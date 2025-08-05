@@ -49,6 +49,28 @@
             font-style: italic;
         }
         
+        .home-button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 25px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            font-weight: 600;
+            font-size: 1rem;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .home-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
         .category {
             background: white;
             border-radius: 10px;
@@ -179,6 +201,7 @@
             <h1>Top Algorithms for Coding Interview</h1>
             <p class="subtitle">Comprehensive guide to essential algorithms and data structures</p>
             <p class="author">by Chinmay Murugkar</p>
+            <a href="https://chinmaymurugkar.com/" class="home-button" target="_blank">← Back to My Website</a>
         </div>
     </header>
 
