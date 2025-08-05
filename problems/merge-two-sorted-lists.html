@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merge Two Sorted Lists - Coding Interview Problems</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+        
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .breadcrumb {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .meta {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .content {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .problem-description {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 0 6px 6px 0;
+        }
+        
+        .solution {
+            margin-bottom: 40px;
+        }
+        
+        .solution h3 {
+            color: #2c3e50;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+                .code-block {
+            background: #2d3748;
+            border: 1px solid #4a5568;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', 'Monaco', 'Consolas', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            white-space: pre;
+            color: #e2e8f0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .code-block .keyword {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        
+        .code-block .string {
+            color: #51cf66;
+        }
+        
+        .code-block .comment {
+            color: #868e96;
+            font-style: italic;
+        }
+        
+        .code-block .number {
+            color: #74c0fc;
+        }
+        
+        .complexity {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .complexity strong {
+            color: #856404;
+        }
+        
+        .example {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .example strong {
+            color: #0c5460;
+        }
+        
+        .linked-list-visualization {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: monospace;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.2s ease;
+        }
+        
+        .nav-btn:hover {
+            background: #2980b9;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="breadcrumb">
+                <a href="../index.html">Home</a> > Linked List > Merge Two Sorted Lists
+            </div>
+            <h1>Merge Two Sorted Lists</h1>
+            <div class="meta">LeetCode Problem 21</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <div class="problem-description">
+                <strong>Problem:</strong> Merge two sorted linked lists and return it as a sorted list. The list should be made by splicing together the nodes of the first two lists.
+                <br><br>
+                <strong>Example:</strong><br>
+                Input: l1 = [1,2,4], l2 = [1,3,4]<br>
+                Output: [1,1,2,3,4,4]
+            </div>
+
+            <div class="solution">
+                <h3>Solution 1 – Iterative Approach</h3>
+                <p>Use a dummy node and compare nodes from both lists iteratively.</p>
+                
+                <div class="code-block">
+public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+    ListNode dummy = new ListNode(0);
+    ListNode current = dummy;
+    
+    while (l1 != null && l2 != null) {
+        if (l1.val <= l2.val) {
+            current.next = l1;
+            l1 = l1.next;
+        } else {
+            current.next = l2;
+            l2 = l2.next;
+        }
+        current = current.next;
+    }
+    
+    // Attach remaining nodes
+    if (l1 != null) {
+        current.next = l1;
+    }
+    if (l2 != null) {
+        current.next = l2;
+    }
+    
+    return dummy.next;
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(m + n)<br>
+                    <strong>Space Complexity:</strong> O(1)
+                </div>
+            </div>
+
+            <div class="solution">
+                <h3>Solution 2 – Recursive Approach</h3>
+                <p>Use recursion to merge the lists by comparing heads and recursively merging the rest.</p>
+                
+                <div class="code-block">
+public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+    if (l1 == null) return l2;
+    if (l2 == null) return l1;
+    
+    if (l1.val <= l2.val) {
+        l1.next = mergeTwoLists(l1.next, l2);
+        return l1;
+    } else {
+        l2.next = mergeTwoLists(l1, l2.next);
+        return l2;
+    }
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(m + n)<br>
+                    <strong>Space Complexity:</strong> O(m + n) for recursion stack
+                </div>
+            </div>
+
+            <div class="linked-list-visualization">
+                <strong>Merging Process Visualization:</strong><br><br>
+                l1: 1 → 2 → 4<br>
+                l2: 1 → 3 → 4<br><br>
+                
+                Step 1: Compare 1 vs 1, choose 1 from l1<br>
+                Result: 1, l1 moves to 2, l2 stays at 1<br><br>
+                
+                Step 2: Compare 2 vs 1, choose 1 from l2<br>
+                Result: 1 → 1, l1 stays at 2, l2 moves to 3<br><br>
+                
+                Step 3: Compare 2 vs 3, choose 2 from l1<br>
+                Result: 1 → 1 → 2, l1 moves to 4, l2 stays at 3<br><br>
+                
+                Continue until: 1 → 1 → 2 → 3 → 4 → 4
+            </div>
+
+            <div class="example">
+                <strong>More Examples:</strong><br><br>
+                Input: l1 = [], l2 = [0]<br>
+                Output: [0]<br><br>
+                
+                Input: l1 = [], l2 = []<br>
+                Output: []<br><br>
+                
+                Input: l1 = [1,3,5], l2 = [2,4,6]<br>
+                Output: [1,2,3,4,5,6]
+            </div>
+
+            <div class="navigation">
+                <a href="reverse-linked-list.html" class="nav-btn" target="_blank">← Previous: Reverse Linked List</a>
+                <a href="detect-cycle.html" class="nav-btn" target="_blank">Next: Linked List Cycle →</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

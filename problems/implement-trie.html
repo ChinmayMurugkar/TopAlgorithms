@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Implement Trie (Prefix Tree) - Coding Interview Problems</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+        
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .breadcrumb {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .meta {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .content {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .problem-description {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 0 6px 6px 0;
+        }
+        
+        .solution {
+            margin-bottom: 40px;
+        }
+        
+        .solution h3 {
+            color: #2c3e50;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+                .code-block {
+            background: #2d3748;
+            border: 1px solid #4a5568;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', 'Monaco', 'Consolas', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            white-space: pre;
+            color: #e2e8f0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .code-block .keyword {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        
+        .code-block .string {
+            color: #51cf66;
+        }
+        
+        .code-block .comment {
+            color: #868e96;
+            font-style: italic;
+        }
+        
+        .code-block .number {
+            color: #74c0fc;
+        }
+        
+        .complexity {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .complexity strong {
+            color: #856404;
+        }
+        
+        .example {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .example strong {
+            color: #0c5460;
+        }
+        
+        .visualization {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: monospace;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.2s ease;
+        }
+        
+        .nav-btn:hover {
+            background: #2980b9;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="breadcrumb">
+                <a href="../index.html">Home</a> > Tree, Heap & Trie > Implement Trie (Prefix Tree)
+            </div>
+            <h1>Implement Trie (Prefix Tree)</h1>
+            <div class="meta">LeetCode Problem 208</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <div class="problem-description">
+                <strong>Problem:</strong> A trie (pronounced as 'try') or prefix tree is a tree data structure used to efficiently store and retrieve keys in a dataset of strings. There are various applications of this data structure, such as autocomplete and spellchecker.
+            </div>
+
+            
+            <div class="solution">
+                <h3>Solution 1 – Trie Implementation</h3>
+                <p>Implement a trie data structure with insert, search, and startsWith operations.</p>
+                
+                <div class="code-block">
+class Trie {
+    private TrieNode root;
+    
+    public Trie() {
+        root = new TrieNode();
+    }
+    
+    public void insert(String word) {
+        TrieNode current = root;
+        for (char c : word.toCharArray()) {
+            if (!current.children.containsKey(c)) {
+                current.children.put(c, new TrieNode());
+            }
+            current = current.children.get(c);
+        }
+        current.isEndOfWord = true;
+    }
+    
+    public boolean search(String word) {
+        TrieNode current = root;
+        for (char c : word.toCharArray()) {
+            if (!current.children.containsKey(c)) {
+                return false;
+            }
+            current = current.children.get(c);
+        }
+        return current.isEndOfWord;
+    }
+    
+    public boolean startsWith(String prefix) {
+        TrieNode current = root;
+        for (char c : prefix.toCharArray()) {
+            if (!current.children.containsKey(c)) {
+                return false;
+            }
+            current = current.children.get(c);
+        }
+        return true;
+    }
+}
+
+class TrieNode {
+    Map<Character, TrieNode> children;
+    boolean isEndOfWord;
+    
+    TrieNode() {
+        children = new HashMap<>();
+        isEndOfWord = false;
+    }
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(m) for insert/search/startsWith where m is word length<br>
+                    <strong>Space Complexity:</strong> O(ALPHABET_SIZE * m * n) where n is number of words
+                </div>
+            </div>
+        
+
+            <div class="navigation">
+                <a href="serialize-deserialize-binary-tree.html" class="nav-btn" target="_blank">← Previous: Serialize and Deserialize Binary Tree</a>
+                <a href="word-search.html" class="nav-btn" target="_blank">Next: Word Search →</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

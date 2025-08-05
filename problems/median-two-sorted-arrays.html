@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Median of Two Sorted Arrays - Coding Interview Problems</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+        
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .breadcrumb {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .meta {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .content {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .problem-description {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 0 6px 6px 0;
+        }
+        
+        .solution {
+            margin-bottom: 40px;
+        }
+        
+        .solution h3 {
+            color: #2c3e50;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+                .code-block {
+            background: #2d3748;
+            border: 1px solid #4a5568;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', 'Monaco', 'Consolas', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            white-space: pre;
+            color: #e2e8f0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .code-block .keyword {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        
+        .code-block .string {
+            color: #51cf66;
+        }
+        
+        .code-block .comment {
+            color: #868e96;
+            font-style: italic;
+        }
+        
+        .code-block .number {
+            color: #74c0fc;
+        }
+        
+        .complexity {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .complexity strong {
+            color: #856404;
+        }
+        
+        .example {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .example strong {
+            color: #0c5460;
+        }
+        
+        .binary-search-visualization {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: monospace;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.2s ease;
+        }
+        
+        .nav-btn:hover {
+            background: #2980b9;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="breadcrumb">
+                <a href="../index.html">Home</a> > String/Array/Matrix > Median of Two Sorted Arrays
+            </div>
+            <h1>Median of Two Sorted Arrays</h1>
+            <div class="meta">LeetCode Problem 4</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <div class="problem-description">
+                <strong>Problem:</strong> Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
+                <br><br>
+                <strong>Constraints:</strong>
+                <ul>
+                    <li>nums1.length + nums2.length >= 1</li>
+                    <li>Time complexity should be O(log(m+n))</li>
+                </ul>
+                <br>
+                <strong>Example:</strong><br>
+                Input: nums1 = [1,3], nums2 = [2]<br>
+                Output: 2.0<br>
+                Explanation: merged array = [1,2,3] and median is 2.
+            </div>
+
+            <div class="solution">
+                <h3>Solution 1 – Merge and Find (Not Optimal)</h3>
+                <p>Merge the arrays and find the median. This doesn't meet the O(log(m+n)) requirement but is straightforward.</p>
+                
+                <div class="code-block">
+public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+    int m = nums1.length;
+    int n = nums2.length;
+    int[] merged = new int[m + n];
+    
+    int i = 0, j = 0, k = 0;
+    
+    // Merge the two arrays
+    while (i < m && j < n) {
+        if (nums1[i] <= nums2[j]) {
+            merged[k++] = nums1[i++];
+        } else {
+            merged[k++] = nums2[j++];
+        }
+    }
+    
+    // Copy remaining elements
+    while (i < m) {
+        merged[k++] = nums1[i++];
+    }
+    while (j < n) {
+        merged[k++] = nums2[j++];
+    }
+    
+    // Find median
+    int totalLength = m + n;
+    if (totalLength % 2 == 0) {
+        return (merged[totalLength / 2 - 1] + merged[totalLength / 2]) / 2.0;
+    } else {
+        return merged[totalLength / 2];
+    }
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(m + n)<br>
+                    <strong>Space Complexity:</strong> O(m + n)
+                </div>
+            </div>
+
+            <div class="solution">
+                <h3>Solution 2 – Binary Search (Optimal)</h3>
+                <p>Use binary search to find the correct partition that gives us the median.</p>
+                
+                <div class="code-block">
+public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+    // Ensure nums1 is the smaller array
+    if (nums1.length > nums2.length) {
+        return findMedianSortedArrays(nums2, nums1);
+    }
+    
+    int m = nums1.length;
+    int n = nums2.length;
+    int left = 0;
+    int right = m;
+    
+    while (left <= right) {
+        // Partition nums1
+        int partitionX = (left + right) / 2;
+        // Partition nums2
+        int partitionY = (m + n + 1) / 2 - partitionX;
+        
+        // Find the four elements around the partition
+        int maxLeftX = (partitionX == 0) ? Integer.MIN_VALUE : nums1[partitionX - 1];
+        int minRightX = (partitionX == m) ? Integer.MAX_VALUE : nums1[partitionX];
+        
+        int maxLeftY = (partitionY == 0) ? Integer.MIN_VALUE : nums2[partitionY - 1];
+        int minRightY = (partitionY == n) ? Integer.MAX_VALUE : nums2[partitionY];
+        
+        // Check if we found the correct partition
+        if (maxLeftX <= minRightY && maxLeftY <= minRightX) {
+            // Found the correct partition
+            if ((m + n) % 2 == 0) {
+                return (Math.max(maxLeftX, maxLeftY) + Math.min(minRightX, minRightY)) / 2.0;
+            } else {
+                return Math.max(maxLeftX, maxLeftY);
+            }
+        } else if (maxLeftX > minRightY) {
+            // Move left in nums1
+            right = partitionX - 1;
+        } else {
+            // Move right in nums1
+            left = partitionX + 1;
+        }
+    }
+    
+    throw new IllegalArgumentException("Input arrays are not sorted");
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(log(min(m, n)))<br>
+                    <strong>Space Complexity:</strong> O(1)
+                </div>
+            </div>
+
+            <div class="binary-search-visualization">
+                <strong>Binary Search Visualization:</strong><br><br>
+                nums1 = [1, 3, 8, 9, 15], nums2 = [7, 11, 18, 19, 21, 25]<br><br>
+                
+                Step 1: partitionX = 2, partitionY = 4<br>
+                Left: [1, 3] + [7, 11, 18, 19] = [1, 3, 7, 11, 18, 19]<br>
+                Right: [8, 9, 15] + [21, 25] = [8, 9, 15, 21, 25]<br>
+                maxLeftX = 3, minRightX = 8<br>
+                maxLeftY = 19, minRightY = 21<br>
+                Check: 3 ≤ 21 ✓, 19 ≤ 8 ✗<br><br>
+                
+                Step 2: Move right (partitionX = 3)<br>
+                Continue binary search...
+            </div>
+
+            <div class="solution">
+                <h3>Solution 3 – Find Kth Element</h3>
+                <p>Find the kth smallest element in the two sorted arrays.</p>
+                
+                <div class="code-block">
+public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+    int m = nums1.length;
+    int n = nums2.length;
+    int totalLength = m + n;
+    
+    if (totalLength % 2 == 0) {
+        // Even length: find (totalLength/2)th and (totalLength/2 + 1)th elements
+        int left = findKthElement(nums1, 0, nums2, 0, totalLength / 2);
+        int right = findKthElement(nums1, 0, nums2, 0, totalLength / 2 + 1);
+        return (left + right) / 2.0;
+    } else {
+        // Odd length: find (totalLength/2 + 1)th element
+        return findKthElement(nums1, 0, nums2, 0, totalLength / 2 + 1);
+    }
+}
+
+private int findKthElement(int[] nums1, int start1, int[] nums2, int start2, int k) {
+    // If one array is exhausted, return kth element from the other
+    if (start1 >= nums1.length) {
+        return nums2[start2 + k - 1];
+    }
+    if (start2 >= nums2.length) {
+        return nums1[start1 + k - 1];
+    }
+    
+    // If k == 1, return the smaller of the first elements
+    if (k == 1) {
+        return Math.min(nums1[start1], nums2[start2]);
+    }
+    
+    // Find the k/2th element in each array
+    int mid1 = start1 + k / 2 - 1 < nums1.length ? nums1[start1 + k / 2 - 1] : Integer.MAX_VALUE;
+    int mid2 = start2 + k / 2 - 1 < nums2.length ? nums2[start2 + k / 2 - 1] : Integer.MAX_VALUE;
+    
+    if (mid1 < mid2) {
+        // The kth element is in the right half of nums1 or left half of nums2
+        return findKthElement(nums1, start1 + k / 2, nums2, start2, k - k / 2);
+    } else {
+        // The kth element is in the right half of nums2 or left half of nums1
+        return findKthElement(nums1, start1, nums2, start2 + k / 2, k - k / 2);
+    }
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(log(m + n))<br>
+                    <strong>Space Complexity:</strong> O(log(m + n)) for recursion stack
+                </div>
+            </div>
+
+            <div class="solution">
+                <h3>Solution 4 – Iterative Kth Element</h3>
+                <p>Iterative version to avoid recursion stack space.</p>
+                
+                <div class="code-block">
+public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+    int m = nums1.length;
+    int n = nums2.length;
+    int totalLength = m + n;
+    
+    if (totalLength % 2 == 0) {
+        int left = findKthElementIterative(nums1, nums2, totalLength / 2);
+        int right = findKthElementIterative(nums1, nums2, totalLength / 2 + 1);
+        return (left + right) / 2.0;
+    } else {
+        return findKthElementIterative(nums1, nums2, totalLength / 2 + 1);
+    }
+}
+
+private int findKthElementIterative(int[] nums1, int[] nums2, int k) {
+    int start1 = 0, start2 = 0;
+    
+    while (true) {
+        // If one array is exhausted
+        if (start1 >= nums1.length) {
+            return nums2[start2 + k - 1];
+        }
+        if (start2 >= nums2.length) {
+            return nums1[start1 + k - 1];
+        }
+        
+        // If k == 1
+        if (k == 1) {
+            return Math.min(nums1[start1], nums2[start2]);
+        }
+        
+        // Find the k/2th element in each array
+        int mid1 = start1 + k / 2 - 1 < nums1.length ? nums1[start1 + k / 2 - 1] : Integer.MAX_VALUE;
+        int mid2 = start2 + k / 2 - 1 < nums2.length ? nums2[start2 + k / 2 - 1] : Integer.MAX_VALUE;
+        
+        if (mid1 < mid2) {
+            start1 += k / 2;
+        } else {
+            start2 += k / 2;
+        }
+        
+        k -= k / 2;
+    }
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(log(m + n))<br>
+                    <strong>Space Complexity:</strong> O(1)
+                </div>
+            </div>
+
+            <div class="example">
+                <strong>More Examples:</strong><br><br>
+                Input: nums1 = [1,2], nums2 = [3,4]<br>
+                Output: 2.5<br>
+                Explanation: merged array = [1,2,3,4], median = (2 + 3) / 2 = 2.5<br><br>
+                
+                Input: nums1 = [0,0], nums2 = [0,0]<br>
+                Output: 0.0<br><br>
+                
+                Input: nums1 = [], nums2 = [1]<br>
+                Output: 1.0
+            </div>
+
+            <div class="solution">
+                <h3>Edge Cases and Validation</h3>
+                <p>Robust implementation handling edge cases:</p>
+                
+                <div class="code-block">
+public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+    // Handle null inputs
+    if (nums1 == null || nums2 == null) {
+        throw new IllegalArgumentException("Input arrays cannot be null");
+    }
+    
+    int m = nums1.length;
+    int n = nums2.length;
+    
+    // Handle empty arrays
+    if (m == 0 && n == 0) {
+        throw new IllegalArgumentException("Both arrays cannot be empty");
+    }
+    
+    if (m == 0) {
+        return findMedian(nums2);
+    }
+    
+    if (n == 0) {
+        return findMedian(nums1);
+    }
+    
+    // Ensure nums1 is the smaller array
+    if (m > n) {
+        return findMedianSortedArrays(nums2, nums1);
+    }
+    
+    // Use binary search approach
+    return findMedianBinarySearch(nums1, nums2);
+}
+
+private double findMedian(int[] nums) {
+    int n = nums.length;
+    if (n % 2 == 0) {
+        return (nums[n / 2 - 1] + nums[n / 2]) / 2.0;
+    } else {
+        return nums[n / 2];
+    }
+}
+
+private double findMedianBinarySearch(int[] nums1, int[] nums2) {
+    int m = nums1.length;
+    int n = nums2.length;
+    int left = 0;
+    int right = m;
+    
+    while (left <= right) {
+        int partitionX = (left + right) / 2;
+        int partitionY = (m + n + 1) / 2 - partitionX;
+        
+        int maxLeftX = (partitionX == 0) ? Integer.MIN_VALUE : nums1[partitionX - 1];
+        int minRightX = (partitionX == m) ? Integer.MAX_VALUE : nums1[partitionX];
+        
+        int maxLeftY = (partitionY == 0) ? Integer.MIN_VALUE : nums2[partitionY - 1];
+        int minRightY = (partitionY == n) ? Integer.MAX_VALUE : nums2[partitionY];
+        
+        if (maxLeftX <= minRightY && maxLeftY <= minRightX) {
+            if ((m + n) % 2 == 0) {
+                return (Math.max(maxLeftX, maxLeftY) + Math.min(minRightX, minRightY)) / 2.0;
+            } else {
+                return Math.max(maxLeftX, maxLeftY);
+            }
+        } else if (maxLeftX > minRightY) {
+            right = partitionX - 1;
+        } else {
+            left = partitionX + 1;
+        }
+    }
+    
+    throw new IllegalArgumentException("Input arrays are not sorted");
+}
+                </div>
+            </div>
+
+            <div class="navigation">
+                <a href="word-ladder.html" class="nav-btn" target="_blank">← Previous: Word Ladder</a>
+                <a href="kth-largest-element.html" class="nav-btn" target="_blank">Next: Kth Largest Element →</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

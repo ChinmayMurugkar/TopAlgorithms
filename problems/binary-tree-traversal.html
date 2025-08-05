@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Tree Traversal - Coding Interview Problems</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+        
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .breadcrumb {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .meta {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .content {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .problem-description {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 0 6px 6px 0;
+        }
+        
+        .solution {
+            margin-bottom: 40px;
+        }
+        
+        .solution h3 {
+            color: #2c3e50;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+                .code-block {
+            background: #2d3748;
+            border: 1px solid #4a5568;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', 'Monaco', 'Consolas', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            white-space: pre;
+            color: #e2e8f0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .code-block .keyword {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        
+        .code-block .string {
+            color: #51cf66;
+        }
+        
+        .code-block .comment {
+            color: #868e96;
+            font-style: italic;
+        }
+        
+        .code-block .number {
+            color: #74c0fc;
+        }
+        
+        .complexity {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .complexity strong {
+            color: #856404;
+        }
+        
+        .example {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .example strong {
+            color: #0c5460;
+        }
+        
+        .tree-visual {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 15px 0;
+            text-align: center;
+            font-family: monospace;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.2s ease;
+        }
+        
+        .nav-btn:hover {
+            background: #2980b9;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="breadcrumb">
+                <a href="../index.html">Home</a> > Tree, Heap & Trie > Binary Tree Traversal
+            </div>
+            <h1>Binary Tree Traversal</h1>
+            <div class="meta">Preorder, Inorder, Postorder, Level Order</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <div class="problem-description">
+                <strong>Problem:</strong> Implement different traversal methods for a binary tree.
+                <br><br>
+                <strong>Traversal Types:</strong>
+                <ul>
+                    <li><strong>Preorder:</strong> Root → Left → Right</li>
+                    <li><strong>Inorder:</strong> Left → Root → Right</li>
+                    <li><strong>Postorder:</strong> Left → Right → Root</li>
+                    <li><strong>Level Order:</strong> Level by level from top to bottom</li>
+                </ul>
+            </div>
+
+            <div class="tree-visual">
+                <strong>Example Tree:</strong><br><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3<br>
+                &nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+                &nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7
+            </div>
+
+            <div class="solution">
+                <h3>1. Preorder Traversal (Root → Left → Right)</h3>
+                <p>Visit root first, then left subtree, then right subtree.</p>
+                
+                <div class="code-block">
+// Recursive
+public List<Integer> preorderTraversal(TreeNode root) {
+    List<Integer> result = new ArrayList<>();
+    preorder(root, result);
+    return result;
+}
+
+private void preorder(TreeNode root, List<Integer> result) {
+    if (root == null) return;
+    
+    result.add(root.val);        // Visit root
+    preorder(root.left, result); // Visit left subtree
+    preorder(root.right, result); // Visit right subtree
+}
+
+// Iterative using Stack
+public List<Integer> preorderTraversalIterative(TreeNode root) {
+    List<Integer> result = new ArrayList<>();
+    if (root == null) return result;
+    
+    Stack<TreeNode> stack = new Stack<>();
+    stack.push(root);
+    
+    while (!stack.isEmpty()) {
+        TreeNode node = stack.pop();
+        result.add(node.val);
+        
+        // Push right first, then left (so left is processed first)
+        if (node.right != null) {
+            stack.push(node.right);
+        }
+        if (node.left != null) {
+            stack.push(node.left);
+        }
+    }
+    
+    return result;
+}
+                </div>
+                
+                <div class="example">
+                    <strong>Preorder Result:</strong> [1, 2, 4, 5, 3, 6, 7]
+                </div>
+            </div>
+
+            <div class="solution">
+                <h3>2. Inorder Traversal (Left → Root → Right)</h3>
+                <p>Visit left subtree first, then root, then right subtree.</p>
+                
+                <div class="code-block">
+// Recursive
+public List<Integer> inorderTraversal(TreeNode root) {
+    List<Integer> result = new ArrayList<>();
+    inorder(root, result);
+    return result;
+}
+
+private void inorder(TreeNode root, List<Integer> result) {
+    if (root == null) return;
+    
+    inorder(root.left, result);  // Visit left subtree
+    result.add(root.val);        // Visit root
+    inorder(root.right, result); // Visit right subtree
+}
+
+// Iterative using Stack
+public List<Integer> inorderTraversalIterative(TreeNode root) {
+    List<Integer> result = new ArrayList<>();
+    Stack<TreeNode> stack = new Stack<>();
+    TreeNode current = root;
+    
+    while (current != null || !stack.isEmpty()) {
+        // Go to the leftmost node
+        while (current != null) {
+            stack.push(current);
+            current = current.left;
+        }
+        
+        // Process current node
+        current = stack.pop();
+        result.add(current.val);
+        
+        // Move to right subtree
+        current = current.right;
+    }
+    
+    return result;
+}
+                </div>
+                
+                <div class="example">
+                    <strong>Inorder Result:</strong> [4, 2, 5, 1, 6, 3, 7]
+                </div>
+            </div>
+
+            <div class="solution">
+                <h3>3. Postorder Traversal (Left → Right → Root)</h3>
+                <p>Visit left subtree first, then right subtree, then root.</p>
+                
+                <div class="code-block">
+// Recursive
+public List<Integer> postorderTraversal(TreeNode root) {
+    List<Integer> result = new ArrayList<>();
+    postorder(root, result);
+    return result;
+}
+
+private void postorder(TreeNode root, List<Integer> result) {
+    if (root == null) return;
+    
+    postorder(root.left, result);  // Visit left subtree
+    postorder(root.right, result); // Visit right subtree
+    result.add(root.val);          // Visit root
+}
+
+// Iterative using Stack
+public List<Integer> postorderTraversalIterative(TreeNode root) {
+    List<Integer> result = new ArrayList<>();
+    if (root == null) return result;
+    
+    Stack<TreeNode> stack = new Stack<>();
+    stack.push(root);
+    
+    while (!stack.isEmpty()) {
+        TreeNode node = stack.pop();
+        result.add(0, node.val); // Add to front to reverse order
+        
+        // Push left first, then right
+        if (node.left != null) {
+            stack.push(node.left);
+        }
+        if (node.right != null) {
+            stack.push(node.right);
+        }
+    }
+    
+    return result;
+}
+                </div>
+                
+                <div class="example">
+                    <strong>Postorder Result:</strong> [4, 5, 2, 6, 7, 3, 1]
+                </div>
+            </div>
+
+            <div class="solution">
+                <h3>4. Level Order Traversal (Breadth-First)</h3>
+                <p>Visit nodes level by level from top to bottom.</p>
+                
+                <div class="code-block">
+// Using Queue (BFS)
+public List<List<Integer>> levelOrder(TreeNode root) {
+    List<List<Integer>> result = new ArrayList<>();
+    if (root == null) return result;
+    
+    Queue<TreeNode> queue = new LinkedList<>();
+    queue.offer(root);
+    
+    while (!queue.isEmpty()) {
+        int levelSize = queue.size();
+        List<Integer> currentLevel = new ArrayList<>();
+        
+        for (int i = 0; i < levelSize; i++) {
+            TreeNode node = queue.poll();
+            currentLevel.add(node.val);
+            
+            if (node.left != null) {
+                queue.offer(node.left);
+            }
+            if (node.right != null) {
+                queue.offer(node.right);
+            }
+        }
+        
+        result.add(currentLevel);
+    }
+    
+    return result;
+}
+
+// Level Order Traversal II (Bottom-up)
+public List<List<Integer>> levelOrderBottom(TreeNode root) {
+    List<List<Integer>> result = new ArrayList<>();
+    if (root == null) return result;
+    
+    Queue<TreeNode> queue = new LinkedList<>();
+    queue.offer(root);
+    
+    while (!queue.isEmpty()) {
+        int levelSize = queue.size();
+        List<Integer> currentLevel = new ArrayList<>();
+        
+        for (int i = 0; i < levelSize; i++) {
+            TreeNode node = queue.poll();
+            currentLevel.add(node.val);
+            
+            if (node.left != null) {
+                queue.offer(node.left);
+            }
+            if (node.right != null) {
+                queue.offer(node.right);
+            }
+        }
+        
+        result.add(0, currentLevel); // Add to front
+    }
+    
+    return result;
+}
+                </div>
+                
+                <div class="example">
+                    <strong>Level Order Result:</strong> [[1], [2, 3], [4, 5, 6, 7]]
+                </div>
+            </div>
+
+            <div class="solution">
+                <h3>5. Morris Traversal (Inorder without Stack/Recursion)</h3>
+                <p>Threaded binary tree traversal using O(1) space.</p>
+                
+                <div class="code-block">
+public List<Integer> inorderTraversalMorris(TreeNode root) {
+    List<Integer> result = new ArrayList<>();
+    TreeNode current = root;
+    
+    while (current != null) {
+        if (current.left == null) {
+            result.add(current.val);
+            current = current.right;
+        } else {
+            // Find the inorder predecessor
+            TreeNode predecessor = current.left;
+            while (predecessor.right != null && predecessor.right != current) {
+                predecessor = predecessor.right;
+            }
+            
+            if (predecessor.right == null) {
+                // Make current as right child of predecessor
+                predecessor.right = current;
+                current = current.left;
+            } else {
+                // Revert the changes
+                predecessor.right = null;
+                result.add(current.val);
+                current = current.right;
+            }
+        }
+    }
+    
+    return result;
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(n) for all traversals<br>
+                    <strong>Space Complexity:</strong> O(h) for recursive, O(n) for iterative, O(1) for Morris
+                </div>
+            </div>
+
+            <div class="navigation">
+                <a href="../index.html" class="nav-btn" target="_blank">← Back to Index</a>
+                <a href="invert-binary-tree.html" class="nav-btn" target="_blank">Next: Invert Binary Tree →</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

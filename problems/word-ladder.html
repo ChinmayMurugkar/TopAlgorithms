@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Ladder - Coding Interview Problems</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+        
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .breadcrumb {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .meta {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .content {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .problem-description {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 0 6px 6px 0;
+        }
+        
+        .solution {
+            margin-bottom: 40px;
+        }
+        
+        .solution h3 {
+            color: #2c3e50;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+                .code-block {
+            background: #2d3748;
+            border: 1px solid #4a5568;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', 'Monaco', 'Consolas', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            white-space: pre;
+            color: #e2e8f0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .code-block .keyword {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        
+        .code-block .string {
+            color: #51cf66;
+        }
+        
+        .code-block .comment {
+            color: #868e96;
+            font-style: italic;
+        }
+        
+        .code-block .number {
+            color: #74c0fc;
+        }
+        
+        .complexity {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .complexity strong {
+            color: #856404;
+        }
+        
+        .example {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .example strong {
+            color: #0c5460;
+        }
+        
+        .bfs-visualization {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: monospace;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.2s ease;
+        }
+        
+        .nav-btn:hover {
+            background: #2980b9;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="breadcrumb">
+                <a href="../index.html">Home</a> > String/Array/Matrix > Word Ladder
+            </div>
+            <h1>Word Ladder</h1>
+            <div class="meta">LeetCode Problem 127</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <div class="problem-description">
+                <strong>Problem:</strong> Given two words (beginWord and endWord), and a dictionary wordList, find the length of shortest transformation sequence from beginWord to endWord.
+                <br><br>
+                <strong>Rules:</strong>
+                <ul>
+                    <li>Only one letter can be changed at a time</li>
+                    <li>Each transformed word must exist in the wordList</li>
+                    <li>Return 0 if there is no such transformation sequence</li>
+                </ul>
+                <br>
+                <strong>Example:</strong><br>
+                Input: beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log","cog"]<br>
+                Output: 5<br>
+                Explanation: hit → hot → dot → dog → cog
+            </div>
+
+            <div class="solution">
+                <h3>Solution 1 – BFS with Set</h3>
+                <p>Use BFS to find the shortest path. Convert wordList to a set for O(1) lookup.</p>
+                
+                <div class="code-block">
+public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+    Set<String> wordSet = new HashSet<>(wordList);
+    
+    if (!wordSet.contains(endWord)) {
+        return 0;
+    }
+    
+    Queue<String> queue = new LinkedList<>();
+    queue.offer(beginWord);
+    wordSet.remove(beginWord);
+    
+    int level = 1;
+    
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        
+        for (int i = 0; i < size; i++) {
+            String currentWord = queue.poll();
+            
+            if (currentWord.equals(endWord)) {
+                return level;
+            }
+            
+            // Generate all possible transformations
+            char[] wordArray = currentWord.toCharArray();
+            for (int j = 0; j < wordArray.length; j++) {
+                char originalChar = wordArray[j];
+                
+                for (char c = 'a'; c <= 'z'; c++) {
+                    wordArray[j] = c;
+                    String newWord = new String(wordArray);
+                    
+                    if (wordSet.contains(newWord)) {
+                        queue.offer(newWord);
+                        wordSet.remove(newWord);
+                    }
+                }
+                
+                wordArray[j] = originalChar;
+            }
+        }
+        
+        level++;
+    }
+    
+    return 0;
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(26 * L * N) where L is word length, N is wordList size<br>
+                    <strong>Space Complexity:</strong> O(N)
+                </div>
+            </div>
+
+            <div class="solution">
+                <h3>Solution 2 – Bidirectional BFS</h3>
+                <p>Use BFS from both start and end to reduce search space significantly.</p>
+                
+                <div class="code-block">
+public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+    Set<String> wordSet = new HashSet<>(wordList);
+    
+    if (!wordSet.contains(endWord)) {
+        return 0;
+    }
+    
+    Set<String> beginSet = new HashSet<>();
+    Set<String> endSet = new HashSet<>();
+    beginSet.add(beginWord);
+    endSet.add(endWord);
+    wordSet.remove(beginWord);
+    wordSet.remove(endWord);
+    
+    int level = 1;
+    
+    while (!beginSet.isEmpty() && !endSet.isEmpty()) {
+        // Always work on the smaller set
+        if (beginSet.size() > endSet.size()) {
+            Set<String> temp = beginSet;
+            beginSet = endSet;
+            endSet = temp;
+        }
+        
+        Set<String> nextLevel = new HashSet<>();
+        
+        for (String word : beginSet) {
+            char[] wordArray = word.toCharArray();
+            
+            for (int i = 0; i < wordArray.length; i++) {
+                char originalChar = wordArray[i];
+                
+                for (char c = 'a'; c <= 'z'; c++) {
+                    wordArray[i] = c;
+                    String newWord = new String(wordArray);
+                    
+                    if (endSet.contains(newWord)) {
+                        return level + 1;
+                    }
+                    
+                    if (wordSet.contains(newWord)) {
+                        nextLevel.add(newWord);
+                        wordSet.remove(newWord);
+                    }
+                }
+                
+                wordArray[i] = originalChar;
+            }
+        }
+        
+        beginSet = nextLevel;
+        level++;
+    }
+    
+    return 0;
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(26 * L * N) but much faster in practice<br>
+                    <strong>Space Complexity:</strong> O(N)
+                </div>
+            </div>
+
+            <div class="bfs-visualization">
+                <strong>BFS Visualization:</strong><br><br>
+                Input: beginWord = "hit", endWord = "cog"<br>
+                wordList = ["hot","dot","dog","lot","log","cog"]<br><br>
+                
+                Level 1: [hit]<br>
+                Transformations: hot, hix, hiy, ... (only "hot" in wordList)<br>
+                Level 2: [hot]<br>
+                Transformations: dot, lot, hxt, hyt, ... (only "dot", "lot" in wordList)<br>
+                Level 3: [dot, lot]<br>
+                From "dot": dog, dxt, dyt, ... (only "dog" in wordList)<br>
+                From "lot": log, lxt, lyt, ... (only "log" in wordList)<br>
+                Level 4: [dog, log]<br>
+                From "dog": cog, dxg, dyg, ... (only "cog" in wordList)<br>
+                From "log": cog, lxg, lyg, ... (only "cog" in wordList)<br><br>
+                Found "cog" at level 4, so total length = 5
+            </div>
+
+            <div class="solution">
+                <h3>Solution 3 – BFS with Word Pattern</h3>
+                <p>Pre-process wordList to create patterns for faster neighbor finding.</p>
+                
+                <div class="code-block">
+public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+    Set<String> wordSet = new HashSet<>(wordList);
+    
+    if (!wordSet.contains(endWord)) {
+        return 0;
+    }
+    
+    // Create pattern map
+    Map<String, List<String>> patternMap = new HashMap<>();
+    for (String word : wordList) {
+        for (int i = 0; i < word.length(); i++) {
+            String pattern = word.substring(0, i) + "*" + word.substring(i + 1);
+            patternMap.computeIfAbsent(pattern, k -> new ArrayList<>()).add(word);
+        }
+    }
+    
+    Queue<String> queue = new LinkedList<>();
+    queue.offer(beginWord);
+    Set<String> visited = new HashSet<>();
+    visited.add(beginWord);
+    
+    int level = 1;
+    
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        
+        for (int i = 0; i < size; i++) {
+            String currentWord = queue.poll();
+            
+            if (currentWord.equals(endWord)) {
+                return level;
+            }
+            
+            // Find neighbors using patterns
+            for (int j = 0; j < currentWord.length(); j++) {
+                String pattern = currentWord.substring(0, j) + "*" + currentWord.substring(j + 1);
+                
+                for (String neighbor : patternMap.getOrDefault(pattern, new ArrayList<>())) {
+                    if (!visited.contains(neighbor)) {
+                        visited.add(neighbor);
+                        queue.offer(neighbor);
+                    }
+                }
+            }
+        }
+        
+        level++;
+    }
+    
+    return 0;
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(L² * N) for preprocessing, O(L * N) for BFS<br>
+                    <strong>Space Complexity:</strong> O(L * N)
+                </div>
+            </div>
+
+            <div class="example">
+                <strong>More Examples:</strong><br><br>
+                Input: beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log"]<br>
+                Output: 0<br>
+                Explanation: "cog" is not in wordList<br><br>
+                
+                Input: beginWord = "hit", endWord = "hit", wordList = ["hot"]<br>
+                Output: 1<br>
+                Explanation: beginWord equals endWord
+            </div>
+
+            <div class="solution">
+                <h3>Solution 4 – A* Search with Heuristic</h3>
+                <p>Use A* search with Hamming distance as heuristic for better performance.</p>
+                
+                <div class="code-block">
+public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+    Set<String> wordSet = new HashSet<>(wordList);
+    
+    if (!wordSet.contains(endWord)) {
+        return 0;
+    }
+    
+    PriorityQueue<WordNode> pq = new PriorityQueue<>((a, b) -> 
+        Integer.compare(a.cost + a.heuristic, b.cost + b.heuristic));
+    
+    pq.offer(new WordNode(beginWord, 1, getHammingDistance(beginWord, endWord)));
+    Set<String> visited = new HashSet<>();
+    
+    while (!pq.isEmpty()) {
+        WordNode current = pq.poll();
+        
+        if (current.word.equals(endWord)) {
+            return current.cost;
+        }
+        
+        if (visited.contains(current.word)) {
+            continue;
+        }
+        
+        visited.add(current.word);
+        
+        char[] wordArray = current.word.toCharArray();
+        for (int i = 0; i < wordArray.length; i++) {
+            char originalChar = wordArray[i];
+            
+            for (char c = 'a'; c <= 'z'; c++) {
+                wordArray[i] = c;
+                String newWord = new String(wordArray);
+                
+                if (wordSet.contains(newWord) && !visited.contains(newWord)) {
+                    int newCost = current.cost + 1;
+                    int newHeuristic = getHammingDistance(newWord, endWord);
+                    pq.offer(new WordNode(newWord, newCost, newHeuristic));
+                }
+            }
+            
+            wordArray[i] = originalChar;
+        }
+    }
+    
+    return 0;
+}
+
+private int getHammingDistance(String word1, String word2) {
+    int distance = 0;
+    for (int i = 0; i < word1.length(); i++) {
+        if (word1.charAt(i) != word2.charAt(i)) {
+            distance++;
+        }
+    }
+    return distance;
+}
+
+class WordNode {
+    String word;
+    int cost;
+    int heuristic;
+    
+    WordNode(String word, int cost, int heuristic) {
+        this.word = word;
+        this.cost = cost;
+        this.heuristic = heuristic;
+    }
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(26 * L * N * log(N))<br>
+                    <strong>Space Complexity:</strong> O(N)
+                </div>
+            </div>
+
+            <div class="navigation">
+                <a href="isomorphic-strings.html" class="nav-btn" target="_blank">← Previous: Isomorphic Strings</a>
+                <a href="median-two-sorted-arrays.html" class="nav-btn" target="_blank">Next: Median of Two Sorted Arrays →</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

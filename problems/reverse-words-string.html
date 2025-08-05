@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reverse Words in a String - Coding Interview Problems</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+        
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .breadcrumb {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .meta {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .content {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .problem-description {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 0 6px 6px 0;
+        }
+        
+        .solution {
+            margin-bottom: 40px;
+        }
+        
+        .solution h3 {
+            color: #2c3e50;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+                .code-block {
+            background: #2d3748;
+            border: 1px solid #4a5568;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', 'Monaco', 'Consolas', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            white-space: pre;
+            color: #e2e8f0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .code-block .keyword {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        
+        .code-block .string {
+            color: #51cf66;
+        }
+        
+        .code-block .comment {
+            color: #868e96;
+            font-style: italic;
+        }
+        
+        .code-block .number {
+            color: #74c0fc;
+        }
+        
+        .complexity {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .complexity strong {
+            color: #856404;
+        }
+        
+        .example {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .example strong {
+            color: #0c5460;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.2s ease;
+        }
+        
+        .nav-btn:hover {
+            background: #2980b9;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="breadcrumb">
+                <a href="../index.html">Home</a> > String/Array/Matrix > Reverse Words in a String
+            </div>
+            <h1>Reverse Words in a String</h1>
+            <div class="meta">LeetCode Problem 151</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <div class="problem-description">
+                <strong>Problem:</strong> Given an input string s, reverse the order of the words.
+                <br><br>
+                <strong>Note:</strong> A word is defined as a sequence of non-space characters. The words in s will be separated by at least one space.
+                <br><br>
+                <strong>Example:</strong><br>
+                Input: s = "the sky is blue"<br>
+                Output: "blue is sky the"
+            </div>
+
+            <div class="solution">
+                <h3>Solution 1 – Using Built-in Functions</h3>
+                <p>The simplest approach is to split the string by spaces, reverse the array, and join it back.</p>
+                
+                <div class="code-block">
+public String reverseWords(String s) {
+    // Remove leading and trailing spaces, split by one or more spaces
+    String[] words = s.trim().split("\\s+");
+    
+    // Reverse the array
+    for (int i = 0; i < words.length / 2; i++) {
+        String temp = words[i];
+        words[i] = words[words.length - 1 - i];
+        words[words.length - 1 - i] = temp;
+    }
+    
+    // Join with single space
+    return String.join(" ", words);
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(n)<br>
+                    <strong>Space Complexity:</strong> O(n)
+                </div>
+            </div>
+
+            <div class="solution">
+                <h3>Solution 2 – Two Pointers (In-place for char array)</h3>
+                <p>If we're given a char array and need to do it in-place:</p>
+                
+                <div class="code-block">
+public void reverseWords(char[] s) {
+    // Reverse the entire string
+    reverse(s, 0, s.length - 1);
+    
+    // Reverse each word
+    int start = 0;
+    for (int i = 0; i < s.length; i++) {
+        if (s[i] == ' ') {
+            reverse(s, start, i - 1);
+            start = i + 1;
+        }
+    }
+    
+    // Reverse the last word
+    reverse(s, start, s.length - 1);
+}
+
+private void reverse(char[] s, int left, int right) {
+    while (left < right) {
+        char temp = s[left];
+        s[left] = s[right];
+        s[right] = temp;
+        left++;
+        right--;
+    }
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(n)<br>
+                    <strong>Space Complexity:</strong> O(1)
+                </div>
+            </div>
+
+            <div class="solution">
+                <h3>Solution 3 – Using Stack</h3>
+                <p>We can use a stack to reverse the order of words:</p>
+                
+                <div class="code-block">
+public String reverseWords(String s) {
+    Stack<String> stack = new Stack<>();
+    StringBuilder word = new StringBuilder();
+    
+    for (int i = 0; i < s.length(); i++) {
+        char c = s.charAt(i);
+        if (c == ' ') {
+            if (word.length() > 0) {
+                stack.push(word.toString());
+                word.setLength(0);
+            }
+        } else {
+            word.append(c);
+        }
+    }
+    
+    // Don't forget the last word
+    if (word.length() > 0) {
+        stack.push(word.toString());
+    }
+    
+    // Build result
+    StringBuilder result = new StringBuilder();
+    while (!stack.isEmpty()) {
+        result.append(stack.pop());
+        if (!stack.isEmpty()) {
+            result.append(" ");
+        }
+    }
+    
+    return result.toString();
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(n)<br>
+                    <strong>Space Complexity:</strong> O(n)
+                </div>
+            </div>
+
+            <div class="example">
+                <strong>Example Walkthrough:</strong><br><br>
+                Input: "the sky is blue"<br><br>
+                Solution 1:<br>
+                1. Split: ["the", "sky", "is", "blue"]<br>
+                2. Reverse: ["blue", "is", "sky", "the"]<br>
+                3. Join: "blue is sky the"<br><br>
+                
+                Solution 2 (char array):<br>
+                1. Original: "the sky is blue"<br>
+                2. Reverse all: "eulb si yks eht"<br>
+                3. Reverse words: "blue is sky the"
+            </div>
+
+            <div class="navigation">
+                <a href="rotate-array.html" class="nav-btn" target="_blank">← Previous: Rotate Array</a>
+                <a href="evaluate-reverse-polish-notation.html" class="nav-btn" target="_blank">Next: Evaluate Reverse Polish Notation →</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

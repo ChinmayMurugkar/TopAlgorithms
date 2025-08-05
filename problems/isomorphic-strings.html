@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isomorphic Strings - Coding Interview Problems</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+        
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .breadcrumb {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .meta {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .content {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .problem-description {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 0 6px 6px 0;
+        }
+        
+        .solution {
+            margin-bottom: 40px;
+        }
+        
+        .solution h3 {
+            color: #2c3e50;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+                .code-block {
+            background: #2d3748;
+            border: 1px solid #4a5568;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', 'Monaco', 'Consolas', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            white-space: pre;
+            color: #e2e8f0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .code-block .keyword {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        
+        .code-block .string {
+            color: #51cf66;
+        }
+        
+        .code-block .comment {
+            color: #868e96;
+            font-style: italic;
+        }
+        
+        .code-block .number {
+            color: #74c0fc;
+        }
+        
+        .complexity {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .complexity strong {
+            color: #856404;
+        }
+        
+        .example {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .example strong {
+            color: #0c5460;
+        }
+        
+        .mapping-visualization {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: monospace;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.2s ease;
+        }
+        
+        .nav-btn:hover {
+            background: #2980b9;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="breadcrumb">
+                <a href="../index.html">Home</a> > String/Array/Matrix > Isomorphic Strings
+            </div>
+            <h1>Isomorphic Strings</h1>
+            <div class="meta">LeetCode Problem 205</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <div class="problem-description">
+                <strong>Problem:</strong> Given two strings s and t, determine if they are isomorphic.
+                <br><br>
+                <strong>Definition:</strong> Two strings s and t are isomorphic if the characters in s can be replaced to get t.
+                <br><br>
+                <strong>Rules:</strong>
+                <ul>
+                    <li>All occurrences of a character must be replaced with another character</li>
+                    <li>No two characters may map to the same character</li>
+                    <li>A character may map to itself</li>
+                </ul>
+                <br>
+                <strong>Example:</strong><br>
+                Input: s = "egg", t = "add"<br>
+                Output: true<br>
+                Explanation: e → a, g → d
+            </div>
+
+            <div class="solution">
+                <h3>Solution 1 – Two Hash Maps</h3>
+                <p>Use two hash maps to ensure bidirectional mapping is consistent.</p>
+                
+                <div class="code-block">
+public boolean isIsomorphic(String s, String t) {
+    if (s.length() != t.length()) {
+        return false;
+    }
+    
+    Map<Character, Character> sToT = new HashMap<>();
+    Map<Character, Character> tToS = new HashMap<>();
+    
+    for (int i = 0; i < s.length(); i++) {
+        char sChar = s.charAt(i);
+        char tChar = t.charAt(i);
+        
+        // Check if sChar already maps to a different character
+        if (sToT.containsKey(sChar) && sToT.get(sChar) != tChar) {
+            return false;
+        }
+        
+        // Check if tChar already maps to a different character
+        if (tToS.containsKey(tChar) && tToS.get(tChar) != sChar) {
+            return false;
+        }
+        
+        sToT.put(sChar, tChar);
+        tToS.put(tChar, sChar);
+    }
+    
+    return true;
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(n)<br>
+                    <strong>Space Complexity:</strong> O(n)
+                </div>
+            </div>
+
+            <div class="solution">
+                <h3>Solution 2 – Array-based Mapping</h3>
+                <p>Use arrays instead of hash maps for better performance since we're dealing with characters.</p>
+                
+                <div class="code-block">
+public boolean isIsomorphic(String s, String t) {
+    if (s.length() != t.length()) {
+        return false;
+    }
+    
+    int[] sToT = new int[256];
+    int[] tToS = new int[256];
+    Arrays.fill(sToT, -1);
+    Arrays.fill(tToS, -1);
+    
+    for (int i = 0; i < s.length(); i++) {
+        char sChar = s.charAt(i);
+        char tChar = t.charAt(i);
+        
+        // Check if mapping is consistent
+        if (sToT[sChar] == -1 && tToS[tChar] == -1) {
+            sToT[sChar] = tChar;
+            tToS[tChar] = sChar;
+        } else if (sToT[sChar] != tChar || tToS[tChar] != sChar) {
+            return false;
+        }
+    }
+    
+    return true;
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(n)<br>
+                    <strong>Space Complexity:</strong> O(1) since arrays are fixed size
+                </div>
+            </div>
+
+            <div class="mapping-visualization">
+                <strong>Mapping Visualization:</strong><br><br>
+                Input: s = "egg", t = "add"<br><br>
+                i=0: s[0]='e', t[0]='a'<br>
+                sToT: e→a, tToS: a→e<br><br>
+                i=1: s[1]='g', t[1]='d'<br>
+                sToT: e→a, g→d, tToS: a→e, d→g<br><br>
+                i=2: s[2]='g', t[2]='d'<br>
+                Check: sToT['g'] = 'd' ✓, tToS['d'] = 'g' ✓<br><br>
+                Result: true
+            </div>
+
+            <div class="solution">
+                <h3>Solution 3 – Single Pass with Last Occurrence</h3>
+                <p>Track the last occurrence of each character to ensure consistent mapping.</p>
+                
+                <div class="code-block">
+public boolean isIsomorphic(String s, String t) {
+    if (s.length() != t.length()) {
+        return false;
+    }
+    
+    int[] sLastIndex = new int[256];
+    int[] tLastIndex = new int[256];
+    Arrays.fill(sLastIndex, -1);
+    Arrays.fill(tLastIndex, -1);
+    
+    for (int i = 0; i < s.length(); i++) {
+        char sChar = s.charAt(i);
+        char tChar = t.charAt(i);
+        
+        // Check if characters have the same last occurrence pattern
+        if (sLastIndex[sChar] != tLastIndex[tChar]) {
+            return false;
+        }
+        
+        sLastIndex[sChar] = i;
+        tLastIndex[tChar] = i;
+    }
+    
+    return true;
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(n)<br>
+                    <strong>Space Complexity:</strong> O(1)
+                </div>
+            </div>
+
+            <div class="example">
+                <strong>More Examples:</strong><br><br>
+                Input: s = "foo", t = "bar"<br>
+                Output: false<br>
+                Explanation: f→b, o→a, o→r (conflict)<br><br>
+                
+                Input: s = "paper", t = "title"<br>
+                Output: true<br>
+                Explanation: p→t, a→i, p→t, e→l, r→e<br><br>
+                
+                Input: s = "badc", t = "baba"<br>
+                Output: false<br>
+                Explanation: b→b, a→a, d→b (conflict)
+            </div>
+
+            <div class="solution">
+                <h3>Solution 4 – Character Transformation</h3>
+                <p>Transform both strings to a normalized form and compare.</p>
+                
+                <div class="code-block">
+public boolean isIsomorphic(String s, String t) {
+    return transformString(s).equals(transformString(t));
+}
+
+private String transformString(String str) {
+    Map<Character, Integer> charToIndex = new HashMap<>();
+    StringBuilder result = new StringBuilder();
+    
+    for (int i = 0; i < str.length(); i++) {
+        char c = str.charAt(i);
+        if (!charToIndex.containsKey(c)) {
+            charToIndex.put(c, charToIndex.size());
+        }
+        result.append(charToIndex.get(c));
+    }
+    
+    return result.toString();
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(n)<br>
+                    <strong>Space Complexity:</strong> O(n)
+                </div>
+            </div>
+
+            <div class="solution">
+                <h3>Edge Cases and Validation</h3>
+                <p>Robust implementation handling edge cases:</p>
+                
+                <div class="code-block">
+public boolean isIsomorphic(String s, String t) {
+    // Handle null inputs
+    if (s == null || t == null) {
+        return s == t;
+    }
+    
+    // Handle different lengths
+    if (s.length() != t.length()) {
+        return false;
+    }
+    
+    // Handle empty strings
+    if (s.length() == 0) {
+        return true;
+    }
+    
+    int[] sToT = new int[256];
+    int[] tToS = new int[256];
+    Arrays.fill(sToT, -1);
+    Arrays.fill(tToS, -1);
+    
+    for (int i = 0; i < s.length(); i++) {
+        char sChar = s.charAt(i);
+        char tChar = t.charAt(i);
+        
+        // Check for mapping conflicts
+        if (sToT[sChar] == -1) {
+            if (tToS[tChar] != -1) {
+                return false; // tChar already mapped to different char
+            }
+            sToT[sChar] = tChar;
+            tToS[tChar] = sChar;
+        } else if (sToT[sChar] != tChar) {
+            return false; // sChar maps to different char
+        }
+    }
+    
+    return true;
+}
+                </div>
+            </div>
+
+            <div class="navigation">
+                <a href="evaluate-reverse-polish-notation.html" class="nav-btn" target="_blank">← Previous: Evaluate Reverse Polish Notation</a>
+                <a href="word-ladder.html" class="nav-btn" target="_blank">Next: Word Ladder →</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

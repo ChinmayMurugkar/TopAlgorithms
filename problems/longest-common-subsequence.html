@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Longest Common Subsequence - Coding Interview Problems</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+        
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .breadcrumb {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .meta {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .content {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .problem-description {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 0 6px 6px 0;
+        }
+        
+        .solution {
+            margin-bottom: 40px;
+        }
+        
+        .solution h3 {
+            color: #2c3e50;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+                .code-block {
+            background: #2d3748;
+            border: 1px solid #4a5568;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', 'Monaco', 'Consolas', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            white-space: pre;
+            color: #e2e8f0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .code-block .keyword {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        
+        .code-block .string {
+            color: #51cf66;
+        }
+        
+        .code-block .comment {
+            color: #868e96;
+            font-style: italic;
+        }
+        
+        .code-block .number {
+            color: #74c0fc;
+        }
+        
+        .complexity {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .complexity strong {
+            color: #856404;
+        }
+        
+        .example {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .example strong {
+            color: #0c5460;
+        }
+        
+        .dp-table {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        
+        .dp-table table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        .dp-table th, .dp-table td {
+            border: 1px solid #dee2e6;
+            padding: 8px;
+            text-align: center;
+        }
+        
+        .dp-table th {
+            background: #e9ecef;
+            font-weight: bold;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.2s ease;
+        }
+        
+        .nav-btn:hover {
+            background: #2980b9;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="breadcrumb">
+                <a href="../index.html">Home</a> > Dynamic Programming > Longest Common Subsequence
+            </div>
+            <h1>Longest Common Subsequence</h1>
+            <div class="meta">LeetCode Problem 1143</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <div class="problem-description">
+                <strong>Problem:</strong> Given two strings text1 and text2, return the length of their longest common subsequence.
+                <br><br>
+                <strong>Definition:</strong> A subsequence of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters.
+                <br><br>
+                <strong>Example:</strong><br>
+                Input: text1 = "abcde", text2 = "ace"<br>
+                Output: 3<br>
+                Explanation: The longest common subsequence is "ace" and its length is 3.
+            </div>
+
+            <div class="solution">
+                <h3>Solution 1 – Dynamic Programming (Bottom-up)</h3>
+                <p>Use a 2D DP table where dp[i][j] represents the length of LCS of text1[0...i-1] and text2[0...j-1].</p>
+                
+                <div class="code-block">
+public int longestCommonSubsequence(String text1, String text2) {
+    int m = text1.length();
+    int n = text2.length();
+    
+    int[][] dp = new int[m + 1][n + 1];
+    
+    for (int i = 1; i <= m; i++) {
+        for (int j = 1; j <= n; j++) {
+            if (text1.charAt(i - 1) == text2.charAt(j - 1)) {
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+            } else {
+                dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+            }
+        }
+    }
+    
+    return dp[m][n];
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(m*n)<br>
+                    <strong>Space Complexity:</strong> O(m*n)
+                </div>
+                
+                <div class="example">
+                    <strong>DP Table Example:</strong><br>
+                    text1 = "abcde", text2 = "ace"
+                </div>
+                
+                <div class="dp-table">
+                    <table>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th>a</th>
+                            <th>c</th>
+                            <th>e</th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <th>a</th>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <th>b</th>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <th>c</th>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <th>d</th>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <th>e</th>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="solution">
+                <h3>Solution 2 – Space Optimized DP</h3>
+                <p>We can optimize space by using only two rows of the DP table.</p>
+                
+                <div class="code-block">
+public int longestCommonSubsequence(String text1, String text2) {
+    int m = text1.length();
+    int n = text2.length();
+    
+    int[] prev = new int[n + 1];
+    int[] curr = new int[n + 1];
+    
+    for (int i = 1; i <= m; i++) {
+        for (int j = 1; j <= n; j++) {
+            if (text1.charAt(i - 1) == text2.charAt(j - 1)) {
+                curr[j] = prev[j - 1] + 1;
+            } else {
+                curr[j] = Math.max(prev[j], curr[j - 1]);
+            }
+        }
+        
+        // Swap arrays
+        int[] temp = prev;
+        prev = curr;
+        curr = temp;
+    }
+    
+    return prev[n];
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(m*n)<br>
+                    <strong>Space Complexity:</strong> O(n)
+                </div>
+            </div>
+
+            <div class="solution">
+                <h3>Solution 3 – Recursive with Memoization</h3>
+                <p>Top-down approach using recursion and memoization:</p>
+                
+                <div class="code-block">
+public int longestCommonSubsequence(String text1, String text2) {
+    int m = text1.length();
+    int n = text2.length();
+    
+    int[][] memo = new int[m][n];
+    for (int i = 0; i < m; i++) {
+        Arrays.fill(memo[i], -1);
+    }
+    
+    return lcs(text1, text2, m - 1, n - 1, memo);
+}
+
+private int lcs(String text1, String text2, int i, int j, int[][] memo) {
+    if (i < 0 || j < 0) {
+        return 0;
+    }
+    
+    if (memo[i][j] != -1) {
+        return memo[i][j];
+    }
+    
+    if (text1.charAt(i) == text2.charAt(j)) {
+        memo[i][j] = lcs(text1, text2, i - 1, j - 1, memo) + 1;
+    } else {
+        memo[i][j] = Math.max(
+            lcs(text1, text2, i - 1, j, memo),
+            lcs(text1, text2, i, j - 1, memo)
+        );
+    }
+    
+    return memo[i][j];
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(m*n)<br>
+                    <strong>Space Complexity:</strong> O(m*n) for memoization + O(m+n) for recursion stack
+                </div>
+            </div>
+
+            <div class="solution">
+                <h3>Printing the LCS</h3>
+                <p>To print the actual LCS, we can backtrack through the DP table:</p>
+                
+                <div class="code-block">
+public String printLCS(String text1, String text2) {
+    int m = text1.length();
+    int n = text2.length();
+    
+    int[][] dp = new int[m + 1][n + 1];
+    
+    // Fill DP table
+    for (int i = 1; i <= m; i++) {
+        for (int j = 1; j <= n; j++) {
+            if (text1.charAt(i - 1) == text2.charAt(j - 1)) {
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+            } else {
+                dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+            }
+        }
+    }
+    
+    // Backtrack to find the LCS
+    StringBuilder lcs = new StringBuilder();
+    int i = m, j = n;
+    
+    while (i > 0 && j > 0) {
+        if (text1.charAt(i - 1) == text2.charAt(j - 1)) {
+            lcs.insert(0, text1.charAt(i - 1));
+            i--;
+            j--;
+        } else if (dp[i - 1][j] > dp[i][j - 1]) {
+            i--;
+        } else {
+            j--;
+        }
+    }
+    
+    return lcs.toString();
+}
+                </div>
+            </div>
+
+            <div class="navigation">
+                <a href="edit-distance.html" class="nav-btn" target="_blank">← Previous: Edit Distance</a>
+                <a href="knapsack-problem.html" class="nav-btn" target="_blank">Next: Knapsack Problem →</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

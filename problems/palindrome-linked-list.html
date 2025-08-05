@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palindrome Linked List - Coding Interview Problems</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+        
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .breadcrumb {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .meta {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .content {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .problem-description {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 0 6px 6px 0;
+        }
+        
+        .solution {
+            margin-bottom: 40px;
+        }
+        
+        .solution h3 {
+            color: #2c3e50;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+                .code-block {
+            background: #2d3748;
+            border: 1px solid #4a5568;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', 'Monaco', 'Consolas', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            white-space: pre;
+            color: #e2e8f0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .code-block .keyword {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        
+        .code-block .string {
+            color: #51cf66;
+        }
+        
+        .code-block .comment {
+            color: #868e96;
+            font-style: italic;
+        }
+        
+        .code-block .number {
+            color: #74c0fc;
+        }
+        
+        .complexity {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .complexity strong {
+            color: #856404;
+        }
+        
+        .example {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .example strong {
+            color: #0c5460;
+        }
+        
+        .linked-list-visualization {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: monospace;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.2s ease;
+        }
+        
+        .nav-btn:hover {
+            background: #2980b9;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="breadcrumb">
+                <a href="../index.html">Home</a> > Linked List > Palindrome Linked List
+            </div>
+            <h1>Palindrome Linked List</h1>
+            <div class="meta">LeetCode Problem 234</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <div class="problem-description">
+                <strong>Problem:</strong> Given the head of a singly linked list, return true if it is a palindrome or false otherwise.
+                <br><br>
+                <strong>Example:</strong><br>
+                Input: head = [1,2,2,1]<br>
+                Output: true<br>
+                Explanation: The list reads the same forwards and backwards.
+            </div>
+
+            <div class="solution">
+                <h3>Solution 1 – Reverse Second Half (Optimal)</h3>
+                <p>Find the middle, reverse the second half, and compare with the first half.</p>
+                
+                <div class="code-block">
+public boolean isPalindrome(ListNode head) {
+    if (head == null || head.next == null) {
+        return true;
+    }
+    
+    // Find the middle of the list
+    ListNode slow = head;
+    ListNode fast = head;
+    
+    while (fast.next != null && fast.next.next != null) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    
+    // Reverse the second half
+    ListNode secondHalf = reverseList(slow.next);
+    ListNode firstHalf = head;
+    
+    // Compare the two halves
+    while (secondHalf != null) {
+        if (firstHalf.val != secondHalf.val) {
+            return false;
+        }
+        firstHalf = firstHalf.next;
+        secondHalf = secondHalf.next;
+    }
+    
+    return true;
+}
+
+private ListNode reverseList(ListNode head) {
+    ListNode prev = null;
+    ListNode current = head;
+    
+    while (current != null) {
+        ListNode nextTemp = current.next;
+        current.next = prev;
+        prev = current;
+        current = nextTemp;
+    }
+    
+    return prev;
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(n)<br>
+                    <strong>Space Complexity:</strong> O(1)
+                </div>
+            </div>
+
+            <div class="solution">
+                <h3>Solution 2 – Stack Approach</h3>
+                <p>Use a stack to store the first half and compare with the second half.</p>
+                
+                <div class="code-block">
+public boolean isPalindrome(ListNode head) {
+    if (head == null || head.next == null) {
+        return true;
+    }
+    
+    // Find the middle
+    ListNode slow = head;
+    ListNode fast = head;
+    
+    while (fast.next != null && fast.next.next != null) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    
+    // Push first half onto stack
+    Stack<Integer> stack = new Stack<>();
+    ListNode current = head;
+    while (current != slow.next) {
+        stack.push(current.val);
+        current = current.next;
+    }
+    
+    // Compare with second half
+    if (fast.next == null) {
+        stack.pop(); // Remove middle element for odd length
+    }
+    
+    while (current != null) {
+        if (stack.pop() != current.val) {
+            return false;
+        }
+        current = current.next;
+    }
+    
+    return true;
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(n)<br>
+                    <strong>Space Complexity:</strong> O(n)
+                </div>
+            </div>
+
+            <div class="linked-list-visualization">
+                <strong>Reverse Second Half Visualization:</strong><br><br>
+                Original: 1 → 2 → 2 → 1<br><br>
+                
+                Step 1: Find middle (slow = 2, fast = 1)<br><br>
+                
+                Step 2: Reverse second half<br>
+                First half: 1 → 2<br>
+                Second half: 1 ← 2 (reversed)<br><br>
+                
+                Step 3: Compare<br>
+                1 == 1 ✓, 2 == 2 ✓<br>
+                Result: true
+            </div>
+
+            <div class="example">
+                <strong>More Examples:</strong><br><br>
+                Input: head = [1,2]<br>
+                Output: false<br><br>
+                
+                Input: head = [1,2,3,2,1]<br>
+                Output: true<br><br>
+                
+                Input: head = [1]<br>
+                Output: true
+            </div>
+
+            <div class="navigation">
+                <a href="remove-nth-node.html" class="nav-btn" target="_blank">← Previous: Remove Nth Node From End</a>
+                <a href="maximum-depth-binary-tree.html" class="nav-btn" target="_blank">Next: Maximum Depth of Binary Tree →</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

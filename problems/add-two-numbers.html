@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Two Numbers - Coding Interview Problems</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+        
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .breadcrumb {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .meta {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .content {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .problem-description {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 0 6px 6px 0;
+        }
+        
+        .solution {
+            margin-bottom: 40px;
+        }
+        
+        .solution h3 {
+            color: #2c3e50;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+                .code-block {
+            background: #2d3748;
+            border: 1px solid #4a5568;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', 'Monaco', 'Consolas', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            white-space: pre;
+            color: #e2e8f0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .code-block .keyword {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        
+        .code-block .string {
+            color: #51cf66;
+        }
+        
+        .code-block .comment {
+            color: #868e96;
+            font-style: italic;
+        }
+        
+        .code-block .number {
+            color: #74c0fc;
+        }
+        
+        .complexity {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .complexity strong {
+            color: #856404;
+        }
+        
+        .example {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .example strong {
+            color: #0c5460;
+        }
+        
+        .linked-list-visualization {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: monospace;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.2s ease;
+        }
+        
+        .nav-btn:hover {
+            background: #2980b9;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="breadcrumb">
+                <a href="../index.html">Home</a> > Linked List > Add Two Numbers
+            </div>
+            <h1>Add Two Numbers</h1>
+            <div class="meta">LeetCode Problem 2</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <div class="problem-description">
+                <strong>Problem:</strong> You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
+                <br><br>
+                <strong>Note:</strong> The digits are stored in reverse order, meaning the 1's digit is at the head of the list.
+                <br><br>
+                <strong>Example:</strong><br>
+                Input: l1 = [2,4,3], l2 = [5,6,4]<br>
+                Output: [7,0,8]<br>
+                Explanation: 342 + 465 = 807
+            </div>
+
+            <div class="solution">
+                <h3>Solution 1 – Iterative Approach</h3>
+                <p>Traverse both lists simultaneously, add corresponding digits and handle carry.</p>
+                
+                <div class="code-block">
+public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    ListNode dummy = new ListNode(0);
+    ListNode current = dummy;
+    int carry = 0;
+    
+    while (l1 != null || l2 != null || carry != 0) {
+        int sum = carry;
+        
+        if (l1 != null) {
+            sum += l1.val;
+            l1 = l1.next;
+        }
+        
+        if (l2 != null) {
+            sum += l2.val;
+            l2 = l2.next;
+        }
+        
+        carry = sum / 10;
+        current.next = new ListNode(sum % 10);
+        current = current.next;
+    }
+    
+    return dummy.next;
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(max(m, n)) where m, n are lengths of the lists<br>
+                    <strong>Space Complexity:</strong> O(max(m, n)) for the result list
+                </div>
+            </div>
+
+            <div class="solution">
+                <h3>Solution 2 – Recursive Approach</h3>
+                <p>Use recursion to add the numbers, passing carry as a parameter.</p>
+                
+                <div class="code-block">
+public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    return addTwoNumbersHelper(l1, l2, 0);
+}
+
+private ListNode addTwoNumbersHelper(ListNode l1, ListNode l2, int carry) {
+    if (l1 == null && l2 == null && carry == 0) {
+        return null;
+    }
+    
+    int sum = carry;
+    if (l1 != null) {
+        sum += l1.val;
+        l1 = l1.next;
+    }
+    if (l2 != null) {
+        sum += l2.val;
+        l2 = l2.next;
+    }
+    
+    ListNode result = new ListNode(sum % 10);
+    result.next = addTwoNumbersHelper(l1, l2, sum / 10);
+    
+    return result;
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(max(m, n))<br>
+                    <strong>Space Complexity:</strong> O(max(m, n)) for recursion stack
+                </div>
+            </div>
+
+            <div class="linked-list-visualization">
+                <strong>Step-by-step Addition:</strong><br><br>
+                l1: 2 → 4 → 3 (represents 342)<br>
+                l2: 5 → 6 → 4 (represents 465)<br><br>
+                
+                Step 1: 2 + 5 = 7, carry = 0<br>
+                Result: 7<br><br>
+                
+                Step 2: 4 + 6 = 10, carry = 1<br>
+                Result: 7 → 0<br><br>
+                
+                Step 3: 3 + 4 + 1 = 8, carry = 0<br>
+                Result: 7 → 0 → 8<br><br>
+                
+                Final: 7 → 0 → 8 (represents 807)
+            </div>
+
+            <div class="solution">
+                <h3>Solution 3 – In-place Addition (If allowed to modify input)</h3>
+                <p>Modify the longer list in-place to save space.</p>
+                
+                <div class="code-block">
+public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    int len1 = getLength(l1);
+    int len2 = getLength(l2);
+    
+    // Make l1 the longer list
+    if (len1 < len2) {
+        ListNode temp = l1;
+        l1 = l2;
+        l2 = temp;
+    }
+    
+    ListNode result = l1;
+    ListNode prev = null;
+    int carry = 0;
+    
+    while (l1 != null) {
+        int sum = l1.val + carry;
+        
+        if (l2 != null) {
+            sum += l2.val;
+            l2 = l2.next;
+        }
+        
+        l1.val = sum % 10;
+        carry = sum / 10;
+        
+        prev = l1;
+        l1 = l1.next;
+    }
+    
+    if (carry > 0) {
+        prev.next = new ListNode(carry);
+    }
+    
+    return result;
+}
+
+private int getLength(ListNode head) {
+    int length = 0;
+    while (head != null) {
+        length++;
+        head = head.next;
+    }
+    return length;
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(max(m, n))<br>
+                    <strong>Space Complexity:</strong> O(1) excluding the result
+                </div>
+            </div>
+
+            <div class="example">
+                <strong>More Examples:</strong><br><br>
+                Input: l1 = [0], l2 = [0]<br>
+                Output: [0]<br><br>
+                
+                Input: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]<br>
+                Output: [8,9,9,9,0,0,0,1]<br>
+                Explanation: 9999999 + 9999 = 10009998
+            </div>
+
+            <div class="solution">
+                <h3>Solution 4 – Handle Different Lengths Efficiently</h3>
+                <p>Optimized version that handles lists of different lengths more efficiently.</p>
+                
+                <div class="code-block">
+public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    ListNode dummy = new ListNode(0);
+    ListNode current = dummy;
+    int carry = 0;
+    
+    // Add digits while both lists have nodes
+    while (l1 != null && l2 != null) {
+        int sum = l1.val + l2.val + carry;
+        carry = sum / 10;
+        
+        current.next = new ListNode(sum % 10);
+        current = current.next;
+        
+        l1 = l1.next;
+        l2 = l2.next;
+    }
+    
+    // Handle remaining digits in l1
+    while (l1 != null) {
+        int sum = l1.val + carry;
+        carry = sum / 10;
+        
+        current.next = new ListNode(sum % 10);
+        current = current.next;
+        
+        l1 = l1.next;
+    }
+    
+    // Handle remaining digits in l2
+    while (l2 != null) {
+        int sum = l2.val + carry;
+        carry = sum / 10;
+        
+        current.next = new ListNode(sum % 10);
+        current = current.next;
+        
+        l2 = l2.next;
+    }
+    
+    // Handle final carry
+    if (carry > 0) {
+        current.next = new ListNode(carry);
+    }
+    
+    return dummy.next;
+}
+                </div>
+                
+                <div class="complexity">
+                    <strong>Time Complexity:</strong> O(max(m, n))<br>
+                    <strong>Space Complexity:</strong> O(max(m, n))
+                </div>
+            </div>
+
+            <div class="solution">
+                <h3>Edge Cases and Validation</h3>
+                <p>Robust implementation handling edge cases:</p>
+                
+                <div class="code-block">
+public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    // Handle null inputs
+    if (l1 == null) return l2;
+    if (l2 == null) return l1;
+    
+    ListNode dummy = new ListNode(0);
+    ListNode current = dummy;
+    int carry = 0;
+    
+    while (l1 != null || l2 != null || carry != 0) {
+        int sum = carry;
+        
+        if (l1 != null) {
+            sum += l1.val;
+            l1 = l1.next;
+        }
+        
+        if (l2 != null) {
+            sum += l2.val;
+            l2 = l2.next;
+        }
+        
+        // Validate digit range
+        if (sum < 0 || sum > 19) {
+            throw new IllegalArgumentException("Invalid digit sum: " + sum);
+        }
+        
+        carry = sum / 10;
+        current.next = new ListNode(sum % 10);
+        current = current.next;
+    }
+    
+    return dummy.next;
+}
+
+// ListNode class definition
+class ListNode {
+    int val;
+    ListNode next;
+    
+    ListNode() {}
+    ListNode(int val) { this.val = val; }
+    ListNode(int val, ListNode next) { 
+        this.val = val; 
+        this.next = next; 
+    }
+}
+                </div>
+            </div>
+
+            <div class="navigation">
+                <a href="../index.html" class="nav-btn" target="_blank">← Back to Index</a>
+                <a href="reverse-linked-list.html" class="nav-btn" target="_blank">Next: Reverse Linked List →</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
