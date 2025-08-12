@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Search a 2D Matrix",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties: Integers in each row are sorted from left to right. The first integer of each row is greater than the last integer of the previous row.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Binary Search",
+      "description": "Treat matrix as sorted array and use binary search.",
+      "code": "public boolean searchMatrix(int[][] matrix, int target) {\n    if (matrix == null || matrix.length == 0) return false;\n    \n    int m = matrix.length;\n    int n = matrix[0].length;\n    int left = 0;\n    int right = m * n - 1;\n    \n    while (left <= right) {\n        int mid = left + (right - left) / 2;\n        int row = mid / n;\n        int col = mid % n;\n        \n        if (matrix[row][col] == target) {\n            return true;\n        } else if (matrix[row][col] < target) {\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n    \n    return false;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log(mn))",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 1 – Binary Search",
+      "description": "Treat matrix as sorted array and use binary search.",
+      "code": "public boolean searchMatrix(int[][] matrix, int target) {\n    if (matrix == null || matrix.length == 0) return false;\n    \n    int m = matrix.length;\n    int n = matrix[0].length;\n    int left = 0;\n    int right = m * n - 1;\n    \n    while (left <= right) {\n        int mid = left + (right - left) / 2;\n        int row = mid / n;\n        int col = mid % n;\n        \n        if (matrix[row][col] == target) {\n            return true;\n        } else if (matrix[row][col] < target) {\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n    \n    return false;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log(mn))",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

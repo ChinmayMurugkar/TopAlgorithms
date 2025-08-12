@@ -1,0 +1,37 @@
+{
+  "problem": {
+    "title": "Word Ladder II",
+    "leetcode_id": 126,
+    "category": "String/Array/Matrix",
+    "description": "Given two words (beginWord and endWord), and a dictionary's word list, find all shortest transformation sequence(s) from beginWord to endWord.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – BFS + DFS",
+      "description": "Use BFS to find shortest paths, then DFS to reconstruct them.",
+      "code": "public List> findLadders(String beginWord, String endWord, List wordList) {\n    Set wordSet = new HashSet<>(wordList);\n    List> result = new ArrayList<>();\n    \n    if (!wordSet.contains(endWord)) return result;\n    \n    Map> graph = new HashMap<>();\n    Map distance = new HashMap<>();\n    \n    // BFS to build graph and find shortest distance\n    Queue queue = new LinkedList<>();\n    queue.offer(beginWord);\n    distance.put(beginWord, 0);\n    \n    while (!queue.isEmpty()) {\n        String current = queue.poll();\n        \n        if (current.equals(endWord)) break;\n        \n        for (int i = 0; i < current.length(); i++) {\n            char[] chars = current.toCharArray();\n            \n            for (char c = 'a'; c <= 'z'; c++) {\n                chars[i] = c;\n                String newWord = new String(chars);\n                \n                if (wordSet.contains(newWord)) {\n                    if (!distance.containsKey(newWord)) {\n                        distance.put(newWord, distance.get(current) + 1);\n                        queue.offer(newWord);\n                    }\n                    \n                    if (distance.get(newWord) == distance.get(current) + 1) {\n                        graph.computeIfAbsent(current, k -> new ArrayList<>()).add(newWord);\n                    }\n                }\n            }\n        }\n    }\n    \n    // DFS to find all shortest paths\n    List path = new ArrayList<>();\n    path.add(beginWord);\n    dfs(beginWord, endWord, graph, distance, path, result);\n    \n    return result;\n}\n\nprivate void dfs(String current, String endWord, Map> graph,\n                Map distance, List path, List> result) {\n    if (current.equals(endWord)) {\n        result.add(new ArrayList<>(path));\n        return;\n    }\n    \n    List neighbors = graph.get(current);\n    if (neighbors == null) return;\n    \n    for (String neighbor : neighbors) {\n        if (distance.get(neighbor) == distance.get(current) + 1) {\n            path.add(neighbor);\n            dfs(neighbor, endWord, graph, distance, path, result);\n            path.remove(path.size() - 1);\n        }\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(26 × wordLength × wordListSize)",
+        "space": "O(wordListSize)"
+      }
+    },
+    {
+      "title": "Solution 1 – BFS + DFS",
+      "description": "Use BFS to find shortest paths, then DFS to reconstruct them.",
+      "code": "public List> findLadders(String beginWord, String endWord, List wordList) {\n    Set wordSet = new HashSet<>(wordList);\n    List> result = new ArrayList<>();\n    \n    if (!wordSet.contains(endWord)) return result;\n    \n    Map> graph = new HashMap<>();\n    Map distance = new HashMap<>();\n    \n    // BFS to build graph and find shortest distance\n    Queue queue = new LinkedList<>();\n    queue.offer(beginWord);\n    distance.put(beginWord, 0);\n    \n    while (!queue.isEmpty()) {\n        String current = queue.poll();\n        \n        if (current.equals(endWord)) break;\n        \n        for (int i = 0; i < current.length(); i++) {\n            char[] chars = current.toCharArray();\n            \n            for (char c = 'a'; c <= 'z'; c++) {\n                chars[i] = c;\n                String newWord = new String(chars);\n                \n                if (wordSet.contains(newWord)) {\n                    if (!distance.containsKey(newWord)) {\n                        distance.put(newWord, distance.get(current) + 1);\n                        queue.offer(newWord);\n                    }\n                    \n                    if (distance.get(newWord) == distance.get(current) + 1) {\n                        graph.computeIfAbsent(current, k -> new ArrayList<>()).add(newWord);\n                    }\n                }\n            }\n        }\n    }\n    \n    // DFS to find all shortest paths\n    List path = new ArrayList<>();\n    path.add(beginWord);\n    dfs(beginWord, endWord, graph, distance, path, result);\n    \n    return result;\n}\n\nprivate void dfs(String current, String endWord, Map> graph,\n                Map distance, List path, List> result) {\n    if (current.equals(endWord)) {\n        result.add(new ArrayList<>(path));\n        return;\n    }\n    \n    List neighbors = graph.get(current);\n    if (neighbors == null) return;\n    \n    for (String neighbor : neighbors) {\n        if (distance.get(neighbor) == distance.get(current) + 1) {\n            path.add(neighbor);\n            dfs(neighbor, endWord, graph, distance, path, result);\n            path.remove(path.size() - 1);\n        }\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(26 × wordLength × wordListSize)",
+        "space": "O(wordListSize)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "word-ladder.html",
+    "next": "median-two-sorted-arrays.html"
+  }
+}

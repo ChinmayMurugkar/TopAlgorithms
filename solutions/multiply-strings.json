@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Multiply Strings",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2, also represented as a string.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Grade School Multiplication",
+      "description": "Implement grade school multiplication algorithm.",
+      "code": "public String multiply(String num1, String num2) {\n    int m = num1.length(), n = num2.length();\n    int[] result = new int[m + n];\n    \n    for (int i = m - 1; i >= 0; i--) {\n        for (int j = n - 1; j >= 0; j--) {\n            int product = (num1.charAt(i) - '0') * (num2.charAt(j) - '0');\n            int sum = result[i + j + 1] + product;\n            \n            result[i + j + 1] = sum % 10;\n            result[i + j] += sum / 10;\n        }\n    }\n    \n    StringBuilder sb = new StringBuilder();\n    for (int digit : result) {\n        if (!(sb.length() == 0 && digit == 0)) {\n            sb.append(digit);\n        }\n    }\n    \n    return sb.length() == 0 ? \"0\" : sb.toString();\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(m × n)",
+        "space": "O(m + n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

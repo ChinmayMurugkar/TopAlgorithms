@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Lowest Common Ancestor of a Binary Search Tree",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given a binary search tree (BST), find the lowest common ancestor (LCA) of two given nodes in the BST.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – BST Property",
+      "description": "Use BST property to find LCA.",
+      "code": "public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {\n    if (root == null) return null;\n    \n    if (p.val < root.val && q.val < root.val) {\n        return lowestCommonAncestor(root.left, p, q);\n    }\n    \n    if (p.val > root.val && q.val > root.val) {\n        return lowestCommonAncestor(root.right, p, q);\n    }\n    \n    return root;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(h)",
+        "space": "O(h)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

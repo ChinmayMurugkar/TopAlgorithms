@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Number of 1 Bits",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Write a function that takes an unsigned integer and returns the number of '1' bits it has (also known as the Hamming weight).",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Bit Manipulation",
+      "description": "Count 1 bits using bit manipulation.",
+      "code": "public int hammingWeight(int n) {\n    int count = 0;\n    while (n != 0) {\n        count += n & 1;\n        n = n >>> 1;\n    }\n    return count;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(1)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

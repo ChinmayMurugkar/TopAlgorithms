@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Matrix Chain Multiplication",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given a sequence of matrices, find the most efficient way to multiply these matrices together. The problem is not actually to perform the multiplications, but merely to decide in which order to perform the multiplications.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Dynamic Programming",
+      "description": "Use dynamic programming to find the optimal parenthesization.",
+      "code": "public int matrixChainMultiplication(int[] dimensions) {\n    int n = dimensions.length - 1;\n    int[][] dp = new int[n][n];\n    \n    // Fill diagonal with 0s\n    for (int i = 0; i < n; i++) {\n        dp[i][i] = 0;\n    }\n    \n    // Fill dp table\n    for (int len = 2; len <= n; len++) {\n        for (int i = 0; i <= n - len; i++) {\n            int j = i + len - 1;\n            dp[i][j] = Integer.MAX_VALUE;\n            \n            for (int k = i; k < j; k++) {\n                int cost = dp[i][k] + dp[k + 1][j] + \n                          dimensions[i] * dimensions[k + 1] * dimensions[j + 1];\n                dp[i][j] = Math.min(dp[i][j], cost);\n            }\n        }\n    }\n    \n    return dp[0][n - 1];\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n³)",
+        "space": "O(n²)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-ii.html"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "problem": {
+    "title": "Add Two Numbers",
+    "leetcode_id": 2,
+    "category": "Linked List",
+    "description": "You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.\n                \nNote: The digits are stored in reverse order, meaning the 1's digit is at the head of the list.",
+    "assumptions": [],
+    "example": {
+      "input": "l1 = [2,4,3], l2 = [5,6,4]",
+      "output": "[7,0,8]",
+      "explanation": "342 + 465 = 807"
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Iterative Approach",
+      "description": "Traverse both lists simultaneously, add corresponding digits and handle carry.",
+      "code": "public ListNode addTwoNumbers(ListNode l1, ListNode l2) {\n    ListNode dummy = new ListNode(0);\n    ListNode current = dummy;\n    int carry = 0;\n    \n    while (l1 != null || l2 != null || carry != 0) {\n        int sum = carry;\n        \n        if (l1 != null) {\n            sum += l1.val;\n            l1 = l1.next;\n        }\n        \n        if (l2 != null) {\n            sum += l2.val;\n            l2 = l2.next;\n        }\n        \n        carry = sum / 10;\n        current.next = new ListNode(sum % 10);\n        current = current.next;\n    }\n    \n    return dummy.next;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(max(m, n)) where m, n are lengths of the lists",
+        "space": "O(max(m, n)) for the result list"
+      }
+    },
+    {
+      "title": "Solution 2 – Recursive Approach",
+      "description": "Use recursion to add the numbers, passing carry as a parameter.",
+      "code": "public ListNode addTwoNumbers(ListNode l1, ListNode l2) {\n    return addTwoNumbersHelper(l1, l2, 0);\n}\n\nprivate ListNode addTwoNumbersHelper(ListNode l1, ListNode l2, int carry) {\n    if (l1 == null && l2 == null && carry == 0) {\n        return null;\n    }\n    \n    int sum = carry;\n    if (l1 != null) {\n        sum += l1.val;\n        l1 = l1.next;\n    }\n    if (l2 != null) {\n        sum += l2.val;\n        l2 = l2.next;\n    }\n    \n    ListNode result = new ListNode(sum % 10);\n    result.next = addTwoNumbersHelper(l1, l2, sum / 10);\n    \n    return result;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(max(m, n))",
+        "space": "O(max(m, n)) for recursion stack"
+      }
+    },
+    {
+      "title": "Solution 3 – In-place Addition (If allowed to modify input)",
+      "description": "Modify the longer list in-place to save space.",
+      "code": "public ListNode addTwoNumbers(ListNode l1, ListNode l2) {\n    int len1 = getLength(l1);\n    int len2 = getLength(l2);\n    \n    // Make l1 the longer list\n    if (len1 < len2) {\n        ListNode temp = l1;\n        l1 = l2;\n        l2 = temp;\n    }\n    \n    ListNode result = l1;\n    ListNode prev = null;\n    int carry = 0;\n    \n    while (l1 != null) {\n        int sum = l1.val + carry;\n        \n        if (l2 != null) {\n            sum += l2.val;\n            l2 = l2.next;\n        }\n        \n        l1.val = sum % 10;\n        carry = sum / 10;\n        \n        prev = l1;\n        l1 = l1.next;\n    }\n    \n    if (carry > 0) {\n        prev.next = new ListNode(carry);\n    }\n    \n    return result;\n}\n\nprivate int getLength(ListNode head) {\n    int length = 0;\n    while (head != null) {\n        length++;\n        head = head.next;\n    }\n    return length;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(max(m, n))",
+        "space": "O(1) excluding the result"
+      }
+    },
+    {
+      "title": "Solution 4 – Handle Different Lengths Efficiently",
+      "description": "Optimized version that handles lists of different lengths more efficiently.",
+      "code": "public ListNode addTwoNumbers(ListNode l1, ListNode l2) {\n    ListNode dummy = new ListNode(0);\n    ListNode current = dummy;\n    int carry = 0;\n    \n    // Add digits while both lists have nodes\n    while (l1 != null && l2 != null) {\n        int sum = l1.val + l2.val + carry;\n        carry = sum / 10;\n        \n        current.next = new ListNode(sum % 10);\n        current = current.next;\n        \n        l1 = l1.next;\n        l2 = l2.next;\n    }\n    \n    // Handle remaining digits in l1\n    while (l1 != null) {\n        int sum = l1.val + carry;\n        carry = sum / 10;\n        \n        current.next = new ListNode(sum % 10);\n        current = current.next;\n        \n        l1 = l1.next;\n    }\n    \n    // Handle remaining digits in l2\n    while (l2 != null) {\n        int sum = l2.val + carry;\n        carry = sum / 10;\n        \n        current.next = new ListNode(sum % 10);\n        current = current.next;\n        \n        l2 = l2.next;\n    }\n    \n    // Handle final carry\n    if (carry > 0) {\n        current.next = new ListNode(carry);\n    }\n    \n    return dummy.next;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(max(m, n))",
+        "space": "O(max(m, n))"
+      }
+    },
+    {
+      "title": "Edge Cases and Validation",
+      "description": "Robust implementation handling edge cases:",
+      "code": "public ListNode addTwoNumbers(ListNode l1, ListNode l2) {\n    // Handle null inputs\n    if (l1 == null) return l2;\n    if (l2 == null) return l1;\n    \n    ListNode dummy = new ListNode(0);\n    ListNode current = dummy;\n    int carry = 0;\n    \n    while (l1 != null || l2 != null || carry != 0) {\n        int sum = carry;\n        \n        if (l1 != null) {\n            sum += l1.val;\n            l1 = l1.next;\n        }\n        \n        if (l2 != null) {\n            sum += l2.val;\n            l2 = l2.next;\n        }\n        \n        // Validate digit range\n        if (sum < 0 || sum > 19) {\n            throw new IllegalArgumentException(\"Invalid digit sum: \" + sum);\n        }\n        \n        carry = sum / 10;\n        current.next = new ListNode(sum % 10);\n        current = current.next;\n    }\n    \n    return dummy.next;\n}\n\n// ListNode class definition\nclass ListNode {\n    int val;\n    ListNode next;\n    \n    ListNode() {}\n    ListNode(int val) { this.val = val; }\n    ListNode(int val, ListNode next) { \n        this.val = val; \n        this.next = next; \n    }\n}",
+      "language": "java"
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "next": "reverse-linked-list.html"
+  }
+}

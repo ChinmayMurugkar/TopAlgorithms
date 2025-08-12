@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Knapsack Problem",
+    "leetcode_id": null,
+    "category": "Dynamic Programming",
+    "description": "Given a set of items, each with a weight and a value, determine the number of each item to include in a collection so that the total weight is less than or equal to a given limit and the total value is as large as possible.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Dynamic Programming",
+      "description": "Use DP to solve 0/1 knapsack problem.",
+      "code": "public int knapsack(int[] weights, int[] values, int capacity) {\n    int n = weights.length;\n    int[][] dp = new int[n + 1][capacity + 1];\n    \n    for (int i = 1; i <= n; i++) {\n        for (int w = 0; w <= capacity; w++) {\n            if (weights[i - 1] <= w) {\n                dp[i][w] = Math.max(dp[i - 1][w], \n                                   dp[i - 1][w - weights[i - 1]] + values[i - 1]);\n            } else {\n                dp[i][w] = dp[i - 1][w];\n            }\n        }\n    }\n    \n    return dp[n][capacity];\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n × W)",
+        "space": "O(n × W)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "level-order-ii.html",
+    "next": "matrix-chain-multiplication.html"
+  }
+}

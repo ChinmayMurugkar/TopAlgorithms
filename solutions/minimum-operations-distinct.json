@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Minimum Operations for Distinct",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Find minimum operations to make all elements distinct in an array.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Sorting and Two Pointers",
+      "description": "Sort array and use two pointers to find minimum operations.",
+      "code": "public int minOperations(int[] nums) {\n    Arrays.sort(nums);\n    int operations = 0;\n    \n    for (int i = 1; i < nums.length; i++) {\n        if (nums[i] <= nums[i - 1]) {\n            operations += nums[i - 1] - nums[i] + 1;\n            nums[i] = nums[i - 1] + 1;\n        }\n    }\n    \n    return operations;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n log n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

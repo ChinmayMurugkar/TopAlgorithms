@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Maximum Product of Word Lengths",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given a string array words, return the maximum value of length(word[i]) * length(word[j]) where the two words do not share common letters.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Bit Manipulation",
+      "description": "Use bit manipulation to check character overlap.",
+      "code": "public int maxProduct(String[] words) {\n    int n = words.length;\n    int[] masks = new int[n];\n    \n    for (int i = 0; i < n; i++) {\n        for (char c : words[i].toCharArray()) {\n            masks[i] |= 1 << (c - 'a');\n        }\n    }\n    \n    int maxProduct = 0;\n    for (int i = 0; i < n; i++) {\n        for (int j = i + 1; j < n; j++) {\n            if ((masks[i] & masks[j]) == 0) {\n                maxProduct = Math.max(maxProduct, words[i].length() * words[j].length());\n            }\n        }\n    }\n    \n    return maxProduct;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n² + L)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Pow(x, n)",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Implement pow(x, n), which calculates x raised to the power n (i.e., xn).",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Fast Power",
+      "description": "Use fast power algorithm with binary exponentiation.",
+      "code": "public double myPow(double x, int n) {\n    if (n == 0) return 1;\n    if (n == 1) return x;\n    if (n == -1) return 1 / x;\n    \n    double half = myPow(x, n / 2);\n    if (n % 2 == 0) {\n        return half * half;\n    } else {\n        return n > 0 ? half * half * x : half * half / x;\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log n)",
+        "space": "O(log n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

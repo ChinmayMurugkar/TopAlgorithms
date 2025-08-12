@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Text Justification",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an array of strings words and a width maxWidth, format the text such that each line has exactly maxWidth characters and is fully (left and right) justified.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Greedy",
+      "description": "Use greedy approach to justify text.",
+      "code": "public List fullJustify(String[] words, int maxWidth) {\n    List result = new ArrayList<>();\n    int i = 0;\n    \n    while (i < words.length) {\n        int j = i;\n        int lineLength = 0;\n        \n        while (j < words.length && lineLength + words[j].length() + (j - i) <= maxWidth) {\n            lineLength += words[j].length();\n            j++;\n        }\n        \n        StringBuilder line = new StringBuilder();\n        int spaces = maxWidth - lineLength;\n        \n        if (j == words.length || j - i == 1) {\n            // Left justify\n            for (int k = i; k < j; k++) {\n                line.append(words[k]);\n                if (k < j - 1) line.append(\" \");\n            }\n            while (line.length() < maxWidth) {\n                line.append(\" \");\n            }\n        } else {\n            // Full justify\n            int gaps = j - i - 1;\n            int spacesPerGap = gaps == 0 ? 0 : spaces / gaps;\n            int extraSpaces = gaps == 0 ? 0 : spaces % gaps;\n            \n            for (int k = i; k < j; k++) {\n                line.append(words[k]);\n                if (k < j - 1) {\n                    int spacesToAdd = spacesPerGap + (extraSpaces-- > 0 ? 1 : 0);\n                    for (int s = 0; s < spacesToAdd; s++) {\n                        line.append(\" \");\n                    }\n                }\n            }\n        }\n        \n        result.add(line.toString());\n        i = j;\n    }\n    \n    return result;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

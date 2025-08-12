@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Range Addition",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Assume you have an array of length n initialized with all 0's and are given k update operations.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Prefix Sum",
+      "description": "Use prefix sum to handle range updates.",
+      "code": "public int[] getModifiedArray(int length, int[][] updates) {\n    int[] result = new int[length];\n    \n    for (int[] update : updates) {\n        int start = update[0];\n        int end = update[1];\n        int inc = update[2];\n        \n        result[start] += inc;\n        if (end + 1 < length) {\n            result[end + 1] -= inc;\n        }\n    }\n    \n    for (int i = 1; i < length; i++) {\n        result[i] += result[i - 1];\n    }\n    \n    return result;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n + k)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

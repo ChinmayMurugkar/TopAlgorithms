@@ -1,0 +1,40 @@
+{
+  "problem": {
+    "title": "Merge Two Sorted Lists",
+    "leetcode_id": 21,
+    "category": "Linked List",
+    "description": "Merge two sorted linked lists and return it as a sorted list. The list should be made by splicing together the nodes of the first two lists.",
+    "assumptions": [],
+    "example": {
+      "input": "l1 = [1,2,4], l2 = [1,3,4]",
+      "output": "[1,1,2,3,4,4]"
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Iterative Approach",
+      "description": "Use a dummy node and compare nodes from both lists iteratively.",
+      "code": "public ListNode mergeTwoLists(ListNode l1, ListNode l2) {\n    ListNode dummy = new ListNode(0);\n    ListNode current = dummy;\n    \n    while (l1 != null && l2 != null) {\n        if (l1.val <= l2.val) {\n            current.next = l1;\n            l1 = l1.next;\n        } else {\n            current.next = l2;\n            l2 = l2.next;\n        }\n        current = current.next;\n    }\n    \n    // Attach remaining nodes\n    if (l1 != null) {\n        current.next = l1;\n    }\n    if (l2 != null) {\n        current.next = l2;\n    }\n    \n    return dummy.next;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(m + n)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 2 – Recursive Approach",
+      "description": "Use recursion to merge the lists by comparing heads and recursively merging the rest.",
+      "code": "public ListNode mergeTwoLists(ListNode l1, ListNode l2) {\n    if (l1 == null) return l2;\n    if (l2 == null) return l1;\n    \n    if (l1.val <= l2.val) {\n        l1.next = mergeTwoLists(l1.next, l2);\n        return l1;\n    } else {\n        l2.next = mergeTwoLists(l1, l2.next);\n        return l2;\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(m + n)",
+        "space": "O(m + n) for recursion stack"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "reverse-linked-list.html",
+    "next": "detect-cycle.html"
+  }
+}

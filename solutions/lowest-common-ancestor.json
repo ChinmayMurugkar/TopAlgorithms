@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Lowest Common Ancestor of a Binary Tree",
+    "leetcode_id": 236,
+    "category": "Tree, Heap & Trie",
+    "description": "Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree. The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Recursive DFS",
+      "description": "Use recursive DFS to find the lowest common ancestor.",
+      "code": "public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {\n    if (root == null || root == p || root == q) {\n        return root;\n    }\n    \n    TreeNode left = lowestCommonAncestor(root.left, p, q);\n    TreeNode right = lowestCommonAncestor(root.right, p, q);\n    \n    if (left != null && right != null) {\n        return root;\n    }\n    \n    return left != null ? left : right;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(h) where h is the height of the tree"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "flatten-binary-tree.html",
+    "next": "serialize-deserialize-binary-tree.html"
+  }
+}

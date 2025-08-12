@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Largest Number",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given a list of non-negative integers nums, arrange them such that they form the largest number and return it.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Custom Comparator",
+      "description": "Sort numbers using custom comparator.",
+      "code": "public String largestNumber(int[] nums) {\n    String[] strs = new String[nums.length];\n    for (int i = 0; i < nums.length; i++) {\n        strs[i] = String.valueOf(nums[i]);\n    }\n    \n    Arrays.sort(strs, (a, b) -> (b + a).compareTo(a + b));\n    \n    if (strs[0].equals(\"0\")) return \"0\";\n    \n    StringBuilder result = new StringBuilder();\n    for (String str : strs) {\n        result.append(str);\n    }\n    \n    return result.toString();\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n log n)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "title": "Solution 1 – Custom Comparator",
+      "description": "Sort numbers using custom comparator.",
+      "code": "public String largestNumber(int[] nums) {\n    String[] strs = new String[nums.length];\n    for (int i = 0; i < nums.length; i++) {\n        strs[i] = String.valueOf(nums[i]);\n    }\n    \n    Arrays.sort(strs, (a, b) -> (b + a).compareTo(a + b));\n    \n    if (strs[0].equals(\"0\")) return \"0\";\n    \n    StringBuilder result = new StringBuilder();\n    for (String str : strs) {\n        result.append(str);\n    }\n    \n    return result.toString();\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n log n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "K'th Smallest/Largest",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Find the kth smallest or largest element in an unsorted array.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – QuickSelect",
+      "description": "Use QuickSelect algorithm to find kth element.",
+      "code": "public int findKthLargest(int[] nums, int k) {\n    return quickSelect(nums, 0, nums.length - 1, nums.length - k);\n}\n\nprivate int quickSelect(int[] nums, int left, int right, int k) {\n    if (left == right) return nums[left];\n    \n    int pivotIndex = partition(nums, left, right);\n    \n    if (k == pivotIndex) {\n        return nums[k];\n    } else if (k < pivotIndex) {\n        return quickSelect(nums, left, pivotIndex - 1, k);\n    } else {\n        return quickSelect(nums, pivotIndex + 1, right, k);\n    }\n}\n\nprivate int partition(int[] nums, int left, int right) {\n    int pivot = nums[right];\n    int i = left;\n    \n    for (int j = left; j < right; j++) {\n        if (nums[j] <= pivot) {\n            swap(nums, i, j);\n            i++;\n        }\n    }\n    \n    swap(nums, i, right);\n    return i;\n}\n\nprivate void swap(int[] nums, int i, int j) {\n    int temp = nums[i];\n    nums[i] = nums[j];\n    nums[j] = temp;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n) average",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

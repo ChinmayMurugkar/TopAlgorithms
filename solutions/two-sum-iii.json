@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Two Sum III",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Design and implement a TwoSum class. It should support the following operations: add and find.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – HashMap",
+      "description": "Use HashMap to store numbers and find pairs.",
+      "code": "class TwoSum {\n    private Map map;\n    \n    public TwoSum() {\n        map = new HashMap<>();\n    }\n    \n    public void add(int number) {\n        map.put(number, map.getOrDefault(number, 0) + 1);\n    }\n    \n    public boolean find(int value) {\n        for (int num : map.keySet()) {\n            int complement = value - num;\n            if (complement == num) {\n                if (map.get(num) > 1) return true;\n            } else {\n                if (map.containsKey(complement)) return true;\n            }\n        }\n        return false;\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n) for find, O(1) for add",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

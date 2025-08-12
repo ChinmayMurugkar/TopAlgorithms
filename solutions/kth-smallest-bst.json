@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Kth Smallest Element in a BST",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given the root of a binary search tree, and an integer k, return the kth smallest value (1-indexed) of all the values of the nodes in the tree.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Inorder Traversal",
+      "description": "Use inorder traversal to find kth smallest element.",
+      "code": "private int count = 0;\nprivate int result = 0;\n\npublic int kthSmallest(TreeNode root, int k) {\n    count = 0;\n    inorder(root, k);\n    return result;\n}\n\nprivate void inorder(TreeNode root, int k) {\n    if (root == null) return;\n    \n    inorder(root.left, k);\n    \n    count++;\n    if (count == k) {\n        result = root.val;\n        return;\n    }\n    \n    inorder(root.right, k);\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(h + k)",
+        "space": "O(h)"
+      }
+    },
+    {
+      "title": "Solution 1 – Inorder Traversal",
+      "description": "Use inorder traversal to find kth smallest element.",
+      "code": "private int count = 0;\nprivate int result = 0;\n\npublic int kthSmallest(TreeNode root, int k) {\n    count = 0;\n    inorder(root, k);\n    return result;\n}\n\nprivate void inorder(TreeNode root, int k) {\n    if (root == null) return;\n    \n    inorder(root.left, k);\n    \n    count++;\n    if (count == k) {\n        result = root.val;\n        return;\n    }\n    \n    inorder(root.right, k);\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(h + k)",
+        "space": "O(h)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

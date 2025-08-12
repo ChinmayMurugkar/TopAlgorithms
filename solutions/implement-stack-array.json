@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Implement a Stack Using an Array",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Implement a stack data structure using an array with push, pop, and peek operations.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Array Implementation",
+      "description": "Implement stack using array with dynamic resizing.",
+      "code": "class Stack {\n    private int[] arr;\n    private int top;\n    private int capacity;\n    \n    public Stack(int size) {\n        arr = new int[size];\n        capacity = size;\n        top = -1;\n    }\n    \n    public void push(int x) {\n        if (isFull()) {\n            int[] newArr = new int[capacity * 2];\n            System.arraycopy(arr, 0, newArr, 0, capacity);\n            arr = newArr;\n            capacity *= 2;\n        }\n        arr[++top] = x;\n    }\n    \n    public int pop() {\n        if (isEmpty()) {\n            throw new IllegalStateException(\"Stack is empty\");\n        }\n        return arr[top--];\n    }\n    \n    public int peek() {\n        if (isEmpty()) {\n            throw new IllegalStateException(\"Stack is empty\");\n        }\n        return arr[top];\n    }\n    \n    public boolean isEmpty() {\n        return top == -1;\n    }\n    \n    public boolean isFull() {\n        return top == capacity - 1;\n    }\n    \n    public int size() {\n        return top + 1;\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(1) amortized",
+        "space": "O(n)"
+      }
+    },
+    {
+      "title": "Solution 1 – Array Implementation",
+      "description": "Implement stack using array with dynamic resizing.",
+      "code": "class Stack {\n    private int[] arr;\n    private int top;\n    private int capacity;\n    \n    public Stack(int size) {\n        arr = new int[size];\n        capacity = size;\n        top = -1;\n    }\n    \n    public void push(int x) {\n        if (isFull()) {\n            int[] newArr = new int[capacity * 2];\n            System.arraycopy(arr, 0, newArr, 0, capacity);\n            arr = newArr;\n            capacity *= 2;\n        }\n        arr[++top] = x;\n    }\n    \n    public int pop() {\n        if (isEmpty()) {\n            throw new IllegalStateException(\"Stack is empty\");\n        }\n        return arr[top--];\n    }\n    \n    public int peek() {\n        if (isEmpty()) {\n            throw new IllegalStateException(\"Stack is empty\");\n        }\n        return arr[top];\n    }\n    \n    public boolean isEmpty() {\n        return top == -1;\n    }\n    \n    public boolean isFull() {\n        return top == capacity - 1;\n    }\n    \n    public int size() {\n        return top + 1;\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(1) amortized",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

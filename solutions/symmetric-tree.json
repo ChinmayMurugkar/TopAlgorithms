@@ -1,0 +1,41 @@
+{
+  "problem": {
+    "title": "Symmetric Tree",
+    "leetcode_id": 101,
+    "category": "Tree, Heap & Trie",
+    "description": "Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).",
+    "assumptions": [],
+    "example": {
+      "input": "root = [1,2,2,3,4,4,3]",
+      "output": "true",
+      "explanation": "The tree is symmetric around its center."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Recursive Approach",
+      "description": "Compare the left and right subtrees recursively.",
+      "code": "public boolean isSymmetric(TreeNode root) {\n    if (root == null) {\n        return true;\n    }\n    \n    return isSymmetricHelper(root.left, root.right);\n}\n\nprivate boolean isSymmetricHelper(TreeNode left, TreeNode right) {\n    if (left == null && right == null) {\n        return true;\n    }\n    \n    if (left == null || right == null) {\n        return false;\n    }\n    \n    if (left.val != right.val) {\n        return false;\n    }\n    \n    return isSymmetricHelper(left.left, right.right) && \n           isSymmetricHelper(left.right, right.left);\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(h) where h is the height of the tree"
+      }
+    },
+    {
+      "title": "Solution 2 – Iterative with Queue",
+      "description": "Use a queue to compare nodes level by level.",
+      "code": "public boolean isSymmetric(TreeNode root) {\n    if (root == null) {\n        return true;\n    }\n    \n    Queue queue = new LinkedList<>();\n    queue.offer(root.left);\n    queue.offer(root.right);\n    \n    while (!queue.isEmpty()) {\n        TreeNode left = queue.poll();\n        TreeNode right = queue.poll();\n        \n        if (left == null && right == null) {\n            continue;\n        }\n        \n        if (left == null || right == null) {\n            return false;\n        }\n        \n        if (left.val != right.val) {\n            return false;\n        }\n        \n        queue.offer(left.left);\n        queue.offer(right.right);\n        queue.offer(left.right);\n        queue.offer(right.left);\n    }\n    \n    return true;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(w) where w is the maximum width"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "validate-binary-search-tree.html",
+    "next": "path-sum.html"
+  }
+}

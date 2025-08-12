@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Combinations",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given two integers n and k, return all possible combinations of k numbers chosen from the range [1, n]. You may return the answer in any order.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Backtracking",
+      "description": "Use backtracking to generate all combinations.",
+      "code": "public List> combine(int n, int k) {\n    List> result = new ArrayList<>();\n    backtrack(1, n, k, new ArrayList<>(), result);\n    return result;\n}\n\nprivate void backtrack(int start, int n, int k, List current, List> result) {\n    if (current.size() == k) {\n        result.add(new ArrayList<>(current));\n        return;\n    }\n    \n    for (int i = start; i <= n; i++) {\n        current.add(i);\n        backtrack(i + 1, n, k, current, result);\n        current.remove(current.size() - 1);\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(C(n,k))",
+        "space": "O(k)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

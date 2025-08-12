@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Same Tree",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given the roots of two binary trees p and q, write a function to check if they are the same or not.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Recursive",
+      "description": "Recursively compare two binary trees.",
+      "code": "public boolean isSameTree(TreeNode p, TreeNode q) {\n    if (p == null && q == null) return true;\n    if (p == null || q == null) return false;\n    \n    return p.val == q.val && \n           isSameTree(p.left, q.left) && \n           isSameTree(p.right, q.right);\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(h)"
+      }
+    },
+    {
+      "title": "Solution 1 – Recursive",
+      "description": "Recursively compare two binary trees.",
+      "code": "public boolean isSameTree(TreeNode p, TreeNode q) {\n    if (p == null && q == null) return true;\n    if (p == null || q == null) return false;\n    \n    return p.val == q.val && \n           isSameTree(p.left, q.left) && \n           isSameTree(p.right, q.right);\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(h)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

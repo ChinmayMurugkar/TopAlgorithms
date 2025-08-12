@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Subsets",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an integer array nums of unique elements, return all possible subsets (the power set).",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Backtracking",
+      "description": "Use backtracking to generate all subsets.",
+      "code": "public List> subsets(int[] nums) {\n    List> result = new ArrayList<>();\n    backtrack(nums, 0, new ArrayList<>(), result);\n    return result;\n}\n\nprivate void backtrack(int[] nums, int start, List current, List> result) {\n    result.add(new ArrayList<>(current));\n    \n    for (int i = start; i < nums.length; i++) {\n        current.add(nums[i]);\n        backtrack(nums, i + 1, current, result);\n        current.remove(current.size() - 1);\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(2^n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

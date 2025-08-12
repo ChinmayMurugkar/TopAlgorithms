@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Maximum Subarray",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an integer array nums, find the subarray with the largest sum, and return its sum.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Kadane's Algorithm",
+      "description": "Keep track of current sum and maximum sum seen so far.",
+      "code": "public int maxSubArray(int[] nums) {\n    int maxSoFar = nums[0];\n    int maxEndingHere = nums[0];\n    \n    for (int i = 1; i < nums.length; i++) {\n        maxEndingHere = Math.max(nums[i], maxEndingHere + nums[i]);\n        maxSoFar = Math.max(maxSoFar, maxEndingHere);\n    }\n    \n    return maxSoFar;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 1 – Kadane's Algorithm",
+      "description": "Keep track of current sum and maximum sum seen so far.",
+      "code": "public int maxSubArray(int[] nums) {\n    int maxSoFar = nums[0];\n    int maxEndingHere = nums[0];\n    \n    for (int i = 1; i < nums.length; i++) {\n        maxEndingHere = Math.max(nums[i], maxEndingHere + nums[i]);\n        maxSoFar = Math.max(maxSoFar, maxEndingHere);\n    }\n    \n    return maxSoFar;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

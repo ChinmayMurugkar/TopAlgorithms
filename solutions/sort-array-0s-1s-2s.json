@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Sort array of 0s, 1s, and 2s",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an array containing only 0s, 1s, and 2s, sort it in linear time.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Dutch National Flag",
+      "description": "Use three pointers to sort the array in one pass.",
+      "code": "public void sortColors(int[] nums) {\n    int low = 0, mid = 0, high = nums.length - 1;\n    \n    while (mid <= high) {\n        if (nums[mid] == 0) {\n            swap(nums, low, mid);\n            low++;\n            mid++;\n        } else if (nums[mid] == 1) {\n            mid++;\n        } else {\n            swap(nums, mid, high);\n            high--;\n        }\n    }\n}\n\nprivate void swap(int[] nums, int i, int j) {\n    int temp = nums[i];\n    nums[i] = nums[j];\n    nums[j] = temp;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

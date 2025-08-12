@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Valid Anagram",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given two strings s and t, return true if t is an anagram of s, and false otherwise.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Character Count",
+      "description": "Count characters in both strings and compare.",
+      "code": "public boolean isAnagram(String s, String t) {\n    if (s.length() != t.length()) return false;\n    \n    int[] count = new int[26];\n    \n    for (char c : s.toCharArray()) {\n        count[c - 'a']++;\n    }\n    \n    for (char c : t.toCharArray()) {\n        count[c - 'a']--;\n        if (count[c - 'a'] < 0) return false;\n    }\n    \n    return true;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 1 – Character Count",
+      "description": "Count characters in both strings and compare.",
+      "code": "public boolean isAnagram(String s, String t) {\n    if (s.length() != t.length()) return false;\n    \n    int[] count = new int[26];\n    \n    for (char c : s.toCharArray()) {\n        count[c - 'a']++;\n    }\n    \n    for (char c : t.toCharArray()) {\n        count[c - 'a']--;\n        if (count[c - 'a'] < 0) return false;\n    }\n    \n    return true;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

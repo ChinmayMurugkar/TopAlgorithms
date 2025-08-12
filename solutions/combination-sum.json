@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Combination Sum",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Backtracking",
+      "description": "Use backtracking to find all combinations.",
+      "code": "public List> combinationSum(int[] candidates, int target) {\n    List> result = new ArrayList<>();\n    backtrack(candidates, target, 0, new ArrayList<>(), result);\n    return result;\n}\n\nprivate void backtrack(int[] candidates, int target, int start, List current, List> result) {\n    if (target == 0) {\n        result.add(new ArrayList<>(current));\n        return;\n    }\n    \n    if (target < 0) return;\n    \n    for (int i = start; i < candidates.length; i++) {\n        current.add(candidates[i]);\n        backtrack(candidates, target - candidates[i], i, current, result);\n        current.remove(current.size() - 1);\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n^(target/min))",
+        "space": "O(target/min)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

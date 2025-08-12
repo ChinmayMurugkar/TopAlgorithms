@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Balanced Binary Tree",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given a binary tree, determine if it is height-balanced.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Recursive with Height",
+      "description": "Check if tree is balanced by checking height difference.",
+      "code": "public boolean isBalanced(TreeNode root) {\n    return getHeight(root) != -1;\n}\n\nprivate int getHeight(TreeNode root) {\n    if (root == null) return 0;\n    \n    int leftHeight = getHeight(root.left);\n    if (leftHeight == -1) return -1;\n    \n    int rightHeight = getHeight(root.right);\n    if (rightHeight == -1) return -1;\n    \n    if (Math.abs(leftHeight - rightHeight) > 1) return -1;\n    \n    return Math.max(leftHeight, rightHeight) + 1;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(h)"
+      }
+    },
+    {
+      "title": "Solution 1 – Recursive with Height",
+      "description": "Check if tree is balanced by checking height difference.",
+      "code": "public boolean isBalanced(TreeNode root) {\n    return getHeight(root) != -1;\n}\n\nprivate int getHeight(TreeNode root) {\n    if (root == null) return 0;\n    \n    int leftHeight = getHeight(root.left);\n    if (leftHeight == -1) return -1;\n    \n    int rightHeight = getHeight(root.right);\n    if (rightHeight == -1) return -1;\n    \n    if (Math.abs(leftHeight - rightHeight) > 1) return -1;\n    \n    return Math.max(leftHeight, rightHeight) + 1;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(h)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Simplify Path",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given a string path, which is an absolute path (starting with a slash '/') to a file or directory in a Unix-style file system, convert it to the simplified canonical path.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Stack",
+      "description": "Use stack to handle path operations.",
+      "code": "public String simplifyPath(String path) {\n    String[] parts = path.split(\"/\");\n    Stack stack = new Stack<>();\n    \n    for (String part : parts) {\n        if (part.equals(\"\") || part.equals(\".\")) {\n            continue;\n        } else if (part.equals(\"..\")) {\n            if (!stack.isEmpty()) {\n                stack.pop();\n            }\n        } else {\n            stack.push(part);\n        }\n    }\n    \n    if (stack.isEmpty()) return \"/\";\n    \n    StringBuilder result = new StringBuilder();\n    for (String dir : stack) {\n        result.append(\"/\").append(dir);\n    }\n    \n    return result.toString();\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

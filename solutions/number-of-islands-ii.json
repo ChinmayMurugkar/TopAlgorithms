@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Number of Islands II",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "You are given an empty 2D binary grid grid of size m x n. The grid represents a map where 0's represent water and 1's represent land.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Union Find",
+      "description": "Use union find to track connected components as islands are added.",
+      "code": "public List numIslands2(int m, int n, int[][] positions) {\n    List result = new ArrayList<>();\n    UnionFind uf = new UnionFind(m * n);\n    int[][] grid = new int[m][n];\n    int count = 0;\n    \n    int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};\n    \n    for (int[] pos : positions) {\n        int i = pos[0], j = pos[1];\n        if (grid[i][j] == 1) {\n            result.add(count);\n            continue;\n        }\n        \n        grid[i][j] = 1;\n        count++;\n        \n        for (int[] dir : directions) {\n            int newI = i + dir[0], newJ = j + dir[1];\n            if (newI >= 0 && newI < m && newJ >= 0 && newJ < n && grid[newI][newJ] == 1) {\n                if (uf.union(i * n + j, newI * n + newJ)) {\n                    count--;\n                }\n            }\n        }\n        \n        result.add(count);\n    }\n    \n    return result;\n}\n\nclass UnionFind {\n    private int[] parent, rank;\n    \n    public UnionFind(int n) {\n        parent = new int[n];\n        rank = new int[n];\n        for (int i = 0; i < n; i++) {\n            parent[i] = i;\n        }\n    }\n    \n    public int find(int x) {\n        if (parent[x] != x) {\n            parent[x] = find(parent[x]);\n        }\n        return parent[x];\n    }\n    \n    public boolean union(int x, int y) {\n        int px = find(x), py = find(y);\n        if (px == py) return false;\n        \n        if (rank[px] < rank[py]) {\n            parent[px] = py;\n        } else if (rank[px] > rank[py]) {\n            parent[py] = px;\n        } else {\n            parent[py] = px;\n            rank[px]++;\n        }\n        return true;\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(k × α(m×n))",
+        "space": "O(m × n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

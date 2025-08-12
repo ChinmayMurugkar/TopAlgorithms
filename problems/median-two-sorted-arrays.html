@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Median of Two Sorted Arrays - Coding Interview Problems</title>
+    <title id="page-title">Problem - Coding Interview Problems</title>
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <link rel="shortcut icon" href="../favicon.svg">
     <link rel="apple-touch-icon" href="../favicon.svg">
@@ -12,7 +12,6 @@
     <script defer src="/_vercel/insights/script.js"></script>
     
     <!-- Google Analytics 4 -->
-    <!-- Replace G-MGQNX8KHDE with your actual Google Analytics ID -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-MGQNX8KHDE"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -106,7 +105,7 @@
             border-bottom: 2px solid #3498db;
         }
         
-                .code-block {
+        .code-block {
             background: #2d3748;
             border: 1px solid #4a5568;
             border-radius: 8px;
@@ -163,15 +162,6 @@
             color: #0c5460;
         }
         
-        .binary-search-visualization {
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 6px;
-            padding: 20px;
-            margin: 15px 0;
-            font-family: monospace;
-        }
-        
         .navigation {
             display: flex;
             justify-content: space-between;
@@ -189,6 +179,21 @@
         
         .nav-btn:hover {
             background: #2980b9;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #721c24;
         }
         
         @media (max-width: 768px) {
@@ -210,355 +215,266 @@
     <div class="header">
         <div class="header-content">
             <div class="breadcrumb">
-                <a href="../index.html">Home</a> > String/Array/Matrix > Median of Two Sorted Arrays
+                <a href="../index.html">Home</a> > <span id="breadcrumb-category">Category</span> > <span id="breadcrumb-title">Problem</span>
             </div>
-            <h1>Median of Two Sorted Arrays</h1>
-            <div class="meta">LeetCode Problem 4</div>
+            <h1 id="problem-title">Loading...</h1>
+            <div class="meta" id="problem-meta">Loading...</div>
         </div>
     </div>
 
     <div class="container">
         <div class="content">
-            <div class="problem-description">
-                <strong>Problem:</strong> Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
-                <br><br>
-                <strong>Constraints:</strong>
-                <ul>
-                    <li>nums1.length + nums2.length >= 1</li>
-                    <li>Time complexity should be O(log(m+n))</li>
-                </ul>
-                <br>
-                <strong>Example:</strong><br>
-                Input: nums1 = [1,3], nums2 = [2]<br>
-                Output: 2.0<br>
-                Explanation: merged array = [1,2,3] and median is 2.
+            <div id="loading" class="loading">
+                <h3>Loading problem...</h3>
+                <p>Please wait while we load the problem details.</p>
             </div>
-
-            <div class="solution">
-                <h3>Solution 1 – Merge and Find (Not Optimal)</h3>
-                <p>Merge the arrays and find the median. This doesn't meet the O(log(m+n)) requirement but is straightforward.</p>
-                
-                <div class="code-block">
-public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-    int m = nums1.length;
-    int n = nums2.length;
-    int[] merged = new int[m + n];
-    
-    int i = 0, j = 0, k = 0;
-    
-    // Merge the two arrays
-    while (i < m && j < n) {
-        if (nums1[i] <= nums2[j]) {
-            merged[k++] = nums1[i++];
-        } else {
-            merged[k++] = nums2[j++];
-        }
-    }
-    
-    // Copy remaining elements
-    while (i < m) {
-        merged[k++] = nums1[i++];
-    }
-    while (j < n) {
-        merged[k++] = nums2[j++];
-    }
-    
-    // Find median
-    int totalLength = m + n;
-    if (totalLength % 2 == 0) {
-        return (merged[totalLength / 2 - 1] + merged[totalLength / 2]) / 2.0;
-    } else {
-        return merged[totalLength / 2];
-    }
-}
-                </div>
-                
-                <div class="complexity">
-                    <strong>Time Complexity:</strong> O(m + n)<br>
-                    <strong>Space Complexity:</strong> O(m + n)
-                </div>
+            
+            <div id="error" class="error" style="display: none;">
+                <h3>Error Loading Problem</h3>
+                <p id="error-message">Failed to load the problem. Please try refreshing the page.</p>
             </div>
-
-            <div class="solution">
-                <h3>Solution 2 – Binary Search (Optimal)</h3>
-                <p>Use binary search to find the correct partition that gives us the median.</p>
-                
-                <div class="code-block">
-public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-    // Ensure nums1 is the smaller array
-    if (nums1.length > nums2.length) {
-        return findMedianSortedArrays(nums2, nums1);
-    }
-    
-    int m = nums1.length;
-    int n = nums2.length;
-    int left = 0;
-    int right = m;
-    
-    while (left <= right) {
-        // Partition nums1
-        int partitionX = (left + right) / 2;
-        // Partition nums2
-        int partitionY = (m + n + 1) / 2 - partitionX;
-        
-        // Find the four elements around the partition
-        int maxLeftX = (partitionX == 0) ? Integer.MIN_VALUE : nums1[partitionX - 1];
-        int minRightX = (partitionX == m) ? Integer.MAX_VALUE : nums1[partitionX];
-        
-        int maxLeftY = (partitionY == 0) ? Integer.MIN_VALUE : nums2[partitionY - 1];
-        int minRightY = (partitionY == n) ? Integer.MAX_VALUE : nums2[partitionY];
-        
-        // Check if we found the correct partition
-        if (maxLeftX <= minRightY && maxLeftY <= minRightX) {
-            // Found the correct partition
-            if ((m + n) % 2 == 0) {
-                return (Math.max(maxLeftX, maxLeftY) + Math.min(minRightX, minRightY)) / 2.0;
-            } else {
-                return Math.max(maxLeftX, maxLeftY);
-            }
-        } else if (maxLeftX > minRightY) {
-            // Move left in nums1
-            right = partitionX - 1;
-        } else {
-            // Move right in nums1
-            left = partitionX + 1;
-        }
-    }
-    
-    throw new IllegalArgumentException("Input arrays are not sorted");
-}
+            
+            <div id="problem-content" style="display: none;">
+                <div class="problem-description" id="problem-description">
+                    <!-- Problem description will be loaded here -->
                 </div>
                 
-                <div class="complexity">
-                    <strong>Time Complexity:</strong> O(log(min(m, n)))<br>
-                    <strong>Space Complexity:</strong> O(1)
-                </div>
-            </div>
-
-            <div class="binary-search-visualization">
-                <strong>Binary Search Visualization:</strong><br><br>
-                nums1 = [1, 3, 8, 9, 15], nums2 = [7, 11, 18, 19, 21, 25]<br><br>
-                
-                Step 1: partitionX = 2, partitionY = 4<br>
-                Left: [1, 3] + [7, 11, 18, 19] = [1, 3, 7, 11, 18, 19]<br>
-                Right: [8, 9, 15] + [21, 25] = [8, 9, 15, 21, 25]<br>
-                maxLeftX = 3, minRightX = 8<br>
-                maxLeftY = 19, minRightY = 21<br>
-                Check: 3 ≤ 21 ✓, 19 ≤ 8 ✗<br><br>
-                
-                Step 2: Move right (partitionX = 3)<br>
-                Continue binary search...
-            </div>
-
-            <div class="solution">
-                <h3>Solution 3 – Find Kth Element</h3>
-                <p>Find the kth smallest element in the two sorted arrays.</p>
-                
-                <div class="code-block">
-public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-    int m = nums1.length;
-    int n = nums2.length;
-    int totalLength = m + n;
-    
-    if (totalLength % 2 == 0) {
-        // Even length: find (totalLength/2)th and (totalLength/2 + 1)th elements
-        int left = findKthElement(nums1, 0, nums2, 0, totalLength / 2);
-        int right = findKthElement(nums1, 0, nums2, 0, totalLength / 2 + 1);
-        return (left + right) / 2.0;
-    } else {
-        // Odd length: find (totalLength/2 + 1)th element
-        return findKthElement(nums1, 0, nums2, 0, totalLength / 2 + 1);
-    }
-}
-
-private int findKthElement(int[] nums1, int start1, int[] nums2, int start2, int k) {
-    // If one array is exhausted, return kth element from the other
-    if (start1 >= nums1.length) {
-        return nums2[start2 + k - 1];
-    }
-    if (start2 >= nums2.length) {
-        return nums1[start1 + k - 1];
-    }
-    
-    // If k == 1, return the smaller of the first elements
-    if (k == 1) {
-        return Math.min(nums1[start1], nums2[start2]);
-    }
-    
-    // Find the k/2th element in each array
-    int mid1 = start1 + k / 2 - 1 < nums1.length ? nums1[start1 + k / 2 - 1] : Integer.MAX_VALUE;
-    int mid2 = start2 + k / 2 - 1 < nums2.length ? nums2[start2 + k / 2 - 1] : Integer.MAX_VALUE;
-    
-    if (mid1 < mid2) {
-        // The kth element is in the right half of nums1 or left half of nums2
-        return findKthElement(nums1, start1 + k / 2, nums2, start2, k - k / 2);
-    } else {
-        // The kth element is in the right half of nums2 or left half of nums1
-        return findKthElement(nums1, start1, nums2, start2 + k / 2, k - k / 2);
-    }
-}
+                <div id="solutions-container">
+                    <!-- Solutions will be loaded here -->
                 </div>
                 
-                <div class="complexity">
-                    <strong>Time Complexity:</strong> O(log(m + n))<br>
-                    <strong>Space Complexity:</strong> O(log(m + n)) for recursion stack
-                </div>
-            </div>
-
-            <div class="solution">
-                <h3>Solution 4 – Iterative Kth Element</h3>
-                <p>Iterative version to avoid recursion stack space.</p>
-                
-                <div class="code-block">
-public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-    int m = nums1.length;
-    int n = nums2.length;
-    int totalLength = m + n;
-    
-    if (totalLength % 2 == 0) {
-        int left = findKthElementIterative(nums1, nums2, totalLength / 2);
-        int right = findKthElementIterative(nums1, nums2, totalLength / 2 + 1);
-        return (left + right) / 2.0;
-    } else {
-        return findKthElementIterative(nums1, nums2, totalLength / 2 + 1);
-    }
-}
-
-private int findKthElementIterative(int[] nums1, int[] nums2, int k) {
-    int start1 = 0, start2 = 0;
-    
-    while (true) {
-        // If one array is exhausted
-        if (start1 >= nums1.length) {
-            return nums2[start2 + k - 1];
-        }
-        if (start2 >= nums2.length) {
-            return nums1[start1 + k - 1];
-        }
-        
-        // If k == 1
-        if (k == 1) {
-            return Math.min(nums1[start1], nums2[start2]);
-        }
-        
-        // Find the k/2th element in each array
-        int mid1 = start1 + k / 2 - 1 < nums1.length ? nums1[start1 + k / 2 - 1] : Integer.MAX_VALUE;
-        int mid2 = start2 + k / 2 - 1 < nums2.length ? nums2[start2 + k / 2 - 1] : Integer.MAX_VALUE;
-        
-        if (mid1 < mid2) {
-            start1 += k / 2;
-        } else {
-            start2 += k / 2;
-        }
-        
-        k -= k / 2;
-    }
-}
+                <div id="variations-container">
+                    <!-- Variations will be loaded here -->
                 </div>
                 
-                <div class="complexity">
-                    <strong>Time Complexity:</strong> O(log(m + n))<br>
-                    <strong>Space Complexity:</strong> O(1)
+                <div class="navigation" id="navigation">
+                    <!-- Navigation will be loaded here -->
                 </div>
-            </div>
-
-            <div class="example">
-                <strong>More Examples:</strong><br><br>
-                Input: nums1 = [1,2], nums2 = [3,4]<br>
-                Output: 2.5<br>
-                Explanation: merged array = [1,2,3,4], median = (2 + 3) / 2 = 2.5<br><br>
-                
-                Input: nums1 = [0,0], nums2 = [0,0]<br>
-                Output: 0.0<br><br>
-                
-                Input: nums1 = [], nums2 = [1]<br>
-                Output: 1.0
-            </div>
-
-            <div class="solution">
-                <h3>Edge Cases and Validation</h3>
-                <p>Robust implementation handling edge cases:</p>
-                
-                <div class="code-block">
-public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-    // Handle null inputs
-    if (nums1 == null || nums2 == null) {
-        throw new IllegalArgumentException("Input arrays cannot be null");
-    }
-    
-    int m = nums1.length;
-    int n = nums2.length;
-    
-    // Handle empty arrays
-    if (m == 0 && n == 0) {
-        throw new IllegalArgumentException("Both arrays cannot be empty");
-    }
-    
-    if (m == 0) {
-        return findMedian(nums2);
-    }
-    
-    if (n == 0) {
-        return findMedian(nums1);
-    }
-    
-    // Ensure nums1 is the smaller array
-    if (m > n) {
-        return findMedianSortedArrays(nums2, nums1);
-    }
-    
-    // Use binary search approach
-    return findMedianBinarySearch(nums1, nums2);
-}
-
-private double findMedian(int[] nums) {
-    int n = nums.length;
-    if (n % 2 == 0) {
-        return (nums[n / 2 - 1] + nums[n / 2]) / 2.0;
-    } else {
-        return nums[n / 2];
-    }
-}
-
-private double findMedianBinarySearch(int[] nums1, int[] nums2) {
-    int m = nums1.length;
-    int n = nums2.length;
-    int left = 0;
-    int right = m;
-    
-    while (left <= right) {
-        int partitionX = (left + right) / 2;
-        int partitionY = (m + n + 1) / 2 - partitionX;
-        
-        int maxLeftX = (partitionX == 0) ? Integer.MIN_VALUE : nums1[partitionX - 1];
-        int minRightX = (partitionX == m) ? Integer.MAX_VALUE : nums1[partitionX];
-        
-        int maxLeftY = (partitionY == 0) ? Integer.MIN_VALUE : nums2[partitionY - 1];
-        int minRightY = (partitionY == n) ? Integer.MAX_VALUE : nums2[partitionY];
-        
-        if (maxLeftX <= minRightY && maxLeftY <= minRightX) {
-            if ((m + n) % 2 == 0) {
-                return (Math.max(maxLeftX, maxLeftY) + Math.min(minRightX, minRightY)) / 2.0;
-            } else {
-                return Math.max(maxLeftX, maxLeftY);
-            }
-        } else if (maxLeftX > minRightY) {
-            right = partitionX - 1;
-        } else {
-            left = partitionX + 1;
-        }
-    }
-    
-    throw new IllegalArgumentException("Input arrays are not sorted");
-}
-                </div>
-            </div>
-
-            <div class="navigation">
-                <a href="word-ladder.html" class="nav-btn" target="_blank">← Previous: Word Ladder</a>
-                <a href="kth-largest-element.html" class="nav-btn" target="_blank">Next: Kth Largest Element →</a>
             </div>
         </div>
     </div>
+
+    <script>
+        class ProblemLoader {
+            constructor() {
+                this.problemId = this.getProblemIdFromUrl();
+                this.solutionsPath = './solutions/';
+                this.init();
+            }
+            
+            getProblemIdFromUrl() {
+                // Extract problem ID from URL (e.g., two-sum.html -> two-sum)
+                const path = window.location.pathname;
+                const filename = path.split('/').pop();
+                return filename.replace('.html', '');
+            }
+            
+            async init() {
+                try {
+                    await this.loadProblem();
+                } catch (error) {
+                    console.error('Error loading problem:', error);
+                    this.showError('Failed to load problem: ' + error.message);
+                }
+            }
+            
+            async loadProblem() {
+                const response = await fetch(`${this.solutionsPath}${this.problemId}.json`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const problemData = await response.json();
+                this.renderProblem(problemData);
+            }
+            
+            renderProblem(data) {
+                // Hide loading, show content
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('problem-content').style.display = 'block';
+                
+                // Update page title
+                document.title = `${data.problem.title} - Coding Interview Problems`;
+                document.getElementById('page-title').textContent = `${data.problem.title} - Coding Interview Problems`;
+                
+                // Update header
+                document.getElementById('problem-title').textContent = data.problem.title;
+                document.getElementById('breadcrumb-category').textContent = data.problem.category;
+                document.getElementById('breadcrumb-title').textContent = data.problem.title;
+                
+                // Update meta
+                const metaText = data.problem.leetcode_id ? 
+                    `LeetCode Problem ${data.problem.leetcode_id}` : 
+                    'Coding Interview Problem';
+                document.getElementById('problem-meta').textContent = metaText;
+                
+                // Render problem description
+                this.renderProblemDescription(data.problem);
+                
+                // Render solutions
+                this.renderSolutions(data.solutions);
+                
+                // Render variations
+                if (data.variations && data.variations.length > 0) {
+                    this.renderVariations(data.variations);
+                }
+                
+                // Render navigation
+                this.renderNavigation(data.navigation);
+            }
+            
+            renderProblemDescription(problem) {
+                const descContainer = document.getElementById('problem-description');
+                
+                let html = `<strong>Problem:</strong> ${problem.description}`;
+                
+                if (problem.assumptions && problem.assumptions.length > 0) {
+                    html += '<br><br><strong>Assumptions:</strong><ul>';
+                    problem.assumptions.forEach(assumption => {
+                        html += `<li>${assumption}</li>`;
+                    });
+                    html += '</ul>';
+                }
+                
+                if (problem.example) {
+                    html += '<br><strong>Example:</strong><br>';
+                    if (problem.example.input) {
+                        html += `Input: ${problem.example.input}<br>`;
+                    }
+                    if (problem.example.output) {
+                        html += `Output: ${problem.example.output}<br>`;
+                    }
+                    if (problem.example.explanation) {
+                        html += `Explanation: ${problem.example.explanation}`;
+                    }
+                }
+                
+                descContainer.innerHTML = html;
+            }
+            
+            renderSolutions(solutions) {
+                const container = document.getElementById('solutions-container');
+                container.innerHTML = '';
+                
+                solutions.forEach(solution => {
+                    const solutionDiv = document.createElement('div');
+                    solutionDiv.className = 'solution';
+                    
+                    let html = `<h3>${solution.title}</h3>`;
+                    
+                    if (solution.description) {
+                        html += `<p>${solution.description}</p>`;
+                    }
+                    
+                    if (solution.code) {
+                        html += `<div class="code-block">${this.escapeHtml(solution.code)}</div>`;
+                    }
+                    
+                    if (solution.complexity) {
+                        html += `<div class="complexity">`;
+                        if (solution.complexity.time) {
+                            html += `<strong>Time Complexity:</strong> ${solution.complexity.time}<br>`;
+                        }
+                        if (solution.complexity.space) {
+                            html += `<strong>Space Complexity:</strong> ${solution.complexity.space}`;
+                        }
+                        html += '</div>';
+                    }
+                    
+                    if (solution.example_walkthrough) {
+                        html += `<div class="example">`;
+                        if (solution.example_walkthrough.text) {
+                            html += `<strong>Example Walkthrough:</strong><br><br>${solution.example_walkthrough.text}`;
+                        } else if (solution.example_walkthrough.steps) {
+                            html += `<strong>Example Walkthrough:</strong><br><br>`;
+                            solution.example_walkthrough.steps.forEach(step => {
+                                html += `${step}<br>`;
+                            });
+                        }
+                        html += '</div>';
+                    }
+                    
+                    solutionDiv.innerHTML = html;
+                    container.appendChild(solutionDiv);
+                });
+            }
+            
+            renderVariations(variations) {
+                const container = document.getElementById('variations-container');
+                container.innerHTML = '';
+                
+                if (variations.length === 0) return;
+                
+                const variationsDiv = document.createElement('div');
+                variationsDiv.className = 'solution';
+                variationsDiv.innerHTML = '<h3>Variations</h3>';
+                
+                variations.forEach(variation => {
+                    let html = `<h4>${variation.title}</h4>`;
+                    
+                    if (variation.description) {
+                        html += `<p>${variation.description}</p>`;
+                    }
+                    
+                    if (variation.code) {
+                        html += `<div class="code-block">${this.escapeHtml(variation.code)}</div>`;
+                    }
+                    
+                    variationsDiv.innerHTML += html;
+                });
+                
+                container.appendChild(variationsDiv);
+            }
+            
+            renderNavigation(navigation) {
+                const container = document.getElementById('navigation');
+                
+                if (!navigation) return;
+                
+                let html = '';
+                
+                if (navigation.previous) {
+                    html += `<a href="${navigation.previous}" class="nav-btn" target="_blank">← Previous: ${this.getProblemTitleFromFilename(navigation.previous)}</a>`;
+                } else {
+                    html += '<span></span>'; // Empty span for flexbox spacing
+                }
+                
+                if (navigation.next) {
+                    html += `<a href="${navigation.next}" class="nav-btn" target="_blank">Next: ${this.getProblemTitleFromFilename(navigation.next)} →</a>`;
+                } else {
+                    html += '<span></span>'; // Empty span for flexbox spacing
+                }
+                
+                container.innerHTML = html;
+            }
+            
+            getProblemTitleFromFilename(filename) {
+                // Convert filename to readable title (e.g., two-sum.html -> Two Sum)
+                return filename
+                    .replace('.html', '')
+                    .split('-')
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ');
+            }
+            
+            escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+            
+            showError(message) {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error').style.display = 'block';
+                document.getElementById('error-message').textContent = message;
+            }
+        }
+        
+        // Initialize the problem loader when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new ProblemLoader();
+        });
+    </script>
 </body>
 </html> 

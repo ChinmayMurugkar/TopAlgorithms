@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Radix Sort",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Implement radix sort algorithm for sorting integers.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Radix Sort Implementation",
+      "description": "Implement radix sort algorithm for integers.",
+      "code": "public void radixSort(int[] arr) {\n    int n = arr.length;\n    if (n <= 1) return;\n    \n    // Find the maximum element\n    int max = arr[0];\n    for (int i = 1; i < n; i++) {\n        if (arr[i] > max) {\n            max = arr[i];\n        }\n    }\n    \n    // Do counting sort for every digit\n    for (int exp = 1; max / exp > 0; exp *= 10) {\n        countingSortByDigit(arr, exp);\n    }\n}\n\nprivate void countingSortByDigit(int[] arr, int exp) {\n    int n = arr.length;\n    int[] output = new int[n];\n    int[] count = new int[10];\n    \n    // Count occurrences\n    for (int i = 0; i < n; i++) {\n        count[(arr[i] / exp) % 10]++;\n    }\n    \n    // Modify count array to store actual positions\n    for (int i = 1; i < 10; i++) {\n        count[i] += count[i - 1];\n    }\n    \n    // Build output array\n    for (int i = n - 1; i >= 0; i--) {\n        int digit = (arr[i] / exp) % 10;\n        output[count[digit] - 1] = arr[i];\n        count[digit]--;\n    }\n    \n    // Copy output array back to original array\n    for (int i = 0; i < n; i++) {\n        arr[i] = output[i];\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(d(n + k))",
+        "space": "O(n + k)"
+      }
+    },
+    {
+      "title": "Solution 1 – Radix Sort Implementation",
+      "description": "Implement radix sort algorithm for integers.",
+      "code": "public void radixSort(int[] arr) {\n    int n = arr.length;\n    if (n <= 1) return;\n    \n    // Find the maximum element\n    int max = arr[0];\n    for (int i = 1; i < n; i++) {\n        if (arr[i] > max) {\n            max = arr[i];\n        }\n    }\n    \n    // Do counting sort for every digit\n    for (int exp = 1; max / exp > 0; exp *= 10) {\n        countingSortByDigit(arr, exp);\n    }\n}\n\nprivate void countingSortByDigit(int[] arr, int exp) {\n    int n = arr.length;\n    int[] output = new int[n];\n    int[] count = new int[10];\n    \n    // Count occurrences\n    for (int i = 0; i < n; i++) {\n        count[(arr[i] / exp) % 10]++;\n    }\n    \n    // Modify count array to store actual positions\n    for (int i = 1; i < 10; i++) {\n        count[i] += count[i - 1];\n    }\n    \n    // Build output array\n    for (int i = n - 1; i >= 0; i--) {\n        int digit = (arr[i] / exp) % 10;\n        output[count[digit] - 1] = arr[i];\n        count[digit]--;\n    }\n    \n    // Copy output array back to original array\n    for (int i = 0; i < n; i++) {\n        arr[i] = output[i];\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(d(n + k))",
+        "space": "O(n + k)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

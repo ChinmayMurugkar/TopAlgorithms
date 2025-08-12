@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Construct Binary Tree from Preorder and Inorder Traversal",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree, construct and return the binary tree.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Recursive",
+      "description": "Use recursive approach with HashMap for index lookup.",
+      "code": "public TreeNode buildTree(int[] preorder, int[] inorder) {\n    Map map = new HashMap<>();\n    for (int i = 0; i < inorder.length; i++) {\n        map.put(inorder[i], i);\n    }\n    return buildTreeHelper(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, map);\n}\n\nprivate TreeNode buildTreeHelper(int[] preorder, int preStart, int preEnd, \n                               int[] inorder, int inStart, int inEnd, \n                               Map map) {\n    if (preStart > preEnd || inStart > inEnd) return null;\n    \n    TreeNode root = new TreeNode(preorder[preStart]);\n    int rootIndex = map.get(preorder[preStart]);\n    int leftSize = rootIndex - inStart;\n    \n    root.left = buildTreeHelper(preorder, preStart + 1, preStart + leftSize, \n                               inorder, inStart, rootIndex - 1, map);\n    root.right = buildTreeHelper(preorder, preStart + leftSize + 1, preEnd, \n                                inorder, rootIndex + 1, inEnd, map);\n    \n    return root;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

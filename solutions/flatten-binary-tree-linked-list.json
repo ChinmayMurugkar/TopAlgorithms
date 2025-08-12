@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Flatten Binary Tree to Linked List",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given the root of a binary tree, flatten the tree into a 'linked list'.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Morris Traversal",
+      "description": "Use Morris traversal to flatten the tree in-place.",
+      "code": "public void flatten(TreeNode root) {\n    TreeNode curr = root;\n    while (curr != null) {\n        if (curr.left != null) {\n            TreeNode prev = curr.left;\n            while (prev.right != null) {\n                prev = prev.right;\n            }\n            prev.right = curr.right;\n            curr.right = curr.left;\n            curr.left = null;\n        }\n        curr = curr.right;\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

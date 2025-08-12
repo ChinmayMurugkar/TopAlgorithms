@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Get Target Using Number List And Arithmetic Operations",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given a list of numbers and a target, find if you can reach the target using arithmetic operations.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Backtracking",
+      "description": "Use backtracking to find all possible arithmetic expressions.",
+      "code": "public List addOperators(String num, int target) {\n    List result = new ArrayList<>();\n    backtrack(num, target, 0, 0, 0, \"\", result);\n    return result;\n}\n\nprivate void backtrack(String num, int target, int index, long value, long prev, String expr, List result) {\n    if (index == num.length()) {\n        if (value == target) {\n            result.add(expr);\n        }\n        return;\n    }\n    \n    for (int i = index; i < num.length(); i++) {\n        if (i != index && num.charAt(index) == '0') break;\n        \n        long curr = Long.parseLong(num.substring(index, i + 1));\n        \n        if (index == 0) {\n            backtrack(num, target, i + 1, curr, curr, expr + curr, result);\n        } else {\n            backtrack(num, target, i + 1, value + curr, curr, expr + \"+\" + curr, result);\n            backtrack(num, target, i + 1, value - curr, -curr, expr + \"-\" + curr, result);\n            backtrack(num, target, i + 1, value - prev + prev * curr, prev * curr, expr + \"*\" + curr, result);\n        }\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(4^n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Top K Frequent Elements",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Heap",
+      "description": "Use min heap to find top k frequent elements.",
+      "code": "public int[] topKFrequent(int[] nums, int k) {\n    Map frequency = new HashMap<>();\n    for (int num : nums) {\n        frequency.put(num, frequency.getOrDefault(num, 0) + 1);\n    }\n    \n    PriorityQueue> pq = new PriorityQueue<>(\n        (a, b) -> a.getValue() - b.getValue()\n    );\n    \n    for (Map.Entry entry : frequency.entrySet()) {\n        pq.offer(entry);\n        if (pq.size() > k) {\n            pq.poll();\n        }\n    }\n    \n    int[] result = new int[k];\n    for (int i = k - 1; i >= 0; i--) {\n        result[i] = pq.poll().getKey();\n    }\n    \n    return result;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n log k)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

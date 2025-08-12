@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Palindrome Pairs",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given a list of unique words, return all the pairs of the distinct indices (i, j) in the given list, so that the concatenation of the two words words[i] + words[j] is a palindrome.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – HashMap",
+      "description": "Use HashMap to find palindrome pairs.",
+      "code": "public List> palindromePairs(String[] words) {\n    List> result = new ArrayList<>();\n    Map map = new HashMap<>();\n    \n    for (int i = 0; i < words.length; i++) {\n        map.put(words[i], i);\n    }\n    \n    for (int i = 0; i < words.length; i++) {\n        String word = words[i];\n        \n        // Check if reverse exists\n        String reverse = new StringBuilder(word).reverse().toString();\n        if (map.containsKey(reverse) && map.get(reverse) != i) {\n            result.add(Arrays.asList(i, map.get(reverse)));\n        }\n        \n        // Check for palindromes\n        for (int j = 0; j < word.length(); j++) {\n            if (isPalindrome(word, 0, j)) {\n                String suffix = new StringBuilder(word.substring(j + 1)).reverse().toString();\n                if (map.containsKey(suffix) && map.get(suffix) != i) {\n                    result.add(Arrays.asList(map.get(suffix), i));\n                }\n            }\n            \n            if (isPalindrome(word, j, word.length() - 1)) {\n                String prefix = new StringBuilder(word.substring(0, j)).reverse().toString();\n                if (map.containsKey(prefix) && map.get(prefix) != i) {\n                    result.add(Arrays.asList(i, map.get(prefix)));\n                }\n            }\n        }\n    }\n    \n    return result;\n}\n\nprivate boolean isPalindrome(String s, int start, int end) {\n    while (start < end) {\n        if (s.charAt(start++) != s.charAt(end--)) {\n            return false;\n        }\n    }\n    return true;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n × k²)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

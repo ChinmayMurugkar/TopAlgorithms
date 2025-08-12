@@ -1,0 +1,40 @@
+{
+  "problem": {
+    "title": "Construct Binary Tree from Inorder and Postorder Traversal",
+    "leetcode_id": 106,
+    "category": "Tree, Heap & Trie",
+    "description": "Given two integer arrays inorder and postorder where inorder is the inorder traversal of a binary tree and postorder is the postorder traversal of the same tree, construct and return the binary tree.",
+    "assumptions": [],
+    "example": {
+      "input": "inorder = [9,3,15,20,7], postorder = [9,15,7,20,3]",
+      "output": "[3,9,20,null,null,15,7]"
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Recursive with Hash Map",
+      "description": "Use a hash map to find the root index in inorder traversal efficiently.",
+      "code": "public TreeNode buildTree(int[] inorder, int[] postorder) {\n    Map inorderMap = new HashMap<>();\n    for (int i = 0; i < inorder.length; i++) {\n        inorderMap.put(inorder[i], i);\n    }\n    \n    return buildTreeHelper(inorder, postorder, 0, inorder.length - 1, \n                          0, postorder.length - 1, inorderMap);\n}\n\nprivate TreeNode buildTreeHelper(int[] inorder, int[] postorder, \n                                int inStart, int inEnd, \n                                int postStart, int postEnd, \n                                Map inorderMap) {\n    if (inStart > inEnd || postStart > postEnd) {\n        return null;\n    }\n    \n    TreeNode root = new TreeNode(postorder[postEnd]);\n    int rootIndex = inorderMap.get(postorder[postEnd]);\n    int leftSubtreeSize = rootIndex - inStart;\n    \n    root.left = buildTreeHelper(inorder, postorder, \n                               inStart, rootIndex - 1, \n                               postStart, postStart + leftSubtreeSize - 1, \n                               inorderMap);\n    \n    root.right = buildTreeHelper(inorder, postorder, \n                                rootIndex + 1, inEnd, \n                                postStart + leftSubtreeSize, postEnd - 1, \n                                inorderMap);\n    \n    return root;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "title": "Solution 2 – Recursive without Hash Map",
+      "description": "Find the root index by linear search in inorder array.",
+      "code": "public TreeNode buildTree(int[] inorder, int[] postorder) {\n    return buildTreeHelper(inorder, postorder, 0, inorder.length - 1, \n                          0, postorder.length - 1);\n}\n\nprivate TreeNode buildTreeHelper(int[] inorder, int[] postorder, \n                                int inStart, int inEnd, \n                                int postStart, int postEnd) {\n    if (inStart > inEnd || postStart > postEnd) {\n        return null;\n    }\n    \n    TreeNode root = new TreeNode(postorder[postEnd]);\n    \n    int rootIndex = inStart;\n    for (int i = inStart; i <= inEnd; i++) {\n        if (inorder[i] == postorder[postEnd]) {\n            rootIndex = i;\n            break;\n        }\n    }\n    \n    int leftSubtreeSize = rootIndex - inStart;\n    \n    root.left = buildTreeHelper(inorder, postorder, \n                               inStart, rootIndex - 1, \n                               postStart, postStart + leftSubtreeSize - 1);\n    \n    root.right = buildTreeHelper(inorder, postorder, \n                                rootIndex + 1, inEnd, \n                                postStart + leftSubtreeSize, postEnd - 1);\n    \n    return root;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n²)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "path-sum.html",
+    "next": "populating-next-right-pointers.html"
+  }
+}

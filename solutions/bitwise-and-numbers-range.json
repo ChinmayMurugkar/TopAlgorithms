@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Bitwise AND of Numbers Range",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given two integers left and right that represent the range [left, right], return the bitwise AND of all numbers in this range, inclusive.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Bit Manipulation",
+      "description": "Find common prefix of binary representations.",
+      "code": "public int rangeBitwiseAnd(int left, int right) {\n    int shift = 0;\n    \n    while (left < right) {\n        left >>= 1;\n        right >>= 1;\n        shift++;\n    }\n    \n    return left << shift;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

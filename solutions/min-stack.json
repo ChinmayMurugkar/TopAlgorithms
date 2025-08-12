@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Min Stack",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Two Stacks",
+      "description": "Use two stacks to maintain minimum element.",
+      "code": "class MinStack {\n    private Stack stack;\n    private Stack minStack;\n    \n    public MinStack() {\n        stack = new Stack<>();\n        minStack = new Stack<>();\n    }\n    \n    public void push(int val) {\n        stack.push(val);\n        \n        if (minStack.isEmpty() || val <= minStack.peek()) {\n            minStack.push(val);\n        }\n    }\n    \n    public void pop() {\n        if (stack.peek().equals(minStack.peek())) {\n            minStack.pop();\n        }\n        stack.pop();\n    }\n    \n    public int top() {\n        return stack.peek();\n    }\n    \n    public int getMin() {\n        return minStack.peek();\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(1)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "title": "Solution 1 – Two Stacks",
+      "description": "Use two stacks to maintain minimum element.",
+      "code": "class MinStack {\n    private Stack stack;\n    private Stack minStack;\n    \n    public MinStack() {\n        stack = new Stack<>();\n        minStack = new Stack<>();\n    }\n    \n    public void push(int val) {\n        stack.push(val);\n        \n        if (minStack.isEmpty() || val <= minStack.peek()) {\n            minStack.push(val);\n        }\n    }\n    \n    public void pop() {\n        if (stack.peek().equals(minStack.peek())) {\n            minStack.pop();\n        }\n        stack.pop();\n    }\n    \n    public int top() {\n        return stack.peek();\n    }\n    \n    public int getMin() {\n        return minStack.peek();\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(1)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

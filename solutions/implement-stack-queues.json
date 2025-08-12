@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Implement Stack using Queues",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Implement a last-in-first-out (LIFO) stack using only two queues.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Two Queues",
+      "description": "Use two queues to implement stack.",
+      "code": "class MyStack {\n    private Queue q1;\n    private Queue q2;\n    \n    public MyStack() {\n        q1 = new LinkedList<>();\n        q2 = new LinkedList<>();\n    }\n    \n    public void push(int x) {\n        q2.offer(x);\n        while (!q1.isEmpty()) {\n            q2.offer(q1.poll());\n        }\n        Queue temp = q1;\n        q1 = q2;\n        q2 = temp;\n    }\n    \n    public int pop() {\n        return q1.poll();\n    }\n    \n    public int top() {\n        return q1.peek();\n    }\n    \n    public boolean empty() {\n        return q1.isEmpty();\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n) for push, O(1) for others",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

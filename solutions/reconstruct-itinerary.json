@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Reconstruct Itinerary",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "You are given a list of airline tickets where tickets[i] = [fromi, toi] represent the departure and arrival airports of one flight.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Hierholzer's Algorithm",
+      "description": "Use Hierholzer's algorithm to find Eulerian path.",
+      "code": "public List findItinerary(List> tickets) {\n    Map> graph = new HashMap<>();\n    \n    for (List ticket : tickets) {\n        graph.computeIfAbsent(ticket.get(0), k -> new PriorityQueue<>()).add(ticket.get(1));\n    }\n    \n    List result = new ArrayList<>();\n    dfs(\"JFK\", graph, result);\n    Collections.reverse(result);\n    return result;\n}\n\nprivate void dfs(String airport, Map> graph, List result) {\n    PriorityQueue destinations = graph.get(airport);\n    \n    while (destinations != null && !destinations.isEmpty()) {\n        String next = destinations.poll();\n        dfs(next, graph, result);\n    }\n    \n    result.add(airport);\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n log n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

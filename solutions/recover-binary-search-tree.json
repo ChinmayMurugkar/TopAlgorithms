@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Recover Binary Search Tree",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "You are given the root of a binary search tree (BST), where the values of exactly two nodes of the tree were swapped by mistake.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Inorder Traversal",
+      "description": "Use inorder traversal to find swapped nodes.",
+      "code": "public void recoverTree(TreeNode root) {\n    TreeNode[] swapped = new TreeNode[2];\n    TreeNode[] prev = {null};\n    inorder(root, prev, swapped);\n    \n    int temp = swapped[0].val;\n    swapped[0].val = swapped[1].val;\n    swapped[1].val = temp;\n}\n\nprivate void inorder(TreeNode node, TreeNode[] prev, TreeNode[] swapped) {\n    if (node == null) return;\n    \n    inorder(node.left, prev, swapped);\n    \n    if (prev[0] != null && prev[0].val > node.val) {\n        if (swapped[0] == null) {\n            swapped[0] = prev[0];\n            swapped[1] = node;\n        } else {\n            swapped[1] = node;\n        }\n    }\n    prev[0] = node;\n    \n    inorder(node.right, prev, swapped);\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(h)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

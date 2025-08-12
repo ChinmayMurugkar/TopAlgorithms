@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Fraction to Recurring Decimal",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given two integers representing the numerator and denominator of a fraction, return the fraction in string format.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Long Division",
+      "description": "Use long division algorithm with HashMap to detect cycles.",
+      "code": "public String fractionToDecimal(int numerator, int denominator) {\n    if (numerator == 0) return \"0\";\n    \n    StringBuilder result = new StringBuilder();\n    if ((numerator < 0) ^ (denominator < 0)) {\n        result.append(\"-\");\n    }\n    \n    long num = Math.abs((long) numerator);\n    long den = Math.abs((long) denominator);\n    \n    result.append(num / den);\n    long remainder = num % den;\n    \n    if (remainder == 0) {\n        return result.toString();\n    }\n    \n    result.append(\".\");\n    Map map = new HashMap<>();\n    \n    while (remainder != 0) {\n        if (map.containsKey(remainder)) {\n            result.insert(map.get(remainder), \"(\");\n            result.append(\")\");\n            break;\n        }\n        \n        map.put(remainder, result.length());\n        remainder *= 10;\n        result.append(remainder / den);\n        remainder %= den;\n    }\n    \n    return result.toString();\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log n)",
+        "space": "O(log n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

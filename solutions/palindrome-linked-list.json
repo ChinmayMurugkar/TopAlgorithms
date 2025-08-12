@@ -1,0 +1,41 @@
+{
+  "problem": {
+    "title": "Palindrome Linked List",
+    "leetcode_id": 234,
+    "category": "Linked List",
+    "description": "Given the head of a singly linked list, return true if it is a palindrome or false otherwise.",
+    "assumptions": [],
+    "example": {
+      "input": "head = [1,2,2,1]",
+      "output": "true",
+      "explanation": "The list reads the same forwards and backwards."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Reverse Second Half (Optimal)",
+      "description": "Find the middle, reverse the second half, and compare with the first half.",
+      "code": "public boolean isPalindrome(ListNode head) {\n    if (head == null || head.next == null) {\n        return true;\n    }\n    \n    // Find the middle of the list\n    ListNode slow = head;\n    ListNode fast = head;\n    \n    while (fast.next != null && fast.next.next != null) {\n        slow = slow.next;\n        fast = fast.next.next;\n    }\n    \n    // Reverse the second half\n    ListNode secondHalf = reverseList(slow.next);\n    ListNode firstHalf = head;\n    \n    // Compare the two halves\n    while (secondHalf != null) {\n        if (firstHalf.val != secondHalf.val) {\n            return false;\n        }\n        firstHalf = firstHalf.next;\n        secondHalf = secondHalf.next;\n    }\n    \n    return true;\n}\n\nprivate ListNode reverseList(ListNode head) {\n    ListNode prev = null;\n    ListNode current = head;\n    \n    while (current != null) {\n        ListNode nextTemp = current.next;\n        current.next = prev;\n        prev = current;\n        current = nextTemp;\n    }\n    \n    return prev;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 2 – Stack Approach",
+      "description": "Use a stack to store the first half and compare with the second half.",
+      "code": "public boolean isPalindrome(ListNode head) {\n    if (head == null || head.next == null) {\n        return true;\n    }\n    \n    // Find the middle\n    ListNode slow = head;\n    ListNode fast = head;\n    \n    while (fast.next != null && fast.next.next != null) {\n        slow = slow.next;\n        fast = fast.next.next;\n    }\n    \n    // Push first half onto stack\n    Stack stack = new Stack<>();\n    ListNode current = head;\n    while (current != slow.next) {\n        stack.push(current.val);\n        current = current.next;\n    }\n    \n    // Compare with second half\n    if (fast.next == null) {\n        stack.pop(); // Remove middle element for odd length\n    }\n    \n    while (current != null) {\n        if (stack.pop() != current.val) {\n            return false;\n        }\n        current = current.next;\n    }\n    \n    return true;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "remove-nth-node.html",
+    "next": "maximum-depth-binary-tree.html"
+  }
+}

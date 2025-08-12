@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reverse Words in a String - Coding Interview Problems</title>
+    <title id="page-title">Problem - Coding Interview Problems</title>
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <link rel="shortcut icon" href="../favicon.svg">
     <link rel="apple-touch-icon" href="../favicon.svg">
@@ -12,7 +12,6 @@
     <script defer src="/_vercel/insights/script.js"></script>
     
     <!-- Google Analytics 4 -->
-    <!-- Replace G-MGQNX8KHDE with your actual Google Analytics ID -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-MGQNX8KHDE"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -106,7 +105,7 @@
             border-bottom: 2px solid #3498db;
         }
         
-                .code-block {
+        .code-block {
             background: #2d3748;
             border: 1px solid #4a5568;
             border-radius: 8px;
@@ -182,6 +181,21 @@
             background: #2980b9;
         }
         
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #721c24;
+        }
+        
         @media (max-width: 768px) {
             .container {
                 padding: 10px;
@@ -201,155 +215,266 @@
     <div class="header">
         <div class="header-content">
             <div class="breadcrumb">
-                <a href="../index.html">Home</a> > String/Array/Matrix > Reverse Words in a String
+                <a href="../index.html">Home</a> > <span id="breadcrumb-category">Category</span> > <span id="breadcrumb-title">Problem</span>
             </div>
-            <h1>Reverse Words in a String</h1>
-            <div class="meta">LeetCode Problem 151</div>
+            <h1 id="problem-title">Loading...</h1>
+            <div class="meta" id="problem-meta">Loading...</div>
         </div>
     </div>
 
     <div class="container">
         <div class="content">
-            <div class="problem-description">
-                <strong>Problem:</strong> Given an input string s, reverse the order of the words.
-                <br><br>
-                <strong>Note:</strong> A word is defined as a sequence of non-space characters. The words in s will be separated by at least one space.
-                <br><br>
-                <strong>Example:</strong><br>
-                Input: s = "the sky is blue"<br>
-                Output: "blue is sky the"
+            <div id="loading" class="loading">
+                <h3>Loading problem...</h3>
+                <p>Please wait while we load the problem details.</p>
             </div>
-
-            <div class="solution">
-                <h3>Solution 1 – Using Built-in Functions</h3>
-                <p>The simplest approach is to split the string by spaces, reverse the array, and join it back.</p>
-                
-                <div class="code-block">
-public String reverseWords(String s) {
-    // Remove leading and trailing spaces, split by one or more spaces
-    String[] words = s.trim().split("\\s+");
-    
-    // Reverse the array
-    for (int i = 0; i < words.length / 2; i++) {
-        String temp = words[i];
-        words[i] = words[words.length - 1 - i];
-        words[words.length - 1 - i] = temp;
-    }
-    
-    // Join with single space
-    return String.join(" ", words);
-}
-                </div>
-                
-                <div class="complexity">
-                    <strong>Time Complexity:</strong> O(n)<br>
-                    <strong>Space Complexity:</strong> O(n)
-                </div>
+            
+            <div id="error" class="error" style="display: none;">
+                <h3>Error Loading Problem</h3>
+                <p id="error-message">Failed to load the problem. Please try refreshing the page.</p>
             </div>
-
-            <div class="solution">
-                <h3>Solution 2 – Two Pointers (In-place for char array)</h3>
-                <p>If we're given a char array and need to do it in-place:</p>
-                
-                <div class="code-block">
-public void reverseWords(char[] s) {
-    // Reverse the entire string
-    reverse(s, 0, s.length - 1);
-    
-    // Reverse each word
-    int start = 0;
-    for (int i = 0; i < s.length; i++) {
-        if (s[i] == ' ') {
-            reverse(s, start, i - 1);
-            start = i + 1;
-        }
-    }
-    
-    // Reverse the last word
-    reverse(s, start, s.length - 1);
-}
-
-private void reverse(char[] s, int left, int right) {
-    while (left < right) {
-        char temp = s[left];
-        s[left] = s[right];
-        s[right] = temp;
-        left++;
-        right--;
-    }
-}
+            
+            <div id="problem-content" style="display: none;">
+                <div class="problem-description" id="problem-description">
+                    <!-- Problem description will be loaded here -->
                 </div>
                 
-                <div class="complexity">
-                    <strong>Time Complexity:</strong> O(n)<br>
-                    <strong>Space Complexity:</strong> O(1)
-                </div>
-            </div>
-
-            <div class="solution">
-                <h3>Solution 3 – Using Stack</h3>
-                <p>We can use a stack to reverse the order of words:</p>
-                
-                <div class="code-block">
-public String reverseWords(String s) {
-    Stack<String> stack = new Stack<>();
-    StringBuilder word = new StringBuilder();
-    
-    for (int i = 0; i < s.length(); i++) {
-        char c = s.charAt(i);
-        if (c == ' ') {
-            if (word.length() > 0) {
-                stack.push(word.toString());
-                word.setLength(0);
-            }
-        } else {
-            word.append(c);
-        }
-    }
-    
-    // Don't forget the last word
-    if (word.length() > 0) {
-        stack.push(word.toString());
-    }
-    
-    // Build result
-    StringBuilder result = new StringBuilder();
-    while (!stack.isEmpty()) {
-        result.append(stack.pop());
-        if (!stack.isEmpty()) {
-            result.append(" ");
-        }
-    }
-    
-    return result.toString();
-}
+                <div id="solutions-container">
+                    <!-- Solutions will be loaded here -->
                 </div>
                 
-                <div class="complexity">
-                    <strong>Time Complexity:</strong> O(n)<br>
-                    <strong>Space Complexity:</strong> O(n)
+                <div id="variations-container">
+                    <!-- Variations will be loaded here -->
                 </div>
-            </div>
-
-            <div class="example">
-                <strong>Example Walkthrough:</strong><br><br>
-                Input: "the sky is blue"<br><br>
-                Solution 1:<br>
-                1. Split: ["the", "sky", "is", "blue"]<br>
-                2. Reverse: ["blue", "is", "sky", "the"]<br>
-                3. Join: "blue is sky the"<br><br>
                 
-                Solution 2 (char array):<br>
-                1. Original: "the sky is blue"<br>
-                2. Reverse all: "eulb si yks eht"<br>
-                3. Reverse words: "blue is sky the"
-            </div>
-
-            <div class="navigation">
-                <a href="rotate-array.html" class="nav-btn" target="_blank">← Previous: Rotate Array</a>
-                <a href="evaluate-reverse-polish-notation.html" class="nav-btn" target="_blank">Next: Evaluate Reverse Polish Notation →</a>
+                <div class="navigation" id="navigation">
+                    <!-- Navigation will be loaded here -->
+                </div>
             </div>
         </div>
     </div>
+
+    <script>
+        class ProblemLoader {
+            constructor() {
+                this.problemId = this.getProblemIdFromUrl();
+                this.solutionsPath = './solutions/';
+                this.init();
+            }
+            
+            getProblemIdFromUrl() {
+                // Extract problem ID from URL (e.g., two-sum.html -> two-sum)
+                const path = window.location.pathname;
+                const filename = path.split('/').pop();
+                return filename.replace('.html', '');
+            }
+            
+            async init() {
+                try {
+                    await this.loadProblem();
+                } catch (error) {
+                    console.error('Error loading problem:', error);
+                    this.showError('Failed to load problem: ' + error.message);
+                }
+            }
+            
+            async loadProblem() {
+                const response = await fetch(`${this.solutionsPath}${this.problemId}.json`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const problemData = await response.json();
+                this.renderProblem(problemData);
+            }
+            
+            renderProblem(data) {
+                // Hide loading, show content
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('problem-content').style.display = 'block';
+                
+                // Update page title
+                document.title = `${data.problem.title} - Coding Interview Problems`;
+                document.getElementById('page-title').textContent = `${data.problem.title} - Coding Interview Problems`;
+                
+                // Update header
+                document.getElementById('problem-title').textContent = data.problem.title;
+                document.getElementById('breadcrumb-category').textContent = data.problem.category;
+                document.getElementById('breadcrumb-title').textContent = data.problem.title;
+                
+                // Update meta
+                const metaText = data.problem.leetcode_id ? 
+                    `LeetCode Problem ${data.problem.leetcode_id}` : 
+                    'Coding Interview Problem';
+                document.getElementById('problem-meta').textContent = metaText;
+                
+                // Render problem description
+                this.renderProblemDescription(data.problem);
+                
+                // Render solutions
+                this.renderSolutions(data.solutions);
+                
+                // Render variations
+                if (data.variations && data.variations.length > 0) {
+                    this.renderVariations(data.variations);
+                }
+                
+                // Render navigation
+                this.renderNavigation(data.navigation);
+            }
+            
+            renderProblemDescription(problem) {
+                const descContainer = document.getElementById('problem-description');
+                
+                let html = `<strong>Problem:</strong> ${problem.description}`;
+                
+                if (problem.assumptions && problem.assumptions.length > 0) {
+                    html += '<br><br><strong>Assumptions:</strong><ul>';
+                    problem.assumptions.forEach(assumption => {
+                        html += `<li>${assumption}</li>`;
+                    });
+                    html += '</ul>';
+                }
+                
+                if (problem.example) {
+                    html += '<br><strong>Example:</strong><br>';
+                    if (problem.example.input) {
+                        html += `Input: ${problem.example.input}<br>`;
+                    }
+                    if (problem.example.output) {
+                        html += `Output: ${problem.example.output}<br>`;
+                    }
+                    if (problem.example.explanation) {
+                        html += `Explanation: ${problem.example.explanation}`;
+                    }
+                }
+                
+                descContainer.innerHTML = html;
+            }
+            
+            renderSolutions(solutions) {
+                const container = document.getElementById('solutions-container');
+                container.innerHTML = '';
+                
+                solutions.forEach(solution => {
+                    const solutionDiv = document.createElement('div');
+                    solutionDiv.className = 'solution';
+                    
+                    let html = `<h3>${solution.title}</h3>`;
+                    
+                    if (solution.description) {
+                        html += `<p>${solution.description}</p>`;
+                    }
+                    
+                    if (solution.code) {
+                        html += `<div class="code-block">${this.escapeHtml(solution.code)}</div>`;
+                    }
+                    
+                    if (solution.complexity) {
+                        html += `<div class="complexity">`;
+                        if (solution.complexity.time) {
+                            html += `<strong>Time Complexity:</strong> ${solution.complexity.time}<br>`;
+                        }
+                        if (solution.complexity.space) {
+                            html += `<strong>Space Complexity:</strong> ${solution.complexity.space}`;
+                        }
+                        html += '</div>';
+                    }
+                    
+                    if (solution.example_walkthrough) {
+                        html += `<div class="example">`;
+                        if (solution.example_walkthrough.text) {
+                            html += `<strong>Example Walkthrough:</strong><br><br>${solution.example_walkthrough.text}`;
+                        } else if (solution.example_walkthrough.steps) {
+                            html += `<strong>Example Walkthrough:</strong><br><br>`;
+                            solution.example_walkthrough.steps.forEach(step => {
+                                html += `${step}<br>`;
+                            });
+                        }
+                        html += '</div>';
+                    }
+                    
+                    solutionDiv.innerHTML = html;
+                    container.appendChild(solutionDiv);
+                });
+            }
+            
+            renderVariations(variations) {
+                const container = document.getElementById('variations-container');
+                container.innerHTML = '';
+                
+                if (variations.length === 0) return;
+                
+                const variationsDiv = document.createElement('div');
+                variationsDiv.className = 'solution';
+                variationsDiv.innerHTML = '<h3>Variations</h3>';
+                
+                variations.forEach(variation => {
+                    let html = `<h4>${variation.title}</h4>`;
+                    
+                    if (variation.description) {
+                        html += `<p>${variation.description}</p>`;
+                    }
+                    
+                    if (variation.code) {
+                        html += `<div class="code-block">${this.escapeHtml(variation.code)}</div>`;
+                    }
+                    
+                    variationsDiv.innerHTML += html;
+                });
+                
+                container.appendChild(variationsDiv);
+            }
+            
+            renderNavigation(navigation) {
+                const container = document.getElementById('navigation');
+                
+                if (!navigation) return;
+                
+                let html = '';
+                
+                if (navigation.previous) {
+                    html += `<a href="${navigation.previous}" class="nav-btn" target="_blank">← Previous: ${this.getProblemTitleFromFilename(navigation.previous)}</a>`;
+                } else {
+                    html += '<span></span>'; // Empty span for flexbox spacing
+                }
+                
+                if (navigation.next) {
+                    html += `<a href="${navigation.next}" class="nav-btn" target="_blank">Next: ${this.getProblemTitleFromFilename(navigation.next)} →</a>`;
+                } else {
+                    html += '<span></span>'; // Empty span for flexbox spacing
+                }
+                
+                container.innerHTML = html;
+            }
+            
+            getProblemTitleFromFilename(filename) {
+                // Convert filename to readable title (e.g., two-sum.html -> Two Sum)
+                return filename
+                    .replace('.html', '')
+                    .split('-')
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ');
+            }
+            
+            escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+            
+            showError(message) {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error').style.display = 'block';
+                document.getElementById('error-message').textContent = message;
+            }
+        }
+        
+        // Initialize the problem loader when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new ProblemLoader();
+        });
+    </script>
 </body>
 </html> 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reverse Linked List - Coding Interview Problems</title>
+    <title id="page-title">Problem - Coding Interview Problems</title>
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <link rel="shortcut icon" href="../favicon.svg">
     <link rel="apple-touch-icon" href="../favicon.svg">
@@ -12,7 +12,6 @@
     <script defer src="/_vercel/insights/script.js"></script>
     
     <!-- Google Analytics 4 -->
-    <!-- Replace G-MGQNX8KHDE with your actual Google Analytics ID -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-MGQNX8KHDE"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -106,7 +105,7 @@
             border-bottom: 2px solid #3498db;
         }
         
-                .code-block {
+        .code-block {
             background: #2d3748;
             border: 1px solid #4a5568;
             border-radius: 8px;
@@ -163,15 +162,6 @@
             color: #0c5460;
         }
         
-        .linked-list-visualization {
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 6px;
-            padding: 20px;
-            margin: 15px 0;
-            font-family: monospace;
-        }
-        
         .navigation {
             display: flex;
             justify-content: space-between;
@@ -189,6 +179,21 @@
         
         .nav-btn:hover {
             background: #2980b9;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #721c24;
         }
         
         @media (max-width: 768px) {
@@ -210,241 +215,266 @@
     <div class="header">
         <div class="header-content">
             <div class="breadcrumb">
-                <a href="../index.html">Home</a> > Linked List > Reverse Linked List
+                <a href="../index.html">Home</a> > <span id="breadcrumb-category">Category</span> > <span id="breadcrumb-title">Problem</span>
             </div>
-            <h1>Reverse Linked List</h1>
-            <div class="meta">LeetCode Problem 206</div>
+            <h1 id="problem-title">Loading...</h1>
+            <div class="meta" id="problem-meta">Loading...</div>
         </div>
     </div>
 
     <div class="container">
         <div class="content">
-            <div class="problem-description">
-                <strong>Problem:</strong> Given the head of a singly linked list, reverse the list, and return the reversed list.
-                <br><br>
-                <strong>Example:</strong><br>
-                Input: head = [1,2,3,4,5]<br>
-                Output: [5,4,3,2,1]
+            <div id="loading" class="loading">
+                <h3>Loading problem...</h3>
+                <p>Please wait while we load the problem details.</p>
             </div>
-
-            <div class="solution">
-                <h3>Solution 1 – Iterative Approach</h3>
-                <p>Use three pointers to reverse the links iteratively.</p>
-                
-                <div class="code-block">
-public ListNode reverseList(ListNode head) {
-    ListNode prev = null;
-    ListNode current = head;
-    
-    while (current != null) {
-        ListNode nextTemp = current.next;
-        current.next = prev;
-        prev = current;
-        current = nextTemp;
-    }
-    
-    return prev;
-}
-                </div>
-                
-                <div class="complexity">
-                    <strong>Time Complexity:</strong> O(n)<br>
-                    <strong>Space Complexity:</strong> O(1)
-                </div>
+            
+            <div id="error" class="error" style="display: none;">
+                <h3>Error Loading Problem</h3>
+                <p id="error-message">Failed to load the problem. Please try refreshing the page.</p>
             </div>
-
-            <div class="solution">
-                <h3>Solution 2 – Recursive Approach</h3>
-                <p>Use recursion to reverse the list by reversing the rest and updating the head.</p>
-                
-                <div class="code-block">
-public ListNode reverseList(ListNode head) {
-    if (head == null || head.next == null) {
-        return head;
-    }
-    
-    ListNode newHead = reverseList(head.next);
-    head.next.next = head;
-    head.next = null;
-    
-    return newHead;
-}
+            
+            <div id="problem-content" style="display: none;">
+                <div class="problem-description" id="problem-description">
+                    <!-- Problem description will be loaded here -->
                 </div>
                 
-                <div class="complexity">
-                    <strong>Time Complexity:</strong> O(n)<br>
-                    <strong>Space Complexity:</strong> O(n) for recursion stack
-                </div>
-            </div>
-
-            <div class="linked-list-visualization">
-                <strong>Iterative Reversal Visualization:</strong><br><br>
-                Initial: 1 → 2 → 3 → 4 → 5 → null<br><br>
-                
-                Step 1: prev=null, curr=1, next=2<br>
-                Update: null ← 1, prev=1, curr=2<br><br>
-                
-                Step 2: prev=1, curr=2, next=3<br>
-                Update: null ← 1 ← 2, prev=2, curr=3<br><br>
-                
-                Step 3: prev=2, curr=3, next=4<br>
-                Update: null ← 1 ← 2 ← 3, prev=3, curr=4<br><br>
-                
-                Continue until: null ← 1 ← 2 ← 3 ← 4 ← 5<br>
-                Return prev (which is 5)
-            </div>
-
-            <div class="solution">
-                <h3>Solution 3 – Stack-based Approach</h3>
-                <p>Use a stack to store nodes and rebuild the list in reverse order.</p>
-                
-                <div class="code-block">
-public ListNode reverseList(ListNode head) {
-    if (head == null) return null;
-    
-    Stack<ListNode> stack = new Stack<>();
-    ListNode current = head;
-    
-    // Push all nodes onto stack
-    while (current != null) {
-        stack.push(current);
-        current = current.next;
-    }
-    
-    // Pop nodes and rebuild list
-    ListNode newHead = stack.pop();
-    current = newHead;
-    
-    while (!stack.isEmpty()) {
-        current.next = stack.pop();
-        current = current.next;
-    }
-    
-    current.next = null;
-    return newHead;
-}
+                <div id="solutions-container">
+                    <!-- Solutions will be loaded here -->
                 </div>
                 
-                <div class="complexity">
-                    <strong>Time Complexity:</strong> O(n)<br>
-                    <strong>Space Complexity:</strong> O(n)
-                </div>
-            </div>
-
-            <div class="example">
-                <strong>More Examples:</strong><br><br>
-                Input: head = [1,2]<br>
-                Output: [2,1]<br><br>
-                
-                Input: head = []<br>
-                Output: []<br><br>
-                
-                Input: head = [1]<br>
-                Output: [1]
-            </div>
-
-            <div class="solution">
-                <h3>Solution 4 – Reverse in Groups</h3>
-                <p>Reverse the list in groups of k (generalization of the problem).</p>
-                
-                <div class="code-block">
-public ListNode reverseKGroup(ListNode head, int k) {
-    if (head == null || k == 1) return head;
-    
-    ListNode dummy = new ListNode(0);
-    dummy.next = head;
-    ListNode prev = dummy;
-    
-    int count = 0;
-    ListNode current = head;
-    
-    while (current != null) {
-        count++;
-        if (count % k == 0) {
-            prev = reverse(prev, current.next);
-            current = prev.next;
-        } else {
-            current = current.next;
-        }
-    }
-    
-    return dummy.next;
-}
-
-private ListNode reverse(ListNode start, ListNode end) {
-    ListNode prev = start;
-    ListNode current = start.next;
-    ListNode first = current;
-    
-    while (current != end) {
-        ListNode next = current.next;
-        current.next = prev;
-        prev = current;
-        current = next;
-    }
-    
-    start.next = prev;
-    first.next = current;
-    
-    return first;
-}
+                <div id="variations-container">
+                    <!-- Variations will be loaded here -->
                 </div>
                 
-                <div class="complexity">
-                    <strong>Time Complexity:</strong> O(n)<br>
-                    <strong>Space Complexity:</strong> O(1)
+                <div class="navigation" id="navigation">
+                    <!-- Navigation will be loaded here -->
                 </div>
-            </div>
-
-            <div class="solution">
-                <h3>Edge Cases and Validation</h3>
-                <p>Robust implementation handling edge cases:</p>
-                
-                <div class="code-block">
-public ListNode reverseList(ListNode head) {
-    // Handle null and single node cases
-    if (head == null || head.next == null) {
-        return head;
-    }
-    
-    ListNode prev = null;
-    ListNode current = head;
-    
-    while (current != null) {
-        // Store next node before changing links
-        ListNode nextTemp = current.next;
-        
-        // Reverse the link
-        current.next = prev;
-        
-        // Move pointers forward
-        prev = current;
-        current = nextTemp;
-    }
-    
-    return prev;
-}
-
-// ListNode class definition
-class ListNode {
-    int val;
-    ListNode next;
-    
-    ListNode() {}
-    ListNode(int val) { this.val = val; }
-    ListNode(int val, ListNode next) { 
-        this.val = val; 
-        this.next = next; 
-    }
-}
-                </div>
-            </div>
-
-            <div class="navigation">
-                <a href="add-two-numbers.html" class="nav-btn" target="_blank">← Previous: Add Two Numbers</a>
-                <a href="merge-two-sorted-lists.html" class="nav-btn" target="_blank">Next: Merge Two Sorted Lists →</a>
             </div>
         </div>
     </div>
+
+    <script>
+        class ProblemLoader {
+            constructor() {
+                this.problemId = this.getProblemIdFromUrl();
+                this.solutionsPath = './solutions/';
+                this.init();
+            }
+            
+            getProblemIdFromUrl() {
+                // Extract problem ID from URL (e.g., two-sum.html -> two-sum)
+                const path = window.location.pathname;
+                const filename = path.split('/').pop();
+                return filename.replace('.html', '');
+            }
+            
+            async init() {
+                try {
+                    await this.loadProblem();
+                } catch (error) {
+                    console.error('Error loading problem:', error);
+                    this.showError('Failed to load problem: ' + error.message);
+                }
+            }
+            
+            async loadProblem() {
+                const response = await fetch(`${this.solutionsPath}${this.problemId}.json`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const problemData = await response.json();
+                this.renderProblem(problemData);
+            }
+            
+            renderProblem(data) {
+                // Hide loading, show content
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('problem-content').style.display = 'block';
+                
+                // Update page title
+                document.title = `${data.problem.title} - Coding Interview Problems`;
+                document.getElementById('page-title').textContent = `${data.problem.title} - Coding Interview Problems`;
+                
+                // Update header
+                document.getElementById('problem-title').textContent = data.problem.title;
+                document.getElementById('breadcrumb-category').textContent = data.problem.category;
+                document.getElementById('breadcrumb-title').textContent = data.problem.title;
+                
+                // Update meta
+                const metaText = data.problem.leetcode_id ? 
+                    `LeetCode Problem ${data.problem.leetcode_id}` : 
+                    'Coding Interview Problem';
+                document.getElementById('problem-meta').textContent = metaText;
+                
+                // Render problem description
+                this.renderProblemDescription(data.problem);
+                
+                // Render solutions
+                this.renderSolutions(data.solutions);
+                
+                // Render variations
+                if (data.variations && data.variations.length > 0) {
+                    this.renderVariations(data.variations);
+                }
+                
+                // Render navigation
+                this.renderNavigation(data.navigation);
+            }
+            
+            renderProblemDescription(problem) {
+                const descContainer = document.getElementById('problem-description');
+                
+                let html = `<strong>Problem:</strong> ${problem.description}`;
+                
+                if (problem.assumptions && problem.assumptions.length > 0) {
+                    html += '<br><br><strong>Assumptions:</strong><ul>';
+                    problem.assumptions.forEach(assumption => {
+                        html += `<li>${assumption}</li>`;
+                    });
+                    html += '</ul>';
+                }
+                
+                if (problem.example) {
+                    html += '<br><strong>Example:</strong><br>';
+                    if (problem.example.input) {
+                        html += `Input: ${problem.example.input}<br>`;
+                    }
+                    if (problem.example.output) {
+                        html += `Output: ${problem.example.output}<br>`;
+                    }
+                    if (problem.example.explanation) {
+                        html += `Explanation: ${problem.example.explanation}`;
+                    }
+                }
+                
+                descContainer.innerHTML = html;
+            }
+            
+            renderSolutions(solutions) {
+                const container = document.getElementById('solutions-container');
+                container.innerHTML = '';
+                
+                solutions.forEach(solution => {
+                    const solutionDiv = document.createElement('div');
+                    solutionDiv.className = 'solution';
+                    
+                    let html = `<h3>${solution.title}</h3>`;
+                    
+                    if (solution.description) {
+                        html += `<p>${solution.description}</p>`;
+                    }
+                    
+                    if (solution.code) {
+                        html += `<div class="code-block">${this.escapeHtml(solution.code)}</div>`;
+                    }
+                    
+                    if (solution.complexity) {
+                        html += `<div class="complexity">`;
+                        if (solution.complexity.time) {
+                            html += `<strong>Time Complexity:</strong> ${solution.complexity.time}<br>`;
+                        }
+                        if (solution.complexity.space) {
+                            html += `<strong>Space Complexity:</strong> ${solution.complexity.space}`;
+                        }
+                        html += '</div>';
+                    }
+                    
+                    if (solution.example_walkthrough) {
+                        html += `<div class="example">`;
+                        if (solution.example_walkthrough.text) {
+                            html += `<strong>Example Walkthrough:</strong><br><br>${solution.example_walkthrough.text}`;
+                        } else if (solution.example_walkthrough.steps) {
+                            html += `<strong>Example Walkthrough:</strong><br><br>`;
+                            solution.example_walkthrough.steps.forEach(step => {
+                                html += `${step}<br>`;
+                            });
+                        }
+                        html += '</div>';
+                    }
+                    
+                    solutionDiv.innerHTML = html;
+                    container.appendChild(solutionDiv);
+                });
+            }
+            
+            renderVariations(variations) {
+                const container = document.getElementById('variations-container');
+                container.innerHTML = '';
+                
+                if (variations.length === 0) return;
+                
+                const variationsDiv = document.createElement('div');
+                variationsDiv.className = 'solution';
+                variationsDiv.innerHTML = '<h3>Variations</h3>';
+                
+                variations.forEach(variation => {
+                    let html = `<h4>${variation.title}</h4>`;
+                    
+                    if (variation.description) {
+                        html += `<p>${variation.description}</p>`;
+                    }
+                    
+                    if (variation.code) {
+                        html += `<div class="code-block">${this.escapeHtml(variation.code)}</div>`;
+                    }
+                    
+                    variationsDiv.innerHTML += html;
+                });
+                
+                container.appendChild(variationsDiv);
+            }
+            
+            renderNavigation(navigation) {
+                const container = document.getElementById('navigation');
+                
+                if (!navigation) return;
+                
+                let html = '';
+                
+                if (navigation.previous) {
+                    html += `<a href="${navigation.previous}" class="nav-btn" target="_blank">← Previous: ${this.getProblemTitleFromFilename(navigation.previous)}</a>`;
+                } else {
+                    html += '<span></span>'; // Empty span for flexbox spacing
+                }
+                
+                if (navigation.next) {
+                    html += `<a href="${navigation.next}" class="nav-btn" target="_blank">Next: ${this.getProblemTitleFromFilename(navigation.next)} →</a>`;
+                } else {
+                    html += '<span></span>'; // Empty span for flexbox spacing
+                }
+                
+                container.innerHTML = html;
+            }
+            
+            getProblemTitleFromFilename(filename) {
+                // Convert filename to readable title (e.g., two-sum.html -> Two Sum)
+                return filename
+                    .replace('.html', '')
+                    .split('-')
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ');
+            }
+            
+            escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+            
+            showError(message) {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error').style.display = 'block';
+                document.getElementById('error-message').textContent = message;
+            }
+        }
+        
+        // Initialize the problem loader when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new ProblemLoader();
+        });
+    </script>
 </body>
 </html> 

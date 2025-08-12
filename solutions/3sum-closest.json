@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "3Sum Closest",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an integer array nums of length n and an integer target, find three integers in nums such that the sum is closest to target.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Two Pointers",
+      "description": "Use two pointers to find closest sum.",
+      "code": "public int threeSumClosest(int[] nums, int target) {\n    Arrays.sort(nums);\n    int closest = nums[0] + nums[1] + nums[2];\n    \n    for (int i = 0; i < nums.length - 2; i++) {\n        int left = i + 1, right = nums.length - 1;\n        \n        while (left < right) {\n            int sum = nums[i] + nums[left] + nums[right];\n            \n            if (Math.abs(sum - target) < Math.abs(closest - target)) {\n                closest = sum;\n            }\n            \n            if (sum < target) {\n                left++;\n            } else {\n                right--;\n            }\n        }\n    }\n    \n    return closest;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n²)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

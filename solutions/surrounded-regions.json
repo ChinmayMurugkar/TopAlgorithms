@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Surrounded Regions",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an m x n matrix board containing 'X' and 'O', capture all regions that are 4-directionally surrounded by 'X'.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – DFS",
+      "description": "Use DFS to mark regions connected to border.",
+      "code": "public void solve(char[][] board) {\n    if (board == null || board.length == 0) return;\n    \n    int m = board.length;\n    int n = board[0].length;\n    \n    // Mark 'O's connected to border\n    for (int i = 0; i < m; i++) {\n        dfs(board, i, 0);\n        dfs(board, i, n - 1);\n    }\n    \n    for (int j = 0; j < n; j++) {\n        dfs(board, 0, j);\n        dfs(board, m - 1, j);\n    }\n    \n    // Flip remaining 'O's to 'X' and 'E's back to 'O'\n    for (int i = 0; i < m; i++) {\n        for (int j = 0; j < n; j++) {\n            if (board[i][j] == 'O') {\n                board[i][j] = 'X';\n            } else if (board[i][j] == 'E') {\n                board[i][j] = 'O';\n            }\n        }\n    }\n}\n\nprivate void dfs(char[][] board, int i, int j) {\n    if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || board[i][j] != 'O') {\n        return;\n    }\n    \n    board[i][j] = 'E';\n    \n    dfs(board, i + 1, j);\n    dfs(board, i - 1, j);\n    dfs(board, i, j + 1);\n    dfs(board, i, j - 1);\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(m×n)",
+        "space": "O(m×n)"
+      }
+    },
+    {
+      "title": "Solution 1 – DFS",
+      "description": "Use DFS to mark regions connected to border.",
+      "code": "public void solve(char[][] board) {\n    if (board == null || board.length == 0) return;\n    \n    int m = board.length;\n    int n = board[0].length;\n    \n    // Mark 'O's connected to border\n    for (int i = 0; i < m; i++) {\n        dfs(board, i, 0);\n        dfs(board, i, n - 1);\n    }\n    \n    for (int j = 0; j < n; j++) {\n        dfs(board, 0, j);\n        dfs(board, m - 1, j);\n    }\n    \n    // Flip remaining 'O's to 'X' and 'E's back to 'O'\n    for (int i = 0; i < m; i++) {\n        for (int j = 0; j < n; j++) {\n            if (board[i][j] == 'O') {\n                board[i][j] = 'X';\n            } else if (board[i][j] == 'E') {\n                board[i][j] = 'O';\n            }\n        }\n    }\n}\n\nprivate void dfs(char[][] board, int i, int j) {\n    if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || board[i][j] != 'O') {\n        return;\n    }\n    \n    board[i][j] = 'E';\n    \n    dfs(board, i + 1, j);\n    dfs(board, i - 1, j);\n    dfs(board, i, j + 1);\n    dfs(board, i, j - 1);\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(m×n)",
+        "space": "O(m×n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

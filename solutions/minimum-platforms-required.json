@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Minimum Platforms Required",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given arrival and departure times of all trains, find the minimum number of platforms required.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Sorting and Two Pointers",
+      "description": "Sort arrival and departure times, then use two pointers to track platforms needed.",
+      "code": "public int findPlatform(int arr[], int dep[], int n) {\n    Arrays.sort(arr);\n    Arrays.sort(dep);\n    \n    int platforms = 1, result = 1;\n    int i = 1, j = 0;\n    \n    while (i < n && j < n) {\n        if (arr[i] <= dep[j]) {\n            platforms++;\n            i++;\n        } else {\n            platforms--;\n            j++;\n        }\n        result = Math.max(result, platforms);\n    }\n    \n    return result;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n log n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

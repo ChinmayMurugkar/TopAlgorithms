@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Permutations",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Backtracking",
+      "description": "Use backtracking to generate all permutations.",
+      "code": "public List> permute(int[] nums) {\n    List> result = new ArrayList<>();\n    backtrack(nums, new ArrayList<>(), new boolean[nums.length], result);\n    return result;\n}\n\nprivate void backtrack(int[] nums, List current, boolean[] used, List> result) {\n    if (current.size() == nums.length) {\n        result.add(new ArrayList<>(current));\n        return;\n    }\n    \n    for (int i = 0; i < nums.length; i++) {\n        if (!used[i]) {\n            used[i] = true;\n            current.add(nums[i]);\n            backtrack(nums, current, used, result);\n            current.remove(current.size() - 1);\n            used[i] = false;\n        }\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n!)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

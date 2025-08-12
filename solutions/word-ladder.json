@@ -1,0 +1,61 @@
+{
+  "problem": {
+    "title": "Word Ladder",
+    "leetcode_id": 127,
+    "category": "String/Array/Matrix",
+    "description": "Given two words (beginWord and endWord), and a dictionary wordList, find the length of shortest transformation sequence from beginWord to endWord.\n                \nRules:\n\nOnly one letter can be changed at a time\nEach transformed word must exist in the wordList\nReturn 0 if there is no such transformation sequence",
+    "assumptions": [],
+    "example": {
+      "input": "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"]",
+      "output": "5",
+      "explanation": "hit → hot → dot → dog → cog"
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – BFS with Set",
+      "description": "Use BFS to find the shortest path. Convert wordList to a set for O(1) lookup.",
+      "code": "public int ladderLength(String beginWord, String endWord, List wordList) {\n    Set wordSet = new HashSet<>(wordList);\n    \n    if (!wordSet.contains(endWord)) {\n        return 0;\n    }\n    \n    Queue queue = new LinkedList<>();\n    queue.offer(beginWord);\n    wordSet.remove(beginWord);\n    \n    int level = 1;\n    \n    while (!queue.isEmpty()) {\n        int size = queue.size();\n        \n        for (int i = 0; i < size; i++) {\n            String currentWord = queue.poll();\n            \n            if (currentWord.equals(endWord)) {\n                return level;\n            }\n            \n            // Generate all possible transformations\n            char[] wordArray = currentWord.toCharArray();\n            for (int j = 0; j < wordArray.length; j++) {\n                char originalChar = wordArray[j];\n                \n                for (char c = 'a'; c <= 'z'; c++) {\n                    wordArray[j] = c;\n                    String newWord = new String(wordArray);\n                    \n                    if (wordSet.contains(newWord)) {\n                        queue.offer(newWord);\n                        wordSet.remove(newWord);\n                    }\n                }\n                \n                wordArray[j] = originalChar;\n            }\n        }\n        \n        level++;\n    }\n    \n    return 0;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(26 * L * N) where L is word length, N is wordList size",
+        "space": "O(N)"
+      }
+    },
+    {
+      "title": "Solution 2 – Bidirectional BFS",
+      "description": "Use BFS from both start and end to reduce search space significantly.",
+      "code": "public int ladderLength(String beginWord, String endWord, List wordList) {\n    Set wordSet = new HashSet<>(wordList);\n    \n    if (!wordSet.contains(endWord)) {\n        return 0;\n    }\n    \n    Set beginSet = new HashSet<>();\n    Set endSet = new HashSet<>();\n    beginSet.add(beginWord);\n    endSet.add(endWord);\n    wordSet.remove(beginWord);\n    wordSet.remove(endWord);\n    \n    int level = 1;\n    \n    while (!beginSet.isEmpty() && !endSet.isEmpty()) {\n        // Always work on the smaller set\n        if (beginSet.size() > endSet.size()) {\n            Set temp = beginSet;\n            beginSet = endSet;\n            endSet = temp;\n        }\n        \n        Set nextLevel = new HashSet<>();\n        \n        for (String word : beginSet) {\n            char[] wordArray = word.toCharArray();\n            \n            for (int i = 0; i < wordArray.length; i++) {\n                char originalChar = wordArray[i];\n                \n                for (char c = 'a'; c <= 'z'; c++) {\n                    wordArray[i] = c;\n                    String newWord = new String(wordArray);\n                    \n                    if (endSet.contains(newWord)) {\n                        return level + 1;\n                    }\n                    \n                    if (wordSet.contains(newWord)) {\n                        nextLevel.add(newWord);\n                        wordSet.remove(newWord);\n                    }\n                }\n                \n                wordArray[i] = originalChar;\n            }\n        }\n        \n        beginSet = nextLevel;\n        level++;\n    }\n    \n    return 0;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(26 * L * N) but much faster in practice",
+        "space": "O(N)"
+      }
+    },
+    {
+      "title": "Solution 3 – BFS with Word Pattern",
+      "description": "Pre-process wordList to create patterns for faster neighbor finding.",
+      "code": "public int ladderLength(String beginWord, String endWord, List wordList) {\n    Set wordSet = new HashSet<>(wordList);\n    \n    if (!wordSet.contains(endWord)) {\n        return 0;\n    }\n    \n    // Create pattern map\n    Map> patternMap = new HashMap<>();\n    for (String word : wordList) {\n        for (int i = 0; i < word.length(); i++) {\n            String pattern = word.substring(0, i) + \"*\" + word.substring(i + 1);\n            patternMap.computeIfAbsent(pattern, k -> new ArrayList<>()).add(word);\n        }\n    }\n    \n    Queue queue = new LinkedList<>();\n    queue.offer(beginWord);\n    Set visited = new HashSet<>();\n    visited.add(beginWord);\n    \n    int level = 1;\n    \n    while (!queue.isEmpty()) {\n        int size = queue.size();\n        \n        for (int i = 0; i < size; i++) {\n            String currentWord = queue.poll();\n            \n            if (currentWord.equals(endWord)) {\n                return level;\n            }\n            \n            // Find neighbors using patterns\n            for (int j = 0; j < currentWord.length(); j++) {\n                String pattern = currentWord.substring(0, j) + \"*\" + currentWord.substring(j + 1);\n                \n                for (String neighbor : patternMap.getOrDefault(pattern, new ArrayList<>())) {\n                    if (!visited.contains(neighbor)) {\n                        visited.add(neighbor);\n                        queue.offer(neighbor);\n                    }\n                }\n            }\n        }\n        \n        level++;\n    }\n    \n    return 0;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(L² * N) for preprocessing, O(L * N) for BFS",
+        "space": "O(L * N)"
+      }
+    },
+    {
+      "title": "Solution 4 – A* Search with Heuristic",
+      "description": "Use A* search with Hamming distance as heuristic for better performance.",
+      "code": "public int ladderLength(String beginWord, String endWord, List wordList) {\n    Set wordSet = new HashSet<>(wordList);\n    \n    if (!wordSet.contains(endWord)) {\n        return 0;\n    }\n    \n    PriorityQueue pq = new PriorityQueue<>((a, b) -> \n        Integer.compare(a.cost + a.heuristic, b.cost + b.heuristic));\n    \n    pq.offer(new WordNode(beginWord, 1, getHammingDistance(beginWord, endWord)));\n    Set visited = new HashSet<>();\n    \n    while (!pq.isEmpty()) {\n        WordNode current = pq.poll();\n        \n        if (current.word.equals(endWord)) {\n            return current.cost;\n        }\n        \n        if (visited.contains(current.word)) {\n            continue;\n        }\n        \n        visited.add(current.word);\n        \n        char[] wordArray = current.word.toCharArray();\n        for (int i = 0; i < wordArray.length; i++) {\n            char originalChar = wordArray[i];\n            \n            for (char c = 'a'; c <= 'z'; c++) {\n                wordArray[i] = c;\n                String newWord = new String(wordArray);\n                \n                if (wordSet.contains(newWord) && !visited.contains(newWord)) {\n                    int newCost = current.cost + 1;\n                    int newHeuristic = getHammingDistance(newWord, endWord);\n                    pq.offer(new WordNode(newWord, newCost, newHeuristic));\n                }\n            }\n            \n            wordArray[i] = originalChar;\n        }\n    }\n    \n    return 0;\n}\n\nprivate int getHammingDistance(String word1, String word2) {\n    int distance = 0;\n    for (int i = 0; i < word1.length(); i++) {\n        if (word1.charAt(i) != word2.charAt(i)) {\n            distance++;\n        }\n    }\n    return distance;\n}\n\nclass WordNode {\n    String word;\n    int cost;\n    int heuristic;\n    \n    WordNode(String word, int cost, int heuristic) {\n        this.word = word;\n        this.cost = cost;\n        this.heuristic = heuristic;\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(26 * L * N * log(N))",
+        "space": "O(N)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "isomorphic-strings.html",
+    "next": "word-ladder-ii.html"
+  }
+}

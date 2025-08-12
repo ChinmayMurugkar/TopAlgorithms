@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Largest Rectangle in Histogram",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an array of integers heights representing the histogram's bar height where the width of each bar is 1, return the area of the largest rectangle in the histogram.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Monotonic Stack",
+      "description": "Use monotonic stack to find largest rectangle.",
+      "code": "public int largestRectangleArea(int[] heights) {\n    Stack stack = new Stack<>();\n    int maxArea = 0;\n    int i = 0;\n    \n    while (i < heights.length) {\n        if (stack.isEmpty() || heights[stack.peek()] <= heights[i]) {\n            stack.push(i++);\n        } else {\n            int height = heights[stack.pop()];\n            int width = stack.isEmpty() ? i : i - stack.peek() - 1;\n            maxArea = Math.max(maxArea, height * width);\n        }\n    }\n    \n    while (!stack.isEmpty()) {\n        int height = heights[stack.pop()];\n        int width = stack.isEmpty() ? i : i - stack.peek() - 1;\n        maxArea = Math.max(maxArea, height * width);\n    }\n    \n    return maxArea;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

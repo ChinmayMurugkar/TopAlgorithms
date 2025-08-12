@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Copy List with Random Pointer",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "A linked list of length n is given such that each node contains an additional random pointer, which could point to any node in the list, or null. Construct a deep copy of the list.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – HashMap",
+      "description": "Use HashMap to map original nodes to copied nodes.",
+      "code": "public Node copyRandomList(Node head) {\n    if (head == null) return null;\n    \n    Map map = new HashMap<>();\n    \n    // First pass: create copies\n    Node current = head;\n    while (current != null) {\n        map.put(current, new Node(current.val));\n        current = current.next;\n    }\n    \n    // Second pass: set next and random pointers\n    current = head;\n    while (current != null) {\n        Node copy = map.get(current);\n        copy.next = map.get(current.next);\n        copy.random = map.get(current.random);\n        current = current.next;\n    }\n    \n    return map.get(head);\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "title": "Solution 1 – HashMap",
+      "description": "Use HashMap to map original nodes to copied nodes.",
+      "code": "public Node copyRandomList(Node head) {\n    if (head == null) return null;\n    \n    Map map = new HashMap<>();\n    \n    // First pass: create copies\n    Node current = head;\n    while (current != null) {\n        map.put(current, new Node(current.val));\n        current = current.next;\n    }\n    \n    // Second pass: set next and random pointers\n    current = head;\n    while (current != null) {\n        Node copy = map.get(current);\n        copy.next = map.get(current.next);\n        copy.random = map.get(current.random);\n        current = current.next;\n    }\n    \n    return map.get(head);\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

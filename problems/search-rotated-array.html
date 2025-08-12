@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search in Rotated Array - Coding Interview Problems</title>
+    <title id="page-title">Problem - Coding Interview Problems</title>
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <link rel="shortcut icon" href="../favicon.svg">
     <link rel="apple-touch-icon" href="../favicon.svg">
@@ -12,7 +12,6 @@
     <script defer src="/_vercel/insights/script.js"></script>
     
     <!-- Google Analytics 4 -->
-    <!-- Replace G-MGQNX8KHDE with your actual Google Analytics ID -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-MGQNX8KHDE"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -21,21 +20,92 @@
       gtag('config', 'G-MGQNX8KHDE');
     </script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background-color: #f8f9fa; }
-        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
-        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px 0; margin-bottom: 30px; }
-        .header-content { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
-        .breadcrumb { margin-bottom: 10px; font-size: 0.9rem; opacity: 0.8; }
-        .breadcrumb a { color: white; text-decoration: none; }
-        .breadcrumb a:hover { text-decoration: underline; }
-        h1 { font-size: 2.2rem; margin-bottom: 10px; }
-        .meta { font-size: 0.9rem; opacity: 0.8; }
-        .content { background: white; border-radius: 10px; padding: 30px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); margin-bottom: 30px; }
-        .problem-description { background: #e3f2fd; border-left: 4px solid #2196f3; padding: 20px; margin-bottom: 30px; border-radius: 0 6px 6px 0; }
-        .solution { margin-bottom: 40px; }
-        .solution h3 { color: #2c3e50; font-size: 1.4rem; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #3498db; }
-                .code-block {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+        
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .breadcrumb {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .meta {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .content {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .problem-description {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 0 6px 6px 0;
+        }
+        
+        .solution {
+            margin-bottom: 40px;
+        }
+        
+        .solution h3 {
+            color: #2c3e50;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        .code-block {
             background: #2d3748;
             border: 1px solid #4a5568;
             border-radius: 8px;
@@ -67,71 +137,344 @@
         .code-block .number {
             color: #74c0fc;
         }
-        .complexity { background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 6px; padding: 15px; margin: 15px 0; }
-        .complexity strong { color: #856404; }
-        .navigation { display: flex; justify-content: space-between; margin-top: 30px; }
-        .nav-btn { padding: 10px 20px; background: #3498db; color: white; text-decoration: none; border-radius: 6px; transition: background 0.2s ease; }
-        .nav-btn:hover { background: #2980b9; }
+        
+        .complexity {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .complexity strong {
+            color: #856404;
+        }
+        
+        .example {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .example strong {
+            color: #0c5460;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.2s ease;
+        }
+        
+        .nav-btn:hover {
+            background: #2980b9;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #721c24;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="header">
         <div class="header-content">
             <div class="breadcrumb">
-                <a href="../index.html">Home</a> > String/Array/Matrix > Search in Rotated Array
+                <a href="../index.html">Home</a> > <span id="breadcrumb-category">Category</span> > <span id="breadcrumb-title">Problem</span>
             </div>
-            <h1>Search in Rotated Array</h1>
-            <div class="meta">LeetCode Problem N/A</div>
+            <h1 id="problem-title">Loading...</h1>
+            <div class="meta" id="problem-meta">Loading...</div>
         </div>
     </div>
 
     <div class="container">
         <div class="content">
-            <div class="problem-description">
-                <strong>Problem:</strong> There is an integer array nums sorted in ascending order (with distinct values).
+            <div id="loading" class="loading">
+                <h3>Loading problem...</h3>
+                <p>Please wait while we load the problem details.</p>
             </div>
-
-            <div class="solution">
-    <h3>Solution 1 – Binary Search</h3>
-    <p>Use binary search with rotation detection.</p>
-    <div class="code-block">
-public int search(int[] nums, int target) {
-    int left = 0, right = nums.length - 1;
-    
-    while (left <= right) {
-        int mid = left + (right - left) / 2;
-        
-        if (nums[mid] == target) return mid;
-        
-        if (nums[left] <= nums[mid]) {
-            if (target >= nums[left] && target < nums[mid]) {
-                right = mid - 1;
-            } else {
-                left = mid + 1;
-            }
-        } else {
-            if (target > nums[mid] && target <= nums[right]) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
-        }
-    }
-    
-    return -1;
-}
-    </div>
-    <div class="complexity">
-        <strong>Time Complexity:</strong> O(log n)<br>
-        <strong>Space Complexity:</strong> O(1)
-    </div>
-</div>
-
-            <div class="navigation">
-                <a href="two-sum.html" class="nav-btn" target="_blank">← Previous: Two Sum</a>
-                <a href="two-sum-iii.html" class="nav-btn" target="_blank">Next: Two Sum III →</a>
+            
+            <div id="error" class="error" style="display: none;">
+                <h3>Error Loading Problem</h3>
+                <p id="error-message">Failed to load the problem. Please try refreshing the page.</p>
+            </div>
+            
+            <div id="problem-content" style="display: none;">
+                <div class="problem-description" id="problem-description">
+                    <!-- Problem description will be loaded here -->
+                </div>
+                
+                <div id="solutions-container">
+                    <!-- Solutions will be loaded here -->
+                </div>
+                
+                <div id="variations-container">
+                    <!-- Variations will be loaded here -->
+                </div>
+                
+                <div class="navigation" id="navigation">
+                    <!-- Navigation will be loaded here -->
+                </div>
             </div>
         </div>
     </div>
+
+    <script>
+        class ProblemLoader {
+            constructor() {
+                this.problemId = this.getProblemIdFromUrl();
+                this.solutionsPath = './solutions/';
+                this.init();
+            }
+            
+            getProblemIdFromUrl() {
+                // Extract problem ID from URL (e.g., two-sum.html -> two-sum)
+                const path = window.location.pathname;
+                const filename = path.split('/').pop();
+                return filename.replace('.html', '');
+            }
+            
+            async init() {
+                try {
+                    await this.loadProblem();
+                } catch (error) {
+                    console.error('Error loading problem:', error);
+                    this.showError('Failed to load problem: ' + error.message);
+                }
+            }
+            
+            async loadProblem() {
+                const response = await fetch(`${this.solutionsPath}${this.problemId}.json`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const problemData = await response.json();
+                this.renderProblem(problemData);
+            }
+            
+            renderProblem(data) {
+                // Hide loading, show content
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('problem-content').style.display = 'block';
+                
+                // Update page title
+                document.title = `${data.problem.title} - Coding Interview Problems`;
+                document.getElementById('page-title').textContent = `${data.problem.title} - Coding Interview Problems`;
+                
+                // Update header
+                document.getElementById('problem-title').textContent = data.problem.title;
+                document.getElementById('breadcrumb-category').textContent = data.problem.category;
+                document.getElementById('breadcrumb-title').textContent = data.problem.title;
+                
+                // Update meta
+                const metaText = data.problem.leetcode_id ? 
+                    `LeetCode Problem ${data.problem.leetcode_id}` : 
+                    'Coding Interview Problem';
+                document.getElementById('problem-meta').textContent = metaText;
+                
+                // Render problem description
+                this.renderProblemDescription(data.problem);
+                
+                // Render solutions
+                this.renderSolutions(data.solutions);
+                
+                // Render variations
+                if (data.variations && data.variations.length > 0) {
+                    this.renderVariations(data.variations);
+                }
+                
+                // Render navigation
+                this.renderNavigation(data.navigation);
+            }
+            
+            renderProblemDescription(problem) {
+                const descContainer = document.getElementById('problem-description');
+                
+                let html = `<strong>Problem:</strong> ${problem.description}`;
+                
+                if (problem.assumptions && problem.assumptions.length > 0) {
+                    html += '<br><br><strong>Assumptions:</strong><ul>';
+                    problem.assumptions.forEach(assumption => {
+                        html += `<li>${assumption}</li>`;
+                    });
+                    html += '</ul>';
+                }
+                
+                if (problem.example) {
+                    html += '<br><strong>Example:</strong><br>';
+                    if (problem.example.input) {
+                        html += `Input: ${problem.example.input}<br>`;
+                    }
+                    if (problem.example.output) {
+                        html += `Output: ${problem.example.output}<br>`;
+                    }
+                    if (problem.example.explanation) {
+                        html += `Explanation: ${problem.example.explanation}`;
+                    }
+                }
+                
+                descContainer.innerHTML = html;
+            }
+            
+            renderSolutions(solutions) {
+                const container = document.getElementById('solutions-container');
+                container.innerHTML = '';
+                
+                solutions.forEach(solution => {
+                    const solutionDiv = document.createElement('div');
+                    solutionDiv.className = 'solution';
+                    
+                    let html = `<h3>${solution.title}</h3>`;
+                    
+                    if (solution.description) {
+                        html += `<p>${solution.description}</p>`;
+                    }
+                    
+                    if (solution.code) {
+                        html += `<div class="code-block">${this.escapeHtml(solution.code)}</div>`;
+                    }
+                    
+                    if (solution.complexity) {
+                        html += `<div class="complexity">`;
+                        if (solution.complexity.time) {
+                            html += `<strong>Time Complexity:</strong> ${solution.complexity.time}<br>`;
+                        }
+                        if (solution.complexity.space) {
+                            html += `<strong>Space Complexity:</strong> ${solution.complexity.space}`;
+                        }
+                        html += '</div>';
+                    }
+                    
+                    if (solution.example_walkthrough) {
+                        html += `<div class="example">`;
+                        if (solution.example_walkthrough.text) {
+                            html += `<strong>Example Walkthrough:</strong><br><br>${solution.example_walkthrough.text}`;
+                        } else if (solution.example_walkthrough.steps) {
+                            html += `<strong>Example Walkthrough:</strong><br><br>`;
+                            solution.example_walkthrough.steps.forEach(step => {
+                                html += `${step}<br>`;
+                            });
+                        }
+                        html += '</div>';
+                    }
+                    
+                    solutionDiv.innerHTML = html;
+                    container.appendChild(solutionDiv);
+                });
+            }
+            
+            renderVariations(variations) {
+                const container = document.getElementById('variations-container');
+                container.innerHTML = '';
+                
+                if (variations.length === 0) return;
+                
+                const variationsDiv = document.createElement('div');
+                variationsDiv.className = 'solution';
+                variationsDiv.innerHTML = '<h3>Variations</h3>';
+                
+                variations.forEach(variation => {
+                    let html = `<h4>${variation.title}</h4>`;
+                    
+                    if (variation.description) {
+                        html += `<p>${variation.description}</p>`;
+                    }
+                    
+                    if (variation.code) {
+                        html += `<div class="code-block">${this.escapeHtml(variation.code)}</div>`;
+                    }
+                    
+                    variationsDiv.innerHTML += html;
+                });
+                
+                container.appendChild(variationsDiv);
+            }
+            
+            renderNavigation(navigation) {
+                const container = document.getElementById('navigation');
+                
+                if (!navigation) return;
+                
+                let html = '';
+                
+                if (navigation.previous) {
+                    html += `<a href="${navigation.previous}" class="nav-btn" target="_blank">← Previous: ${this.getProblemTitleFromFilename(navigation.previous)}</a>`;
+                } else {
+                    html += '<span></span>'; // Empty span for flexbox spacing
+                }
+                
+                if (navigation.next) {
+                    html += `<a href="${navigation.next}" class="nav-btn" target="_blank">Next: ${this.getProblemTitleFromFilename(navigation.next)} →</a>`;
+                } else {
+                    html += '<span></span>'; // Empty span for flexbox spacing
+                }
+                
+                container.innerHTML = html;
+            }
+            
+            getProblemTitleFromFilename(filename) {
+                // Convert filename to readable title (e.g., two-sum.html -> Two Sum)
+                return filename
+                    .replace('.html', '')
+                    .split('-')
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ');
+            }
+            
+            escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+            
+            showError(message) {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error').style.display = 'block';
+                document.getElementById('error-message').textContent = message;
+            }
+        }
+        
+        // Initialize the problem loader when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new ProblemLoader();
+        });
+    </script>
 </body>
-</html>
+</html> 

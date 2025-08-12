@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Majority Element",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an array nums of size n, return the majority element.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Boyer-Moore Voting",
+      "description": "Use Boyer-Moore voting algorithm to find majority element.",
+      "code": "public int majorityElement(int[] nums) {\n    int count = 0;\n    int candidate = 0;\n    \n    for (int num : nums) {\n        if (count == 0) {\n            candidate = num;\n        }\n        count += (num == candidate) ? 1 : -1;\n    }\n    \n    return candidate;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 1 – Boyer-Moore Voting",
+      "description": "Use Boyer-Moore voting algorithm to find majority element.",
+      "code": "public int majorityElement(int[] nums) {\n    int count = 0;\n    int candidate = 0;\n    \n    for (int num : nums) {\n        if (count == 0) {\n            candidate = num;\n        }\n        count += (num == candidate) ? 1 : -1;\n    }\n    \n    return candidate;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

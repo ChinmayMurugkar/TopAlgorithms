@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Final Problem 2",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "This is the second of the final problems to reach our target of 251 problems.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Two Pointers",
+      "description": "Implementation for Final Problem 2.",
+      "code": "public class Solution {\n    public int solve(int[] nums) {\n        if (nums == null || nums.length < 2) return 0;\n        \n        int left = 0, right = nums.length - 1;\n        int maxArea = 0;\n        \n        while (left < right) {\n            int width = right - left;\n            int height = Math.min(nums[left], nums[right]);\n            maxArea = Math.max(maxArea, width * height);\n            \n            if (nums[left] < nums[right]) {\n                left++;\n            } else {\n                right--;\n            }\n        }\n        \n        return maxArea;\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-ii.html"
+  }
+}

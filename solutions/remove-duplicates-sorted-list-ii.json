@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Remove Duplicates from Sorted List II",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given the head of a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Two Pointers",
+      "description": "Use two pointers to remove all duplicates.",
+      "code": "public ListNode deleteDuplicates(ListNode head) {\n    ListNode dummy = new ListNode(0);\n    dummy.next = head;\n    ListNode prev = dummy;\n    \n    while (head != null && head.next != null) {\n        if (head.val == head.next.val) {\n            while (head.next != null && head.val == head.next.val) {\n                head = head.next;\n            }\n            prev.next = head.next;\n        } else {\n            prev = head;\n        }\n        head = head.next;\n    }\n    \n    return dummy.next;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

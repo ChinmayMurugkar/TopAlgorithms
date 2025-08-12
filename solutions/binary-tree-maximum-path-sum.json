@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Binary Tree Maximum Path Sum",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – DFS",
+      "description": "Use DFS to find the maximum path sum.",
+      "code": "private int maxSum = Integer.MIN_VALUE;\n\npublic int maxPathSum(TreeNode root) {\n    maxSum = Integer.MIN_VALUE;\n    dfs(root);\n    return maxSum;\n}\n\nprivate int dfs(TreeNode root) {\n    if (root == null) return 0;\n    \n    int leftMax = Math.max(0, dfs(root.left));\n    int rightMax = Math.max(0, dfs(root.right));\n    \n    maxSum = Math.max(maxSum, root.val + leftMax + rightMax);\n    \n    return root.val + Math.max(leftMax, rightMax);\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(h)"
+      }
+    },
+    {
+      "title": "Solution 1 – DFS",
+      "description": "Use DFS to find the maximum path sum.",
+      "code": "private int maxSum = Integer.MIN_VALUE;\n\npublic int maxPathSum(TreeNode root) {\n    maxSum = Integer.MIN_VALUE;\n    dfs(root);\n    return maxSum;\n}\n\nprivate int dfs(TreeNode root) {\n    if (root == null) return 0;\n    \n    int leftMax = Math.max(0, dfs(root.left));\n    int rightMax = Math.max(0, dfs(root.right));\n    \n    maxSum = Math.max(maxSum, root.val + leftMax + rightMax);\n    \n    return root.val + Math.max(leftMax, rightMax);\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(h)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Vertical Order Traversal",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given the root of a binary tree, calculate the vertical order traversal of the binary tree. For each node at position (row, col), its left and right children will be at positions (row + 1, col - 1) and (row + 1, col + 1) respectively.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – DFS with Sorting",
+      "description": "Use DFS to collect nodes and sort by position.",
+      "code": "public List> verticalTraversal(TreeNode root) {\n    List nodes = new ArrayList<>();\n    dfs(root, 0, 0, nodes);\n    \n    Collections.sort(nodes, (a, b) -> {\n        if (a[1] != b[1]) return a[1] - b[1]; // column\n        if (a[0] != b[0]) return a[0] - b[0]; // row\n        return a[2] - b[2]; // value\n    });\n    \n    List> result = new ArrayList<>();\n    int currentCol = nodes.get(0)[1];\n    List currentList = new ArrayList<>();\n    \n    for (int[] node : nodes) {\n        if (node[1] != currentCol) {\n            result.add(currentList);\n            currentList = new ArrayList<>();\n            currentCol = node[1];\n        }\n        currentList.add(node[2]);\n    }\n    result.add(currentList);\n    \n    return result;\n}\n\nprivate void dfs(TreeNode node, int row, int col, List nodes) {\n    if (node == null) return;\n    \n    nodes.add(new int[]{row, col, node.val});\n    dfs(node.left, row + 1, col - 1, nodes);\n    dfs(node.right, row + 1, col + 1, nodes);\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n log n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-ii.html"
+  }
+}

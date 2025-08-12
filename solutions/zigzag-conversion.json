@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "ZigZag Conversion",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "The string 'PAYPALISHIRING' is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Row by Row",
+      "description": "Build result row by row using zigzag pattern.",
+      "code": "public String convert(String s, int numRows) {\n    if (numRows == 1) return s;\n    \n    StringBuilder[] rows = new StringBuilder[numRows];\n    for (int i = 0; i < numRows; i++) {\n        rows[i] = new StringBuilder();\n    }\n    \n    int currentRow = 0;\n    boolean goingDown = false;\n    \n    for (char c : s.toCharArray()) {\n        rows[currentRow].append(c);\n        \n        if (currentRow == 0 || currentRow == numRows - 1) {\n            goingDown = !goingDown;\n        }\n        \n        currentRow += goingDown ? 1 : -1;\n    }\n    \n    StringBuilder result = new StringBuilder();\n    for (StringBuilder row : rows) {\n        result.append(row);\n    }\n    \n    return result.toString();\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

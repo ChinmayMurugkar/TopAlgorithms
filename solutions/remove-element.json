@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Remove Element",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an integer array nums and an integer val, remove all occurrences of val in nums in-place.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Two Pointers",
+      "description": "Use two pointers to remove elements in-place.",
+      "code": "public int removeElement(int[] nums, int val) {\n    int i = 0;\n    \n    for (int j = 0; j < nums.length; j++) {\n        if (nums[j] != val) {\n            nums[i] = nums[j];\n            i++;\n        }\n    }\n    \n    return i;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 1 – Two Pointers",
+      "description": "Use two pointers to remove elements in-place.",
+      "code": "public int removeElement(int[] nums, int val) {\n    int i = 0;\n    \n    for (int j = 0; j < nums.length; j++) {\n        if (nums[j] != val) {\n            nums[i] = nums[j];\n            i++;\n        }\n    }\n    \n    return i;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

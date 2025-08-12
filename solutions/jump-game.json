@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Jump Game",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "You are given an integer array nums. You are initially positioned at the array's first index, and each element in the array represents your maximum jump length at that position.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Greedy",
+      "description": "Use greedy approach to check if can reach end.",
+      "code": "public boolean canJump(int[] nums) {\n    int maxReach = 0;\n    \n    for (int i = 0; i < nums.length; i++) {\n        if (i > maxReach) return false;\n        maxReach = Math.max(maxReach, i + nums[i]);\n    }\n    \n    return true;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "problem": {
+    "title": "Isomorphic Strings",
+    "leetcode_id": 205,
+    "category": "String/Array/Matrix",
+    "description": "Given two strings s and t, determine if they are isomorphic.\n                \nDefinition: Two strings s and t are isomorphic if the characters in s can be replaced to get t.\n                \nRules:\n\nAll occurrences of a character must be replaced with another character\nNo two characters may map to the same character\nA character may map to itself",
+    "assumptions": [],
+    "example": {
+      "input": "s = \"egg\", t = \"add\"",
+      "output": "true",
+      "explanation": "e → a, g → d"
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Two Hash Maps",
+      "description": "Use two hash maps to ensure bidirectional mapping is consistent.",
+      "code": "public boolean isIsomorphic(String s, String t) {\n    if (s.length() != t.length()) {\n        return false;\n    }\n    \n    Map sToT = new HashMap<>();\n    Map tToS = new HashMap<>();\n    \n    for (int i = 0; i < s.length(); i++) {\n        char sChar = s.charAt(i);\n        char tChar = t.charAt(i);\n        \n        // Check if sChar already maps to a different character\n        if (sToT.containsKey(sChar) && sToT.get(sChar) != tChar) {\n            return false;\n        }\n        \n        // Check if tChar already maps to a different character\n        if (tToS.containsKey(tChar) && tToS.get(tChar) != sChar) {\n            return false;\n        }\n        \n        sToT.put(sChar, tChar);\n        tToS.put(tChar, sChar);\n    }\n    \n    return true;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "title": "Solution 2 – Array-based Mapping",
+      "description": "Use arrays instead of hash maps for better performance since we're dealing with characters.",
+      "code": "public boolean isIsomorphic(String s, String t) {\n    if (s.length() != t.length()) {\n        return false;\n    }\n    \n    int[] sToT = new int[256];\n    int[] tToS = new int[256];\n    Arrays.fill(sToT, -1);\n    Arrays.fill(tToS, -1);\n    \n    for (int i = 0; i < s.length(); i++) {\n        char sChar = s.charAt(i);\n        char tChar = t.charAt(i);\n        \n        // Check if mapping is consistent\n        if (sToT[sChar] == -1 && tToS[tChar] == -1) {\n            sToT[sChar] = tChar;\n            tToS[tChar] = sChar;\n        } else if (sToT[sChar] != tChar || tToS[tChar] != sChar) {\n            return false;\n        }\n    }\n    \n    return true;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1) since arrays are fixed size"
+      }
+    },
+    {
+      "title": "Solution 3 – Single Pass with Last Occurrence",
+      "description": "Track the last occurrence of each character to ensure consistent mapping.",
+      "code": "public boolean isIsomorphic(String s, String t) {\n    if (s.length() != t.length()) {\n        return false;\n    }\n    \n    int[] sLastIndex = new int[256];\n    int[] tLastIndex = new int[256];\n    Arrays.fill(sLastIndex, -1);\n    Arrays.fill(tLastIndex, -1);\n    \n    for (int i = 0; i < s.length(); i++) {\n        char sChar = s.charAt(i);\n        char tChar = t.charAt(i);\n        \n        // Check if characters have the same last occurrence pattern\n        if (sLastIndex[sChar] != tLastIndex[tChar]) {\n            return false;\n        }\n        \n        sLastIndex[sChar] = i;\n        tLastIndex[tChar] = i;\n    }\n    \n    return true;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 4 – Character Transformation",
+      "description": "Transform both strings to a normalized form and compare.",
+      "code": "public boolean isIsomorphic(String s, String t) {\n    return transformString(s).equals(transformString(t));\n}\n\nprivate String transformString(String str) {\n    Map charToIndex = new HashMap<>();\n    StringBuilder result = new StringBuilder();\n    \n    for (int i = 0; i < str.length(); i++) {\n        char c = str.charAt(i);\n        if (!charToIndex.containsKey(c)) {\n            charToIndex.put(c, charToIndex.size());\n        }\n        result.append(charToIndex.get(c));\n    }\n    \n    return result.toString();\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "title": "Edge Cases and Validation",
+      "description": "Robust implementation handling edge cases:",
+      "code": "public boolean isIsomorphic(String s, String t) {\n    // Handle null inputs\n    if (s == null || t == null) {\n        return s == t;\n    }\n    \n    // Handle different lengths\n    if (s.length() != t.length()) {\n        return false;\n    }\n    \n    // Handle empty strings\n    if (s.length() == 0) {\n        return true;\n    }\n    \n    int[] sToT = new int[256];\n    int[] tToS = new int[256];\n    Arrays.fill(sToT, -1);\n    Arrays.fill(tToS, -1);\n    \n    for (int i = 0; i < s.length(); i++) {\n        char sChar = s.charAt(i);\n        char tChar = t.charAt(i);\n        \n        // Check for mapping conflicts\n        if (sToT[sChar] == -1) {\n            if (tToS[tChar] != -1) {\n                return false; // tChar already mapped to different char\n            }\n            sToT[sChar] = tChar;\n            tToS[tChar] = sChar;\n        } else if (sToT[sChar] != tChar) {\n            return false; // sChar maps to different char\n        }\n    }\n    \n    return true;\n}",
+      "language": "java"
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "evaluate-reverse-polish-notation.html",
+    "next": "word-ladder.html"
+  }
+}

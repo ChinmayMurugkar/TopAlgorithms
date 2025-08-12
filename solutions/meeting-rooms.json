@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Meeting Rooms II",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an array of meeting time intervals intervals where intervals[i] = [starti, endi], return the minimum number of conference rooms required.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Sorting",
+      "description": "Sort intervals and check for overlap.",
+      "code": "public boolean canAttendMeetings(int[][] intervals) {\n    Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));\n    \n    for (int i = 1; i < intervals.length; i++) {\n        if (intervals[i][0] < intervals[i - 1][1]) {\n            return false;\n        }\n    }\n    \n    return true;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n log n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

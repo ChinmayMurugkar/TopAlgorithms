@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Find Minimum in Rotated Sorted Array",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Suppose an array of length n sorted in ascending order is rotated between 1 and n times.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Binary Search",
+      "description": "Use binary search to find minimum in rotated array.",
+      "code": "public int findMin(int[] nums) {\n    int left = 0;\n    int right = nums.length - 1;\n    \n    while (left < right) {\n        int mid = left + (right - left) / 2;\n        \n        if (nums[mid] > nums[right]) {\n            left = mid + 1;\n        } else {\n            right = mid;\n        }\n    }\n    \n    return nums[left];\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log n)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 1 – Binary Search",
+      "description": "Use binary search to find minimum in rotated array.",
+      "code": "public int findMin(int[] nums) {\n    int left = 0;\n    int right = nums.length - 1;\n    \n    while (left < right) {\n        int mid = left + (right - left) / 2;\n        \n        if (nums[mid] > nums[right]) {\n            left = mid + 1;\n        } else {\n            right = mid;\n        }\n    }\n    \n    return nums[left];\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Form the Largest Number",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given a list of non-negative integers, arrange them such that they form the largest number.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Custom Sorting",
+      "description": "Use custom comparator to sort numbers.",
+      "code": "public String largestNumber(int[] nums) {\n    String[] strings = new String[nums.length];\n    for (int i = 0; i < nums.length; i++) {\n        strings[i] = String.valueOf(nums[i]);\n    }\n    \n    Arrays.sort(strings, (a, b) -> (b + a).compareTo(a + b));\n    \n    if (strings[0].equals(\"0\")) return \"0\";\n    \n    StringBuilder result = new StringBuilder();\n    for (String s : strings) {\n        result.append(s);\n    }\n    \n    return result.toString();\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n log n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

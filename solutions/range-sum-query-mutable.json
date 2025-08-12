@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Range Sum Query – Mutable",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an integer array nums, handle multiple queries of the following types: Update the value of an element in nums.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Binary Indexed Tree",
+      "description": "Use Binary Indexed Tree for efficient range sum and updates.",
+      "code": "class NumArray {\n    private int[] tree;\n    private int[] nums;\n    private int n;\n    \n    public NumArray(int[] nums) {\n        this.nums = nums;\n        this.n = nums.length;\n        this.tree = new int[n + 1];\n        \n        for (int i = 0; i < n; i++) {\n            updateTree(i + 1, nums[i]);\n        }\n    }\n    \n    public void update(int index, int val) {\n        int diff = val - nums[index];\n        nums[index] = val;\n        updateTree(index + 1, diff);\n    }\n    \n    public int sumRange(int left, int right) {\n        return query(right + 1) - query(left);\n    }\n    \n    private void updateTree(int index, int val) {\n        while (index <= n) {\n            tree[index] += val;\n            index += index & -index;\n        }\n    }\n    \n    private int query(int index) {\n        int sum = 0;\n        while (index > 0) {\n            sum += tree[index];\n            index -= index & -index;\n        }\n        return sum;\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log n) for update and query",
+        "space": "O(n)"
+      }
+    },
+    {
+      "title": "Solution 1 – Binary Indexed Tree",
+      "description": "Use Binary Indexed Tree for efficient range sum and updates.",
+      "code": "class NumArray {\n    private int[] tree;\n    private int[] nums;\n    private int n;\n    \n    public NumArray(int[] nums) {\n        this.nums = nums;\n        this.n = nums.length;\n        this.tree = new int[n + 1];\n        \n        for (int i = 0; i < n; i++) {\n            updateTree(i + 1, nums[i]);\n        }\n    }\n    \n    public void update(int index, int val) {\n        int diff = val - nums[index];\n        nums[index] = val;\n        updateTree(index + 1, diff);\n    }\n    \n    public int sumRange(int left, int right) {\n        return query(right + 1) - query(left);\n    }\n    \n    private void updateTree(int index, int val) {\n        while (index <= n) {\n            tree[index] += val;\n            index += index & -index;\n        }\n    }\n    \n    private int query(int index) {\n        int sum = 0;\n        while (index > 0) {\n            sum += tree[index];\n            index -= index & -index;\n        }\n        return sum;\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log n) for update and query",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

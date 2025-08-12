@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Inorder Successor in BST",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given the root of a binary search tree and a node p in it, return the in-order successor of that node in the BST.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – BST Traversal",
+      "description": "Use BST property to find successor.",
+      "code": "public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {\n    TreeNode successor = null;\n    \n    while (root != null) {\n        if (p.val >= root.val) {\n            root = root.right;\n        } else {\n            successor = root;\n            root = root.left;\n        }\n    }\n    \n    return successor;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(h)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

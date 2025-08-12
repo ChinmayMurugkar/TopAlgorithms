@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Intersection of Two Arrays",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given two integer arrays nums1 and nums2, return an array of their intersection.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – HashSet",
+      "description": "Use HashSet to find intersection.",
+      "code": "public int[] intersection(int[] nums1, int[] nums2) {\n    Set set1 = new HashSet<>();\n    Set result = new HashSet<>();\n    \n    for (int num : nums1) {\n        set1.add(num);\n    }\n    \n    for (int num : nums2) {\n        if (set1.contains(num)) {\n            result.add(num);\n        }\n    }\n    \n    int[] intersection = new int[result.size()];\n    int i = 0;\n    for (int num : result) {\n        intersection[i++] = num;\n    }\n    \n    return intersection;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n + m)",
+        "space": "O(min(n, m))"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

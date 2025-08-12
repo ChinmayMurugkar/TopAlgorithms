@@ -1,0 +1,79 @@
+{
+  "problem": {
+    "title": "Two Sum",
+    "leetcode_id": 1,
+    "category": "String/Array/Matrix",
+    "description": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.",
+    "assumptions": [
+      "You may assume that each input would have exactly one solution",
+      "You may not use the same element twice",
+      "You can return the answer in any order"
+    ],
+    "example": {
+      "input": "nums = [2,7,11,15], target = 9",
+      "output": "[0,1]",
+      "explanation": "Because nums[0] + nums[1] == 9, we return [0, 1]."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Brute Force",
+      "description": "The simplest approach is to check every pair of numbers in the array.",
+      "code": "public int[] twoSum(int[] nums, int target) {\n    for (int i = 0; i < nums.length; i++) {\n        for (int j = i + 1; j < nums.length; j++) {\n            if (nums[i] + nums[j] == target) {\n                return new int[]{i, j};\n            }\n        }\n    }\n    return new int[]{};\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n²)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 2 – Hash Map (Optimal)",
+      "description": "Use a hash map to store complements. For each number, check if its complement (target - num) exists in the map.",
+      "code": "public int[] twoSum(int[] nums, int target) {\n    Map<Integer, Integer> map = new HashMap<>();\n    \n    for (int i = 0; i < nums.length; i++) {\n        int complement = target - nums[i];\n        \n        if (map.containsKey(complement)) {\n            return new int[]{map.get(complement), i};\n        }\n        \n        map.put(nums[i], i);\n    }\n    \n    return new int[]{};\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      },
+      "example_walkthrough": {
+        "text": "nums = [2, 7, 11, 15], target = 9\n                    i=0: nums[0]=2, complement=9-2=7\n                    map={2:0}\n                    i=1: nums[1]=7, complement=9-7=2\n                    map contains 2, return [0,1]"
+      }
+    },
+    {
+      "title": "Solution 3 – Two Pointers (If Array is Sorted)",
+      "description": "If the array is sorted, we can use two pointers approach:",
+      "code": "public int[] twoSum(int[] nums, int target) {\n    int left = 0;\n    int right = nums.length - 1;\n    \n    while (left < right) {\n        int sum = nums[left] + nums[right];\n        \n        if (sum == target) {\n            return new int[]{left, right};\n        } else if (sum < target) {\n            left++;\n        } else {\n            right--;\n        }\n    }\n    \n    return new int[]{};\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n log n) if sorting needed, O(n) if already sorted",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 4 – Python One-Liner (NEW!)",
+      "description": "A Pythonic approach using list comprehension and enumerate:",
+      "code": "def twoSum(nums, target):\n    return next([i, j] for i, x in enumerate(nums) \n                for j, y in enumerate(nums[i+1:], i+1) \n                if x + y == target)",
+      "language": "python",
+      "complexity": {
+        "time": "O(n²)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [
+    {
+      "title": "Two Sum II - Input Array Is Sorted",
+      "description": "Same problem but array is sorted in ascending order. Use two pointers approach."
+    },
+    {
+      "title": "Two Sum III - Data Structure Design",
+      "description": "Design a data structure that supports add and find operations:",
+      "code": "class TwoSum {\n    private Map<Integer, Integer> map;\n    \n    public TwoSum() {\n        map = new HashMap<>();\n    }\n    \n    public void add(int number) {\n        map.put(number, map.getOrDefault(number, 0) + 1);\n    }\n    \n    public boolean find(int value) {\n        for (int num : map.keySet()) {\n            int complement = value - num;\n            if (map.containsKey(complement)) {\n                if (complement != num || map.get(complement) > 1) {\n                    return true;\n                }\n            }\n        }\n        return false;\n    }\n}",
+      "language": "java"
+    }
+  ],
+  "navigation": {
+    "previous": "3sum-closest.html",
+    "next": "two-sum-ii.html"
+  }
+}

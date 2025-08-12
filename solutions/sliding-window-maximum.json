@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Sliding Window Maximum",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "You are given an array of integers nums, there is a sliding window of size k which is moving from the very left of the array to the very right.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Deque",
+      "description": "Use deque to maintain maximum elements in sliding window.",
+      "code": "public int[] maxSlidingWindow(int[] nums, int k) {\n    if (nums == null || nums.length == 0) return new int[0];\n    \n    int n = nums.length;\n    int[] result = new int[n - k + 1];\n    Deque deque = new LinkedList<>();\n    \n    for (int i = 0; i < n; i++) {\n        // Remove elements outside window\n        while (!deque.isEmpty() && deque.peekFirst() < i - k + 1) {\n            deque.pollFirst();\n        }\n        \n        // Remove smaller elements\n        while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {\n            deque.pollLast();\n        }\n        \n        deque.offerLast(i);\n        \n        if (i >= k - 1) {\n            result[i - k + 1] = nums[deque.peekFirst()];\n        }\n    }\n    \n    return result;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(k)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

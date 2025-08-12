@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Merge Overlapping Intervals",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given a collection of intervals, merge all overlapping intervals.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Sorting",
+      "description": "Sort intervals and merge overlapping ones.",
+      "code": "public int[][] merge(int[][] intervals) {\n    if (intervals.length <= 1) return intervals;\n    \n    Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));\n    \n    List result = new ArrayList<>();\n    int[] current = intervals[0];\n    \n    for (int i = 1; i < intervals.length; i++) {\n        if (current[1] >= intervals[i][0]) {\n            current[1] = Math.max(current[1], intervals[i][1]);\n        } else {\n            result.add(current);\n            current = intervals[i];\n        }\n    }\n    result.add(current);\n    \n    return result.toArray(new int[result.size()][]);\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n log n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

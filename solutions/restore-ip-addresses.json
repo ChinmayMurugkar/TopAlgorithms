@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Restore IP Addresses",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "A valid IP address consists of exactly four integers separated by single dots. Each integer is between 0 and 255 (inclusive) and cannot have leading zeros.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Backtracking",
+      "description": "Use backtracking to find valid IP addresses.",
+      "code": "public List restoreIpAddresses(String s) {\n    List result = new ArrayList<>();\n    backtrack(s, 0, 0, \"\", result);\n    return result;\n}\n\nprivate void backtrack(String s, int index, int dots, String current, List result) {\n    if (dots == 4 && index == s.length()) {\n        result.add(current.substring(0, current.length() - 1));\n        return;\n    }\n    \n    if (dots > 4) return;\n    \n    for (int i = 1; i <= 3 && index + i <= s.length(); i++) {\n        String segment = s.substring(index, index + i);\n        if (segment.length() > 1 && segment.charAt(0) == '0') continue;\n        if (Integer.parseInt(segment) > 255) continue;\n        \n        backtrack(s, index + i, dots + 1, current + segment + \".\", result);\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(3^4)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

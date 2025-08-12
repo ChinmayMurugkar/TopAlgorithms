@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Find Leaves of Binary Tree",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given the root of a binary tree, collect a tree's nodes as if you were doing this: Collect all the leaf nodes.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – DFS with Height",
+      "description": "Use DFS to find leaves based on their height from bottom.",
+      "code": "public List> findLeaves(TreeNode root) {\n    List> result = new ArrayList<>();\n    getHeight(root, result);\n    return result;\n}\n\nprivate int getHeight(TreeNode root, List> result) {\n    if (root == null) return -1;\n    \n    int leftHeight = getHeight(root.left, result);\n    int rightHeight = getHeight(root.right, result);\n    \n    int currentHeight = Math.max(leftHeight, rightHeight) + 1;\n    \n    if (currentHeight >= result.size()) {\n        result.add(new ArrayList<>());\n    }\n    \n    result.get(currentHeight).add(root.val);\n    \n    return currentHeight;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(h)"
+      }
+    },
+    {
+      "title": "Solution 1 – DFS with Height",
+      "description": "Use DFS to find leaves based on their height from bottom.",
+      "code": "public List> findLeaves(TreeNode root) {\n    List> result = new ArrayList<>();\n    getHeight(root, result);\n    return result;\n}\n\nprivate int getHeight(TreeNode root, List> result) {\n    if (root == null) return -1;\n    \n    int leftHeight = getHeight(root.left, result);\n    int rightHeight = getHeight(root.right, result);\n    \n    int currentHeight = Math.max(leftHeight, rightHeight) + 1;\n    \n    if (currentHeight >= result.size()) {\n        result.add(new ArrayList<>());\n    }\n    \n    result.get(currentHeight).add(root.val);\n    \n    return currentHeight;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(h)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

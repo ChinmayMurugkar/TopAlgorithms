@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Count Complete Tree Nodes",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given the root of a complete binary tree, return the number of the nodes in the tree.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Binary Search",
+      "description": "Use binary search to find the number of nodes.",
+      "code": "public int countNodes(TreeNode root) {\n    if (root == null) return 0;\n    \n    int leftHeight = getHeight(root.left);\n    int rightHeight = getHeight(root.right);\n    \n    if (leftHeight == rightHeight) {\n        return (1 << leftHeight) + countNodes(root.right);\n    } else {\n        return (1 << rightHeight) + countNodes(root.left);\n    }\n}\n\nprivate int getHeight(TreeNode node) {\n    int height = 0;\n    while (node != null) {\n        height++;\n        node = node.left;\n    }\n    return height;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log² n)",
+        "space": "O(log n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

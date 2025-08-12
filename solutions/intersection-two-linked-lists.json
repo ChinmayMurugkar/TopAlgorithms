@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Intersection of Two Linked Lists",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given the heads of two singly linked-lists headA and headB, return the node at which the two lists intersect.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Two Pointers",
+      "description": "Use two pointers to find intersection point.",
+      "code": "public ListNode getIntersectionNode(ListNode headA, ListNode headB) {\n    if (headA == null || headB == null) return null;\n    \n    ListNode a = headA, b = headB;\n    \n    while (a != b) {\n        a = (a == null) ? headB : a.next;\n        b = (b == null) ? headA : b.next;\n    }\n    \n    return a;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(m + n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

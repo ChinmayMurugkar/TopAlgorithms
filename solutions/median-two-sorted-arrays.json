@@ -1,0 +1,67 @@
+{
+  "problem": {
+    "title": "Median of Two Sorted Arrays",
+    "leetcode_id": 4,
+    "category": "String/Array/Matrix",
+    "description": "Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.\n                \nConstraints:\n\nnums1.length + nums2.length >= 1\nTime complexity should be O(log(m+n))",
+    "assumptions": [],
+    "example": {
+      "input": "nums1 = [1,3], nums2 = [2]",
+      "output": "2.0",
+      "explanation": "merged array = [1,2,3] and median is 2."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Merge and Find (Not Optimal)",
+      "description": "Merge the arrays and find the median. This doesn't meet the O(log(m+n)) requirement but is straightforward.",
+      "code": "public double findMedianSortedArrays(int[] nums1, int[] nums2) {\n    int m = nums1.length;\n    int n = nums2.length;\n    int[] merged = new int[m + n];\n    \n    int i = 0, j = 0, k = 0;\n    \n    // Merge the two arrays\n    while (i < m && j < n) {\n        if (nums1[i] <= nums2[j]) {\n            merged[k++] = nums1[i++];\n        } else {\n            merged[k++] = nums2[j++];\n        }\n    }\n    \n    // Copy remaining elements\n    while (i < m) {\n        merged[k++] = nums1[i++];\n    }\n    while (j < n) {\n        merged[k++] = nums2[j++];\n    }\n    \n    // Find median\n    int totalLength = m + n;\n    if (totalLength % 2 == 0) {\n        return (merged[totalLength / 2 - 1] + merged[totalLength / 2]) / 2.0;\n    } else {\n        return merged[totalLength / 2];\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(m + n)",
+        "space": "O(m + n)"
+      }
+    },
+    {
+      "title": "Solution 2 – Binary Search (Optimal)",
+      "description": "Use binary search to find the correct partition that gives us the median.",
+      "code": "public double findMedianSortedArrays(int[] nums1, int[] nums2) {\n    // Ensure nums1 is the smaller array\n    if (nums1.length > nums2.length) {\n        return findMedianSortedArrays(nums2, nums1);\n    }\n    \n    int m = nums1.length;\n    int n = nums2.length;\n    int left = 0;\n    int right = m;\n    \n    while (left <= right) {\n        // Partition nums1\n        int partitionX = (left + right) / 2;\n        // Partition nums2\n        int partitionY = (m + n + 1) / 2 - partitionX;\n        \n        // Find the four elements around the partition\n        int maxLeftX = (partitionX == 0) ? Integer.MIN_VALUE : nums1[partitionX - 1];\n        int minRightX = (partitionX == m) ? Integer.MAX_VALUE : nums1[partitionX];\n        \n        int maxLeftY = (partitionY == 0) ? Integer.MIN_VALUE : nums2[partitionY - 1];\n        int minRightY = (partitionY == n) ? Integer.MAX_VALUE : nums2[partitionY];\n        \n        // Check if we found the correct partition\n        if (maxLeftX <= minRightY && maxLeftY <= minRightX) {\n            // Found the correct partition\n            if ((m + n) % 2 == 0) {\n                return (Math.max(maxLeftX, maxLeftY) + Math.min(minRightX, minRightY)) / 2.0;\n            } else {\n                return Math.max(maxLeftX, maxLeftY);\n            }\n        } else if (maxLeftX > minRightY) {\n            // Move left in nums1\n            right = partitionX - 1;\n        } else {\n            // Move right in nums1\n            left = partitionX + 1;\n        }\n    }\n    \n    throw new IllegalArgumentException(\"Input arrays are not sorted\");\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log(min(m, n)))",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 3 – Find Kth Element",
+      "description": "Find the kth smallest element in the two sorted arrays.",
+      "code": "public double findMedianSortedArrays(int[] nums1, int[] nums2) {\n    int m = nums1.length;\n    int n = nums2.length;\n    int totalLength = m + n;\n    \n    if (totalLength % 2 == 0) {\n        // Even length: find (totalLength/2)th and (totalLength/2 + 1)th elements\n        int left = findKthElement(nums1, 0, nums2, 0, totalLength / 2);\n        int right = findKthElement(nums1, 0, nums2, 0, totalLength / 2 + 1);\n        return (left + right) / 2.0;\n    } else {\n        // Odd length: find (totalLength/2 + 1)th element\n        return findKthElement(nums1, 0, nums2, 0, totalLength / 2 + 1);\n    }\n}\n\nprivate int findKthElement(int[] nums1, int start1, int[] nums2, int start2, int k) {\n    // If one array is exhausted, return kth element from the other\n    if (start1 >= nums1.length) {\n        return nums2[start2 + k - 1];\n    }\n    if (start2 >= nums2.length) {\n        return nums1[start1 + k - 1];\n    }\n    \n    // If k == 1, return the smaller of the first elements\n    if (k == 1) {\n        return Math.min(nums1[start1], nums2[start2]);\n    }\n    \n    // Find the k/2th element in each array\n    int mid1 = start1 + k / 2 - 1 < nums1.length ? nums1[start1 + k / 2 - 1] : Integer.MAX_VALUE;\n    int mid2 = start2 + k / 2 - 1 < nums2.length ? nums2[start2 + k / 2 - 1] : Integer.MAX_VALUE;\n    \n    if (mid1 < mid2) {\n        // The kth element is in the right half of nums1 or left half of nums2\n        return findKthElement(nums1, start1 + k / 2, nums2, start2, k - k / 2);\n    } else {\n        // The kth element is in the right half of nums2 or left half of nums1\n        return findKthElement(nums1, start1, nums2, start2 + k / 2, k - k / 2);\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log(m + n))",
+        "space": "O(log(m + n)) for recursion stack"
+      }
+    },
+    {
+      "title": "Solution 4 – Iterative Kth Element",
+      "description": "Iterative version to avoid recursion stack space.",
+      "code": "public double findMedianSortedArrays(int[] nums1, int[] nums2) {\n    int m = nums1.length;\n    int n = nums2.length;\n    int totalLength = m + n;\n    \n    if (totalLength % 2 == 0) {\n        int left = findKthElementIterative(nums1, nums2, totalLength / 2);\n        int right = findKthElementIterative(nums1, nums2, totalLength / 2 + 1);\n        return (left + right) / 2.0;\n    } else {\n        return findKthElementIterative(nums1, nums2, totalLength / 2 + 1);\n    }\n}\n\nprivate int findKthElementIterative(int[] nums1, int[] nums2, int k) {\n    int start1 = 0, start2 = 0;\n    \n    while (true) {\n        // If one array is exhausted\n        if (start1 >= nums1.length) {\n            return nums2[start2 + k - 1];\n        }\n        if (start2 >= nums2.length) {\n            return nums1[start1 + k - 1];\n        }\n        \n        // If k == 1\n        if (k == 1) {\n            return Math.min(nums1[start1], nums2[start2]);\n        }\n        \n        // Find the k/2th element in each array\n        int mid1 = start1 + k / 2 - 1 < nums1.length ? nums1[start1 + k / 2 - 1] : Integer.MAX_VALUE;\n        int mid2 = start2 + k / 2 - 1 < nums2.length ? nums2[start2 + k / 2 - 1] : Integer.MAX_VALUE;\n        \n        if (mid1 < mid2) {\n            start1 += k / 2;\n        } else {\n            start2 += k / 2;\n        }\n        \n        k -= k / 2;\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log(m + n))",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Edge Cases and Validation",
+      "description": "Robust implementation handling edge cases:",
+      "code": "public double findMedianSortedArrays(int[] nums1, int[] nums2) {\n    // Handle null inputs\n    if (nums1 == null || nums2 == null) {\n        throw new IllegalArgumentException(\"Input arrays cannot be null\");\n    }\n    \n    int m = nums1.length;\n    int n = nums2.length;\n    \n    // Handle empty arrays\n    if (m == 0 && n == 0) {\n        throw new IllegalArgumentException(\"Both arrays cannot be empty\");\n    }\n    \n    if (m == 0) {\n        return findMedian(nums2);\n    }\n    \n    if (n == 0) {\n        return findMedian(nums1);\n    }\n    \n    // Ensure nums1 is the smaller array\n    if (m > n) {\n        return findMedianSortedArrays(nums2, nums1);\n    }\n    \n    // Use binary search approach\n    return findMedianBinarySearch(nums1, nums2);\n}\n\nprivate double findMedian(int[] nums) {\n    int n = nums.length;\n    if (n % 2 == 0) {\n        return (nums[n / 2 - 1] + nums[n / 2]) / 2.0;\n    } else {\n        return nums[n / 2];\n    }\n}\n\nprivate double findMedianBinarySearch(int[] nums1, int[] nums2) {\n    int m = nums1.length;\n    int n = nums2.length;\n    int left = 0;\n    int right = m;\n    \n    while (left <= right) {\n        int partitionX = (left + right) / 2;\n        int partitionY = (m + n + 1) / 2 - partitionX;\n        \n        int maxLeftX = (partitionX == 0) ? Integer.MIN_VALUE : nums1[partitionX - 1];\n        int minRightX = (partitionX == m) ? Integer.MAX_VALUE : nums1[partitionX];\n        \n        int maxLeftY = (partitionY == 0) ? Integer.MIN_VALUE : nums2[partitionY - 1];\n        int minRightY = (partitionY == n) ? Integer.MAX_VALUE : nums2[partitionY];\n        \n        if (maxLeftX <= minRightY && maxLeftY <= minRightX) {\n            if ((m + n) % 2 == 0) {\n                return (Math.max(maxLeftX, maxLeftY) + Math.min(minRightX, minRightY)) / 2.0;\n            } else {\n                return Math.max(maxLeftX, maxLeftY);\n            }\n        } else if (maxLeftX > minRightY) {\n            right = partitionX - 1;\n        } else {\n            left = partitionX + 1;\n        }\n    }\n    \n    throw new IllegalArgumentException(\"Input arrays are not sorted\");\n}",
+      "language": "java"
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "word-ladder.html",
+    "next": "kth-largest-element.html"
+  }
+}

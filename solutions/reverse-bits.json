@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Reverse Bits",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Reverse bits of a given 32 bits unsigned integer.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Bit Manipulation",
+      "description": "Reverse bits using bit manipulation.",
+      "code": "public int reverseBits(int n) {\n    int result = 0;\n    \n    for (int i = 0; i < 32; i++) {\n        result = (result << 1) | (n & 1);\n        n = n >> 1;\n    }\n    \n    return result;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(1)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 1 – Bit Manipulation",
+      "description": "Reverse bits using bit manipulation.",
+      "code": "public int reverseBits(int n) {\n    int result = 0;\n    \n    for (int i = 0; i < 32; i++) {\n        result = (result << 1) | (n & 1);\n        n = n >> 1;\n    }\n    \n    return result;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(1)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

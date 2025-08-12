@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Coin Change",
+    "leetcode_id": 322,
+    "category": "Dynamic Programming",
+    "description": "You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money. Return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Dynamic Programming",
+      "description": "Use DP to find the minimum number of coins needed.",
+      "code": "public int coinChange(int[] coins, int amount) {\n    int[] dp = new int[amount + 1];\n    Arrays.fill(dp, amount + 1);\n    dp[0] = 0;\n    \n    for (int i = 1; i <= amount; i++) {\n        for (int coin : coins) {\n            if (coin <= i) {\n                dp[i] = Math.min(dp[i], dp[i - coin] + 1);\n            }\n        }\n    }\n    \n    return dp[amount] > amount ? -1 : dp[amount];\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(amount * number of coins)",
+        "space": "O(amount)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "house-robber.html",
+    "next": "unique-paths.html"
+  }
+}

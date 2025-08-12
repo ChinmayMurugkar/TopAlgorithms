@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Maximum Binary Gap",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given a positive integer n, find and return the longest distance between any two adjacent 1's in the binary representation of n.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Bit Manipulation",
+      "description": "Find maximum gap between 1s in binary representation.",
+      "code": "public int binaryGap(int n) {\n    int maxGap = 0;\n    int lastOne = -1;\n    \n    for (int i = 0; i < 32; i++) {\n        if ((n & (1 << i)) != 0) {\n            if (lastOne != -1) {\n                maxGap = Math.max(maxGap, i - lastOne);\n            }\n            lastOne = i;\n        }\n    }\n    \n    return maxGap;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

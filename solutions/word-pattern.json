@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Word Pattern",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given a pattern and a string s, find if s follows the same pattern.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – HashMap",
+      "description": "Use HashMap to check pattern matching.",
+      "code": "public boolean wordPattern(String pattern, String s) {\n    String[] words = s.split(\" \");\n    if (pattern.length() != words.length) return false;\n    \n    Map charToWord = new HashMap<>();\n    Map wordToChar = new HashMap<>();\n    \n    for (int i = 0; i < pattern.length(); i++) {\n        char c = pattern.charAt(i);\n        String word = words[i];\n        \n        if (charToWord.containsKey(c)) {\n            if (!charToWord.get(c).equals(word)) return false;\n        } else {\n            if (wordToChar.containsKey(word)) return false;\n            charToWord.put(c, word);\n            wordToChar.put(word, c);\n        }\n    }\n    \n    return true;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "problem": {
+    "title": "Quick Sort",
+    "leetcode_id": null,
+    "category": "Sorting",
+    "description": "Implement Quick Sort algorithm to sort an array of integers.\n                \nAlgorithm: Quick Sort is a divide-and-conquer algorithm that picks a pivot element and partitions the array around it.\n                \nKey Steps:\n\nChoose a pivot element\nPartition the array around the pivot\nRecursively sort the left and right subarrays",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Basic Quick Sort",
+      "description": "Standard implementation with the last element as pivot:",
+      "code": "public void quickSort(int[] arr, int low, int high) {\n    if (low < high) {\n        // Find the partition index\n        int pi = partition(arr, low, high);\n        \n        // Recursively sort elements before and after partition\n        quickSort(arr, low, pi - 1);\n        quickSort(arr, pi + 1, high);\n    }\n}\n\nprivate int partition(int[] arr, int low, int high) {\n    // Choose the rightmost element as pivot\n    int pivot = arr[high];\n    \n    // Index of smaller element\n    int i = low - 1;\n    \n    for (int j = low; j < high; j++) {\n        // If current element is smaller than or equal to pivot\n        if (arr[j] <= pivot) {\n            i++;\n            // Swap arr[i] and arr[j]\n            int temp = arr[i];\n            arr[i] = arr[j];\n            arr[j] = temp;\n        }\n    }\n    \n    // Place pivot in its correct position\n    int temp = arr[i + 1];\n    arr[i + 1] = arr[high];\n    arr[high] = temp;\n    \n    return i + 1;\n}\n\n// Wrapper method\npublic void quickSort(int[] arr) {\n    quickSort(arr, 0, arr.length - 1);\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n log n) average, O(n²) worst case",
+        "space": "O(log n) average, O(n) worst case"
+      }
+    },
+    {
+      "title": "Solution 2 – Randomized Quick Sort",
+      "description": "Using random pivot selection to avoid worst-case scenarios:",
+      "code": "public void randomizedQuickSort(int[] arr, int low, int high) {\n    if (low < high) {\n        int pi = randomizedPartition(arr, low, high);\n        randomizedQuickSort(arr, low, pi - 1);\n        randomizedQuickSort(arr, pi + 1, high);\n    }\n}\n\nprivate int randomizedPartition(int[] arr, int low, int high) {\n    // Choose a random pivot\n    int randomIndex = low + (int)(Math.random() * (high - low + 1));\n    \n    // Swap random pivot with the last element\n    int temp = arr[randomIndex];\n    arr[randomIndex] = arr[high];\n    arr[high] = temp;\n    \n    return partition(arr, low, high);\n}\n\nprivate int partition(int[] arr, int low, int high) {\n    int pivot = arr[high];\n    int i = low - 1;\n    \n    for (int j = low; j < high; j++) {\n        if (arr[j] <= pivot) {\n            i++;\n            int temp = arr[i];\n            arr[i] = arr[j];\n            arr[j] = temp;\n        }\n    }\n    \n    int temp = arr[i + 1];\n    arr[i + 1] = arr[high];\n    arr[high] = temp;\n    \n    return i + 1;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n log n) average and expected",
+        "space": "O(log n) average"
+      }
+    },
+    {
+      "title": "Solution 3 – Three-Way Partition Quick Sort",
+      "description": "Efficient for arrays with many duplicate elements:",
+      "code": "public void threeWayQuickSort(int[] arr, int low, int high) {\n    if (low < high) {\n        int[] pivotRange = threeWayPartition(arr, low, high);\n        threeWayQuickSort(arr, low, pivotRange[0] - 1);\n        threeWayQuickSort(arr, pivotRange[1] + 1, high);\n    }\n}\n\nprivate int[] threeWayPartition(int[] arr, int low, int high) {\n    int pivot = arr[low];\n    int lt = low;      // Elements less than pivot\n    int gt = high;     // Elements greater than pivot\n    int i = low + 1;   // Current element\n    \n    while (i <= gt) {\n        if (arr[i] < pivot) {\n            swap(arr, lt++, i++);\n        } else if (arr[i] > pivot) {\n            swap(arr, i, gt--);\n        } else {\n            i++;\n        }\n    }\n    \n    return new int[]{lt, gt};\n}\n\nprivate void swap(int[] arr, int i, int j) {\n    int temp = arr[i];\n    arr[i] = arr[j];\n    arr[j] = temp;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n log n) average",
+        "space": "O(log n) average"
+      }
+    },
+    {
+      "title": "Optimization Techniques",
+      "code": "private int medianOfThree(int[] arr, int low, int high) {\n    int mid = low + (high - low) / 2;\n    \n    // Sort low, mid, high\n    if (arr[low] > arr[mid]) swap(arr, low, mid);\n    if (arr[low] > arr[high]) swap(arr, low, high);\n    if (arr[mid] > arr[high]) swap(arr, mid, high);\n    \n    // Place pivot at high-1\n    swap(arr, mid, high - 1);\n    return arr[high - 1];\n}",
+      "language": "java"
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "merge-sort.html",
+    "next": "heap-sort.html"
+  }
+}

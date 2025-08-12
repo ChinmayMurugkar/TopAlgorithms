@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Add Digits",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an integer num, repeatedly add all its digits until the result has only one digit, and return it.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Mathematical",
+      "description": "Use mathematical formula for digital root.",
+      "code": "public int addDigits(int num) {\n    if (num == 0) return 0;\n    if (num % 9 == 0) return 9;\n    return num % 9;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(1)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

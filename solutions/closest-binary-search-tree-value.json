@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Closest Binary Search Tree Value",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given the root of a binary search tree and a target value, return the value in the BST that is closest to the target.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Binary Search",
+      "description": "Use binary search to find the closest value in BST.",
+      "code": "public int closestValue(TreeNode root, double target) {\n    int closest = root.val;\n    \n    while (root != null) {\n        if (Math.abs(root.val - target) < Math.abs(closest - target)) {\n            closest = root.val;\n        }\n        \n        if (target < root.val) {\n            root = root.left;\n        } else {\n            root = root.right;\n        }\n    }\n    \n    return closest;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(h)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 1 – Binary Search",
+      "description": "Use binary search to find the closest value in BST.",
+      "code": "public int closestValue(TreeNode root, double target) {\n    int closest = root.val;\n    \n    while (root != null) {\n        if (Math.abs(root.val - target) < Math.abs(closest - target)) {\n            closest = root.val;\n        }\n        \n        if (target < root.val) {\n            root = root.left;\n        } else {\n            root = root.right;\n        }\n    }\n    \n    return closest;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(h)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

@@ -1,0 +1,41 @@
+{
+  "problem": {
+    "title": "Path Sum",
+    "leetcode_id": 112,
+    "category": "Tree, Heap & Trie",
+    "description": "Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.\n                \nNote: A leaf is a node with no children.",
+    "assumptions": [],
+    "example": {
+      "input": "root = [5,4,8,11,null,13,4,7,2,null,null,null,1], targetSum = 22",
+      "output": "true",
+      "explanation": "The path 5 → 4 → 11 → 2 sums to 22."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Recursive DFS",
+      "description": "Use recursion to check all root-to-leaf paths.",
+      "code": "public boolean hasPathSum(TreeNode root, int targetSum) {\n    if (root == null) {\n        return false;\n    }\n    \n    if (root.left == null && root.right == null) {\n        return targetSum == root.val;\n    }\n    \n    return hasPathSum(root.left, targetSum - root.val) || \n           hasPathSum(root.right, targetSum - root.val);\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(h) where h is the height of the tree"
+      }
+    },
+    {
+      "title": "Solution 2 – Iterative DFS with Stack",
+      "description": "Use a stack to simulate recursive calls iteratively.",
+      "code": "public boolean hasPathSum(TreeNode root, int targetSum) {\n    if (root == null) {\n        return false;\n    }\n    \n    Stack nodeStack = new Stack<>();\n    Stack sumStack = new Stack<>();\n    \n    nodeStack.push(root);\n    sumStack.push(targetSum - root.val);\n    \n    while (!nodeStack.isEmpty()) {\n        TreeNode current = nodeStack.pop();\n        int currentSum = sumStack.pop();\n        \n        if (current.left == null && current.right == null && currentSum == 0) {\n            return true;\n        }\n        \n        if (current.right != null) {\n            nodeStack.push(current.right);\n            sumStack.push(currentSum - current.right.val);\n        }\n        \n        if (current.left != null) {\n            nodeStack.push(current.left);\n            sumStack.push(currentSum - current.left.val);\n        }\n    }\n    \n    return false;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(h)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "symmetric-tree.html",
+    "next": "construct-binary-tree.html"
+  }
+}

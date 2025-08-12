@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Generate Parentheses",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Backtracking",
+      "description": "Use backtracking to generate valid parentheses.",
+      "code": "public List generateParenthesis(int n) {\n    List result = new ArrayList<>();\n    backtrack(n, n, \"\", result);\n    return result;\n}\n\nprivate void backtrack(int open, int close, String current, List result) {\n    if (open == 0 && close == 0) {\n        result.add(current);\n        return;\n    }\n    \n    if (open > 0) {\n        backtrack(open - 1, close, current + \"(\", result);\n    }\n    \n    if (close > open) {\n        backtrack(open, close - 1, current + \")\", result);\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(4^n/√n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

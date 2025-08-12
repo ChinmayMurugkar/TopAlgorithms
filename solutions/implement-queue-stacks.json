@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Implement Queue using Stacks",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Implement a first-in-first-out (FIFO) queue using only two stacks.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Two Stacks",
+      "description": "Use two stacks to implement queue.",
+      "code": "class MyQueue {\n    private Stack stack1;\n    private Stack stack2;\n    \n    public MyQueue() {\n        stack1 = new Stack<>();\n        stack2 = new Stack<>();\n    }\n    \n    public void push(int x) {\n        stack1.push(x);\n    }\n    \n    public int pop() {\n        if (stack2.isEmpty()) {\n            while (!stack1.isEmpty()) {\n                stack2.push(stack1.pop());\n            }\n        }\n        return stack2.pop();\n    }\n    \n    public int peek() {\n        if (stack2.isEmpty()) {\n            while (!stack1.isEmpty()) {\n                stack2.push(stack1.pop());\n            }\n        }\n        return stack2.peek();\n    }\n    \n    public boolean empty() {\n        return stack1.isEmpty() && stack2.isEmpty();\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(1) amortized",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

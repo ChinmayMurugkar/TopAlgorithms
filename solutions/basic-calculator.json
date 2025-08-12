@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Basic Calculator",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given a string s representing a valid expression, implement a basic calculator to evaluate it, and return the result of the evaluation.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Stack",
+      "description": "Use stack to handle parentheses and operations.",
+      "code": "public int calculate(String s) {\n    Stack stack = new Stack<>();\n    int result = 0;\n    int number = 0;\n    int sign = 1;\n    \n    for (int i = 0; i < s.length(); i++) {\n        char c = s.charAt(i);\n        \n        if (Character.isDigit(c)) {\n            number = number * 10 + (c - '0');\n        } else if (c == '+') {\n            result += sign * number;\n            number = 0;\n            sign = 1;\n        } else if (c == '-') {\n            result += sign * number;\n            number = 0;\n            sign = -1;\n        } else if (c == '(') {\n            stack.push(result);\n            stack.push(sign);\n            result = 0;\n            sign = 1;\n        } else if (c == ')') {\n            result += sign * number;\n            number = 0;\n            result *= stack.pop();\n            result += stack.pop();\n        }\n    }\n    \n    if (number != 0) {\n        result += sign * number;\n    }\n    \n    return result;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

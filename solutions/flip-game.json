@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Flip Game",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "You are playing the following Flip Game with your friend: Given a string that contains only these two characters: + and -, you and your friend take turns to flip two consecutive '++' into '--'.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – String Manipulation",
+      "description": "Find all possible moves by replacing ++ with --.",
+      "code": "public List generatePossibleNextMoves(String s) {\n    List result = new ArrayList<>();\n    \n    for (int i = 0; i < s.length() - 1; i++) {\n        if (s.charAt(i) == '+' && s.charAt(i + 1) == '+') {\n            result.add(s.substring(0, i) + \"--\" + s.substring(i + 2));\n        }\n    }\n    \n    return result;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

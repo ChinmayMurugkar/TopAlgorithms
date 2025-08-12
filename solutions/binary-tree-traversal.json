@@ -1,0 +1,50 @@
+{
+  "problem": {
+    "title": "Binary Tree Traversal",
+    "leetcode_id": null,
+    "category": "Tree, Heap & Trie",
+    "description": "Implement different traversal methods for a binary tree.\n                \nTraversal Types:\n\nPreorder: Root → Left → Right\nInorder: Left → Root → Right\nPostorder: Left → Right → Root\nLevel Order: Level by level from top to bottom",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "1. Preorder Traversal (Root → Left → Right)",
+      "description": "Visit root first, then left subtree, then right subtree.",
+      "code": "// Recursive\npublic List preorderTraversal(TreeNode root) {\n    List result = new ArrayList<>();\n    preorder(root, result);\n    return result;\n}\n\nprivate void preorder(TreeNode root, List result) {\n    if (root == null) return;\n    \n    result.add(root.val);        // Visit root\n    preorder(root.left, result); // Visit left subtree\n    preorder(root.right, result); // Visit right subtree\n}\n\n// Iterative using Stack\npublic List preorderTraversalIterative(TreeNode root) {\n    List result = new ArrayList<>();\n    if (root == null) return result;\n    \n    Stack stack = new Stack<>();\n    stack.push(root);\n    \n    while (!stack.isEmpty()) {\n        TreeNode node = stack.pop();\n        result.add(node.val);\n        \n        // Push right first, then left (so left is processed first)\n        if (node.right != null) {\n            stack.push(node.right);\n        }\n        if (node.left != null) {\n            stack.push(node.left);\n        }\n    }\n    \n    return result;\n}",
+      "language": "java"
+    },
+    {
+      "title": "2. Inorder Traversal (Left → Root → Right)",
+      "description": "Visit left subtree first, then root, then right subtree.",
+      "code": "// Recursive\npublic List inorderTraversal(TreeNode root) {\n    List result = new ArrayList<>();\n    inorder(root, result);\n    return result;\n}\n\nprivate void inorder(TreeNode root, List result) {\n    if (root == null) return;\n    \n    inorder(root.left, result);  // Visit left subtree\n    result.add(root.val);        // Visit root\n    inorder(root.right, result); // Visit right subtree\n}\n\n// Iterative using Stack\npublic List inorderTraversalIterative(TreeNode root) {\n    List result = new ArrayList<>();\n    Stack stack = new Stack<>();\n    TreeNode current = root;\n    \n    while (current != null || !stack.isEmpty()) {\n        // Go to the leftmost node\n        while (current != null) {\n            stack.push(current);\n            current = current.left;\n        }\n        \n        // Process current node\n        current = stack.pop();\n        result.add(current.val);\n        \n        // Move to right subtree\n        current = current.right;\n    }\n    \n    return result;\n}",
+      "language": "java"
+    },
+    {
+      "title": "3. Postorder Traversal (Left → Right → Root)",
+      "description": "Visit left subtree first, then right subtree, then root.",
+      "code": "// Recursive\npublic List postorderTraversal(TreeNode root) {\n    List result = new ArrayList<>();\n    postorder(root, result);\n    return result;\n}\n\nprivate void postorder(TreeNode root, List result) {\n    if (root == null) return;\n    \n    postorder(root.left, result);  // Visit left subtree\n    postorder(root.right, result); // Visit right subtree\n    result.add(root.val);          // Visit root\n}\n\n// Iterative using Stack\npublic List postorderTraversalIterative(TreeNode root) {\n    List result = new ArrayList<>();\n    if (root == null) return result;\n    \n    Stack stack = new Stack<>();\n    stack.push(root);\n    \n    while (!stack.isEmpty()) {\n        TreeNode node = stack.pop();\n        result.add(0, node.val); // Add to front to reverse order\n        \n        // Push left first, then right\n        if (node.left != null) {\n            stack.push(node.left);\n        }\n        if (node.right != null) {\n            stack.push(node.right);\n        }\n    }\n    \n    return result;\n}",
+      "language": "java"
+    },
+    {
+      "title": "4. Level Order Traversal (Breadth-First)",
+      "description": "Visit nodes level by level from top to bottom.",
+      "code": "// Using Queue (BFS)\npublic List> levelOrder(TreeNode root) {\n    List> result = new ArrayList<>();\n    if (root == null) return result;\n    \n    Queue queue = new LinkedList<>();\n    queue.offer(root);\n    \n    while (!queue.isEmpty()) {\n        int levelSize = queue.size();\n        List currentLevel = new ArrayList<>();\n        \n        for (int i = 0; i < levelSize; i++) {\n            TreeNode node = queue.poll();\n            currentLevel.add(node.val);\n            \n            if (node.left != null) {\n                queue.offer(node.left);\n            }\n            if (node.right != null) {\n                queue.offer(node.right);\n            }\n        }\n        \n        result.add(currentLevel);\n    }\n    \n    return result;\n}\n\n// Level Order Traversal II (Bottom-up)\npublic List> levelOrderBottom(TreeNode root) {\n    List> result = new ArrayList<>();\n    if (root == null) return result;\n    \n    Queue queue = new LinkedList<>();\n    queue.offer(root);\n    \n    while (!queue.isEmpty()) {\n        int levelSize = queue.size();\n        List currentLevel = new ArrayList<>();\n        \n        for (int i = 0; i < levelSize; i++) {\n            TreeNode node = queue.poll();\n            currentLevel.add(node.val);\n            \n            if (node.left != null) {\n                queue.offer(node.left);\n            }\n            if (node.right != null) {\n                queue.offer(node.right);\n            }\n        }\n        \n        result.add(0, currentLevel); // Add to front\n    }\n    \n    return result;\n}",
+      "language": "java"
+    },
+    {
+      "title": "5. Morris Traversal (Inorder without Stack/Recursion)",
+      "description": "Threaded binary tree traversal using O(1) space.",
+      "code": "public List inorderTraversalMorris(TreeNode root) {\n    List result = new ArrayList<>();\n    TreeNode current = root;\n    \n    while (current != null) {\n        if (current.left == null) {\n            result.add(current.val);\n            current = current.right;\n        } else {\n            // Find the inorder predecessor\n            TreeNode predecessor = current.left;\n            while (predecessor.right != null && predecessor.right != current) {\n                predecessor = predecessor.right;\n            }\n            \n            if (predecessor.right == null) {\n                // Make current as right child of predecessor\n                predecessor.right = current;\n                current = current.left;\n            } else {\n                // Revert the changes\n                predecessor.right = null;\n                result.add(current.val);\n                current = current.right;\n            }\n        }\n    }\n    \n    return result;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n) for all traversals",
+        "space": "O(h) for recursive, O(n) for iterative, O(1) for Morris"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "next": "invert-binary-tree.html"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Find K Pairs with Smallest Sums",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "You are given two integer arrays nums1 and nums2 sorted in ascending order and an integer k.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Min Heap",
+      "description": "Use min heap to find k pairs with smallest sums.",
+      "code": "public List> kSmallestPairs(int[] nums1, int[] nums2, int k) {\n    List> result = new ArrayList<>();\n    if (nums1.length == 0 || nums2.length == 0 || k == 0) return result;\n    \n    PriorityQueue pq = new PriorityQueue<>((a, b) -> \n        nums1[a[0]] + nums2[a[1]] - nums1[b[0]] - nums2[b[1]]);\n    \n    for (int i = 0; i < Math.min(nums1.length, k); i++) {\n        pq.offer(new int[]{i, 0});\n    }\n    \n    while (k > 0 && !pq.isEmpty()) {\n        int[] pair = pq.poll();\n        result.add(Arrays.asList(nums1[pair[0]], nums2[pair[1]]));\n        \n        if (pair[1] + 1 < nums2.length) {\n            pq.offer(new int[]{pair[0], pair[1] + 1});\n        }\n        k--;\n    }\n    \n    return result;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(k log k)",
+        "space": "O(k)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

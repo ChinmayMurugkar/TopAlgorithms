@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Search a 2D Matrix II",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Write an efficient algorithm that searches for a value target in an m x n integer matrix matrix.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Search from Corner",
+      "description": "Start from top-right corner and move based on comparison.",
+      "code": "public boolean searchMatrix(int[][] matrix, int target) {\n    if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {\n        return false;\n    }\n    \n    int row = 0, col = matrix[0].length - 1;\n    \n    while (row < matrix.length && col >= 0) {\n        if (matrix[row][col] == target) {\n            return true;\n        } else if (matrix[row][col] > target) {\n            col--;\n        } else {\n            row++;\n        }\n    }\n    \n    return false;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(m + n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

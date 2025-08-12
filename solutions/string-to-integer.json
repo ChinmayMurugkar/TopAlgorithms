@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "String to Integer",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Character by Character",
+      "description": "Parse the string character by character, handling edge cases.",
+      "code": "public int myAtoi(String s) {\n    if (s == null || s.length() == 0) return 0;\n    \n    int i = 0;\n    while (i < s.length() && s.charAt(i) == ' ') {\n        i++;\n    }\n    \n    if (i == s.length()) return 0;\n    \n    boolean negative = false;\n    if (s.charAt(i) == '+' || s.charAt(i) == '-') {\n        negative = s.charAt(i) == '-';\n        i++;\n    }\n    \n    long result = 0;\n    while (i < s.length() && Character.isDigit(s.charAt(i))) {\n        result = result * 10 + (s.charAt(i) - '0');\n        \n        if (negative && -result <= Integer.MIN_VALUE) return Integer.MIN_VALUE;\n        if (!negative && result >= Integer.MAX_VALUE) return Integer.MAX_VALUE;\n        \n        i++;\n    }\n    \n    return negative ? (int) -result : (int) result;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 1 – Character by Character",
+      "description": "Parse the string character by character, handling edge cases.",
+      "code": "public int myAtoi(String s) {\n    if (s == null || s.length() == 0) return 0;\n    \n    int i = 0;\n    while (i < s.length() && s.charAt(i) == ' ') {\n        i++;\n    }\n    \n    if (i == s.length()) return 0;\n    \n    boolean negative = false;\n    if (s.charAt(i) == '+' || s.charAt(i) == '-') {\n        negative = s.charAt(i) == '-';\n        i++;\n    }\n    \n    long result = 0;\n    while (i < s.length() && Character.isDigit(s.charAt(i))) {\n        result = result * 10 + (s.charAt(i) - '0');\n        \n        if (negative && -result <= Integer.MIN_VALUE) return Integer.MIN_VALUE;\n        if (!negative && result >= Integer.MAX_VALUE) return Integer.MAX_VALUE;\n        \n        i++;\n    }\n    \n    return negative ? (int) -result : (int) result;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

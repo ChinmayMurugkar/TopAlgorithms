@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Unique Binary Search Trees II",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an integer n, return all the structurally unique BST's (binary search trees), which has exactly n nodes of unique values from 1 to n.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Recursive",
+      "description": "Generate all possible BSTs recursively.",
+      "code": "public List generateTrees(int n) {\n    if (n == 0) return new ArrayList<>();\n    return generateTrees(1, n);\n}\n\nprivate List generateTrees(int start, int end) {\n    List result = new ArrayList<>();\n    \n    if (start > end) {\n        result.add(null);\n        return result;\n    }\n    \n    for (int i = start; i <= end; i++) {\n        List leftTrees = generateTrees(start, i - 1);\n        List rightTrees = generateTrees(i + 1, end);\n        \n        for (TreeNode left : leftTrees) {\n            for (TreeNode right : rightTrees) {\n                TreeNode root = new TreeNode(i);\n                root.left = left;\n                root.right = right;\n                result.add(root);\n            }\n        }\n    }\n    \n    return result;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(C(n))",
+        "space": "O(C(n))"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

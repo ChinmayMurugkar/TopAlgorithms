@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Minimum Height Trees",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "A tree is an undirected graph in which any two vertices are connected by exactly one path.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Topological Sort",
+      "description": "Use topological sort to find center nodes.",
+      "code": "public List findMinHeightTrees(int n, int[][] edges) {\n    if (n == 1) return Arrays.asList(0);\n    \n    List> graph = new ArrayList<>();\n    for (int i = 0; i < n; i++) {\n        graph.add(new HashSet<>());\n    }\n    \n    for (int[] edge : edges) {\n        graph.get(edge[0]).add(edge[1]);\n        graph.get(edge[1]).add(edge[0]);\n    }\n    \n    List leaves = new ArrayList<>();\n    for (int i = 0; i < n; i++) {\n        if (graph.get(i).size() == 1) {\n            leaves.add(i);\n        }\n    }\n    \n    while (n > 2) {\n        n -= leaves.size();\n        List newLeaves = new ArrayList<>();\n        \n        for (int leaf : leaves) {\n            int neighbor = graph.get(leaf).iterator().next();\n            graph.get(neighbor).remove(leaf);\n            \n            if (graph.get(neighbor).size() == 1) {\n                newLeaves.add(neighbor);\n            }\n        }\n        \n        leaves = newLeaves;\n    }\n    \n    return leaves;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

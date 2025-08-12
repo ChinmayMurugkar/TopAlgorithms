@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Counting Bits",
+    "leetcode_id": 338,
+    "category": "Bit Manipulation",
+    "description": "Given an integer n, return an array ans of length n + 1 such that for each i (0 <= i <= n), ans[i] is the number of 1's in the binary representation of i.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Dynamic Programming",
+      "description": "Use DP to count bits efficiently.",
+      "code": "public int[] countBits(int n) {\n    int[] result = new int[n + 1];\n    \n    for (int i = 1; i <= n; i++) {\n        result[i] = result[i >> 1] + (i & 1);\n    }\n    \n    return result;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "power-of-two.html",
+    "next": "reverse-bits.html"
+  }
+}

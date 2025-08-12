@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Implement Trie (Prefix Tree)",
+    "leetcode_id": 208,
+    "category": "Tree, Heap & Trie",
+    "description": "A trie (pronounced as 'try') or prefix tree is a tree data structure used to efficiently store and retrieve keys in a dataset of strings. There are various applications of this data structure, such as autocomplete and spellchecker.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Trie Implementation",
+      "description": "Implement a trie data structure with insert, search, and startsWith operations.",
+      "code": "class Trie {\n    private TrieNode root;\n    \n    public Trie() {\n        root = new TrieNode();\n    }\n    \n    public void insert(String word) {\n        TrieNode current = root;\n        for (char c : word.toCharArray()) {\n            if (!current.children.containsKey(c)) {\n                current.children.put(c, new TrieNode());\n            }\n            current = current.children.get(c);\n        }\n        current.isEndOfWord = true;\n    }\n    \n    public boolean search(String word) {\n        TrieNode current = root;\n        for (char c : word.toCharArray()) {\n            if (!current.children.containsKey(c)) {\n                return false;\n            }\n            current = current.children.get(c);\n        }\n        return current.isEndOfWord;\n    }\n    \n    public boolean startsWith(String prefix) {\n        TrieNode current = root;\n        for (char c : prefix.toCharArray()) {\n            if (!current.children.containsKey(c)) {\n                return false;\n            }\n            current = current.children.get(c);\n        }\n        return true;\n    }\n}\n\nclass TrieNode {\n    Map children;\n    boolean isEndOfWord;\n    \n    TrieNode() {\n        children = new HashMap<>();\n        isEndOfWord = false;\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(m) for insert/search/startsWith where m is word length",
+        "space": "O(ALPHABET_SIZE * m * n) where n is number of words"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "serialize-deserialize-binary-tree.html",
+    "next": "word-search.html"
+  }
+}

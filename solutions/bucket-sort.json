@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Bucket Sort",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Implement bucket sort algorithm for sorting floating point numbers.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Bucket Sort Implementation",
+      "description": "Implement bucket sort algorithm.",
+      "code": "public void bucketSort(double[] arr) {\n    int n = arr.length;\n    if (n <= 1) return;\n    \n    // Create buckets\n    List[] buckets = new List[n];\n    for (int i = 0; i < n; i++) {\n        buckets[i] = new ArrayList<>();\n    }\n    \n    // Distribute elements into buckets\n    for (int i = 0; i < n; i++) {\n        int bucketIndex = (int) (n * arr[i]);\n        buckets[bucketIndex].add(arr[i]);\n    }\n    \n    // Sort individual buckets\n    for (int i = 0; i < n; i++) {\n        Collections.sort(buckets[i]);\n    }\n    \n    // Concatenate buckets\n    int index = 0;\n    for (int i = 0; i < n; i++) {\n        for (double value : buckets[i]) {\n            arr[index++] = value;\n        }\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n + k)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "title": "Solution 1 – Bucket Sort Implementation",
+      "description": "Implement bucket sort algorithm.",
+      "code": "public void bucketSort(double[] arr) {\n    int n = arr.length;\n    if (n <= 1) return;\n    \n    // Create buckets\n    List[] buckets = new List[n];\n    for (int i = 0; i < n; i++) {\n        buckets[i] = new ArrayList<>();\n    }\n    \n    // Distribute elements into buckets\n    for (int i = 0; i < n; i++) {\n        int bucketIndex = (int) (n * arr[i]);\n        buckets[bucketIndex].add(arr[i]);\n    }\n    \n    // Sort individual buckets\n    for (int i = 0; i < n; i++) {\n        Collections.sort(buckets[i]);\n    }\n    \n    // Concatenate buckets\n    int index = 0;\n    for (int i = 0; i < n; i++) {\n        for (double value : buckets[i]) {\n            arr[index++] = value;\n        }\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n + k)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Container With Most Water",
+    "leetcode_id": 11,
+    "category": "String/Array/Matrix",
+    "description": "Given n non-negative integers height where each represents a point at coordinate (i, height[i]), find two lines that together with the x-axis form a container that would hold the maximum amount of water.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Two Pointers",
+      "description": "Use two pointers approach to find the maximum area.",
+      "code": "public int maxArea(int[] height) {\n    int maxArea = 0;\n    int left = 0;\n    int right = height.length - 1;\n    \n    while (left < right) {\n        int width = right - left;\n        int h = Math.min(height[left], height[right]);\n        maxArea = Math.max(maxArea, width * h);\n        \n        if (height[left] < height[right]) {\n            left++;\n        } else {\n            right--;\n        }\n    }\n    \n    return maxArea;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "longest-substring-without-repeating-characters.html",
+    "next": "trapping-rain-water.html"
+  }
+}

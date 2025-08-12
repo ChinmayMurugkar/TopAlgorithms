@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Populating Next Right Pointers in Each Node II",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given a binary tree, populate each next pointer to point to its next right node.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Level Order Traversal",
+      "description": "Use level order traversal to connect nodes.",
+      "code": "public Node connect(Node root) {\n    if (root == null) return null;\n    \n    Node levelStart = root;\n    while (levelStart != null) {\n        Node curr = levelStart;\n        Node nextLevelStart = null;\n        Node prev = null;\n        \n        while (curr != null) {\n            if (curr.left != null) {\n                if (prev == null) {\n                    nextLevelStart = curr.left;\n                } else {\n                    prev.next = curr.left;\n                }\n                prev = curr.left;\n            }\n            \n            if (curr.right != null) {\n                if (prev == null) {\n                    nextLevelStart = curr.right;\n                } else {\n                    prev.next = curr.right;\n                }\n                prev = curr.right;\n            }\n            \n            curr = curr.next;\n        }\n        \n        levelStart = nextLevelStart;\n    }\n    \n    return root;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "4Sum",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an array nums of n integers, return an array of all the unique quadruplets [nums[a], nums[b], nums[c], nums[d]] such that: 0 <= a, b, c, d < n, a, b, c, and d are distinct, nums[a] + nums[b] + nums[c] + nums[d] == target",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Two Pointers",
+      "description": "Use two pointers approach with nested loops.",
+      "code": "public List> fourSum(int[] nums, int target) {\n    List> result = new ArrayList<>();\n    if (nums.length < 4) return result;\n    \n    Arrays.sort(nums);\n    \n    for (int i = 0; i < nums.length - 3; i++) {\n        if (i > 0 && nums[i] == nums[i - 1]) continue;\n        \n        for (int j = i + 1; j < nums.length - 2; j++) {\n            if (j > i + 1 && nums[j] == nums[j - 1]) continue;\n            \n            int left = j + 1, right = nums.length - 1;\n            while (left < right) {\n                int sum = nums[i] + nums[j] + nums[left] + nums[right];\n                \n                if (sum == target) {\n                    result.add(Arrays.asList(nums[i], nums[j], nums[left], nums[right]));\n                    while (left < right && nums[left] == nums[left + 1]) left++;\n                    while (left < right && nums[right] == nums[right - 1]) right--;\n                    left++;\n                    right--;\n                } else if (sum < target) {\n                    left++;\n                } else {\n                    right--;\n                }\n            }\n        }\n    }\n    \n    return result;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n³)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

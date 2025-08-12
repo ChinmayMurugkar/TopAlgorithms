@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Find Peak Element",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "A peak element is an element that is strictly greater than its neighbors.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Binary Search",
+      "description": "Use binary search to find peak element.",
+      "code": "public int findPeakElement(int[] nums) {\n    int left = 0, right = nums.length - 1;\n    \n    while (left < right) {\n        int mid = left + (right - left) / 2;\n        \n        if (nums[mid] > nums[mid + 1]) {\n            right = mid;\n        } else {\n            left = mid + 1;\n        }\n    }\n    \n    return left;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Longest Substring Without Repeating Characters",
+    "leetcode_id": 3,
+    "category": "String/Array/Matrix",
+    "description": "Given a string s, find the length of the longest substring without repeating characters.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Sliding Window with HashSet",
+      "description": "Use sliding window technique with a HashSet to track unique characters.",
+      "code": "public int lengthOfLongestSubstring(String s) {\n    Set set = new HashSet<>();\n    int maxLength = 0;\n    int left = 0;\n    \n    for (int right = 0; right < s.length(); right++) {\n        char c = s.charAt(right);\n        \n        while (set.contains(c)) {\n            set.remove(s.charAt(left));\n            left++;\n        }\n        \n        set.add(c);\n        maxLength = Math.max(maxLength, right - left + 1);\n    }\n    \n    return maxLength;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(min(m, n)) where m is charset size"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "valid-parentheses.html",
+    "next": "container-with-most-water.html"
+  }
+}

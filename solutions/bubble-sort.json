@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Bubble Sort",
+    "leetcode_id": null,
+    "category": "Sorting",
+    "description": "Implement bubble sort algorithm to sort an array of integers in ascending order. Bubble sort is a simple sorting algorithm that repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Bubble Sort Implementation",
+      "description": "Implement bubble sort by repeatedly swapping adjacent elements if they are in wrong order.",
+      "code": "public void bubbleSort(int[] arr) {\n    int n = arr.length;\n    boolean swapped;\n    \n    for (int i = 0; i < n - 1; i++) {\n        swapped = false;\n        \n        for (int j = 0; j < n - i - 1; j++) {\n            if (arr[j] > arr[j + 1]) {\n                // Swap arr[j] and arr[j+1]\n                int temp = arr[j];\n                arr[j] = arr[j + 1];\n                arr[j + 1] = temp;\n                swapped = true;\n            }\n        }\n        \n        // If no swapping occurred, array is sorted\n        if (!swapped) {\n            break;\n        }\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n²) worst and average case, O(n) best case",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "invert-binary-tree.html",
+    "next": "insertion-sort.html"
+  }
+}

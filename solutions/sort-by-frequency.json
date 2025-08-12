@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Sort by Frequency",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Sort elements of an array by frequency of occurrence.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – HashMap and PriorityQueue",
+      "description": "Use HashMap to count frequency and PriorityQueue to sort.",
+      "code": "public String frequencySort(String s) {\n    Map map = new HashMap<>();\n    for (char c : s.toCharArray()) {\n        map.put(c, map.getOrDefault(c, 0) + 1);\n    }\n    \n    PriorityQueue pq = new PriorityQueue<>((a, b) -> \n        map.get(b) - map.get(a));\n    \n    for (char c : map.keySet()) {\n        pq.offer(c);\n    }\n    \n    StringBuilder result = new StringBuilder();\n    while (!pq.isEmpty()) {\n        char c = pq.poll();\n        for (int i = 0; i < map.get(c); i++) {\n            result.append(c);\n        }\n    }\n    \n    return result.toString();\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n log n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

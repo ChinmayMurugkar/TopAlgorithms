@@ -1,0 +1,41 @@
+{
+  "problem": {
+    "title": "Linked List Cycle",
+    "leetcode_id": 141,
+    "category": "Linked List",
+    "description": "Given head, the head of a linked list, determine if the linked list has a cycle in it.\n                \nDefinition: A cycle exists if there is some node in the list that can be reached again by continuously following the next pointer.",
+    "assumptions": [],
+    "example": {
+      "input": "head = [3,2,0,-4], pos = 1",
+      "output": "true",
+      "explanation": "There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed)."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Floyd's Cycle Finding Algorithm (Two Pointers)",
+      "description": "Use fast and slow pointers. If there's a cycle, they will eventually meet.",
+      "code": "public boolean hasCycle(ListNode head) {\n    if (head == null || head.next == null) {\n        return false;\n    }\n    \n    ListNode slow = head;\n    ListNode fast = head;\n    \n    while (fast != null && fast.next != null) {\n        slow = slow.next;\n        fast = fast.next.next;\n        \n        if (slow == fast) {\n            return true;\n        }\n    }\n    \n    return false;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 2 – Hash Set Approach",
+      "description": "Use a hash set to track visited nodes.",
+      "code": "public boolean hasCycle(ListNode head) {\n    Set visited = new HashSet<>();\n    ListNode current = head;\n    \n    while (current != null) {\n        if (visited.contains(current)) {\n            return true;\n        }\n        visited.add(current);\n        current = current.next;\n    }\n    \n    return false;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "merge-two-sorted-lists.html",
+    "next": "remove-nth-node.html"
+  }
+}

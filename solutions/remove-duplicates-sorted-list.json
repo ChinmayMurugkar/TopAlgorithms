@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Remove Duplicates from Sorted List",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given the head of a sorted linked list, delete all duplicates such that each element appears only once.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Two Pointers",
+      "description": "Use two pointers to remove duplicates.",
+      "code": "public ListNode deleteDuplicates(ListNode head) {\n    if (head == null || head.next == null) return head;\n    \n    ListNode current = head;\n    while (current.next != null) {\n        if (current.val == current.next.val) {\n            current.next = current.next.next;\n        } else {\n            current = current.next;\n        }\n    }\n    \n    return head;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

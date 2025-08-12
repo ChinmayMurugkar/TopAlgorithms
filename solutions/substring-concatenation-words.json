@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Substring with Concatenation of All Words",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "You are given a string s and an array of strings words. All the strings of words are of the same length.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Sliding Window",
+      "description": "Use sliding window with HashMap to find concatenated substrings.",
+      "code": "public List findSubstring(String s, String[] words) {\n    List result = new ArrayList<>();\n    if (s == null || words == null || words.length == 0) return result;\n    \n    int wordLength = words[0].length();\n    int totalLength = wordLength * words.length;\n    \n    Map wordCount = new HashMap<>();\n    for (String word : words) {\n        wordCount.put(word, wordCount.getOrDefault(word, 0) + 1);\n    }\n    \n    for (int i = 0; i <= s.length() - totalLength; i++) {\n        Map seen = new HashMap<>();\n        int j = 0;\n        \n        while (j < words.length) {\n            String word = s.substring(i + j * wordLength, i + (j + 1) * wordLength);\n            if (!wordCount.containsKey(word)) break;\n            \n            seen.put(word, seen.getOrDefault(word, 0) + 1);\n            if (seen.get(word) > wordCount.get(word)) break;\n            j++;\n        }\n        \n        if (j == words.length) {\n            result.add(i);\n        }\n    }\n    \n    return result;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n × m × k)",
+        "space": "O(m)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

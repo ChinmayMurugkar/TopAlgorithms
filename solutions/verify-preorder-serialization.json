@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Verify Preorder Serialization of a Binary Tree",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "One way to serialize a binary tree is to use preorder traversal.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Stack",
+      "description": "Use stack to verify preorder serialization.",
+      "code": "public boolean isValidSerialization(String preorder) {\n    String[] nodes = preorder.split(\",\");\n    int slots = 1;\n    \n    for (String node : nodes) {\n        slots--;\n        if (slots < 0) return false;\n        \n        if (!node.equals(\"#\")) {\n            slots += 2;\n        }\n    }\n    \n    return slots == 0;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

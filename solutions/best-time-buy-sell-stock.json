@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Best Time to Buy and Sell Stock",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "You are given an array prices where prices[i] is the price of a given stock on the ith day.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – One Pass",
+      "description": "Keep track of minimum price and maximum profit.",
+      "code": "public int maxProfit(int[] prices) {\n    int minPrice = Integer.MAX_VALUE;\n    int maxProfit = 0;\n    \n    for (int price : prices) {\n        minPrice = Math.min(minPrice, price);\n        maxProfit = Math.max(maxProfit, price - minPrice);\n    }\n    \n    return maxProfit;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 1 – One Pass",
+      "description": "Keep track of minimum price and maximum profit.",
+      "code": "public int maxProfit(int[] prices) {\n    int minPrice = Integer.MAX_VALUE;\n    int maxProfit = 0;\n    \n    for (int price : prices) {\n        minPrice = Math.min(minPrice, price);\n        maxProfit = Math.max(maxProfit, price - minPrice);\n    }\n    \n    return maxProfit;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

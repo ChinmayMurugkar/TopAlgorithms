@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Word Break",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Dynamic Programming",
+      "description": "Use DP to check if string can be segmented.",
+      "code": "public boolean wordBreak(String s, List wordDict) {\n    Set wordSet = new HashSet<>(wordDict);\n    boolean[] dp = new boolean[s.length() + 1];\n    dp[0] = true;\n    \n    for (int i = 1; i <= s.length(); i++) {\n        for (int j = 0; j < i; j++) {\n            if (dp[j] && wordSet.contains(s.substring(j, i))) {\n                dp[i] = true;\n                break;\n            }\n        }\n    }\n    \n    return dp[s.length()];\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n³)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

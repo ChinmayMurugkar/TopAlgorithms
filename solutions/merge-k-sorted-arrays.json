@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Merge k sorted arrays",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Merge k sorted arrays into a single sorted array efficiently.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Min Heap",
+      "description": "Use min heap to merge k sorted arrays.",
+      "code": "public int[] mergeKSortedArrays(int[][] arrays) {\n    PriorityQueue pq = new PriorityQueue<>();\n    int totalSize = 0;\n    \n    for (int i = 0; i < arrays.length; i++) {\n        if (arrays[i].length > 0) {\n            pq.offer(new ArrayElement(arrays[i][0], i, 0));\n            totalSize += arrays[i].length;\n        }\n    }\n    \n    int[] result = new int[totalSize];\n    int index = 0;\n    \n    while (!pq.isEmpty()) {\n        ArrayElement element = pq.poll();\n        result[index++] = element.value;\n        \n        if (element.elementIndex + 1 < arrays[element.arrayIndex].length) {\n            pq.offer(new ArrayElement(\n                arrays[element.arrayIndex][element.elementIndex + 1],\n                element.arrayIndex,\n                element.elementIndex + 1\n            ));\n        }\n    }\n    \n    return result;\n}\n\nclass ArrayElement {\n    int value, arrayIndex, elementIndex;\n    \n    ArrayElement(int value, int arrayIndex, int elementIndex) {\n        this.value = value;\n        this.arrayIndex = arrayIndex;\n        this.elementIndex = elementIndex;\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n log k)",
+        "space": "O(k)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

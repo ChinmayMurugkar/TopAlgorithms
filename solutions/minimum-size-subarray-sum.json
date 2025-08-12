@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Minimum Size Subarray Sum",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an array of positive integers nums and a positive integer target, return the minimal length of a contiguous subarray [numsl, numsl+1, ..., numsr-1, numsr] of which the sum is greater than or equal to target.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Sliding Window",
+      "description": "Use sliding window to find minimum subarray.",
+      "code": "public int minSubArrayLen(int target, int[] nums) {\n    int left = 0, sum = 0, minLen = Integer.MAX_VALUE;\n    \n    for (int right = 0; right < nums.length; right++) {\n        sum += nums[right];\n        \n        while (sum >= target) {\n            minLen = Math.min(minLen, right - left + 1);\n            sum -= nums[left];\n            left++;\n        }\n    }\n    \n    return minLen == Integer.MAX_VALUE ? 0 : minLen;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

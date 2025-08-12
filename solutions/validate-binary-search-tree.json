@@ -1,0 +1,50 @@
+{
+  "problem": {
+    "title": "Validate Binary Search Tree",
+    "leetcode_id": 98,
+    "category": "Tree, Heap & Trie",
+    "description": "Given the root of a binary tree, determine if it is a valid binary search tree (BST).\n                \nDefinition: A valid BST is defined as follows:\n                \nThe left subtree of a node contains only nodes with keys less than the node's key\nThe right subtree of a node contains only nodes with keys greater than the node's key\nBoth the left and right subtrees must also be binary search trees",
+    "assumptions": [],
+    "example": {
+      "input": "root = [2,1,3]",
+      "output": "true"
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Inorder Traversal",
+      "description": "Use inorder traversal to check if the sequence is strictly increasing.",
+      "code": "public boolean isValidBST(TreeNode root) {\n    List inorder = new ArrayList<>();\n    inorderTraversal(root, inorder);\n    \n    for (int i = 1; i < inorder.size(); i++) {\n        if (inorder.get(i) <= inorder.get(i - 1)) {\n            return false;\n        }\n    }\n    \n    return true;\n}\n\nprivate void inorderTraversal(TreeNode root, List inorder) {\n    if (root == null) {\n        return;\n    }\n    \n    inorderTraversal(root.left, inorder);\n    inorder.add(root.val);\n    inorderTraversal(root.right, inorder);\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "title": "Solution 2 – Recursive with Range",
+      "description": "Pass valid ranges to each node and check if the node's value falls within the range.",
+      "code": "public boolean isValidBST(TreeNode root) {\n    return isValidBSTHelper(root, Long.MIN_VALUE, Long.MAX_VALUE);\n}\n\nprivate boolean isValidBSTHelper(TreeNode root, long min, long max) {\n    if (root == null) {\n        return true;\n    }\n    \n    if (root.val <= min || root.val >= max) {\n        return false;\n    }\n    \n    return isValidBSTHelper(root.left, min, root.val) && \n           isValidBSTHelper(root.right, root.val, max);\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(h) where h is the height of the tree"
+      }
+    },
+    {
+      "title": "Solution 3 – Iterative Inorder",
+      "description": "Use iterative inorder traversal to avoid recursion stack space.",
+      "code": "public boolean isValidBST(TreeNode root) {\n    Stack stack = new Stack<>();\n    TreeNode prev = null;\n    TreeNode current = root;\n    \n    while (current != null || !stack.isEmpty()) {\n        while (current != null) {\n            stack.push(current);\n            current = current.left;\n        }\n        \n        current = stack.pop();\n        \n        if (prev != null && current.val <= prev.val) {\n            return false;\n        }\n        \n        prev = current;\n        current = current.right;\n    }\n    \n    return true;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(h)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "maximum-depth-binary-tree.html",
+    "next": "symmetric-tree.html"
+  }
+}

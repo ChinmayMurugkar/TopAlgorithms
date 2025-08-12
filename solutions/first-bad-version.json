@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "First Bad Version",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "You are a product manager and currently leading a team to develop a new product. Unfortunately, the latest version of your product fails the quality check.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Binary Search",
+      "description": "Use binary search to find the first bad version.",
+      "code": "public int firstBadVersion(int n) {\n    int left = 1;\n    int right = n;\n    \n    while (left < right) {\n        int mid = left + (right - left) / 2;\n        \n        if (isBadVersion(mid)) {\n            right = mid;\n        } else {\n            left = mid + 1;\n        }\n    }\n    \n    return left;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log n)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 1 – Binary Search",
+      "description": "Use binary search to find the first bad version.",
+      "code": "public int firstBadVersion(int n) {\n    int left = 1;\n    int right = n;\n    \n    while (left < right) {\n        int mid = left + (right - left) / 2;\n        \n        if (isBadVersion(mid)) {\n            right = mid;\n        } else {\n            left = mid + 1;\n        }\n    }\n    \n    return left;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

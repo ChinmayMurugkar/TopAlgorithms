@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Odd Even Linked List",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given the head of a singly linked list, group all the nodes with odd indices together followed by the nodes with even indices, and return the reordered list.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Two Pointers",
+      "description": "Separate odd and even nodes, then reconnect.",
+      "code": "public ListNode oddEvenList(ListNode head) {\n    if (head == null || head.next == null) return head;\n    \n    ListNode odd = head, even = head.next, evenHead = even;\n    \n    while (even != null && even.next != null) {\n        odd.next = even.next;\n        odd = odd.next;\n        even.next = odd.next;\n        even = even.next;\n    }\n    \n    odd.next = evenHead;\n    return head;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

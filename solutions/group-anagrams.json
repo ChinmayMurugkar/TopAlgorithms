@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Group Anagrams",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an array of strings strs, group the anagrams together. You can return the answer in any order.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – HashMap",
+      "description": "Group strings by their sorted character array.",
+      "code": "public List> groupAnagrams(String[] strs) {\n    Map> map = new HashMap<>();\n    \n    for (String str : strs) {\n        char[] chars = str.toCharArray();\n        Arrays.sort(chars);\n        String key = new String(chars);\n        \n        map.computeIfAbsent(key, k -> new ArrayList<>()).add(str);\n    }\n    \n    return new ArrayList<>(map.values());\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n * k log k)",
+        "space": "O(n * k)"
+      }
+    },
+    {
+      "title": "Solution 1 – HashMap",
+      "description": "Group strings by their sorted character array.",
+      "code": "public List> groupAnagrams(String[] strs) {\n    Map> map = new HashMap<>();\n    \n    for (String str : strs) {\n        char[] chars = str.toCharArray();\n        Arrays.sort(chars);\n        String key = new String(chars);\n        \n        map.computeIfAbsent(key, k -> new ArrayList<>()).add(str);\n    }\n    \n    return new ArrayList<>(map.values());\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n * k log k)",
+        "space": "O(n * k)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

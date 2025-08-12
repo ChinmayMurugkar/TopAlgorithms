@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Print Linked List in Reversed Order",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Print a linked list in reversed order using recursion or iterative approach.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Recursive",
+      "description": "Use recursion to print in reverse order.",
+      "code": "public void printLinkedListInReverse(ListNode head) {\n    if (head == null) return;\n    \n    printLinkedListInReverse(head.next);\n    System.out.println(head.val);\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

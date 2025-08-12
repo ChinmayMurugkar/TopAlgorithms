@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Linked List Cycle",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given head, the head of a linked list, determine if the linked list has a cycle in it.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Floyd's Cycle Finding",
+      "description": "Use fast and slow pointers to detect cycle.",
+      "code": "public boolean hasCycle(ListNode head) {\n    if (head == null || head.next == null) return false;\n    \n    ListNode slow = head;\n    ListNode fast = head;\n    \n    while (fast != null && fast.next != null) {\n        slow = slow.next;\n        fast = fast.next.next;\n        \n        if (slow == fast) {\n            return true;\n        }\n    }\n    \n    return false;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 1 – Floyd's Cycle Finding",
+      "description": "Use fast and slow pointers to detect cycle.",
+      "code": "public boolean hasCycle(ListNode head) {\n    if (head == null || head.next == null) return false;\n    \n    ListNode slow = head;\n    ListNode fast = head;\n    \n    while (fast != null && fast.next != null) {\n        slow = slow.next;\n        fast = fast.next.next;\n        \n        if (slow == fast) {\n            return true;\n        }\n    }\n    \n    return false;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Add Binary",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given two binary strings a and b, return their sum as a binary string.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Bit by Bit",
+      "description": "Add binary strings bit by bit with carry.",
+      "code": "public String addBinary(String a, String b) {\n    StringBuilder result = new StringBuilder();\n    int carry = 0;\n    int i = a.length() - 1;\n    int j = b.length() - 1;\n    \n    while (i >= 0 || j >= 0 || carry > 0) {\n        int sum = carry;\n        \n        if (i >= 0) {\n            sum += a.charAt(i) - '0';\n            i--;\n        }\n        \n        if (j >= 0) {\n            sum += b.charAt(j) - '0';\n            j--;\n        }\n        \n        result.insert(0, (char) (sum % 2 + '0'));\n        carry = sum / 2;\n    }\n    \n    return result.toString();\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(max(m,n))",
+        "space": "O(max(m,n))"
+      }
+    },
+    {
+      "title": "Solution 1 – Bit by Bit",
+      "description": "Add binary strings bit by bit with carry.",
+      "code": "public String addBinary(String a, String b) {\n    StringBuilder result = new StringBuilder();\n    int carry = 0;\n    int i = a.length() - 1;\n    int j = b.length() - 1;\n    \n    while (i >= 0 || j >= 0 || carry > 0) {\n        int sum = carry;\n        \n        if (i >= 0) {\n            sum += a.charAt(i) - '0';\n            i--;\n        }\n        \n        if (j >= 0) {\n            sum += b.charAt(j) - '0';\n            j--;\n        }\n        \n        result.insert(0, (char) (sum % 2 + '0'));\n        carry = sum / 2;\n    }\n    \n    return result.toString();\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(max(m,n))",
+        "space": "O(max(m,n))"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Binary Tree Level Order Traversal",
+    "leetcode_id": 102,
+    "category": "Tree, Heap & Trie",
+    "description": "Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – BFS with Queue",
+      "description": "Use BFS with a queue to traverse the tree level by level.",
+      "code": "public List> levelOrder(TreeNode root) {\n    List> result = new ArrayList<>();\n    \n    if (root == null) {\n        return result;\n    }\n    \n    Queue queue = new LinkedList<>();\n    queue.offer(root);\n    \n    while (!queue.isEmpty()) {\n        int levelSize = queue.size();\n        List currentLevel = new ArrayList<>();\n        \n        for (int i = 0; i < levelSize; i++) {\n            TreeNode node = queue.poll();\n            currentLevel.add(node.val);\n            \n            if (node.left != null) {\n                queue.offer(node.left);\n            }\n            if (node.right != null) {\n                queue.offer(node.right);\n            }\n        }\n        \n        result.add(currentLevel);\n    }\n    \n    return result;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "clone-graph.html",
+    "next": "invert-binary-tree.html"
+  }
+}

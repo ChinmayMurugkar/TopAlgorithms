@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Serialize and Deserialize Binary Tree",
+    "leetcode_id": 297,
+    "category": "Tree, Heap & Trie",
+    "description": "Design an algorithm to serialize and deserialize a binary tree. There is no restriction on how your serialization/deserialization algorithm should work. You just need to ensure that a binary tree can be serialized to a string and this string can be deserialized to the original tree structure.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Preorder with Null Markers",
+      "description": "Use preorder traversal with null markers to serialize and deserialize.",
+      "code": "public String serialize(TreeNode root) {\n    if (root == null) {\n        return \"null\";\n    }\n    \n    return root.val + \",\" + serialize(root.left) + \",\" + serialize(root.right);\n}\n\npublic TreeNode deserialize(String data) {\n    String[] values = data.split(\",\");\n    return deserializeHelper(values, new int[]{0});\n}\n\nprivate TreeNode deserializeHelper(String[] values, int[] index) {\n    if (values[index[0]].equals(\"null\")) {\n        index[0]++;\n        return null;\n    }\n    \n    TreeNode root = new TreeNode(Integer.parseInt(values[index[0]]));\n    index[0]++;\n    root.left = deserializeHelper(values, index);\n    root.right = deserializeHelper(values, index);\n    \n    return root;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "lowest-common-ancestor.html",
+    "next": "implement-trie.html"
+  }
+}

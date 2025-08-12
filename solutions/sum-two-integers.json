@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Sum of Two Integers",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given two integers a and b, return the sum of the two integers without using the operators + and -.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Bit Manipulation",
+      "description": "Use bit manipulation to add without + operator.",
+      "code": "public int getSum(int a, int b) {\n    while (b != 0) {\n        int carry = a & b;\n        a = a ^ b;\n        b = carry << 1;\n    }\n    return a;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(1)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

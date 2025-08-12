@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Remove Duplicates from Sorted Array",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Two Pointers",
+      "description": "Use two pointers to remove duplicates in-place.",
+      "code": "public int removeDuplicates(int[] nums) {\n    if (nums.length == 0) return 0;\n    \n    int i = 0;\n    for (int j = 1; j < nums.length; j++) {\n        if (nums[j] != nums[i]) {\n            i++;\n            nums[i] = nums[j];\n        }\n    }\n    \n    return i + 1;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 1 – Two Pointers",
+      "description": "Use two pointers to remove duplicates in-place.",
+      "code": "public int removeDuplicates(int[] nums) {\n    if (nums.length == 0) return 0;\n    \n    int i = 0;\n    for (int j = 1; j < nums.length; j++) {\n        if (nums[j] != nums[i]) {\n            i++;\n            nums[i] = nums[j];\n        }\n    }\n    \n    return i + 1;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

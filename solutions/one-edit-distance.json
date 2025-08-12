@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "One Edit Distance",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given two strings s and t, return true if they are both one edit distance apart, otherwise return false.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Character Comparison",
+      "description": "Compare characters and allow one edit.",
+      "code": "public boolean isOneEditDistance(String s, String t) {\n    int m = s.length();\n    int n = t.length();\n    \n    if (Math.abs(m - n) > 1) return false;\n    \n    int i = 0, j = 0;\n    int diff = 0;\n    \n    while (i < m && j < n) {\n        if (s.charAt(i) == t.charAt(j)) {\n            i++;\n            j++;\n        } else {\n            diff++;\n            if (diff > 1) return false;\n            \n            if (m > n) {\n                i++;\n            } else if (m < n) {\n                j++;\n            } else {\n                i++;\n                j++;\n            }\n        }\n    }\n    \n    if (i < m || j < n) diff++;\n    \n    return diff == 1;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(min(m,n))",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 1 – Character Comparison",
+      "description": "Compare characters and allow one edit.",
+      "code": "public boolean isOneEditDistance(String s, String t) {\n    int m = s.length();\n    int n = t.length();\n    \n    if (Math.abs(m - n) > 1) return false;\n    \n    int i = 0, j = 0;\n    int diff = 0;\n    \n    while (i < m && j < n) {\n        if (s.charAt(i) == t.charAt(j)) {\n            i++;\n            j++;\n        } else {\n            diff++;\n            if (diff > 1) return false;\n            \n            if (m > n) {\n                i++;\n            } else if (m < n) {\n                j++;\n            } else {\n                i++;\n                j++;\n            }\n        }\n    }\n    \n    if (i < m || j < n) diff++;\n    \n    return diff == 1;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(min(m,n))",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

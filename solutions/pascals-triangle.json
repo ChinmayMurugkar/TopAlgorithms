@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Pascal's Triangle",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an integer numRows, return the first numRows of Pascal's triangle.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Dynamic Programming",
+      "description": "Build Pascal's triangle using DP.",
+      "code": "public List> generate(int numRows) {\n    List> result = new ArrayList<>();\n    \n    for (int i = 0; i < numRows; i++) {\n        List row = new ArrayList<>();\n        for (int j = 0; j <= i; j++) {\n            if (j == 0 || j == i) {\n                row.add(1);\n            } else {\n                row.add(result.get(i - 1).get(j - 1) + result.get(i - 1).get(j));\n            }\n        }\n        result.add(row);\n    }\n    \n    return result;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n²)",
+        "space": "O(n²)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Course Schedule",
+    "leetcode_id": 207,
+    "category": "Graph",
+    "description": "There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Topological Sort with DFS",
+      "description": "Use DFS to detect cycles in the course dependency graph.",
+      "code": "public boolean canFinish(int numCourses, int[][] prerequisites) {\n    List> graph = new ArrayList<>();\n    for (int i = 0; i < numCourses; i++) {\n        graph.add(new ArrayList<>());\n    }\n    \n    for (int[] prerequisite : prerequisites) {\n        graph.get(prerequisite[1]).add(prerequisite[0]);\n    }\n    \n    boolean[] visited = new boolean[numCourses];\n    boolean[] recStack = new boolean[numCourses];\n    \n    for (int i = 0; i < numCourses; i++) {\n        if (!visited[i] && hasCycle(graph, i, visited, recStack)) {\n            return false;\n        }\n    }\n    \n    return true;\n}\n\nprivate boolean hasCycle(List> graph, int node, \n                        boolean[] visited, boolean[] recStack) {\n    visited[node] = true;\n    recStack[node] = true;\n    \n    for (int neighbor : graph.get(node)) {\n        if (!visited[neighbor] && hasCycle(graph, neighbor, visited, recStack)) {\n            return true;\n        } else if (recStack[neighbor]) {\n            return true;\n        }\n    }\n    \n    recStack[node] = false;\n    return false;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(V + E) where V is vertices and E is edges",
+        "space": "O(V)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "number-of-islands.html",
+    "next": "clone-graph.html"
+  }
+}

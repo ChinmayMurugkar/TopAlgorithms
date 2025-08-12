@@ -1,0 +1,41 @@
+{
+  "problem": {
+    "title": "Populating Next Right Pointers in Each Node",
+    "leetcode_id": 116,
+    "category": "Tree, Heap & Trie",
+    "description": "You are given a perfect binary tree where all leaves are on the same level, and every parent has two children. Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.",
+    "assumptions": [],
+    "example": {
+      "input": "root = [1,2,3,4,5,6,7]",
+      "output": "[1,#,2,3,#,4,5,6,7,#]",
+      "explanation": "The next pointers connect nodes at the same level."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Level Order Traversal",
+      "description": "Use BFS to connect nodes at the same level.",
+      "code": "public Node connect(Node root) {\n    if (root == null) {\n        return null;\n    }\n    \n    Queue queue = new LinkedList<>();\n    queue.offer(root);\n    \n    while (!queue.isEmpty()) {\n        int levelSize = queue.size();\n        \n        for (int i = 0; i < levelSize; i++) {\n            Node current = queue.poll();\n            \n            if (i < levelSize - 1) {\n                current.next = queue.peek();\n            }\n            \n            if (current.left != null) {\n                queue.offer(current.left);\n            }\n            if (current.right != null) {\n                queue.offer(current.right);\n            }\n        }\n    }\n    \n    return root;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(w) where w is the maximum width"
+      }
+    },
+    {
+      "title": "Solution 2 – Using Existing Next Pointers",
+      "description": "Use the next pointers we've already set to connect the next level.",
+      "code": "public Node connect(Node root) {\n    if (root == null) {\n        return null;\n    }\n    \n    Node leftmost = root;\n    \n    while (leftmost.left != null) {\n        Node current = leftmost;\n        \n        while (current != null) {\n            current.left.next = current.right;\n            \n            if (current.next != null) {\n                current.right.next = current.next.left;\n            }\n            \n            current = current.next;\n        }\n        \n        leftmost = leftmost.left;\n    }\n    \n    return root;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "construct-binary-tree.html",
+    "next": "flatten-binary-tree.html"
+  }
+}

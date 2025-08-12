@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Divide Two Integers",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given two integers dividend and divisor, divide two integers without using multiplication, division, and mod operator.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Bit Manipulation",
+      "description": "Use bit manipulation to divide without multiplication.",
+      "code": "public int divide(int dividend, int divisor) {\n    if (dividend == Integer.MIN_VALUE && divisor == -1) {\n        return Integer.MAX_VALUE;\n    }\n    \n    boolean negative = (dividend < 0) ^ (divisor < 0);\n    long dvd = Math.abs((long) dividend);\n    long dvs = Math.abs((long) divisor);\n    \n    int result = 0;\n    while (dvd >= dvs) {\n        long temp = dvs;\n        int multiple = 1;\n        \n        while (dvd >= (temp << 1)) {\n            temp <<= 1;\n            multiple <<= 1;\n        }\n        \n        dvd -= temp;\n        result += multiple;\n    }\n    \n    return negative ? -result : result;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

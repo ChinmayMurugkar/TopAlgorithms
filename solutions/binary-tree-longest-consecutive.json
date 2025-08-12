@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Binary Tree Longest Consecutive Sequence",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given the root of a binary tree, return the length of the longest consecutive sequence path.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – DFS",
+      "description": "Use DFS to find longest consecutive sequence.",
+      "code": "public int longestConsecutive(TreeNode root) {\n    if (root == null) return 0;\n    return dfs(root, 1, root.val);\n}\n\nprivate int dfs(TreeNode node, int length, int prev) {\n    if (node == null) return length - 1;\n    \n    int currLength = (node.val == prev + 1) ? length : 1;\n    \n    int left = dfs(node.left, currLength + 1, node.val);\n    int right = dfs(node.right, currLength + 1, node.val);\n    \n    return Math.max(currLength, Math.max(left, right));\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(h)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

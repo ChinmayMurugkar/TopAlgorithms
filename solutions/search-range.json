@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Search for a Range",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an array of integers nums sorted in non-decreasing order, find the starting and ending position of a given target value.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Binary Search",
+      "description": "Use binary search to find first and last occurrence.",
+      "code": "public int[] searchRange(int[] nums, int target) {\n    int[] result = {-1, -1};\n    if (nums == null || nums.length == 0) return result;\n    \n    result[0] = findFirst(nums, target);\n    result[1] = findLast(nums, target);\n    \n    return result;\n}\n\nprivate int findFirst(int[] nums, int target) {\n    int left = 0, right = nums.length - 1;\n    int result = -1;\n    \n    while (left <= right) {\n        int mid = left + (right - left) / 2;\n        if (nums[mid] == target) {\n            result = mid;\n            right = mid - 1;\n        } else if (nums[mid] < target) {\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n    \n    return result;\n}\n\nprivate int findLast(int[] nums, int target) {\n    int left = 0, right = nums.length - 1;\n    int result = -1;\n    \n    while (left <= right) {\n        int mid = left + (right - left) / 2;\n        if (nums[mid] == target) {\n            result = mid;\n            left = mid + 1;\n        } else if (nums[mid] < target) {\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n    \n    return result;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

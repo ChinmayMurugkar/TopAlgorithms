@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Guess Number Higher or Lower",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "We are playing the Guess Game. The game is as follows:",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Binary Search",
+      "description": "Use binary search to guess the number.",
+      "code": "public int guessNumber(int n) {\n    int left = 1, right = n;\n    \n    while (left <= right) {\n        int mid = left + (right - left) / 2;\n        int result = guess(mid);\n        \n        if (result == 0) {\n            return mid;\n        } else if (result == 1) {\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n    \n    return -1;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

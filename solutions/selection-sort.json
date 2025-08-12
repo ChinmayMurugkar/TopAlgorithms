@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Selection Sort",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Implement selection sort algorithm to sort an array in ascending order.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Selection Sort Implementation",
+      "description": "Implement selection sort algorithm to sort an array.",
+      "code": "public void selectionSort(int[] arr) {\n    int n = arr.length;\n    \n    for (int i = 0; i < n - 1; i++) {\n        // Find the minimum element in unsorted array\n        int minIndex = i;\n        for (int j = i + 1; j < n; j++) {\n            if (arr[j] < arr[minIndex]) {\n                minIndex = j;\n            }\n        }\n        \n        // Swap the found minimum element with the first element\n        int temp = arr[minIndex];\n        arr[minIndex] = arr[i];\n        arr[i] = temp;\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n²)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 1 – Selection Sort Implementation",
+      "description": "Implement selection sort algorithm to sort an array.",
+      "code": "public void selectionSort(int[] arr) {\n    int n = arr.length;\n    \n    for (int i = 0; i < n - 1; i++) {\n        // Find the minimum element in unsorted array\n        int minIndex = i;\n        for (int j = i + 1; j < n; j++) {\n            if (arr[j] < arr[minIndex]) {\n                minIndex = j;\n            }\n        }\n        \n        // Swap the found minimum element with the first element\n        int temp = arr[minIndex];\n        arr[minIndex] = arr[i];\n        arr[i] = temp;\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n²)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

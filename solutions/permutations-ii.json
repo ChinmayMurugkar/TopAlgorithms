@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Permutations II",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given a collection of numbers, nums, that might contain duplicates, return all possible unique permutations in any order.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Backtracking with Duplicate Handling",
+      "description": "Use backtracking with duplicate detection.",
+      "code": "public List> permuteUnique(int[] nums) {\n    List> result = new ArrayList<>();\n    Arrays.sort(nums);\n    backtrack(nums, new boolean[nums.length], new ArrayList<>(), result);\n    return result;\n}\n\nprivate void backtrack(int[] nums, boolean[] used, List current, List> result) {\n    if (current.size() == nums.length) {\n        result.add(new ArrayList<>(current));\n        return;\n    }\n    \n    for (int i = 0; i < nums.length; i++) {\n        if (used[i] || (i > 0 && nums[i] == nums[i - 1] && !used[i - 1])) {\n            continue;\n        }\n        \n        used[i] = true;\n        current.add(nums[i]);\n        backtrack(nums, used, current, result);\n        current.remove(current.size() - 1);\n        used[i] = false;\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n!)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

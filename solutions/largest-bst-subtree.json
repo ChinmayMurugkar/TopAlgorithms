@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Largest BST Subtree",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given the root of a binary tree, find the largest subtree, which is also a Binary Search Tree (BST), where the largest means subtree has the largest number of nodes.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – DFS",
+      "description": "Use DFS to find largest BST subtree.",
+      "code": "public int largestBSTSubtree(TreeNode root) {\n    return dfs(root)[2];\n}\n\nprivate int[] dfs(TreeNode node) {\n    if (node == null) {\n        return new int[]{Integer.MAX_VALUE, Integer.MIN_VALUE, 0};\n    }\n    \n    int[] left = dfs(node.left);\n    int[] right = dfs(node.right);\n    \n    if (node.val > left[1] && node.val < right[0]) {\n        return new int[]{\n            Math.min(left[0], node.val),\n            Math.max(right[1], node.val),\n            left[2] + right[2] + 1\n        };\n    }\n    \n    return new int[]{Integer.MIN_VALUE, Integer.MAX_VALUE, \n                     Math.max(left[2], right[2])};\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(h)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

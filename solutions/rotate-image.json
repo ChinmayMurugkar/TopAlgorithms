@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Rotate Image",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Transpose and Reverse",
+      "description": "Transpose the matrix and reverse each row.",
+      "code": "public void rotate(int[][] matrix) {\n    int n = matrix.length;\n    \n    // Transpose\n    for (int i = 0; i < n; i++) {\n        for (int j = i; j < n; j++) {\n            int temp = matrix[i][j];\n            matrix[i][j] = matrix[j][i];\n            matrix[j][i] = temp;\n        }\n    }\n    \n    // Reverse each row\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < n / 2; j++) {\n            int temp = matrix[i][j];\n            matrix[i][j] = matrix[i][n - 1 - j];\n            matrix[i][n - 1 - j] = temp;\n        }\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n²)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

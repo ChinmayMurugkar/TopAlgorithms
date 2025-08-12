@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Merge Sort",
+    "leetcode_id": null,
+    "category": "Sorting",
+    "description": "Implement merge sort algorithm to sort an array of integers in ascending order. Merge sort is a divide-and-conquer algorithm that recursively breaks down a problem into two or more sub-problems of the same or related type.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Merge Sort Implementation",
+      "description": "Implement merge sort using divide and conquer approach.",
+      "code": "public void mergeSort(int[] arr) {\n    if (arr == null || arr.length <= 1) {\n        return;\n    }\n    \n    int mid = arr.length / 2;\n    int[] left = Arrays.copyOfRange(arr, 0, mid);\n    int[] right = Arrays.copyOfRange(arr, mid, arr.length);\n    \n    mergeSort(left);\n    mergeSort(right);\n    merge(arr, left, right);\n}\n\nprivate void merge(int[] arr, int[] left, int[] right) {\n    int i = 0, j = 0, k = 0;\n    \n    while (i < left.length && j < right.length) {\n        if (left[i] <= right[j]) {\n            arr[k++] = left[i++];\n        } else {\n            arr[k++] = right[j++];\n        }\n    }\n    \n    while (i < left.length) {\n        arr[k++] = left[i++];\n    }\n    \n    while (j < right.length) {\n        arr[k++] = right[j++];\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n log n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "coin-change.html",
+    "next": "heap-sort.html"
+  }
+}

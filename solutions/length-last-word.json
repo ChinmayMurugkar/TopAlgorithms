@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Length of Last Word",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given a string s consisting of words and spaces, return the length of the last word in the string.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – String Traversal",
+      "description": "Traverse string from end to find last word length.",
+      "code": "public int lengthOfLastWord(String s) {\n    int length = 0;\n    int i = s.length() - 1;\n    \n    // Skip trailing spaces\n    while (i >= 0 && s.charAt(i) == ' ') {\n        i--;\n    }\n    \n    // Count characters of last word\n    while (i >= 0 && s.charAt(i) != ' ') {\n        length++;\n        i--;\n    }\n    \n    return length;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

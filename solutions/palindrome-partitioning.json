@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Palindrome Partitioning",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given a string s, partition s such that every substring of the partition is a palindrome.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Backtracking",
+      "description": "Use backtracking to find all palindrome partitions.",
+      "code": "public List> partition(String s) {\n    List> result = new ArrayList<>();\n    backtrack(s, 0, new ArrayList<>(), result);\n    return result;\n}\n\nprivate void backtrack(String s, int start, List current, List> result) {\n    if (start == s.length()) {\n        result.add(new ArrayList<>(current));\n        return;\n    }\n    \n    for (int i = start; i < s.length(); i++) {\n        if (isPalindrome(s, start, i)) {\n            current.add(s.substring(start, i + 1));\n            backtrack(s, i + 1, current, result);\n            current.remove(current.size() - 1);\n        }\n    }\n}\n\nprivate boolean isPalindrome(String s, int start, int end) {\n    while (start < end) {\n        if (s.charAt(start++) != s.charAt(end--)) {\n            return false;\n        }\n    }\n    return true;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n × 2^n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

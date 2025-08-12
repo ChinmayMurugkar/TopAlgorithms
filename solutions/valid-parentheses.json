@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Valid Parentheses",
+    "leetcode_id": 20,
+    "category": "String/Array/Matrix",
+    "description": "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid. An input string is valid if: Open brackets must be closed by the same type of brackets. Open brackets must be closed in the correct order.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Stack",
+      "description": "Use a stack to keep track of opening brackets and match them with closing brackets.",
+      "code": "public boolean isValid(String s) {\n    Stack stack = new Stack<>();\n    \n    for (char c : s.toCharArray()) {\n        if (c == '(' || c == '{' || c == '[') {\n            stack.push(c);\n        } else {\n            if (stack.isEmpty()) {\n                return false;\n            }\n            \n            char top = stack.pop();\n            if ((c == ')' && top != '(') || \n                (c == '}' && top != '{') || \n                (c == ']' && top != '[')) {\n                return false;\n            }\n        }\n    }\n    \n    return stack.isEmpty();\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "happy-number.html",
+    "next": "longest-substring-without-repeating-characters.html"
+  }
+}

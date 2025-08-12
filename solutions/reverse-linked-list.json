@@ -1,0 +1,66 @@
+{
+  "problem": {
+    "title": "Reverse Linked List",
+    "leetcode_id": 206,
+    "category": "Linked List",
+    "description": "Given the head of a singly linked list, reverse the list, and return the reversed list.",
+    "assumptions": [],
+    "example": {
+      "input": "head = [1,2,3,4,5]",
+      "output": "[5,4,3,2,1]"
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Iterative Approach",
+      "description": "Use three pointers to reverse the links iteratively.",
+      "code": "public ListNode reverseList(ListNode head) {\n    ListNode prev = null;\n    ListNode current = head;\n    \n    while (current != null) {\n        ListNode nextTemp = current.next;\n        current.next = prev;\n        prev = current;\n        current = nextTemp;\n    }\n    \n    return prev;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 2 – Recursive Approach",
+      "description": "Use recursion to reverse the list by reversing the rest and updating the head.",
+      "code": "public ListNode reverseList(ListNode head) {\n    if (head == null || head.next == null) {\n        return head;\n    }\n    \n    ListNode newHead = reverseList(head.next);\n    head.next.next = head;\n    head.next = null;\n    \n    return newHead;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n) for recursion stack"
+      }
+    },
+    {
+      "title": "Solution 3 – Stack-based Approach",
+      "description": "Use a stack to store nodes and rebuild the list in reverse order.",
+      "code": "public ListNode reverseList(ListNode head) {\n    if (head == null) return null;\n    \n    Stack stack = new Stack<>();\n    ListNode current = head;\n    \n    // Push all nodes onto stack\n    while (current != null) {\n        stack.push(current);\n        current = current.next;\n    }\n    \n    // Pop nodes and rebuild list\n    ListNode newHead = stack.pop();\n    current = newHead;\n    \n    while (!stack.isEmpty()) {\n        current.next = stack.pop();\n        current = current.next;\n    }\n    \n    current.next = null;\n    return newHead;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "title": "Solution 4 – Reverse in Groups",
+      "description": "Reverse the list in groups of k (generalization of the problem).",
+      "code": "public ListNode reverseKGroup(ListNode head, int k) {\n    if (head == null || k == 1) return head;\n    \n    ListNode dummy = new ListNode(0);\n    dummy.next = head;\n    ListNode prev = dummy;\n    \n    int count = 0;\n    ListNode current = head;\n    \n    while (current != null) {\n        count++;\n        if (count % k == 0) {\n            prev = reverse(prev, current.next);\n            current = prev.next;\n        } else {\n            current = current.next;\n        }\n    }\n    \n    return dummy.next;\n}\n\nprivate ListNode reverse(ListNode start, ListNode end) {\n    ListNode prev = start;\n    ListNode current = start.next;\n    ListNode first = current;\n    \n    while (current != end) {\n        ListNode next = current.next;\n        current.next = prev;\n        prev = current;\n        current = next;\n    }\n    \n    start.next = prev;\n    first.next = current;\n    \n    return first;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Edge Cases and Validation",
+      "description": "Robust implementation handling edge cases:",
+      "code": "public ListNode reverseList(ListNode head) {\n    // Handle null and single node cases\n    if (head == null || head.next == null) {\n        return head;\n    }\n    \n    ListNode prev = null;\n    ListNode current = head;\n    \n    while (current != null) {\n        // Store next node before changing links\n        ListNode nextTemp = current.next;\n        \n        // Reverse the link\n        current.next = prev;\n        \n        // Move pointers forward\n        prev = current;\n        current = nextTemp;\n    }\n    \n    return prev;\n}\n\n// ListNode class definition\nclass ListNode {\n    int val;\n    ListNode next;\n    \n    ListNode() {}\n    ListNode(int val) { this.val = val; }\n    ListNode(int val, ListNode next) { \n        this.val = val; \n        this.next = next; \n    }\n}",
+      "language": "java"
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "add-two-numbers.html",
+    "next": "merge-two-sorted-lists.html"
+  }
+}

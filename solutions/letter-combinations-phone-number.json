@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Letter Combinations of a Phone Number",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Backtracking",
+      "description": "Use backtracking to generate all combinations.",
+      "code": "public List letterCombinations(String digits) {\n    List result = new ArrayList<>();\n    if (digits == null || digits.length() == 0) return result;\n    \n    String[] mapping = {\"\", \"\", \"abc\", \"def\", \"ghi\", \"jkl\", \"mno\", \"pqrs\", \"tuv\", \"wxyz\"};\n    backtrack(digits, 0, \"\", mapping, result);\n    return result;\n}\n\nprivate void backtrack(String digits, int index, String current, String[] mapping, List result) {\n    if (index == digits.length()) {\n        result.add(current);\n        return;\n    }\n    \n    String letters = mapping[digits.charAt(index) - '0'];\n    for (char letter : letters.toCharArray()) {\n        backtrack(digits, index + 1, current + letter, mapping, result);\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(4^n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

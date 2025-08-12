@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "H-Index",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an array of integers citations where citations[i] is the number of citations a researcher received for their ith paper, return the researcher's h-index.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Sorting",
+      "description": "Sort citations and find h-index.",
+      "code": "public int hIndex(int[] citations) {\n    Arrays.sort(citations);\n    int n = citations.length;\n    \n    for (int i = 0; i < n; i++) {\n        if (citations[i] >= n - i) {\n            return n - i;\n        }\n    }\n    \n    return 0;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n log n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

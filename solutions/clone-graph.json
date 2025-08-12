@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Clone Graph",
+    "leetcode_id": 133,
+    "category": "Graph",
+    "description": "Given a reference of a node in a connected undirected graph. Return a deep copy (clone) of the graph. Each node in the graph contains a value (int) and a list (List[Node]) of its neighbors.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – DFS with HashMap",
+      "description": "Use DFS with a HashMap to clone the graph and avoid cycles.",
+      "code": "public Node cloneGraph(Node node) {\n    if (node == null) {\n        return null;\n    }\n    \n    Map visited = new HashMap<>();\n    return cloneGraphHelper(node, visited);\n}\n\nprivate Node cloneGraphHelper(Node node, Map visited) {\n    if (visited.containsKey(node)) {\n        return visited.get(node);\n    }\n    \n    Node clone = new Node(node.val);\n    visited.put(node, clone);\n    \n    for (Node neighbor : node.neighbors) {\n        clone.neighbors.add(cloneGraphHelper(neighbor, visited));\n    }\n    \n    return clone;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(V + E) where V is vertices and E is edges",
+        "space": "O(V)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "edit-distance.html",
+    "next": "pacific-atlantic-water-flow.html"
+  }
+}

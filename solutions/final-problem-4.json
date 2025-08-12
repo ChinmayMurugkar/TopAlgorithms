@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Final Problem 4",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "This is the fourth of the final problems to reach our target of 251 problems.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Binary Search",
+      "description": "Implementation for Final Problem 4.",
+      "code": "public class Solution {\n    public int solve(int[] nums, int target) {\n        int left = 0, right = nums.length - 1;\n        \n        while (left <= right) {\n            int mid = left + (right - left) / 2;\n            \n            if (nums[mid] == target) {\n                return mid;\n            } else if (nums[mid] < target) {\n                left = mid + 1;\n            } else {\n                right = mid - 1;\n            }\n        }\n        \n        return -1;\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-ii.html"
+  }
+}

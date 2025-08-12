@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Ugly Number",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "An ugly number is a positive integer whose prime factors are limited to 2, 3, and 5. Given an integer n, return true if n is an ugly number.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Prime Factorization",
+      "description": "Check if number has only 2, 3, 5 as prime factors.",
+      "code": "public boolean isUgly(int n) {\n    if (n <= 0) return false;\n    \n    while (n % 2 == 0) n /= 2;\n    while (n % 3 == 0) n /= 3;\n    while (n % 5 == 0) n /= 5;\n    \n    return n == 1;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log n)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 1 – Prime Factorization",
+      "description": "Check if number has only 2, 3, 5 as prime factors.",
+      "code": "public boolean isUgly(int n) {\n    if (n <= 0) return false;\n    \n    while (n % 2 == 0) n /= 2;\n    while (n % 3 == 0) n /= 3;\n    while (n % 5 == 0) n /= 5;\n    \n    return n == 1;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

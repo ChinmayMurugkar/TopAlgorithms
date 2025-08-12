@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Factorial Trailing Zeroes",
+    "leetcode_id": 172,
+    "category": "Math",
+    "description": "Given an integer n, return the number of trailing zeroes in n!. Note that n! = n * (n - 1) * (n - 2) * ... * 3 * 2 * 1.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Count Factors of 5",
+      "description": "Count the number of factors of 5 in the factorial.",
+      "code": "public int trailingZeroes(int n) {\n    int count = 0;\n    \n    while (n > 0) {\n        n /= 5;\n        count += n;\n    }\n    \n    return count;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "counting-bits.html",
+    "next": "happy-number.html"
+  }
+}

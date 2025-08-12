@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Binary Tree Paths",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given the root of a binary tree, return all root-to-leaf paths in any order.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – DFS",
+      "description": "Use DFS to find all root-to-leaf paths.",
+      "code": "public List binaryTreePaths(TreeNode root) {\n    List result = new ArrayList<>();\n    if (root == null) return result;\n    \n    dfs(root, \"\", result);\n    return result;\n}\n\nprivate void dfs(TreeNode root, String path, List result) {\n    if (root.left == null && root.right == null) {\n        result.add(path + root.val);\n        return;\n    }\n    \n    if (root.left != null) {\n        dfs(root.left, path + root.val + \"->\", result);\n    }\n    \n    if (root.right != null) {\n        dfs(root.right, path + root.val + \"->\", result);\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(h)"
+      }
+    },
+    {
+      "title": "Solution 1 – DFS",
+      "description": "Use DFS to find all root-to-leaf paths.",
+      "code": "public List binaryTreePaths(TreeNode root) {\n    List result = new ArrayList<>();\n    if (root == null) return result;\n    \n    dfs(root, \"\", result);\n    return result;\n}\n\nprivate void dfs(TreeNode root, String path, List result) {\n    if (root.left == null && root.right == null) {\n        result.add(path + root.val);\n        return;\n    }\n    \n    if (root.left != null) {\n        dfs(root.left, path + root.val + \"->\", result);\n    }\n    \n    if (root.right != null) {\n        dfs(root.right, path + root.val + \"->\", result);\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(h)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

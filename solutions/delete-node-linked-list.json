@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Delete Node in a Linked List",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Write a function to delete a node in a singly-linked list.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Value Copy",
+      "description": "Copy next node's value and delete next node.",
+      "code": "public void deleteNode(ListNode node) {\n    node.val = node.next.val;\n    node.next = node.next.next;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(1)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

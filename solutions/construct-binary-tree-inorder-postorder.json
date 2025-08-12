@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Construct Binary Tree from Inorder and Postorder Traversal",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given two integer arrays inorder and postorder where inorder is the inorder traversal of a binary tree and postorder is the postorder traversal of the same tree, construct and return the binary tree.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Recursive",
+      "description": "Use recursive approach with HashMap for index lookup.",
+      "code": "public TreeNode buildTree(int[] inorder, int[] postorder) {\n    Map map = new HashMap<>();\n    for (int i = 0; i < inorder.length; i++) {\n        map.put(inorder[i], i);\n    }\n    return buildTreeHelper(inorder, 0, inorder.length - 1, postorder, 0, postorder.length - 1, map);\n}\n\nprivate TreeNode buildTreeHelper(int[] inorder, int inStart, int inEnd, \n                               int[] postorder, int postStart, int postEnd, \n                               Map map) {\n    if (inStart > inEnd || postStart > postEnd) return null;\n    \n    TreeNode root = new TreeNode(postorder[postEnd]);\n    int rootIndex = map.get(postorder[postEnd]);\n    int leftSize = rootIndex - inStart;\n    \n    root.left = buildTreeHelper(inorder, inStart, rootIndex - 1, \n                               postorder, postStart, postStart + leftSize - 1, map);\n    root.right = buildTreeHelper(inorder, rootIndex + 1, inEnd, \n                                postorder, postStart + leftSize, postEnd - 1, map);\n    \n    return root;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

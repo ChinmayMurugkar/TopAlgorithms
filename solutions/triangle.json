@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Triangle",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given a triangle array, return the minimum path sum from top to bottom.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Dynamic Programming",
+      "description": "Use bottom-up DP to find minimum path sum.",
+      "code": "public int minimumTotal(List> triangle) {\n    if (triangle == null || triangle.isEmpty()) return 0;\n    \n    int n = triangle.size();\n    int[] dp = new int[n];\n    \n    // Initialize with last row\n    for (int i = 0; i < n; i++) {\n        dp[i] = triangle.get(n - 1).get(i);\n    }\n    \n    // Bottom-up approach\n    for (int i = n - 2; i >= 0; i--) {\n        for (int j = 0; j <= i; j++) {\n            dp[j] = Math.min(dp[j], dp[j + 1]) + triangle.get(i).get(j);\n        }\n    }\n    \n    return dp[0];\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n²)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

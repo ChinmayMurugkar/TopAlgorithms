@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "The Skyline Problem",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "A city's skyline is the outer contour of the silhouette formed by all the buildings in that city when viewed from a distance.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Line Sweep",
+      "description": "Use line sweep algorithm with priority queue.",
+      "code": "public List> getSkyline(int[][] buildings) {\n    List> result = new ArrayList<>();\n    List heights = new ArrayList<>();\n    \n    // Convert buildings to height events\n    for (int[] building : buildings) {\n        heights.add(new int[]{building[0], -building[2]}); // start\n        heights.add(new int[]{building[1], building[2]});  // end\n    }\n    \n    // Sort by x-coordinate\n    Collections.sort(heights, (a, b) -> {\n        if (a[0] != b[0]) return a[0] - b[0];\n        return a[1] - b[1];\n    });\n    \n    PriorityQueue pq = new PriorityQueue<>(Collections.reverseOrder());\n    pq.offer(0);\n    int prevHeight = 0;\n    \n    for (int[] height : heights) {\n        if (height[1] < 0) {\n            pq.offer(-height[1]); // start of building\n        } else {\n            pq.remove(height[1]); // end of building\n        }\n        \n        int currHeight = pq.peek();\n        if (currHeight != prevHeight) {\n            result.add(Arrays.asList(height[0], currHeight));\n            prevHeight = currHeight;\n        }\n    }\n    \n    return result;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n log n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

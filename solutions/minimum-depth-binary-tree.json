@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Minimum Depth of Binary Tree",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given a binary tree, find its minimum depth. The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – BFS",
+      "description": "Use BFS to find the minimum depth.",
+      "code": "public int minDepth(TreeNode root) {\n    if (root == null) return 0;\n    \n    Queue queue = new LinkedList<>();\n    queue.offer(root);\n    int depth = 1;\n    \n    while (!queue.isEmpty()) {\n        int size = queue.size();\n        \n        for (int i = 0; i < size; i++) {\n            TreeNode current = queue.poll();\n            \n            if (current.left == null && current.right == null) {\n                return depth;\n            }\n            \n            if (current.left != null) {\n                queue.offer(current.left);\n            }\n            if (current.right != null) {\n                queue.offer(current.right);\n            }\n        }\n        \n        depth++;\n    }\n    \n    return depth;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "title": "Solution 1 – BFS",
+      "description": "Use BFS to find the minimum depth.",
+      "code": "public int minDepth(TreeNode root) {\n    if (root == null) return 0;\n    \n    Queue queue = new LinkedList<>();\n    queue.offer(root);\n    int depth = 1;\n    \n    while (!queue.isEmpty()) {\n        int size = queue.size();\n        \n        for (int i = 0; i < size; i++) {\n            TreeNode current = queue.poll();\n            \n            if (current.left == null && current.right == null) {\n                return depth;\n            }\n            \n            if (current.left != null) {\n                queue.offer(current.left);\n            }\n            if (current.right != null) {\n                queue.offer(current.right);\n            }\n        }\n        \n        depth++;\n    }\n    \n    return depth;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

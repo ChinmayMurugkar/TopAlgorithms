@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Count and Say",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "The count-and-say sequence is a sequence of digit strings defined by the recursive formula:",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Iterative",
+      "description": "Generate the sequence iteratively.",
+      "code": "public String countAndSay(int n) {\n    if (n == 1) return \"1\";\n    \n    String result = \"1\";\n    for (int i = 2; i <= n; i++) {\n        result = generateNext(result);\n    }\n    return result;\n}\n\nprivate String generateNext(String s) {\n    StringBuilder sb = new StringBuilder();\n    int count = 1;\n    char current = s.charAt(0);\n    \n    for (int i = 1; i < s.length(); i++) {\n        if (s.charAt(i) == current) {\n            count++;\n        } else {\n            sb.append(count).append(current);\n            current = s.charAt(i);\n            count = 1;\n        }\n    }\n    sb.append(count).append(current);\n    \n    return sb.toString();\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n × 2^n)",
+        "space": "O(2^n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

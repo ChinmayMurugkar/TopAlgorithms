@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Longest Substring that contains 2 unique characters",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given a string s, find the length of the longest substring that contains at most two distinct characters.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Sliding Window",
+      "description": "Use sliding window with HashMap.",
+      "code": "public int lengthOfLongestSubstringTwoDistinct(String s) {\n    Map map = new HashMap<>();\n    int left = 0, maxLen = 0;\n    \n    for (int right = 0; right < s.length(); right++) {\n        char c = s.charAt(right);\n        map.put(c, map.getOrDefault(c, 0) + 1);\n        \n        while (map.size() > 2) {\n            char leftChar = s.charAt(left);\n            map.put(leftChar, map.get(leftChar) - 1);\n            if (map.get(leftChar) == 0) {\n                map.remove(leftChar);\n            }\n            left++;\n        }\n        \n        maxLen = Math.max(maxLen, right - left + 1);\n    }\n    \n    return maxLen;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

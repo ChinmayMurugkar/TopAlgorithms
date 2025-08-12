@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Word Search",
+    "leetcode_id": 79,
+    "category": "Graph",
+    "description": "Given an m x n grid of characters board and a string word, return true if word exists in the grid. The word can be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – DFS with Backtracking",
+      "description": "Use DFS with backtracking to search for the word in the grid.",
+      "code": "public boolean exist(char[][] board, String word) {\n    int m = board.length;\n    int n = board[0].length;\n    \n    for (int i = 0; i < m; i++) {\n        for (int j = 0; j < n; j++) {\n            if (dfs(board, word, i, j, 0)) {\n                return true;\n            }\n        }\n    }\n    \n    return false;\n}\n\nprivate boolean dfs(char[][] board, String word, int i, int j, int index) {\n    if (index == word.length()) {\n        return true;\n    }\n    \n    if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || \n        board[i][j] != word.charAt(index)) {\n        return false;\n    }\n    \n    char temp = board[i][j];\n    board[i][j] = '#';\n    \n    boolean result = dfs(board, word, i + 1, j, index + 1) ||\n                    dfs(board, word, i - 1, j, index + 1) ||\n                    dfs(board, word, i, j + 1, index + 1) ||\n                    dfs(board, word, i, j - 1, index + 1);\n    \n    board[i][j] = temp;\n    return result;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(m * n * 4^L) where L is word length",
+        "space": "O(L) for recursion stack"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "implement-trie.html",
+    "next": "number-of-islands.html"
+  }
+}

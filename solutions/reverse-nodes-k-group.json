@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Reverse Nodes in k-Group",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given the head of a linked list, reverse the nodes of the list k at a time, and return the modified list.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Iterative",
+      "description": "Reverse nodes in groups of k iteratively.",
+      "code": "public ListNode reverseKGroup(ListNode head, int k) {\n    ListNode dummy = new ListNode(0);\n    dummy.next = head;\n    ListNode prev = dummy;\n    \n    while (head != null) {\n        ListNode tail = head;\n        int count = 0;\n        \n        while (tail != null && count < k) {\n            tail = tail.next;\n            count++;\n        }\n        \n        if (count == k) {\n            ListNode[] reversed = reverse(head, tail);\n            prev.next = reversed[0];\n            prev = reversed[1];\n            head = tail;\n        } else {\n            break;\n        }\n    }\n    \n    return dummy.next;\n}\n\nprivate ListNode[] reverse(ListNode head, ListNode tail) {\n    ListNode prev = null;\n    ListNode curr = head;\n    \n    while (curr != tail) {\n        ListNode next = curr.next;\n        curr.next = prev;\n        prev = curr;\n        curr = next;\n    }\n    \n    return new ListNode[]{prev, head};\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

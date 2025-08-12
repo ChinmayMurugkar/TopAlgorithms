@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Candy",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "There are n children standing in a line. Each child is assigned a rating value given in the integer array ratings.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Two Pass",
+      "description": "Use two passes to distribute candy optimally.",
+      "code": "public int candy(int[] ratings) {\n    int n = ratings.length;\n    int[] candies = new int[n];\n    Arrays.fill(candies, 1);\n    \n    // Left to right pass\n    for (int i = 1; i < n; i++) {\n        if (ratings[i] > ratings[i - 1]) {\n            candies[i] = candies[i - 1] + 1;\n        }\n    }\n    \n    // Right to left pass\n    for (int i = n - 2; i >= 0; i--) {\n        if (ratings[i] > ratings[i + 1]) {\n            candies[i] = Math.max(candies[i], candies[i + 1] + 1);\n        }\n    }\n    \n    int total = 0;\n    for (int candy : candies) {\n        total += candy;\n    }\n    \n    return total;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

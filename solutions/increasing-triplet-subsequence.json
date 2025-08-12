@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Increasing Triplet Subsequence",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an integer array nums, return true if there exists a triple of indices (i, j, k) such that i < j < k and nums[i] < nums[j] < nums[k].",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Two Variables",
+      "description": "Use two variables to track smallest and second smallest.",
+      "code": "public boolean increasingTriplet(int[] nums) {\n    int first = Integer.MAX_VALUE;\n    int second = Integer.MAX_VALUE;\n    \n    for (int num : nums) {\n        if (num <= first) {\n            first = num;\n        } else if (num <= second) {\n            second = num;\n        } else {\n            return true;\n        }\n    }\n    \n    return false;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

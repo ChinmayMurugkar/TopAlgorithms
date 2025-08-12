@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Power of Two",
+    "leetcode_id": 231,
+    "category": "Bit Manipulation",
+    "description": "Given an integer n, return true if it is a power of two. Otherwise, return false. An integer n is a power of two, if there exists an integer x such that n == 2^x.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Bit Manipulation",
+      "description": "Use bit manipulation to check if a number is power of two.",
+      "code": "public boolean isPowerOfTwo(int n) {\n    if (n <= 0) {\n        return false;\n    }\n    \n    return (n & (n - 1)) == 0;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(1)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "heap-sort.html",
+    "next": "counting-bits.html"
+  }
+}

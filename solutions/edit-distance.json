@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Edit Distance",
+    "leetcode_id": 72,
+    "category": "Dynamic Programming",
+    "description": "Given two strings word1 and word2, return the minimum number of operations required to convert word1 to word2. You have the following three operations permitted on a word: Insert a character, Delete a character, Replace a character.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Dynamic Programming",
+      "description": "Use DP to find the minimum number of operations to convert one string to another.",
+      "code": "public int minDistance(String word1, String word2) {\n    int m = word1.length();\n    int n = word2.length();\n    \n    int[][] dp = new int[m + 1][n + 1];\n    \n    // Fill first row and column\n    for (int i = 0; i <= m; i++) {\n        dp[i][0] = i;\n    }\n    for (int j = 0; j <= n; j++) {\n        dp[0][j] = j;\n    }\n    \n    // Fill the rest of the table\n    for (int i = 1; i <= m; i++) {\n        for (int j = 1; j <= n; j++) {\n            if (word1.charAt(i - 1) == word2.charAt(j - 1)) {\n                dp[i][j] = dp[i - 1][j - 1];\n            } else {\n                dp[i][j] = 1 + Math.min(dp[i - 1][j - 1], \n                                       Math.min(dp[i - 1][j], dp[i][j - 1]));\n            }\n        }\n    }\n    \n    return dp[m][n];\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(m * n)",
+        "space": "O(m * n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "unique-paths.html",
+    "next": "longest-increasing-subsequence.html"
+  }
+}

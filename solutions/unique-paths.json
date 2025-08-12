@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Unique Paths",
+    "leetcode_id": 62,
+    "category": "Dynamic Programming",
+    "description": "There is a robot on an m x n grid. The robot is initially located at the top-left corner (i.e., grid[0][0]). The robot tries to move to the bottom-right corner (i.e., grid[m - 1][n - 1]). The robot can only move either down or right at any point in time.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Dynamic Programming",
+      "description": "Use DP to calculate the number of unique paths to each cell.",
+      "code": "public int uniquePaths(int m, int n) {\n    int[][] dp = new int[m][n];\n    \n    // Fill first row and column with 1\n    for (int i = 0; i < m; i++) {\n        dp[i][0] = 1;\n    }\n    for (int j = 0; j < n; j++) {\n        dp[0][j] = 1;\n    }\n    \n    // Fill the rest of the grid\n    for (int i = 1; i < m; i++) {\n        for (int j = 1; j < n; j++) {\n            dp[i][j] = dp[i - 1][j] + dp[i][j - 1];\n        }\n    }\n    \n    return dp[m - 1][n - 1];\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(m * n)",
+        "space": "O(m * n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "container-with-most-water.html",
+    "next": "edit-distance.html"
+  }
+}

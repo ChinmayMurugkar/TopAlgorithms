@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Gas Station",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "There are n gas stations along a circular route, where the amount of gas at the ith station is gas[i].",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Greedy",
+      "description": "Use greedy approach to find starting gas station.",
+      "code": "public int canCompleteCircuit(int[] gas, int[] cost) {\n    int totalGas = 0, totalCost = 0;\n    int start = 0, currentGas = 0;\n    \n    for (int i = 0; i < gas.length; i++) {\n        totalGas += gas[i];\n        totalCost += cost[i];\n        currentGas += gas[i] - cost[i];\n        \n        if (currentGas < 0) {\n            start = i + 1;\n            currentGas = 0;\n        }\n    }\n    \n    return totalGas >= totalCost ? start : -1;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

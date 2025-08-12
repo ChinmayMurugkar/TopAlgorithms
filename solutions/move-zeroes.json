@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Move Zeroes",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Two Pointers",
+      "description": "Move non-zero elements to the front, then fill with zeros.",
+      "code": "public void moveZeroes(int[] nums) {\n    int nonZeroIndex = 0;\n    \n    for (int i = 0; i < nums.length; i++) {\n        if (nums[i] != 0) {\n            nums[nonZeroIndex] = nums[i];\n            nonZeroIndex++;\n        }\n    }\n    \n    for (int i = nonZeroIndex; i < nums.length; i++) {\n        nums[i] = 0;\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 1 – Two Pointers",
+      "description": "Move non-zero elements to the front, then fill with zeros.",
+      "code": "public void moveZeroes(int[] nums) {\n    int nonZeroIndex = 0;\n    \n    for (int i = 0; i < nums.length; i++) {\n        if (nums[i] != 0) {\n            nums[nonZeroIndex] = nums[i];\n            nonZeroIndex++;\n        }\n    }\n    \n    for (int i = nonZeroIndex; i < nums.length; i++) {\n        nums[i] = 0;\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

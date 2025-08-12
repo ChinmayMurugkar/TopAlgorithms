@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Excel Sheet Column Number",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given a string columnTitle that represents the column title as appears in an Excel sheet, return its corresponding column number.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Base 26 Conversion",
+      "description": "Convert column title to number.",
+      "code": "public int titleToNumber(String columnTitle) {\n    int result = 0;\n    \n    for (char c : columnTitle.toCharArray()) {\n        result = result * 26 + (c - 'A' + 1);\n    }\n    \n    return result;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

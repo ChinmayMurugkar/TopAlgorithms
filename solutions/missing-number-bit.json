@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Missing Number",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – XOR",
+      "description": "Use XOR to find the missing number.",
+      "code": "public int missingNumber(int[] nums) {\n    int result = nums.length;\n    for (int i = 0; i < nums.length; i++) {\n        result ^= i ^ nums[i];\n    }\n    return result;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

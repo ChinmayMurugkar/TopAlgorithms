@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Happy Number",
+    "leetcode_id": 202,
+    "category": "Math",
+    "description": "Write an algorithm to determine if a number n is happy. A happy number is a number defined by the following process: Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Floyd's Cycle Detection",
+      "description": "Use Floyd's cycle detection algorithm to detect cycles.",
+      "code": "public boolean isHappy(int n) {\n    int slow = n;\n    int fast = getNext(n);\n    \n    while (fast != 1 && slow != fast) {\n        slow = getNext(slow);\n        fast = getNext(getNext(fast));\n    }\n    \n    return fast == 1;\n}\n\nprivate int getNext(int n) {\n    int sum = 0;\n    while (n > 0) {\n        int digit = n % 10;\n        sum += digit * digit;\n        n /= 10;\n    }\n    return sum;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "factorial-trailing-zeros.html",
+    "next": "perfect-squares.html"
+  }
+}

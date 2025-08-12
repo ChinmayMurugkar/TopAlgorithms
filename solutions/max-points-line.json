@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Max Points on a Line",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given an array of points where points[i] = [xi, yi] represents a point on the X-Y plane, return the maximum number of points that lie on the same straight line.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – HashMap with GCD",
+      "description": "Use HashMap to count points on same line.",
+      "code": "public int maxPoints(int[][] points) {\n    if (points.length <= 2) return points.length;\n    \n    int maxPoints = 0;\n    for (int i = 0; i < points.length; i++) {\n        Map slopes = new HashMap<>();\n        int duplicates = 0;\n        \n        for (int j = 0; j < points.length; j++) {\n            if (i == j) continue;\n            \n            if (points[i][0] == points[j][0] && points[i][1] == points[j][1]) {\n                duplicates++;\n                continue;\n            }\n            \n            int dx = points[j][0] - points[i][0];\n            int dy = points[j][1] - points[i][1];\n            int gcd = gcd(dx, dy);\n            \n            String slope = (dx / gcd) + \"/\" + (dy / gcd);\n            slopes.put(slope, slopes.getOrDefault(slope, 0) + 1);\n        }\n        \n        int maxSlope = 0;\n        for (int count : slopes.values()) {\n            maxSlope = Math.max(maxSlope, count);\n        }\n        \n        maxPoints = Math.max(maxPoints, maxSlope + duplicates + 1);\n    }\n    \n    return maxPoints;\n}\n\nprivate int gcd(int a, int b) {\n    return b == 0 ? a : gcd(b, a % b);\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n²)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Word Ladder - Coding Interview Problems</title>
+    <title id="page-title">Problem - Coding Interview Problems</title>
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <link rel="shortcut icon" href="../favicon.svg">
     <link rel="apple-touch-icon" href="../favicon.svg">
@@ -12,7 +12,6 @@
     <script defer src="/_vercel/insights/script.js"></script>
     
     <!-- Google Analytics 4 -->
-    <!-- Replace G-MGQNX8KHDE with your actual Google Analytics ID -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-MGQNX8KHDE"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -106,7 +105,7 @@
             border-bottom: 2px solid #3498db;
         }
         
-                .code-block {
+        .code-block {
             background: #2d3748;
             border: 1px solid #4a5568;
             border-radius: 8px;
@@ -163,15 +162,6 @@
             color: #0c5460;
         }
         
-        .bfs-visualization {
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 6px;
-            padding: 20px;
-            margin: 15px 0;
-            font-family: monospace;
-        }
-        
         .navigation {
             display: flex;
             justify-content: space-between;
@@ -189,6 +179,21 @@
         
         .nav-btn:hover {
             background: #2980b9;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #721c24;
         }
         
         @media (max-width: 768px) {
@@ -210,340 +215,266 @@
     <div class="header">
         <div class="header-content">
             <div class="breadcrumb">
-                <a href="../index.html">Home</a> > String/Array/Matrix > Word Ladder
+                <a href="../index.html">Home</a> > <span id="breadcrumb-category">Category</span> > <span id="breadcrumb-title">Problem</span>
             </div>
-            <h1>Word Ladder</h1>
-            <div class="meta">LeetCode Problem 127</div>
+            <h1 id="problem-title">Loading...</h1>
+            <div class="meta" id="problem-meta">Loading...</div>
         </div>
     </div>
 
     <div class="container">
         <div class="content">
-            <div class="problem-description">
-                <strong>Problem:</strong> Given two words (beginWord and endWord), and a dictionary wordList, find the length of shortest transformation sequence from beginWord to endWord.
-                <br><br>
-                <strong>Rules:</strong>
-                <ul>
-                    <li>Only one letter can be changed at a time</li>
-                    <li>Each transformed word must exist in the wordList</li>
-                    <li>Return 0 if there is no such transformation sequence</li>
-                </ul>
-                <br>
-                <strong>Example:</strong><br>
-                Input: beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log","cog"]<br>
-                Output: 5<br>
-                Explanation: hit → hot → dot → dog → cog
+            <div id="loading" class="loading">
+                <h3>Loading problem...</h3>
+                <p>Please wait while we load the problem details.</p>
             </div>
-
-            <div class="solution">
-                <h3>Solution 1 – BFS with Set</h3>
-                <p>Use BFS to find the shortest path. Convert wordList to a set for O(1) lookup.</p>
-                
-                <div class="code-block">
-public int ladderLength(String beginWord, String endWord, List<String> wordList) {
-    Set<String> wordSet = new HashSet<>(wordList);
-    
-    if (!wordSet.contains(endWord)) {
-        return 0;
-    }
-    
-    Queue<String> queue = new LinkedList<>();
-    queue.offer(beginWord);
-    wordSet.remove(beginWord);
-    
-    int level = 1;
-    
-    while (!queue.isEmpty()) {
-        int size = queue.size();
-        
-        for (int i = 0; i < size; i++) {
-            String currentWord = queue.poll();
             
-            if (currentWord.equals(endWord)) {
-                return level;
-            }
-            
-            // Generate all possible transformations
-            char[] wordArray = currentWord.toCharArray();
-            for (int j = 0; j < wordArray.length; j++) {
-                char originalChar = wordArray[j];
-                
-                for (char c = 'a'; c <= 'z'; c++) {
-                    wordArray[j] = c;
-                    String newWord = new String(wordArray);
-                    
-                    if (wordSet.contains(newWord)) {
-                        queue.offer(newWord);
-                        wordSet.remove(newWord);
-                    }
-                }
-                
-                wordArray[j] = originalChar;
-            }
-        }
-        
-        level++;
-    }
-    
-    return 0;
-}
-                </div>
-                
-                <div class="complexity">
-                    <strong>Time Complexity:</strong> O(26 * L * N) where L is word length, N is wordList size<br>
-                    <strong>Space Complexity:</strong> O(N)
-                </div>
+            <div id="error" class="error" style="display: none;">
+                <h3>Error Loading Problem</h3>
+                <p id="error-message">Failed to load the problem. Please try refreshing the page.</p>
             </div>
-
-            <div class="solution">
-                <h3>Solution 2 – Bidirectional BFS</h3>
-                <p>Use BFS from both start and end to reduce search space significantly.</p>
-                
-                <div class="code-block">
-public int ladderLength(String beginWord, String endWord, List<String> wordList) {
-    Set<String> wordSet = new HashSet<>(wordList);
-    
-    if (!wordSet.contains(endWord)) {
-        return 0;
-    }
-    
-    Set<String> beginSet = new HashSet<>();
-    Set<String> endSet = new HashSet<>();
-    beginSet.add(beginWord);
-    endSet.add(endWord);
-    wordSet.remove(beginWord);
-    wordSet.remove(endWord);
-    
-    int level = 1;
-    
-    while (!beginSet.isEmpty() && !endSet.isEmpty()) {
-        // Always work on the smaller set
-        if (beginSet.size() > endSet.size()) {
-            Set<String> temp = beginSet;
-            beginSet = endSet;
-            endSet = temp;
-        }
-        
-        Set<String> nextLevel = new HashSet<>();
-        
-        for (String word : beginSet) {
-            char[] wordArray = word.toCharArray();
             
-            for (int i = 0; i < wordArray.length; i++) {
-                char originalChar = wordArray[i];
-                
-                for (char c = 'a'; c <= 'z'; c++) {
-                    wordArray[i] = c;
-                    String newWord = new String(wordArray);
-                    
-                    if (endSet.contains(newWord)) {
-                        return level + 1;
-                    }
-                    
-                    if (wordSet.contains(newWord)) {
-                        nextLevel.add(newWord);
-                        wordSet.remove(newWord);
-                    }
-                }
-                
-                wordArray[i] = originalChar;
-            }
-        }
-        
-        beginSet = nextLevel;
-        level++;
-    }
-    
-    return 0;
-}
+            <div id="problem-content" style="display: none;">
+                <div class="problem-description" id="problem-description">
+                    <!-- Problem description will be loaded here -->
                 </div>
                 
-                <div class="complexity">
-                    <strong>Time Complexity:</strong> O(26 * L * N) but much faster in practice<br>
-                    <strong>Space Complexity:</strong> O(N)
-                </div>
-            </div>
-
-            <div class="bfs-visualization">
-                <strong>BFS Visualization:</strong><br><br>
-                Input: beginWord = "hit", endWord = "cog"<br>
-                wordList = ["hot","dot","dog","lot","log","cog"]<br><br>
-                
-                Level 1: [hit]<br>
-                Transformations: hot, hix, hiy, ... (only "hot" in wordList)<br>
-                Level 2: [hot]<br>
-                Transformations: dot, lot, hxt, hyt, ... (only "dot", "lot" in wordList)<br>
-                Level 3: [dot, lot]<br>
-                From "dot": dog, dxt, dyt, ... (only "dog" in wordList)<br>
-                From "lot": log, lxt, lyt, ... (only "log" in wordList)<br>
-                Level 4: [dog, log]<br>
-                From "dog": cog, dxg, dyg, ... (only "cog" in wordList)<br>
-                From "log": cog, lxg, lyg, ... (only "cog" in wordList)<br><br>
-                Found "cog" at level 4, so total length = 5
-            </div>
-
-            <div class="solution">
-                <h3>Solution 3 – BFS with Word Pattern</h3>
-                <p>Pre-process wordList to create patterns for faster neighbor finding.</p>
-                
-                <div class="code-block">
-public int ladderLength(String beginWord, String endWord, List<String> wordList) {
-    Set<String> wordSet = new HashSet<>(wordList);
-    
-    if (!wordSet.contains(endWord)) {
-        return 0;
-    }
-    
-    // Create pattern map
-    Map<String, List<String>> patternMap = new HashMap<>();
-    for (String word : wordList) {
-        for (int i = 0; i < word.length(); i++) {
-            String pattern = word.substring(0, i) + "*" + word.substring(i + 1);
-            patternMap.computeIfAbsent(pattern, k -> new ArrayList<>()).add(word);
-        }
-    }
-    
-    Queue<String> queue = new LinkedList<>();
-    queue.offer(beginWord);
-    Set<String> visited = new HashSet<>();
-    visited.add(beginWord);
-    
-    int level = 1;
-    
-    while (!queue.isEmpty()) {
-        int size = queue.size();
-        
-        for (int i = 0; i < size; i++) {
-            String currentWord = queue.poll();
-            
-            if (currentWord.equals(endWord)) {
-                return level;
-            }
-            
-            // Find neighbors using patterns
-            for (int j = 0; j < currentWord.length(); j++) {
-                String pattern = currentWord.substring(0, j) + "*" + currentWord.substring(j + 1);
-                
-                for (String neighbor : patternMap.getOrDefault(pattern, new ArrayList<>())) {
-                    if (!visited.contains(neighbor)) {
-                        visited.add(neighbor);
-                        queue.offer(neighbor);
-                    }
-                }
-            }
-        }
-        
-        level++;
-    }
-    
-    return 0;
-}
+                <div id="solutions-container">
+                    <!-- Solutions will be loaded here -->
                 </div>
                 
-                <div class="complexity">
-                    <strong>Time Complexity:</strong> O(L² * N) for preprocessing, O(L * N) for BFS<br>
-                    <strong>Space Complexity:</strong> O(L * N)
-                </div>
-            </div>
-
-            <div class="example">
-                <strong>More Examples:</strong><br><br>
-                Input: beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log"]<br>
-                Output: 0<br>
-                Explanation: "cog" is not in wordList<br><br>
-                
-                Input: beginWord = "hit", endWord = "hit", wordList = ["hot"]<br>
-                Output: 1<br>
-                Explanation: beginWord equals endWord
-            </div>
-
-            <div class="solution">
-                <h3>Solution 4 – A* Search with Heuristic</h3>
-                <p>Use A* search with Hamming distance as heuristic for better performance.</p>
-                
-                <div class="code-block">
-public int ladderLength(String beginWord, String endWord, List<String> wordList) {
-    Set<String> wordSet = new HashSet<>(wordList);
-    
-    if (!wordSet.contains(endWord)) {
-        return 0;
-    }
-    
-    PriorityQueue<WordNode> pq = new PriorityQueue<>((a, b) -> 
-        Integer.compare(a.cost + a.heuristic, b.cost + b.heuristic));
-    
-    pq.offer(new WordNode(beginWord, 1, getHammingDistance(beginWord, endWord)));
-    Set<String> visited = new HashSet<>();
-    
-    while (!pq.isEmpty()) {
-        WordNode current = pq.poll();
-        
-        if (current.word.equals(endWord)) {
-            return current.cost;
-        }
-        
-        if (visited.contains(current.word)) {
-            continue;
-        }
-        
-        visited.add(current.word);
-        
-        char[] wordArray = current.word.toCharArray();
-        for (int i = 0; i < wordArray.length; i++) {
-            char originalChar = wordArray[i];
-            
-            for (char c = 'a'; c <= 'z'; c++) {
-                wordArray[i] = c;
-                String newWord = new String(wordArray);
-                
-                if (wordSet.contains(newWord) && !visited.contains(newWord)) {
-                    int newCost = current.cost + 1;
-                    int newHeuristic = getHammingDistance(newWord, endWord);
-                    pq.offer(new WordNode(newWord, newCost, newHeuristic));
-                }
-            }
-            
-            wordArray[i] = originalChar;
-        }
-    }
-    
-    return 0;
-}
-
-private int getHammingDistance(String word1, String word2) {
-    int distance = 0;
-    for (int i = 0; i < word1.length(); i++) {
-        if (word1.charAt(i) != word2.charAt(i)) {
-            distance++;
-        }
-    }
-    return distance;
-}
-
-class WordNode {
-    String word;
-    int cost;
-    int heuristic;
-    
-    WordNode(String word, int cost, int heuristic) {
-        this.word = word;
-        this.cost = cost;
-        this.heuristic = heuristic;
-    }
-}
+                <div id="variations-container">
+                    <!-- Variations will be loaded here -->
                 </div>
                 
-                <div class="complexity">
-                    <strong>Time Complexity:</strong> O(26 * L * N * log(N))<br>
-                    <strong>Space Complexity:</strong> O(N)
+                <div class="navigation" id="navigation">
+                    <!-- Navigation will be loaded here -->
                 </div>
-            </div>
-
-            <div class="navigation">
-                <a href="isomorphic-strings.html" class="nav-btn">← Previous: Isomorphic Strings</a>
-                <a href="word-ladder-ii.html" class="nav-btn">Next: Word Ladder II →</a>
             </div>
         </div>
     </div>
+
+    <script>
+        class ProblemLoader {
+            constructor() {
+                this.problemId = this.getProblemIdFromUrl();
+                this.solutionsPath = './solutions/';
+                this.init();
+            }
+            
+            getProblemIdFromUrl() {
+                // Extract problem ID from URL (e.g., two-sum.html -> two-sum)
+                const path = window.location.pathname;
+                const filename = path.split('/').pop();
+                return filename.replace('.html', '');
+            }
+            
+            async init() {
+                try {
+                    await this.loadProblem();
+                } catch (error) {
+                    console.error('Error loading problem:', error);
+                    this.showError('Failed to load problem: ' + error.message);
+                }
+            }
+            
+            async loadProblem() {
+                const response = await fetch(`${this.solutionsPath}${this.problemId}.json`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const problemData = await response.json();
+                this.renderProblem(problemData);
+            }
+            
+            renderProblem(data) {
+                // Hide loading, show content
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('problem-content').style.display = 'block';
+                
+                // Update page title
+                document.title = `${data.problem.title} - Coding Interview Problems`;
+                document.getElementById('page-title').textContent = `${data.problem.title} - Coding Interview Problems`;
+                
+                // Update header
+                document.getElementById('problem-title').textContent = data.problem.title;
+                document.getElementById('breadcrumb-category').textContent = data.problem.category;
+                document.getElementById('breadcrumb-title').textContent = data.problem.title;
+                
+                // Update meta
+                const metaText = data.problem.leetcode_id ? 
+                    `LeetCode Problem ${data.problem.leetcode_id}` : 
+                    'Coding Interview Problem';
+                document.getElementById('problem-meta').textContent = metaText;
+                
+                // Render problem description
+                this.renderProblemDescription(data.problem);
+                
+                // Render solutions
+                this.renderSolutions(data.solutions);
+                
+                // Render variations
+                if (data.variations && data.variations.length > 0) {
+                    this.renderVariations(data.variations);
+                }
+                
+                // Render navigation
+                this.renderNavigation(data.navigation);
+            }
+            
+            renderProblemDescription(problem) {
+                const descContainer = document.getElementById('problem-description');
+                
+                let html = `<strong>Problem:</strong> ${problem.description}`;
+                
+                if (problem.assumptions && problem.assumptions.length > 0) {
+                    html += '<br><br><strong>Assumptions:</strong><ul>';
+                    problem.assumptions.forEach(assumption => {
+                        html += `<li>${assumption}</li>`;
+                    });
+                    html += '</ul>';
+                }
+                
+                if (problem.example) {
+                    html += '<br><strong>Example:</strong><br>';
+                    if (problem.example.input) {
+                        html += `Input: ${problem.example.input}<br>`;
+                    }
+                    if (problem.example.output) {
+                        html += `Output: ${problem.example.output}<br>`;
+                    }
+                    if (problem.example.explanation) {
+                        html += `Explanation: ${problem.example.explanation}`;
+                    }
+                }
+                
+                descContainer.innerHTML = html;
+            }
+            
+            renderSolutions(solutions) {
+                const container = document.getElementById('solutions-container');
+                container.innerHTML = '';
+                
+                solutions.forEach(solution => {
+                    const solutionDiv = document.createElement('div');
+                    solutionDiv.className = 'solution';
+                    
+                    let html = `<h3>${solution.title}</h3>`;
+                    
+                    if (solution.description) {
+                        html += `<p>${solution.description}</p>`;
+                    }
+                    
+                    if (solution.code) {
+                        html += `<div class="code-block">${this.escapeHtml(solution.code)}</div>`;
+                    }
+                    
+                    if (solution.complexity) {
+                        html += `<div class="complexity">`;
+                        if (solution.complexity.time) {
+                            html += `<strong>Time Complexity:</strong> ${solution.complexity.time}<br>`;
+                        }
+                        if (solution.complexity.space) {
+                            html += `<strong>Space Complexity:</strong> ${solution.complexity.space}`;
+                        }
+                        html += '</div>';
+                    }
+                    
+                    if (solution.example_walkthrough) {
+                        html += `<div class="example">`;
+                        if (solution.example_walkthrough.text) {
+                            html += `<strong>Example Walkthrough:</strong><br><br>${solution.example_walkthrough.text}`;
+                        } else if (solution.example_walkthrough.steps) {
+                            html += `<strong>Example Walkthrough:</strong><br><br>`;
+                            solution.example_walkthrough.steps.forEach(step => {
+                                html += `${step}<br>`;
+                            });
+                        }
+                        html += '</div>';
+                    }
+                    
+                    solutionDiv.innerHTML = html;
+                    container.appendChild(solutionDiv);
+                });
+            }
+            
+            renderVariations(variations) {
+                const container = document.getElementById('variations-container');
+                container.innerHTML = '';
+                
+                if (variations.length === 0) return;
+                
+                const variationsDiv = document.createElement('div');
+                variationsDiv.className = 'solution';
+                variationsDiv.innerHTML = '<h3>Variations</h3>';
+                
+                variations.forEach(variation => {
+                    let html = `<h4>${variation.title}</h4>`;
+                    
+                    if (variation.description) {
+                        html += `<p>${variation.description}</p>`;
+                    }
+                    
+                    if (variation.code) {
+                        html += `<div class="code-block">${this.escapeHtml(variation.code)}</div>`;
+                    }
+                    
+                    variationsDiv.innerHTML += html;
+                });
+                
+                container.appendChild(variationsDiv);
+            }
+            
+            renderNavigation(navigation) {
+                const container = document.getElementById('navigation');
+                
+                if (!navigation) return;
+                
+                let html = '';
+                
+                if (navigation.previous) {
+                    html += `<a href="${navigation.previous}" class="nav-btn" target="_blank">← Previous: ${this.getProblemTitleFromFilename(navigation.previous)}</a>`;
+                } else {
+                    html += '<span></span>'; // Empty span for flexbox spacing
+                }
+                
+                if (navigation.next) {
+                    html += `<a href="${navigation.next}" class="nav-btn" target="_blank">Next: ${this.getProblemTitleFromFilename(navigation.next)} →</a>`;
+                } else {
+                    html += '<span></span>'; // Empty span for flexbox spacing
+                }
+                
+                container.innerHTML = html;
+            }
+            
+            getProblemTitleFromFilename(filename) {
+                // Convert filename to readable title (e.g., two-sum.html -> Two Sum)
+                return filename
+                    .replace('.html', '')
+                    .split('-')
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ');
+            }
+            
+            escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+            
+            showError(message) {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error').style.display = 'block';
+                document.getElementById('error-message').textContent = message;
+            }
+        }
+        
+        // Initialize the problem loader when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new ProblemLoader();
+        });
+    </script>
 </body>
 </html> 

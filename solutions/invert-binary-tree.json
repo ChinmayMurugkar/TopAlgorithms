@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Invert Binary Tree",
+    "leetcode_id": 226,
+    "category": "Tree, Heap & Trie",
+    "description": "Given the root of a binary tree, invert the tree, and return its root. To invert a binary tree, swap every left node with its corresponding right node.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Recursive DFS",
+      "description": "Use recursive DFS to swap left and right children of each node.",
+      "code": "public TreeNode invertTree(TreeNode root) {\n    if (root == null) {\n        return null;\n    }\n    \n    // Swap left and right children\n    TreeNode temp = root.left;\n    root.left = root.right;\n    root.right = temp;\n    \n    // Recursively invert left and right subtrees\n    invertTree(root.left);\n    invertTree(root.right);\n    \n    return root;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(h) where h is the height of the tree"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "binary-tree-level-order-traversal.html",
+    "next": "kth-smallest-element-in-bst.html"
+  }
+}

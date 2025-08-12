@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Convert Sorted List to Binary Search Tree",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given the head of a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Inorder Simulation",
+      "description": "Simulate inorder traversal to build the BST.",
+      "code": "private ListNode head;\n\npublic TreeNode sortedListToBST(ListNode head) {\n    this.head = head;\n    int size = getSize(head);\n    return buildBST(0, size - 1);\n}\n\nprivate int getSize(ListNode head) {\n    int size = 0;\n    while (head != null) {\n        size++;\n        head = head.next;\n    }\n    return size;\n}\n\nprivate TreeNode buildBST(int left, int right) {\n    if (left > right) return null;\n    \n    int mid = left + (right - left) / 2;\n    \n    TreeNode leftChild = buildBST(left, mid - 1);\n    TreeNode root = new TreeNode(head.val);\n    head = head.next;\n    TreeNode rightChild = buildBST(mid + 1, right);\n    \n    root.left = leftChild;\n    root.right = rightChild;\n    \n    return root;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(log n)"
+      }
+    },
+    {
+      "title": "Solution 1 – Inorder Simulation",
+      "description": "Simulate inorder traversal to build the BST.",
+      "code": "private ListNode head;\n\npublic TreeNode sortedListToBST(ListNode head) {\n    this.head = head;\n    int size = getSize(head);\n    return buildBST(0, size - 1);\n}\n\nprivate int getSize(ListNode head) {\n    int size = 0;\n    while (head != null) {\n        size++;\n        head = head.next;\n    }\n    return size;\n}\n\nprivate TreeNode buildBST(int left, int right) {\n    if (left > right) return null;\n    \n    int mid = left + (right - left) / 2;\n    \n    TreeNode leftChild = buildBST(left, mid - 1);\n    TreeNode root = new TreeNode(head.val);\n    head = head.next;\n    TreeNode rightChild = buildBST(mid + 1, right);\n    \n    root.left = leftChild;\n    root.right = rightChild;\n    \n    return root;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(log n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Case-specific Sorting of Strings",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Sort a string such that uppercase letters come before lowercase letters.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Two Pointers",
+      "description": "Use two pointers to sort case-specific strings.",
+      "code": "public String caseSort(String str) {\n    char[] arr = str.toCharArray();\n    int n = arr.length;\n    \n    // Separate uppercase and lowercase letters\n    List upper = new ArrayList<>();\n    List lower = new ArrayList<>();\n    \n    for (char c : arr) {\n        if (Character.isUpperCase(c)) {\n            upper.add(c);\n        } else {\n            lower.add(c);\n        }\n    }\n    \n    // Sort both lists\n    Collections.sort(upper);\n    Collections.sort(lower);\n    \n    // Reconstruct the string\n    int upperIndex = 0, lowerIndex = 0;\n    for (int i = 0; i < n; i++) {\n        if (Character.isUpperCase(arr[i])) {\n            arr[i] = upper.get(upperIndex++);\n        } else {\n            arr[i] = lower.get(lowerIndex++);\n        }\n    }\n    \n    return new String(arr);\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n log n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

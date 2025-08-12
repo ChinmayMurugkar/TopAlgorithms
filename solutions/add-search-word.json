@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Add and Search Word",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Design a data structure that supports adding new words and finding if a string matches any previously added string.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Trie with DFS",
+      "description": "Use Trie data structure with DFS for pattern matching.",
+      "code": "class WordDictionary {\n    private TrieNode root;\n    \n    public WordDictionary() {\n        root = new TrieNode();\n    }\n    \n    public void addWord(String word) {\n        TrieNode node = root;\n        for (char c : word.toCharArray()) {\n            if (node.children[c - 'a'] == null) {\n                node.children[c - 'a'] = new TrieNode();\n            }\n            node = node.children[c - 'a'];\n        }\n        node.isEnd = true;\n    }\n    \n    public boolean search(String word) {\n        return searchHelper(word, 0, root);\n    }\n    \n    private boolean searchHelper(String word, int index, TrieNode node) {\n        if (index == word.length()) return node.isEnd;\n        \n        char c = word.charAt(index);\n        if (c == '.') {\n            for (TrieNode child : node.children) {\n                if (child != null && searchHelper(word, index + 1, child)) {\n                    return true;\n                }\n            }\n            return false;\n        } else {\n            return node.children[c - 'a'] != null && \n                   searchHelper(word, index + 1, node.children[c - 'a']);\n        }\n    }\n}\n\nclass TrieNode {\n    TrieNode[] children = new TrieNode[26];\n    boolean isEnd = false;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n) for add, O(26^m) for search",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

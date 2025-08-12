@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Rectangle Area",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given the coordinates of two rectilinear rectangles in a 2D plane, return the total area covered by the two rectangles.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Geometry",
+      "description": "Calculate area with overlap consideration.",
+      "code": "public int computeArea(int ax1, int ay1, int ax2, int ay2, \n                        int bx1, int by1, int bx2, int by2) {\n    int area1 = (ax2 - ax1) * (ay2 - ay1);\n    int area2 = (bx2 - bx1) * (by2 - by1);\n    \n    int overlapWidth = Math.min(ax2, bx2) - Math.max(ax1, bx1);\n    int overlapHeight = Math.min(ay2, by2) - Math.max(ay1, by1);\n    \n    int overlapArea = 0;\n    if (overlapWidth > 0 && overlapHeight > 0) {\n        overlapArea = overlapWidth * overlapHeight;\n    }\n    \n    return area1 + area2 - overlapArea;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(1)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Swap Nodes in Pairs",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given a linked list, swap every two adjacent nodes and return its head.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Iterative",
+      "description": "Swap nodes in pairs iteratively.",
+      "code": "public ListNode swapPairs(ListNode head) {\n    if (head == null || head.next == null) return head;\n    \n    ListNode dummy = new ListNode(0);\n    dummy.next = head;\n    ListNode prev = dummy;\n    \n    while (prev.next != null && prev.next.next != null) {\n        ListNode first = prev.next;\n        ListNode second = prev.next.next;\n        \n        first.next = second.next;\n        second.next = first;\n        prev.next = second;\n        \n        prev = first;\n    }\n    \n    return dummy.next;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

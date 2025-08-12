@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Find Median from Data Stream",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "The median is the middle value in an ordered integer list.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Two Heaps",
+      "description": "Use min heap and max heap to maintain median.",
+      "code": "class MedianFinder {\n    private PriorityQueue minHeap;\n    private PriorityQueue maxHeap;\n    \n    public MedianFinder() {\n        minHeap = new PriorityQueue<>();\n        maxHeap = new PriorityQueue<>(Collections.reverseOrder());\n    }\n    \n    public void addNum(int num) {\n        maxHeap.offer(num);\n        minHeap.offer(maxHeap.poll());\n        \n        if (maxHeap.size() < minHeap.size()) {\n            maxHeap.offer(minHeap.poll());\n        }\n    }\n    \n    public double findMedian() {\n        if (maxHeap.size() > minHeap.size()) {\n            return maxHeap.peek();\n        }\n        return (maxHeap.peek() + minHeap.peek()) / 2.0;\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log n) for add, O(1) for find",
+        "space": "O(n)"
+      }
+    },
+    {
+      "title": "Solution 1 – Two Heaps",
+      "description": "Use min heap and max heap to maintain median.",
+      "code": "class MedianFinder {\n    private PriorityQueue minHeap;\n    private PriorityQueue maxHeap;\n    \n    public MedianFinder() {\n        minHeap = new PriorityQueue<>();\n        maxHeap = new PriorityQueue<>(Collections.reverseOrder());\n    }\n    \n    public void addNum(int num) {\n        maxHeap.offer(num);\n        minHeap.offer(maxHeap.poll());\n        \n        if (maxHeap.size() < minHeap.size()) {\n            maxHeap.offer(minHeap.poll());\n        }\n    }\n    \n    public double findMedian() {\n        if (maxHeap.size() > minHeap.size()) {\n            return maxHeap.peek();\n        }\n        return (maxHeap.peek() + minHeap.peek()) / 2.0;\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(log n) for add, O(1) for find",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

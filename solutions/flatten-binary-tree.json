@@ -1,0 +1,40 @@
+{
+  "problem": {
+    "title": "Flatten Binary Tree to Linked List",
+    "leetcode_id": 114,
+    "category": "Tree, Heap & Trie",
+    "description": "Given the root of a binary tree, flatten the tree into a \"linked list\" in-place. The \"linked list\" should use the same TreeNode class where the right child pointer points to the next node in the list and the left child pointer is always null.",
+    "assumptions": [],
+    "example": {
+      "input": "root = [1,2,5,3,4,null,6]",
+      "output": "[1,null,2,null,3,null,4,null,5,null,6]"
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Recursive (Reverse Preorder)",
+      "description": "Flatten the right subtree, then the left subtree, and rewire the pointers.",
+      "code": "public void flatten(TreeNode root) {\n    flattenHelper(root, null);\n}\n\nprivate TreeNode flattenHelper(TreeNode node, TreeNode prev) {\n    if (node == null) {\n        return prev;\n    }\n    \n    prev = flattenHelper(node.right, prev);\n    prev = flattenHelper(node.left, prev);\n    \n    node.right = prev;\n    node.left = null;\n    prev = node;\n    \n    return prev;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(h) where h is the height of the tree"
+      }
+    },
+    {
+      "title": "Solution 2 – Iterative with Stack",
+      "description": "Use a stack to simulate preorder traversal and rewire pointers.",
+      "code": "public void flatten(TreeNode root) {\n    if (root == null) {\n        return;\n    }\n    \n    Stack stack = new Stack<>();\n    stack.push(root);\n    \n    while (!stack.isEmpty()) {\n        TreeNode current = stack.pop();\n        \n        if (current.right != null) {\n            stack.push(current.right);\n        }\n        if (current.left != null) {\n            stack.push(current.left);\n        }\n        \n        if (!stack.isEmpty()) {\n            current.right = stack.peek();\n        }\n        current.left = null;\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(h)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "populating-next-right-pointers.html",
+    "next": "lowest-common-ancestor.html"
+  }
+}

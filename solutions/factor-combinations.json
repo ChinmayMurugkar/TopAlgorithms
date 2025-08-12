@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Factor Combinations",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Numbers can be regarded as the product of their factors. Given an integer n, return all possible combinations of its factors.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Backtracking",
+      "description": "Use backtracking to find all factor combinations.",
+      "code": "public List> getFactors(int n) {\n    List> result = new ArrayList<>();\n    backtrack(n, 2, new ArrayList<>(), result);\n    return result;\n}\n\nprivate void backtrack(int n, int start, List current, List> result) {\n    if (n == 1) {\n        if (current.size() > 1) {\n            result.add(new ArrayList<>(current));\n        }\n        return;\n    }\n    \n    for (int i = start; i <= n; i++) {\n        if (n % i == 0) {\n            current.add(i);\n            backtrack(n / i, i, current, result);\n            current.remove(current.size() - 1);\n        }\n    }\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n^(log n))",
+        "space": "O(log n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

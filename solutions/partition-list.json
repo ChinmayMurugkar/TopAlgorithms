@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Partition List",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given the head of a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Two Pointers",
+      "description": "Use two pointers to partition list.",
+      "code": "public ListNode partition(ListNode head, int x) {\n    ListNode beforeHead = new ListNode(0);\n    ListNode afterHead = new ListNode(0);\n    ListNode before = beforeHead;\n    ListNode after = afterHead;\n    \n    while (head != null) {\n        if (head.val < x) {\n            before.next = head;\n            before = before.next;\n        } else {\n            after.next = head;\n            after = after.next;\n        }\n        head = head.next;\n    }\n    \n    after.next = null;\n    before.next = afterHead.next;\n    \n    return beforeHead.next;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

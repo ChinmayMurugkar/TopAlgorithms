@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Regular Expression Matching",
+    "leetcode_id": 10,
+    "category": "String/Array/Matrix",
+    "description": "Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*'.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Dynamic Programming",
+      "description": "Use DP to match pattern with string.",
+      "code": "public boolean isMatch(String s, String p) {\n    int m = s.length();\n    int n = p.length();\n    \n    boolean[][] dp = new boolean[m + 1][n + 1];\n    dp[0][0] = true;\n    \n    // Handle patterns like a*, a*b*, etc.\n    for (int j = 1; j <= n; j++) {\n        if (p.charAt(j - 1) == '*') {\n            dp[0][j] = dp[0][j - 2];\n        }\n    }\n    \n    for (int i = 1; i <= m; i++) {\n        for (int j = 1; j <= n; j++) {\n            if (p.charAt(j - 1) == '.' || p.charAt(j - 1) == s.charAt(i - 1)) {\n                dp[i][j] = dp[i - 1][j - 1];\n            } else if (p.charAt(j - 1) == '*') {\n                dp[i][j] = dp[i][j - 2]; // zero occurrence\n                if (p.charAt(j - 2) == '.' || p.charAt(j - 2) == s.charAt(i - 1)) {\n                    dp[i][j] = dp[i][j] || dp[i - 1][j];\n                }\n            }\n        }\n    }\n    \n    return dp[m][n];\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(m×n)",
+        "space": "O(m×n)"
+      }
+    },
+    {
+      "title": "Solution 1 – Dynamic Programming",
+      "description": "Use DP to match pattern with string.",
+      "code": "public boolean isMatch(String s, String p) {\n    int m = s.length();\n    int n = p.length();\n    \n    boolean[][] dp = new boolean[m + 1][n + 1];\n    dp[0][0] = true;\n    \n    // Handle patterns like a*, a*b*, etc.\n    for (int j = 1; j <= n; j++) {\n        if (p.charAt(j - 1) == '*') {\n            dp[0][j] = dp[0][j - 2];\n        }\n    }\n    \n    for (int i = 1; i <= m; i++) {\n        for (int j = 1; j <= n; j++) {\n            if (p.charAt(j - 1) == '.' || p.charAt(j - 1) == s.charAt(i - 1)) {\n                dp[i][j] = dp[i - 1][j - 1];\n            } else if (p.charAt(j - 1) == '*') {\n                dp[i][j] = dp[i][j - 2]; // zero occurrence\n                if (p.charAt(j - 2) == '.' || p.charAt(j - 2) == s.charAt(i - 1)) {\n                    dp[i][j] = dp[i][j] || dp[i - 1][j];\n                }\n            }\n        }\n    }\n    \n    return dp[m][n];\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(m×n)",
+        "space": "O(m×n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

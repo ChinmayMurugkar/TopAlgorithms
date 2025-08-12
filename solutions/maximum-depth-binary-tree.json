@@ -1,0 +1,51 @@
+{
+  "problem": {
+    "title": "Maximum Depth of Binary Tree",
+    "leetcode_id": 104,
+    "category": "Tree, Heap & Trie",
+    "description": "Given the root of a binary tree, return its maximum depth.\n                \nDefinition: A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.",
+    "assumptions": [],
+    "example": {
+      "input": "root = [3,9,20,null,null,15,7]",
+      "output": "3",
+      "explanation": "The maximum depth is 3 (path: 3 → 20 → 7)."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Recursive DFS",
+      "description": "Use recursion to find the maximum depth of left and right subtrees.",
+      "code": "public int maxDepth(TreeNode root) {\n    if (root == null) {\n        return 0;\n    }\n    \n    int leftDepth = maxDepth(root.left);\n    int rightDepth = maxDepth(root.right);\n    \n    return Math.max(leftDepth, rightDepth) + 1;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(h) where h is the height of the tree"
+      }
+    },
+    {
+      "title": "Solution 2 – Iterative BFS",
+      "description": "Use level-order traversal to count the number of levels.",
+      "code": "public int maxDepth(TreeNode root) {\n    if (root == null) {\n        return 0;\n    }\n    \n    Queue queue = new LinkedList<>();\n    queue.offer(root);\n    int depth = 0;\n    \n    while (!queue.isEmpty()) {\n        int levelSize = queue.size();\n        \n        for (int i = 0; i < levelSize; i++) {\n            TreeNode current = queue.poll();\n            \n            if (current.left != null) {\n                queue.offer(current.left);\n            }\n            if (current.right != null) {\n                queue.offer(current.right);\n            }\n        }\n        \n        depth++;\n    }\n    \n    return depth;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(w) where w is the maximum width"
+      }
+    },
+    {
+      "title": "Solution 3 – Iterative DFS with Stack",
+      "description": "Use a stack to simulate recursive calls iteratively.",
+      "code": "public int maxDepth(TreeNode root) {\n    if (root == null) {\n        return 0;\n    }\n    \n    Stack nodeStack = new Stack<>();\n    Stack depthStack = new Stack<>();\n    \n    nodeStack.push(root);\n    depthStack.push(1);\n    \n    int maxDepth = 0;\n    \n    while (!nodeStack.isEmpty()) {\n        TreeNode current = nodeStack.pop();\n        int currentDepth = depthStack.pop();\n        \n        maxDepth = Math.max(maxDepth, currentDepth);\n        \n        if (current.right != null) {\n            nodeStack.push(current.right);\n            depthStack.push(currentDepth + 1);\n        }\n        \n        if (current.left != null) {\n            nodeStack.push(current.left);\n            depthStack.push(currentDepth + 1);\n        }\n    }\n    \n    return maxDepth;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(h)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "palindrome-linked-list.html",
+    "next": "validate-binary-search-tree.html"
+  }
+}

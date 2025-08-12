@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Minimum Path Sum",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right, which minimizes the sum of all numbers along its path.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Dynamic Programming",
+      "description": "Use DP to find minimum path sum.",
+      "code": "public int minPathSum(int[][] grid) {\n    int m = grid.length, n = grid[0].length;\n    \n    for (int i = 1; i < m; i++) {\n        grid[i][0] += grid[i - 1][0];\n    }\n    \n    for (int j = 1; j < n; j++) {\n        grid[0][j] += grid[0][j - 1];\n    }\n    \n    for (int i = 1; i < m; i++) {\n        for (int j = 1; j < n; j++) {\n            grid[i][j] += Math.min(grid[i - 1][j], grid[i][j - 1]);\n        }\n    }\n    \n    return grid[m - 1][n - 1];\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(m × n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

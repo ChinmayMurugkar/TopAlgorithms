@@ -1,0 +1,27 @@
+{
+  "problem": {
+    "title": "Minimum Window Substring",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window.",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Sliding Window",
+      "description": "Use sliding window with two pointers.",
+      "code": "public String minWindow(String s, String t) {\n    if (s.length() == 0 || t.length() == 0) return \"\";\n    \n    Map target = new HashMap<>();\n    for (char c : t.toCharArray()) {\n        target.put(c, target.getOrDefault(c, 0) + 1);\n    }\n    \n    int left = 0, right = 0;\n    int minLen = Integer.MAX_VALUE, minStart = 0;\n    int required = target.size(), formed = 0;\n    Map window = new HashMap<>();\n    \n    while (right < s.length()) {\n        char c = s.charAt(right);\n        window.put(c, window.getOrDefault(c, 0) + 1);\n        \n        if (target.containsKey(c) && window.get(c).equals(target.get(c))) {\n            formed++;\n        }\n        \n        while (left <= right && formed == required) {\n            if (right - left + 1 < minLen) {\n                minLen = right - left + 1;\n                minStart = left;\n            }\n            \n            char leftChar = s.charAt(left);\n            window.put(leftChar, window.get(leftChar) - 1);\n            \n            if (target.containsKey(leftChar) && window.get(leftChar) < target.get(leftChar)) {\n                formed--;\n            }\n            left++;\n        }\n        right++;\n    }\n    \n    return minLen == Integer.MAX_VALUE ? \"\" : s.substring(minStart, minStart + minLen);\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(k)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "two-sum.html",
+    "next": "two-sum-iii.html"
+  }
+}

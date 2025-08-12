@@ -1,0 +1,34 @@
+{
+  "problem": {
+    "title": "Valid Sudoku",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:",
+    "assumptions": [],
+    "example": {}
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – HashSet",
+      "description": "Use HashSet to check rows, columns, and boxes.",
+      "code": "public boolean isValidSudoku(char[][] board) {\n    for (int i = 0; i < 9; i++) {\n        Set row = new HashSet<>();\n        Set col = new HashSet<>();\n        Set box = new HashSet<>();\n        \n        for (int j = 0; j < 9; j++) {\n            // Check row\n            if (board[i][j] != '.' && !row.add(board[i][j])) return false;\n            \n            // Check column\n            if (board[j][i] != '.' && !col.add(board[j][i])) return false;\n            \n            // Check 3x3 box\n            int boxRow = 3 * (i / 3) + j / 3;\n            int boxCol = 3 * (i % 3) + j % 3;\n            if (board[boxRow][boxCol] != '.' && !box.add(board[boxRow][boxCol])) return false;\n        }\n    }\n    \n    return true;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n²)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "title": "Solution 1 – HashSet",
+      "description": "Use HashSet to check rows, columns, and boxes.",
+      "code": "public boolean isValidSudoku(char[][] board) {\n    for (int i = 0; i < 9; i++) {\n        Set row = new HashSet<>();\n        Set col = new HashSet<>();\n        Set box = new HashSet<>();\n        \n        for (int j = 0; j < 9; j++) {\n            // Check row\n            if (board[i][j] != '.' && !row.add(board[i][j])) return false;\n            \n            // Check column\n            if (board[j][i] != '.' && !col.add(board[j][i])) return false;\n            \n            // Check 3x3 box\n            int boxRow = 3 * (i / 3) + j / 3;\n            int boxCol = 3 * (i % 3) + j % 3;\n            if (board[boxRow][boxCol] != '.' && !box.add(board[boxRow][boxCol])) return false;\n        }\n    }\n    \n    return true;\n}",
+      "language": "java",
+      "complexity": {
+        "time": "O(n²)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}
