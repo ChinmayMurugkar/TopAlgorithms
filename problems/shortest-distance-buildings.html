@@ -7,24 +7,656 @@
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <link rel="shortcut icon" href="../favicon.svg">
     <link rel="apple-touch-icon" href="../favicon.svg">
+
+    <!-- Vercel Analytics -->
     <script defer src="/_vercel/insights/script.js"></script>
+
+    <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-MGQNX8KHDE"></script>
-    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MGQNX8KHDE');</script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-MGQNX8KHDE');
+    </script>
+
+    <!-- CodeMirror 5 CSS (tiny, loads instantly) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/eclipse.min.css">
+
     <style>
-        *{margin:0;padding:0;box-sizing:border-box;}body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;line-height:1.6;color:#333;background-color:#f8f9fa;}.container{max-width:1000px;margin:0 auto;padding:20px;}.header{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;padding:30px 0;margin-bottom:30px;}.header-content{max-width:1000px;margin:0 auto;padding:0 20px;}.breadcrumb{margin-bottom:10px;font-size:0.9rem;opacity:0.8;}.breadcrumb a{color:white;text-decoration:none;}.breadcrumb a:hover{text-decoration:underline;}h1{font-size:2.2rem;margin-bottom:10px;}.meta{font-size:0.9rem;opacity:0.8;}.content{background:white;border-radius:10px;padding:30px;box-shadow:0 4px 6px rgba(0,0,0,0.1);margin-bottom:30px;}.problem-description{background:#e3f2fd;border-left:4px solid #2196f3;padding:20px;margin-bottom:30px;border-radius:0 6px 6px 0;}.solution{margin-bottom:40px;}.solution h3{color:#2c3e50;font-size:1.4rem;margin-bottom:15px;padding-bottom:8px;border-bottom:2px solid #3498db;}.code-tabs-wrapper{margin:15px 0;}.code-tab-bar{display:flex;gap:0;background:#1a202c;border-radius:8px 8px 0 0;border:1px solid #4a5568;border-bottom:none;padding:6px 8px 0;}.code-tab-btn{padding:7px 20px;background:transparent;color:#718096;border:none;border-radius:6px 6px 0 0;cursor:pointer;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;font-size:0.82rem;font-weight:600;letter-spacing:0.4px;transition:color 0.15s,background 0.15s;display:flex;align-items:center;gap:6px;position:relative;}.code-tab-btn.active{background:#2d3748;color:#e2e8f0;}.code-tab-btn.active::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:#667eea;border-radius:2px 2px 0 0;}.code-tab-btn:hover:not(.active){color:#a0aec0;background:#252f3e;}.code-tab-btn .lang-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}.code-tab-btn.java-tab .lang-dot{background:#f89820;}.code-tab-btn.python-tab .lang-dot{background:#3572A5;}.code-panel{display:none;}.code-panel.active{display:block;}.code-panel .code-block{border-radius:0 0 8px 8px;margin-top:0;border-top:none;}.code-label-bar{display:flex;background:#1a202c;border-radius:8px 8px 0 0;border:1px solid #4a5568;border-bottom:none;padding:6px 8px 0;}.code-label{padding:7px 20px;background:#2d3748;color:#e2e8f0;border-radius:6px 6px 0 0;font-size:0.82rem;font-weight:600;letter-spacing:0.4px;display:flex;align-items:center;gap:6px;position:relative;}.code-label::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:#667eea;border-radius:2px 2px 0 0;}.code-label.java-label .lang-dot{background:#f89820;}.code-label.python-label .lang-dot{background:#3572A5;}.code-label-bar+.code-block{border-radius:0 0 8px 8px;margin-top:0;border-top:none;}.code-block{background:#2d3748;border:1px solid #4a5568;border-radius:8px;padding:20px;margin:15px 0;overflow-x:auto;font-family:'Courier New','Monaco','Consolas',monospace;font-size:0.95rem;line-height:1.5;white-space:pre;color:#e2e8f0;box-shadow:0 4px 6px rgba(0,0,0,0.1);}.complexity{background:#fff3cd;border:1px solid #ffeaa7;border-radius:6px;padding:15px;margin:15px 0;}.complexity strong{color:#856404;}.example{background:#d1ecf1;border:1px solid #bee5eb;border-radius:6px;padding:15px;margin:15px 0;}.example strong{color:#0c5460;}.navigation{display:flex;justify-content:space-between;margin-top:30px;}.nav-btn{padding:10px 20px;background:#3498db;color:white;text-decoration:none;border-radius:6px;transition:background 0.2s ease;}.nav-btn:hover{background:#2980b9;}.loading{text-align:center;padding:40px;color:#666;}.error{background:#f8d7da;border:1px solid #f5c6cb;border-radius:6px;padding:20px;margin:20px 0;color:#721c24;}@media(max-width:768px){.container{padding:10px;}.content{padding:20px;}h1{font-size:1.8rem;}}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; padding: 30px 0; margin-bottom: 30px;
+        }
+        .header-content { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        .breadcrumb { margin-bottom: 10px; font-size: 0.9rem; opacity: 0.8; }
+        .breadcrumb a { color: white; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        h1 { font-size: 2.2rem; margin-bottom: 10px; }
+        .meta { font-size: 0.9rem; opacity: 0.8; }
+
+        .content {
+            background: white; border-radius: 10px;
+            padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 30px;
+        }
+        .problem-description {
+            background: #e3f2fd; border-left: 4px solid #2196f3;
+            padding: 20px; margin-bottom: 30px; border-radius: 0 6px 6px 0;
+        }
+        .solution { margin-bottom: 40px; }
+        .solution h3 {
+            color: #2c3e50; font-size: 1.4rem; margin-bottom: 15px;
+            padding-bottom: 8px; border-bottom: 2px solid #3498db;
+        }
+
+        /* ── Display language tabs ── */
+        .code-tabs-wrapper { margin: 15px 0; }
+        .code-tab-bar {
+            display: flex; background: #1a202c;
+            border-radius: 8px 8px 0 0; border: 1px solid #4a5568;
+            border-bottom: none; padding: 6px 8px 0;
+        }
+        .code-tab-btn {
+            padding: 7px 20px; background: transparent; color: #718096;
+            border: none; border-radius: 6px 6px 0 0; cursor: pointer;
+            font-family: 'Segoe UI', sans-serif; font-size: 0.82rem; font-weight: 600;
+            letter-spacing: 0.4px; transition: color .15s, background .15s;
+            display: flex; align-items: center; gap: 6px; position: relative;
+        }
+        .code-tab-btn.active { background: #2d3748; color: #e2e8f0; }
+        .code-tab-btn.active::after {
+            content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
+            height: 2px; background: #667eea; border-radius: 2px 2px 0 0;
+        }
+        .code-tab-btn:hover:not(.active) { color: #a0aec0; background: #252f3e; }
+
+        .lang-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .java-tab .lang-dot, .java-label .lang-dot       { background: #f89820; }
+        .python-tab .lang-dot, .python-label .lang-dot   { background: #3572A5; }
+
+        .code-panel { display: none; }
+        .code-panel.active { display: block; }
+        .code-panel .code-block { border-radius: 0 0 8px 8px; margin-top: 0; border-top: none; }
+
+        .code-label-bar {
+            display: flex; background: #1a202c; border-radius: 8px 8px 0 0;
+            border: 1px solid #4a5568; border-bottom: none; padding: 6px 8px 0;
+        }
+        .code-label {
+            padding: 7px 20px; background: #2d3748; color: #e2e8f0;
+            border-radius: 6px 6px 0 0; font-size: 0.82rem; font-weight: 600;
+            letter-spacing: 0.4px; display: flex; align-items: center; gap: 6px; position: relative;
+        }
+        .code-label::after {
+            content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
+            height: 2px; background: #667eea; border-radius: 2px 2px 0 0;
+        }
+
+        .code-block {
+            background: #2d3748; border: 1px solid #4a5568; border-radius: 8px;
+            padding: 20px; margin: 15px 0; overflow-x: auto;
+            font-family: 'Courier New', 'Monaco', monospace;
+            font-size: 0.95rem; line-height: 1.5; white-space: pre;
+            color: #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* ── Playground ── */
+        .playground-toggle {
+            margin-top: 8px; padding: 7px 16px;
+            background: transparent; border: 1.5px solid #667eea;
+            border-radius: 6px; color: #667eea;
+            font-size: 0.84rem; font-weight: 600; cursor: pointer;
+            transition: background .15s, color .15s;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .playground-toggle:hover { background: #667eea; color: white; }
+        .playground-toggle:disabled { opacity: .5; cursor: wait; }
+
+        .playground-panel {
+            display: none; margin-top: 8px;
+            border: 1px solid #4a5568; border-radius: 8px; overflow: hidden;
+        }
+        .playground-panel.open { display: block; }
+
+        .pg-header {
+            display: flex; align-items: center; justify-content: space-between;
+            background: #1a202c; padding: 8px 12px; gap: 8px; flex-wrap: wrap;
+        }
+        .pg-lang-tabs { display: flex; gap: 4px; }
+        .pg-lang-btn {
+            padding: 5px 14px; background: transparent; color: #718096;
+            border: 1px solid transparent; border-radius: 5px; cursor: pointer;
+            font-size: 0.8rem; font-weight: 600;
+            display: inline-flex; align-items: center; gap: 5px; transition: all .15s;
+        }
+        .pg-lang-btn.active { background: #2d3748; color: #e2e8f0; border-color: #4a5568; }
+        .pg-lang-btn:hover:not(.active):not(.disabled) { color: #a0aec0; }
+        .pg-lang-btn.disabled { opacity: .35; cursor: not-allowed; }
+
+        .pg-controls { display: flex; align-items: center; gap: 8px; }
+        .pg-theme-btn {
+            background: transparent; border: 1px solid #4a5568;
+            border-radius: 5px; color: #a0aec0; padding: 5px 10px;
+            font-size: 0.8rem; cursor: pointer; transition: all .15s;
+        }
+        .pg-theme-btn:hover { border-color: #718096; color: #e2e8f0; }
+        .pg-run-btn {
+            padding: 5px 16px; background: #48bb78; color: white;
+            border: none; border-radius: 5px; font-size: 0.82rem; font-weight: 700;
+            cursor: pointer; transition: background .15s;
+            display: inline-flex; align-items: center; gap: 5px;
+        }
+        .pg-run-btn:hover { background: #38a169; }
+        .pg-run-btn:disabled { background: #718096; cursor: not-allowed; }
+
+        .pg-editor-pane { display: none; }
+        .pg-editor-pane.active { display: block; }
+
+        /* CodeMirror 5 overrides */
+        .CodeMirror {
+            height: auto; min-height: 180px; max-height: 380px;
+            font-family: 'Courier New', 'Monaco', monospace;
+            font-size: 0.88rem; line-height: 1.55;
+        }
+        .CodeMirror-scroll { max-height: 380px; }
+
+        .pg-output {
+            background: #0d1117; border-top: 1px solid #30363d;
+            padding: 12px 16px; font-family: 'Courier New', monospace;
+            font-size: 0.85rem; color: #c9d1d9;
+            min-height: 44px; max-height: 220px; overflow-y: auto; white-space: pre-wrap;
+        }
+        .pg-output.has-error { color: #ff6b6b; }
+        .out-label { color: #4a5568; font-size: 0.72rem; font-family: 'Segoe UI', sans-serif; margin-bottom: 4px; }
+
+        /* Light mode */
+        body.light .code-block { background: #f6f8fa; color: #24292e; border-color: #d0d7de; }
+        body.light .code-tab-bar, body.light .code-label-bar { background: #f0f0f0; }
+        body.light .code-tab-btn.active, body.light .code-label { background: #f6f8fa; color: #24292e; }
+        body.light .code-tab-btn { color: #57606a; }
+        body.light .pg-header { background: #f0f0f0; }
+        body.light .pg-lang-btn.active { background: #fff; color: #24292e; border-color: #d0d7de; }
+        body.light .pg-lang-btn { color: #57606a; }
+        body.light .playground-panel { border-color: #d0d7de; }
+        body.light .pg-theme-btn { border-color: #d0d7de; color: #57606a; }
+        body.light .pg-output { background: #f6f8fa; color: #24292e; border-top-color: #d0d7de; }
+        body.light .pg-output.has-error { color: #cf222e; }
+        body.light .out-label { color: #8c959f; }
+
+        /* Misc */
+        .complexity {
+            background: #fff3cd; border: 1px solid #ffeaa7;
+            border-radius: 6px; padding: 15px; margin: 15px 0;
+        }
+        .complexity strong { color: #856404; }
+        .example {
+            background: #d1ecf1; border: 1px solid #bee5eb;
+            border-radius: 6px; padding: 15px; margin: 15px 0;
+        }
+        .example strong { color: #0c5460; }
+        .navigation { display: flex; justify-content: space-between; margin-top: 30px; }
+        .nav-btn {
+            padding: 10px 20px; background: #3498db; color: white;
+            text-decoration: none; border-radius: 6px; transition: background .2s;
+        }
+        .nav-btn:hover { background: #2980b9; }
+        .loading { text-align: center; padding: 40px; color: #666; }
+        .error {
+            background: #f8d7da; border: 1px solid #f5c6cb;
+            border-radius: 6px; padding: 20px; margin: 20px 0; color: #721c24;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .content { padding: 20px; }
+            h1 { font-size: 1.8rem; }
+        }
     </style>
 </head>
 <body>
-    <div class="header"><div class="header-content"><div class="breadcrumb"><a href="../index.html">Home</a> > <span id="breadcrumb-category">Category</span> > <span id="breadcrumb-title">Problem</span></div><h1 id="problem-title">Loading...</h1><div class="meta" id="problem-meta">Loading...</div></div></div>
-    <div class="container"><div class="content">
-        <div id="loading" class="loading"><h3>Loading problem...</h3><p>Please wait while we load the problem details.</p></div>
-        <div id="error" class="error" style="display:none;"><h3>Error Loading Problem</h3><p id="error-message">Failed to load the problem. Please try refreshing the page.</p></div>
-        <div id="problem-content" style="display:none;"><div class="problem-description" id="problem-description"></div><div id="solutions-container"></div><div id="variations-container"></div><div class="navigation" id="navigation"></div></div>
-    </div></div>
+    <div class="header">
+        <div class="header-content">
+            <div class="breadcrumb">
+                <a href="../index.html">Home</a> &gt;
+                <span id="breadcrumb-category">Category</span> &gt;
+                <span id="breadcrumb-title">Problem</span>
+            </div>
+            <h1 id="problem-title">Loading...</h1>
+            <div class="meta" id="problem-meta">Loading...</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <div id="loading" class="loading">
+                <h3>Loading problem...</h3>
+                <p>Please wait while we load the problem details.</p>
+            </div>
+            <div id="error" class="error" style="display:none;">
+                <h3>Error Loading Problem</h3>
+                <p id="error-message">Failed to load the problem. Please try refreshing the page.</p>
+            </div>
+            <div id="problem-content" style="display:none;">
+                <div class="problem-description" id="problem-description"></div>
+                <div id="solutions-container"></div>
+                <div id="variations-container"></div>
+                <div class="navigation" id="navigation"></div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        function switchTab(tabId,lang,btn){const wrapper=btn.closest('.code-tabs-wrapper');wrapper.querySelectorAll('.code-tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');wrapper.querySelectorAll('.code-panel').forEach(p=>p.classList.remove('active'));wrapper.querySelector('#'+tabId+'-'+lang).classList.add('active');}
-        class ProblemLoader{constructor(){this.problemId=this.getProblemIdFromUrl();this.solutionsPath='/solutions/';this.tabCounter=0;this.init();}getProblemIdFromUrl(){const path=window.location.pathname;const filename=path.split('/').pop();return filename.replace('.html','');}async init(){try{await this.loadProblem();}catch(error){console.error('Error loading problem:',error);this.showError('Failed to load problem: '+error.message);}}async loadProblem(){const response=await fetch(`${this.solutionsPath}${this.problemId}.json`);if(!response.ok){throw new Error(`HTTP ${response.status}: ${response.statusText}`);}const problemData=await response.json();this.renderProblem(problemData);}renderProblem(data){document.getElementById('loading').style.display='none';document.getElementById('problem-content').style.display='block';document.title=`${data.problem.title} - Coding Interview Problems`;document.getElementById('page-title').textContent=`${data.problem.title} - Coding Interview Problems`;document.getElementById('problem-title').textContent=data.problem.title;document.getElementById('breadcrumb-category').textContent=data.problem.category;document.getElementById('breadcrumb-title').textContent=data.problem.title;const metaText=data.problem.leetcode_id?`LeetCode Problem ${data.problem.leetcode_id}`:'Coding Interview Problem';document.getElementById('problem-meta').textContent=metaText;this.renderProblemDescription(data.problem);this.renderSolutions(data.solutions);if(data.variations&&data.variations.length>0){this.renderVariations(data.variations);}this.renderNavigation(data.navigation);}renderProblemDescription(problem){const descContainer=document.getElementById('problem-description');let html=`<strong>Problem:</strong> ${problem.description}`;if(problem.assumptions&&problem.assumptions.length>0){html+='<br><br><strong>Assumptions:</strong><ul>';problem.assumptions.forEach(a=>{html+=`<li>${a}</li>`;});html+='</ul>';}if(problem.example){html+='<br><strong>Example:</strong><br>';if(problem.example.input){html+=`Input: ${problem.example.input}<br>`;}if(problem.example.output){html+=`Output: ${problem.example.output}<br>`;}if(problem.example.explanation){html+=`Explanation: ${problem.example.explanation}`;}}descContainer.innerHTML=html;}renderCodeSection(solution){const isPythonOnly=solution.language==='python'&&!solution.code_python;const hasJava=solution.code&&!isPythonOnly;const hasPython=!!solution.code_python||isPythonOnly;const pythonCode=solution.code_python||(isPythonOnly?solution.code:null);const javaCode=hasJava?solution.code:null;if(!hasJava&&!hasPython)return'';if(hasJava&&hasPython){const tabId='tab-'+(++this.tabCounter);return`<div class="code-tabs-wrapper"><div class="code-tab-bar"><button class="code-tab-btn java-tab active" onclick="switchTab('${tabId}','java',this)"><span class="lang-dot"></span>Java</button><button class="code-tab-btn python-tab" onclick="switchTab('${tabId}','python',this)"><span class="lang-dot"></span>Python</button></div><div id="${tabId}-java" class="code-panel active"><div class="code-block">${this.escapeHtml(javaCode)}</div></div><div id="${tabId}-python" class="code-panel"><div class="code-block">${this.escapeHtml(pythonCode)}</div></div></div>`;}const lang=isPythonOnly?'python':'java';const label=isPythonOnly?'Python':'Java';return`<div class="code-tabs-wrapper"><div class="code-label-bar"><span class="code-label ${lang}-label"><span class="lang-dot"></span>${label}</span></div><div class="code-block" style="border-radius:0 0 8px 8px;margin-top:0;border-top:none">${this.escapeHtml(solution.code)}</div></div>`;}renderSolutions(solutions){const container=document.getElementById('solutions-container');container.innerHTML='';solutions.forEach(solution=>{const solutionDiv=document.createElement('div');solutionDiv.className='solution';let html=`<h3>${solution.title}</h3>`;if(solution.description){html+=`<p>${solution.description}</p>`;}if(solution.code||solution.code_python){html+=this.renderCodeSection(solution);}if(solution.complexity){html+=`<div class="complexity">`;if(solution.complexity.time){html+=`<strong>Time Complexity:</strong> ${solution.complexity.time}<br>`;}if(solution.complexity.space){html+=`<strong>Space Complexity:</strong> ${solution.complexity.space}`;}html+='</div>';}if(solution.example_walkthrough){html+=`<div class="example">`;if(solution.example_walkthrough.text){html+=`<strong>Example Walkthrough:</strong><br><br>${solution.example_walkthrough.text}`;}html+='</div>';}solutionDiv.innerHTML=html;container.appendChild(solutionDiv);});}renderVariations(variations){const container=document.getElementById('variations-container');container.innerHTML='';if(variations.length===0)return;const variationsDiv=document.createElement('div');variationsDiv.className='solution';variationsDiv.innerHTML='<h3>Variations</h3>';variations.forEach(variation=>{let html=`<h4>${variation.title}</h4>`;if(variation.description){html+=`<p>${variation.description}</p>`;}if(variation.code||variation.code_python){html+=this.renderCodeSection(variation);}variationsDiv.innerHTML+=html;});container.appendChild(variationsDiv);}renderNavigation(navigation){const container=document.getElementById('navigation');if(!navigation)return;let html='';if(navigation.previous){html+=`<a href="${navigation.previous}" class="nav-btn" target="_blank">← Previous: ${this.getProblemTitleFromFilename(navigation.previous)}</a>`;}else{html+='<span></span>';}if(navigation.next){html+=`<a href="${navigation.next}" class="nav-btn" target="_blank">Next: ${this.getProblemTitleFromFilename(navigation.next)} →</a>`;}else{html+='<span></span>';}container.innerHTML=html;}getProblemTitleFromFilename(filename){return filename.replace('.html','').split('-').map(word=>word.charAt(0).toUpperCase()+word.slice(1)).join(' ');}escapeHtml(text){const div=document.createElement('div');div.textContent=text;return div.innerHTML;}showError(message){document.getElementById('loading').style.display='none';document.getElementById('error').style.display='block';document.getElementById('error-message').textContent=message;}}
-        document.addEventListener('DOMContentLoaded',()=>{new ProblemLoader();});
+        /* ── Theme ─────────────────────────────────────────────────────────── */
+        (function () {
+            if (localStorage.getItem('pg-theme') === 'light')
+                document.body.classList.add('light');
+        })();
+
+        function isDark() { return !document.body.classList.contains('light'); }
+
+        /* ── CodeMirror 5 lazy loader ─────────────────────────────────────── */
+        var cmLoaded = false, cmLoading = false, cmCallbacks = [];
+
+        function loadCM(cb) {
+            if (cmLoaded) { cb(); return; }
+            cmCallbacks.push(cb);
+            if (cmLoading) return;
+            cmLoading = true;
+
+            function addScript(src, onload) {
+                var s = document.createElement('script');
+                s.src = src; s.onload = onload;
+                document.head.appendChild(s);
+            }
+
+            // Load CM core first, then language modes in parallel
+            addScript('https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js', function () {
+                var done = 0;
+                function check() { if (++done === 2) { cmLoaded = true; cmCallbacks.forEach(function(f){f();}); cmCallbacks = []; } }
+                addScript('https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/clike/clike.min.js', check);
+                addScript('https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js', check);
+            });
+        }
+
+        /* ── Java wrapper ─────────────────────────────────────────────────── */
+        function wrapJava(code) {
+            if (/^\s*(public\s+)?class\s+\w+/.test(code)) return code;
+            var indented = code.split('\n').map(function(l){ return '    ' + l; }).join('\n');
+            return 'import java.util.*;\nimport java.util.stream.*;\n\npublic class Main {\n' +
+                indented + '\n\n' +
+                '    public static void main(String[] args) {\n' +
+                '        Main sol = new Main();\n' +
+                '        // TODO: call your method, e.g.:\n' +
+                '        // System.out.println(sol.methodName(arg1, arg2));\n' +
+                '    }\n}';
+        }
+
+        function wrapPython(code) {
+            return code + '\n\n# Test your solution:\n# print(your_function(args))';
+        }
+
+        /* ── Piston API ───────────────────────────────────────────────────── */
+        function runCode(code, lang, cb) {
+            var pistonLang = lang === 'java' ? 'java' : 'python3';
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'https://emkc.org/api/v2/piston/execute');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = function () {
+                try {
+                    var d = JSON.parse(xhr.responseText);
+                    var out = (d.run && d.run.stdout) || '';
+                    var err = (d.run && d.run.stderr) || (d.compile && d.compile.stderr) || '';
+                    cb(null, out, err);
+                } catch(e) { cb('Invalid response from server'); }
+            };
+            xhr.onerror = function () { cb('Network error — check your connection'); };
+            xhr.send(JSON.stringify({
+                language: pistonLang,
+                version: '*',
+                files: [{ name: lang === 'java' ? 'Main.java' : 'solution.py', content: code }]
+            }));
+        }
+
+        /* ── Display tab switcher ─────────────────────────────────────────── */
+        function switchTab(tabId, lang, btn) {
+            var wrapper = btn.closest('.code-tabs-wrapper');
+            wrapper.querySelectorAll('.code-tab-btn').forEach(function(b){ b.classList.remove('active'); });
+            btn.classList.add('active');
+            wrapper.querySelectorAll('.code-panel').forEach(function(p){ p.classList.remove('active'); });
+            wrapper.querySelector('#' + tabId + '-' + lang).classList.add('active');
+        }
+
+        /* ── Playground open/close ────────────────────────────────────────── */
+        function openPlayground(pgId) {
+            var panel  = document.getElementById(pgId);
+            var toggle = panel.previousElementSibling;
+
+            if (panel.classList.contains('open')) {
+                panel.classList.remove('open');
+                toggle.textContent = '▶  Try it';
+                return;
+            }
+
+            if (panel.dataset.ready) {
+                panel.classList.add('open');
+                toggle.textContent = '▼  Close editor';
+                return;
+            }
+
+            // First open — load CM then init
+            toggle.disabled = true;
+            toggle.textContent = 'Loading editor…';
+
+            loadCM(function () {
+                initPlayground(panel);
+                panel.classList.add('open');
+                toggle.disabled = false;
+                toggle.textContent = '▼  Close editor';
+            });
+        }
+
+        function initPlayground(panel) {
+            panel.dataset.ready = '1';
+
+            var javaCodeRaw   = panel.dataset.java   || '';
+            var pythonCodeRaw = panel.dataset.python || '';
+            var javaCode      = javaCodeRaw   ? wrapJava(javaCodeRaw)     : '';
+            var pythonCode    = pythonCodeRaw ? wrapPython(pythonCodeRaw) : '';
+
+            var editors = {};
+            var currentTheme = isDark() ? 'dracula' : 'eclipse';
+
+            function makeEditor(host, code, mode) {
+                return CodeMirror(host, {
+                    value: code,
+                    mode: mode,
+                    theme: currentTheme,
+                    lineNumbers: true,
+                    indentWithTabs: false,
+                    tabSize: 4,
+                    indentUnit: 4,
+                    lineWrapping: false,
+                    autofocus: false
+                });
+            }
+
+            var javaHost   = panel.querySelector('.cm-java-host');
+            var pythonHost = panel.querySelector('.cm-python-host');
+            if (javaCode && javaHost)     editors.java   = makeEditor(javaHost,   javaCode,   'text/x-java');
+            if (pythonCode && pythonHost) editors.python = makeEditor(pythonHost, pythonCode, 'python');
+
+            // Active lang — whichever has code
+            var activeLang = javaCode ? 'java' : 'python';
+            panel._activeLang = activeLang;
+
+            /* Lang tabs */
+            panel.querySelectorAll('.pg-lang-btn').forEach(function(btn) {
+                btn.addEventListener('click', function () {
+                    if (btn.classList.contains('disabled')) return;
+                    panel.querySelectorAll('.pg-lang-btn').forEach(function(b){ b.classList.remove('active'); });
+                    btn.classList.add('active');
+                    panel.querySelectorAll('.pg-editor-pane').forEach(function(p){ p.classList.remove('active'); });
+                    panel.querySelector('.pg-editor-pane[data-lang="' + btn.dataset.lang + '"]').classList.add('active');
+                    panel._activeLang = btn.dataset.lang;
+                    // Refresh CM to fix display glitch after display:none
+                    var ed = editors[btn.dataset.lang];
+                    if (ed) setTimeout(function(){ ed.refresh(); }, 10);
+                });
+            });
+
+            /* Theme toggle */
+            var themeBtn = panel.querySelector('.pg-theme-btn');
+            themeBtn.addEventListener('click', function () {
+                var goLight = isDark();
+                document.body.classList.toggle('light', goLight);
+                localStorage.setItem('pg-theme', goLight ? 'light' : 'dark');
+                var newTheme = goLight ? 'eclipse' : 'dracula';
+                themeBtn.textContent = goLight ? '🌙 Dark' : '☀ Light';
+                // Update all editors on page
+                document.querySelectorAll('.CodeMirror').forEach(function(cmEl) {
+                    if (cmEl.CodeMirror) cmEl.CodeMirror.setOption('theme', newTheme);
+                });
+            });
+
+            /* Run button */
+            var runBtn = panel.querySelector('.pg-run-btn');
+            var outEl  = panel.querySelector('.pg-output');
+
+            runBtn.addEventListener('click', function () {
+                var lang   = panel._activeLang;
+                var editor = editors[lang];
+                if (!editor) return;
+                var code   = editor.getValue();
+
+                runBtn.disabled = true;
+                runBtn.textContent = 'Running…';
+                outEl.className = 'pg-output';
+                outEl.innerHTML = '<div class="out-label">Output</div>Running…';
+
+                runCode(code, lang, function (err, out, stderr) {
+                    runBtn.disabled = false;
+                    runBtn.textContent = '▶ Run';
+                    if (err) {
+                        outEl.className = 'pg-output has-error';
+                        outEl.innerHTML = '<div class="out-label">Error</div>' + escHtml(err);
+                        return;
+                    }
+                    if (stderr && !out) {
+                        outEl.className = 'pg-output has-error';
+                        outEl.innerHTML = '<div class="out-label">Error</div>' + escHtml(stderr);
+                    } else {
+                        outEl.innerHTML = '<div class="out-label">Output</div>' +
+                            escHtml(out || '(no output)') +
+                            (stderr ? '\n<span style="color:#ffa07a">' + escHtml(stderr) + '</span>' : '');
+                    }
+                });
+            });
+        }
+
+        function escHtml(s) {
+            return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        }
+
+        /* ── ProblemLoader ────────────────────────────────────────────────── */
+        var tabCounter = 0, pgCounter = 0;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var problemId = window.location.pathname.split('/').pop().replace('.html','');
+
+            fetch('/solutions/' + problemId + '.json')
+                .then(function(r) {
+                    if (!r.ok) throw new Error('HTTP ' + r.status);
+                    return r.json();
+                })
+                .then(renderProblem)
+                .catch(function(e) {
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('error').style.display = 'block';
+                    document.getElementById('error-message').textContent = 'Failed to load problem: ' + e.message;
+                });
+        });
+
+        function renderProblem(data) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('problem-content').style.display = 'block';
+
+            var title = data.problem.title + ' - Coding Interview Problems';
+            document.title = title;
+            document.getElementById('page-title').textContent = title;
+            document.getElementById('problem-title').textContent = data.problem.title;
+            document.getElementById('breadcrumb-category').textContent = data.problem.category;
+            document.getElementById('breadcrumb-title').textContent = data.problem.title;
+            document.getElementById('problem-meta').textContent =
+                data.problem.leetcode_id ? 'LeetCode Problem ' + data.problem.leetcode_id : 'Coding Interview Problem';
+
+            renderDescription(data.problem);
+            renderSolutions(data.solutions, 'solutions-container');
+            if (data.variations && data.variations.length)
+                renderVariations(data.variations);
+            renderNavigation(data.navigation);
+        }
+
+        function renderDescription(p) {
+            var el = document.getElementById('problem-description');
+            var html = '<strong>Problem:</strong> ' + p.description;
+            if (p.assumptions && p.assumptions.length) {
+                html += '<br><br><strong>Assumptions:</strong><ul>';
+                p.assumptions.forEach(function(a){ html += '<li>' + a + '</li>'; });
+                html += '</ul>';
+            }
+            if (p.example) {
+                html += '<br><strong>Example:</strong><br>';
+                if (p.example.input)       html += 'Input: '       + p.example.input + '<br>';
+                if (p.example.output)      html += 'Output: '      + p.example.output + '<br>';
+                if (p.example.explanation) html += 'Explanation: ' + p.example.explanation;
+            }
+            el.innerHTML = html;
+        }
+
+        function renderCodeSection(sol) {
+            var isPyOnly  = sol.language === 'python' && !sol.code_python;
+            var hasJava   = sol.code && !isPyOnly;
+            var hasPython = !!sol.code_python || isPyOnly;
+            var jCode     = hasJava   ? sol.code        : null;
+            var pCode     = hasPython ? (sol.code_python || sol.code) : null;
+
+            if (!jCode && !pCode) return '';
+
+            var displayHtml = '';
+
+            if (jCode && pCode) {
+                var tid = 'tab-' + (++tabCounter);
+                displayHtml =
+                    '<div class="code-tabs-wrapper">' +
+                    '<div class="code-tab-bar">' +
+                    '<button class="code-tab-btn java-tab active" onclick="switchTab(\'' + tid + '\',\'java\',this)">' +
+                    '<span class="lang-dot"></span>Java</button>' +
+                    '<button class="code-tab-btn python-tab" onclick="switchTab(\'' + tid + '\',\'python\',this)">' +
+                    '<span class="lang-dot"></span>Python</button>' +
+                    '</div>' +
+                    '<div id="' + tid + '-java" class="code-panel active"><div class="code-block">' + escHtml(jCode) + '</div></div>' +
+                    '<div id="' + tid + '-python" class="code-panel"><div class="code-block">' + escHtml(pCode) + '</div></div>' +
+                    '</div>';
+            } else {
+                var lang  = isPyOnly ? 'python' : 'java';
+                var label = isPyOnly ? 'Python'  : 'Java';
+                var code  = jCode || pCode;
+                displayHtml =
+                    '<div class="code-tabs-wrapper">' +
+                    '<div class="code-label-bar"><span class="code-label ' + lang + '-label"><span class="lang-dot"></span>' + label + '</span></div>' +
+                    '<div class="code-block" style="border-radius:0 0 8px 8px;margin-top:0;border-top:none">' + escHtml(code) + '</div>' +
+                    '</div>';
+            }
+
+            /* Playground */
+            var pgId = 'pg-' + (++pgCounter);
+            var themeLabel = isDark() ? '☀ Light' : '🌙 Dark';
+
+            var jAttr = jCode   ? ' data-java="'   + escAttr(jCode)  + '"' : '';
+            var pAttr = pCode   ? ' data-python="' + escAttr(pCode)  + '"' : '';
+
+            var jBtnCls = !jCode ? ' disabled' : ' active';
+            var pBtnCls = !pCode ? ' disabled' : (jCode ? '' : ' active');
+
+            var jPaneCls = jCode ? ' active' : '';
+            var pPaneCls = !jCode && pCode ? ' active' : '';
+
+            var playHtml =
+                '<button class="playground-toggle" onclick="openPlayground(\'' + pgId + '\')">▶  Try it</button>' +
+                '<div class="playground-panel" id="' + pgId + '"' + jAttr + pAttr + '>' +
+                  '<div class="pg-header">' +
+                    '<div class="pg-lang-tabs">' +
+                      '<button class="pg-lang-btn java-tab' + jBtnCls + '" data-lang="java"><span class="lang-dot"></span>Java</button>' +
+                      '<button class="pg-lang-btn python-tab' + pBtnCls + '" data-lang="python"><span class="lang-dot"></span>Python</button>' +
+                    '</div>' +
+                    '<div class="pg-controls">' +
+                      '<button class="pg-theme-btn">' + themeLabel + '</button>' +
+                      '<button class="pg-run-btn">▶ Run</button>' +
+                    '</div>' +
+                  '</div>' +
+                  '<div class="pg-editor-pane' + jPaneCls + '" data-lang="java"><div class="cm-java-host"></div></div>' +
+                  '<div class="pg-editor-pane' + pPaneCls + '" data-lang="python"><div class="cm-python-host"></div></div>' +
+                  '<div class="pg-output"><div class="out-label">Output</div></div>' +
+                '</div>';
+
+            return displayHtml + playHtml;
+        }
+
+        function renderSolutions(solutions, containerId) {
+            var container = document.getElementById(containerId);
+            if (!container) return;
+            container.innerHTML = '';
+            solutions.forEach(function(sol) {
+                var div = document.createElement('div');
+                div.className = 'solution';
+                var html = '<h3>' + sol.title + '</h3>';
+                if (sol.description) html += '<p>' + sol.description + '</p>';
+                if (sol.code || sol.code_python) html += renderCodeSection(sol);
+                if (sol.complexity) {
+                    html += '<div class="complexity">';
+                    if (sol.complexity.time)  html += '<strong>Time Complexity:</strong> ' + sol.complexity.time + '<br>';
+                    if (sol.complexity.space) html += '<strong>Space Complexity:</strong> ' + sol.complexity.space;
+                    html += '</div>';
+                }
+                if (sol.example_walkthrough) {
+                    html += '<div class="example"><strong>Example Walkthrough:</strong><br><br>';
+                    if (sol.example_walkthrough.text)
+                        html += sol.example_walkthrough.text;
+                    else if (sol.example_walkthrough.steps)
+                        sol.example_walkthrough.steps.forEach(function(s){ html += s + '<br>'; });
+                    html += '</div>';
+                }
+                div.innerHTML = html;
+                container.appendChild(div);
+            });
+        }
+
+        function renderVariations(variations) {
+            var container = document.getElementById('variations-container');
+            container.innerHTML = '';
+            var div = document.createElement('div');
+            div.className = 'solution';
+            div.innerHTML = '<h3>Variations</h3>';
+            variations.forEach(function(v) {
+                var html = '<h4>' + v.title + '</h4>';
+                if (v.description) html += '<p>' + v.description + '</p>';
+                if (v.code || v.code_python) html += renderCodeSection(v);
+                div.innerHTML += html;
+            });
+            container.appendChild(div);
+        }
+
+        function renderNavigation(nav) {
+            if (!nav) return;
+            var el = document.getElementById('navigation');
+            var prev = nav.previous
+                ? '<a href="' + nav.previous + '" class="nav-btn">← Previous: ' + titleFromFile(nav.previous) + '</a>'
+                : '<span></span>';
+            var next = nav.next
+                ? '<a href="' + nav.next + '" class="nav-btn">Next: ' + titleFromFile(nav.next) + ' →</a>'
+                : '<span></span>';
+            el.innerHTML = prev + next;
+        }
+
+        function titleFromFile(f) {
+            return f.replace('.html','').split('-').map(function(w){ return w[0].toUpperCase()+w.slice(1); }).join(' ');
+        }
+
+        function escAttr(s) {
+            return s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+        }
     </script>
 </body>
 </html>
