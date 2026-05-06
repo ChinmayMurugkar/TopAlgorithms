@@ -196,6 +196,23 @@
         body.light .pg-output.has-error { color: #cf222e; }
         body.light .out-label { color: #8c959f; }
 
+        /* ── Top playground section ── */
+        .try-it-section {
+            margin-bottom: 30px;
+            border: 1.5px solid #667eea;
+            border-radius: 10px; overflow: hidden;
+        }
+        .try-it-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 14px 18px;
+        }
+        .try-it-header h3 { margin: 0; color: white; font-size: 1.1rem; }
+        .try-it-header p  { margin: 3px 0 0; font-size: 0.84rem; color: rgba(255,255,255,0.8); }
+        .try-it-section .playground-panel {
+            border: none; border-radius: 0; margin: 0;
+        }
+        .try-it-section .playground-panel.open { display: block; }
+
         /* Misc */
         .complexity {
             background: #fff3cd; border: 1px solid #ffeaa7;
@@ -250,6 +267,7 @@
             </div>
             <div id="problem-content" style="display:none;">
                 <div class="problem-description" id="problem-description"></div>
+                <div id="try-it-container"></div>
                 <div id="solutions-container"></div>
                 <div id="variations-container"></div>
                 <div class="navigation" id="navigation"></div>
@@ -372,8 +390,9 @@
 
             var javaCodeRaw   = panel.dataset.java   || '';
             var pythonCodeRaw = panel.dataset.python || '';
-            var javaCode      = javaCodeRaw   ? wrapJava(javaCodeRaw)     : '';
-            var pythonCode    = pythonCodeRaw ? wrapPython(pythonCodeRaw) : '';
+            var noWrap        = !!panel.dataset.nowrap;
+            var javaCode      = javaCodeRaw   ? (noWrap ? javaCodeRaw   : wrapJava(javaCodeRaw))   : '';
+            var pythonCode    = pythonCodeRaw ? (noWrap ? pythonCodeRaw : wrapPython(pythonCodeRaw)) : '';
 
             var editors = {};
             var currentTheme = isDark() ? 'dracula' : 'eclipse';
@@ -502,10 +521,71 @@
                 data.problem.leetcode_id ? 'LeetCode Problem ' + data.problem.leetcode_id : 'Coding Interview Problem';
 
             renderDescription(data.problem);
+            renderTopPlayground();
             renderSolutions(data.solutions, 'solutions-container');
             if (data.variations && data.variations.length)
                 renderVariations(data.variations);
             renderNavigation(data.navigation);
+        }
+
+        function renderTopPlayground() {
+            var container = document.getElementById('try-it-container');
+            if (!container) return;
+
+            var pgId = 'pg-top';
+            var themeLabel = isDark() ? '☀ Light' : '🌙 Dark';
+
+            var javaStarter =
+                'public class Solution {\n' +
+                '    // Write your solution here\n' +
+                '    public int solve(/* add params */) {\n' +
+                '        \n' +
+                '        return 0;\n' +
+                '    }\n\n' +
+                '    public static void main(String[] args) {\n' +
+                '        Solution sol = new Solution();\n' +
+                '        // Test your solution:\n' +
+                '        // System.out.println(sol.solve(...));\n' +
+                '    }\n' +
+                '}';
+
+            var pythonStarter =
+                '# Write your solution here\n\n' +
+                'def solve(# add params):\n' +
+                '    pass\n\n\n' +
+                '# Test your solution:\n' +
+                '# print(solve(...))';
+
+            container.innerHTML =
+                '<div class="try-it-section">' +
+                '<div class="try-it-header">' +
+                '<h3>✏️ Try It Yourself</h3>' +
+                '<p>Write and run your solution before checking the answers below</p>' +
+                '</div>' +
+                '<div class="playground-panel open" id="' + pgId + '" ' +
+                'data-java="' + escAttr(javaStarter) + '" ' +
+                'data-python="' + escAttr(pythonStarter) + '" data-nowrap="1">' +
+                '<div class="pg-header">' +
+                '<div class="pg-lang-tabs">' +
+                '<button class="pg-lang-btn java-tab active" data-lang="java"><span class="lang-dot"></span>Java</button>' +
+                '<button class="pg-lang-btn python-tab" data-lang="python"><span class="lang-dot"></span>Python</button>' +
+                '</div>' +
+                '<div class="pg-controls">' +
+                '<button class="pg-theme-btn">' + themeLabel + '</button>' +
+                '<button class="pg-run-btn">▶ Run</button>' +
+                '</div>' +
+                '</div>' +
+                '<div class="pg-editor-pane active" data-lang="java"><div class="cm-java-host"></div></div>' +
+                '<div class="pg-editor-pane" data-lang="python"><div class="cm-python-host"></div></div>' +
+                '<div class="pg-output"><div class="out-label">Output</div></div>' +
+                '</div>' +
+                '</div>';
+
+            // Auto-init: load CM immediately (no click needed)
+            loadCM(function () {
+                var panel = document.getElementById(pgId);
+                if (panel) initPlayground(panel);
+            });
         }
 
         function renderDescription(p) {
