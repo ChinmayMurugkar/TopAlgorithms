@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Counting Sort Implementation",
-      "description": "Implement counting sort algorithm for integers.",
+      "description": "Count the frequency of each distinct value, convert counts to cumulative positions (prefix sums), then place each element in its correct output position by reading the original array right-to-left to preserve stability. Because it uses no comparisons, counting sort runs in O(n+k) time where k is the value range.",
       "code": "public void countingSort(int[] arr) {\n    int n = arr.length;\n    if (n <= 1) return;\n    \n    // Find the maximum element\n    int max = arr[0];\n    for (int i = 1; i < n; i++) {\n        if (arr[i] > max) {\n            max = arr[i];\n        }\n    }\n    \n    // Create count array\n    int[] count = new int[max + 1];\n    \n    // Count occurrences\n    for (int i = 0; i < n; i++) {\n        count[arr[i]]++;\n    }\n    \n    // Modify count array to store actual positions\n    for (int i = 1; i <= max; i++) {\n        count[i] += count[i - 1];\n    }\n    \n    // Create output array\n    int[] output = new int[n];\n    \n    // Build output array\n    for (int i = n - 1; i >= 0; i--) {\n        output[count[arr[i]] - 1] = arr[i];\n        count[arr[i]]--;\n    }\n    \n    // Copy output array back to original array\n    for (int i = 0; i < n; i++) {\n        arr[i] = output[i];\n    }\n}",
+      "code_python": "from typing import List\n\ndef counting_sort(arr: List[int]) -> None:\n    n = len(arr)\n    if n <= 1:\n        return\n\n    max_val = max(arr)\n    count = [0] * (max_val + 1)\n\n    for val in arr:\n        count[val] += 1\n\n    for i in range(1, max_val + 1):\n        count[i] += count[i - 1]\n\n    output = [0] * n\n    for i in range(n - 1, -1, -1):\n        output[count[arr[i]] - 1] = arr[i]\n        count[arr[i]] -= 1\n\n    for i in range(n):\n        arr[i] = output[i]",
       "language": "java",
       "complexity": {
         "time": "O(n + k)",
@@ -20,8 +21,9 @@
     },
     {
       "title": "Solution 1 – Counting Sort Implementation",
-      "description": "Implement counting sort algorithm for integers.",
+      "description": "Count the frequency of each distinct value, convert counts to cumulative positions (prefix sums), then place each element in its correct output position by reading the original array right-to-left to preserve stability. Because it uses no comparisons, counting sort runs in O(n+k) time where k is the value range.",
       "code": "public void countingSort(int[] arr) {\n    int n = arr.length;\n    if (n <= 1) return;\n    \n    // Find the maximum element\n    int max = arr[0];\n    for (int i = 1; i < n; i++) {\n        if (arr[i] > max) {\n            max = arr[i];\n        }\n    }\n    \n    // Create count array\n    int[] count = new int[max + 1];\n    \n    // Count occurrences\n    for (int i = 0; i < n; i++) {\n        count[arr[i]]++;\n    }\n    \n    // Modify count array to store actual positions\n    for (int i = 1; i <= max; i++) {\n        count[i] += count[i - 1];\n    }\n    \n    // Create output array\n    int[] output = new int[n];\n    \n    // Build output array\n    for (int i = n - 1; i >= 0; i--) {\n        output[count[arr[i]] - 1] = arr[i];\n        count[arr[i]]--;\n    }\n    \n    // Copy output array back to original array\n    for (int i = 0; i < n; i++) {\n        arr[i] = output[i];\n    }\n}",
+      "code_python": "from typing import List\n\ndef counting_sort(arr: List[int]) -> None:\n    n = len(arr)\n    if n <= 1:\n        return\n\n    max_val = max(arr)\n    count = [0] * (max_val + 1)\n\n    for val in arr:\n        count[val] += 1\n\n    for i in range(1, max_val + 1):\n        count[i] += count[i - 1]\n\n    output = [0] * n\n    for i in range(n - 1, -1, -1):\n        output[count[arr[i]] - 1] = arr[i]\n        count[arr[i]] -= 1\n\n    for i in range(n):\n        arr[i] = output[i]",
       "language": "java",
       "complexity": {
         "time": "O(n + k)",

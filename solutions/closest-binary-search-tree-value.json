@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Binary Search",
-      "description": "Use binary search to find the closest value in BST.",
+      "description": "Traverse the BST like a binary search: at each node update the closest candidate if the current node is nearer to the target, then move left if the target is smaller or right if larger. The BST property guarantees we only follow the branch that can possibly contain a closer value, giving O(h) time.",
       "code": "public int closestValue(TreeNode root, double target) {\n    int closest = root.val;\n    \n    while (root != null) {\n        if (Math.abs(root.val - target) < Math.abs(closest - target)) {\n            closest = root.val;\n        }\n        \n        if (target < root.val) {\n            root = root.left;\n        } else {\n            root = root.right;\n        }\n    }\n    \n    return closest;\n}",
+      "code_python": "# class TreeNode: def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom typing import Optional\n\ndef closestValue(root: Optional[object], target: float) -> int:\n    closest = root.val\n    node = root\n    while node is not None:\n        if abs(node.val - target) < abs(closest - target):\n            closest = node.val\n        if target < node.val:\n            node = node.left\n        else:\n            node = node.right\n    return closest",
       "language": "java",
       "complexity": {
         "time": "O(h)",
@@ -20,8 +21,9 @@
     },
     {
       "title": "Solution 1 – Binary Search",
-      "description": "Use binary search to find the closest value in BST.",
+      "description": "Traverse the BST like a binary search: at each node update the closest candidate if the current node is nearer to the target, then move left if the target is smaller or right if larger. The BST property guarantees we only follow the branch that can possibly contain a closer value, giving O(h) time.",
       "code": "public int closestValue(TreeNode root, double target) {\n    int closest = root.val;\n    \n    while (root != null) {\n        if (Math.abs(root.val - target) < Math.abs(closest - target)) {\n            closest = root.val;\n        }\n        \n        if (target < root.val) {\n            root = root.left;\n        } else {\n            root = root.right;\n        }\n    }\n    \n    return closest;\n}",
+      "code_python": "# class TreeNode: def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom typing import Optional\n\ndef closestValue(root: Optional[object], target: float) -> int:\n    closest = root.val\n    node = root\n    while node is not None:\n        if abs(node.val - target) < abs(closest - target):\n            closest = node.val\n        if target < node.val:\n            node = node.left\n        else:\n            node = node.right\n    return closest",
       "language": "java",
       "complexity": {
         "time": "O(h)",

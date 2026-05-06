@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Two Stacks",
-      "description": "Use two stacks to implement queue.",
+      "description": "Use two stacks: an input stack for push operations and an output stack for pop/peek operations. When the output stack is empty and a pop or peek is needed, all elements from the input stack are transferred to the output stack, reversing their order and exposing the oldest element at the top. The key insight is that a lazy transfer strategy gives O(1) amortized cost per operation because each element is moved at most once.",
       "code": "class MyQueue {\n    private Stack stack1;\n    private Stack stack2;\n    \n    public MyQueue() {\n        stack1 = new Stack<>();\n        stack2 = new Stack<>();\n    }\n    \n    public void push(int x) {\n        stack1.push(x);\n    }\n    \n    public int pop() {\n        if (stack2.isEmpty()) {\n            while (!stack1.isEmpty()) {\n                stack2.push(stack1.pop());\n            }\n        }\n        return stack2.pop();\n    }\n    \n    public int peek() {\n        if (stack2.isEmpty()) {\n            while (!stack1.isEmpty()) {\n                stack2.push(stack1.pop());\n            }\n        }\n        return stack2.peek();\n    }\n    \n    public boolean empty() {\n        return stack1.isEmpty() && stack2.isEmpty();\n    }\n}",
+      "code_python": "class MyQueue:\n    def __init__(self) -> None:\n        self._in: list[int] = []\n        self._out: list[int] = []\n\n    def push(self, x: int) -> None:\n        self._in.append(x)\n\n    def _transfer(self) -> None:\n        if not self._out:\n            while self._in:\n                self._out.append(self._in.pop())\n\n    def pop(self) -> int:\n        self._transfer()\n        return self._out.pop()\n\n    def peek(self) -> int:\n        self._transfer()\n        return self._out[-1]\n\n    def empty(self) -> bool:\n        return not self._in and not self._out",
       "language": "java",
       "complexity": {
         "time": "O(1) amortized",

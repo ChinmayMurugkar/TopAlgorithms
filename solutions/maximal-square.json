@@ -1,0 +1,39 @@
+{
+  "problem": {
+    "title": "Maximal Square",
+    "leetcode_id": 221,
+    "category": "Dynamic Programming",
+    "description": "Given an m×n binary matrix filled with '0's and '1's, find the largest square containing only '1's and return its area.",
+    "assumptions": [
+      "Matrix contains only '0' and '1' characters.",
+      "m and n are at least 1.",
+      "Return 0 if no '1' exists."
+    ],
+    "example": {
+      "input": "matrix = [[\"1\",\"0\",\"1\",\"1\",\"1\"],[\"1\",\"0\",\"1\",\"1\",\"1\"],[\"1\",\"1\",\"1\",\"1\",\"1\"],[\"1\",\"0\",\"0\",\"1\",\"0\"]]",
+      "output": "9",
+      "explanation": "A 3×3 square of '1's exists in the bottom-right region of rows 0-2 and columns 2-4."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Dynamic Programming",
+      "description": "Define dp[i][j] as the side length of the largest square whose bottom-right corner is at (i, j). If matrix[i][j] == '1', then dp[i][j] = min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) + 1; otherwise it stays 0. The recurrence works because a square is only as large as the smallest square formed by its three neighboring corners. Track the maximum dp value and return its square.",
+      "code": "public int maximalSquare(char[][] matrix) {\n    int m = matrix.length, n = matrix[0].length;\n    int[][] dp = new int[m + 1][n + 1];\n    int maxSide = 0;\n\n    for (int i = 1; i <= m; i++) {\n        for (int j = 1; j <= n; j++) {\n            if (matrix[i-1][j-1] == '1') {\n                dp[i][j] = Math.min(dp[i-1][j],\n                            Math.min(dp[i][j-1], dp[i-1][j-1])) + 1;\n                maxSide = Math.max(maxSide, dp[i][j]);\n            }\n        }\n    }\n    return maxSide * maxSide;\n}",
+      "code_python": "def maximalSquare(matrix: list[list[str]]) -> int:\n    m, n = len(matrix), len(matrix[0])\n    dp = [[0] * (n + 1) for _ in range(m + 1)]\n    max_side = 0\n\n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            if matrix[i - 1][j - 1] == '1':\n                dp[i][j] = min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) + 1\n                max_side = max(max_side, dp[i][j])\n\n    return max_side * max_side",
+      "language": "java",
+      "complexity": {
+        "time": "O(mn) — single pass through all cells",
+        "space": "O(mn) for the DP table; reducible to O(n) with a 1D array"
+      },
+      "example_walkthrough": {
+        "text": "At cell (2,4) (0-indexed), matrix[2][4]='1'. dp[2][4] = min(dp[1][4], dp[2][3], dp[1][3]) + 1 = min(2,2,2)+1 = 3. This means a 3×3 square ends here. Area = 3*3 = 9."
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "longest-increasing-path-matrix.html",
+    "next": "maximal-rectangle.html"
+  }
+}

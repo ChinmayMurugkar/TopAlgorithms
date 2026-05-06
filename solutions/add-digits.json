@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Mathematical",
-      "description": "Use mathematical formula for digital root.",
+      "description": "The repeated digit sum is the digital root, which follows a simple modular arithmetic pattern: any non-zero number's digital root equals its value modulo 9, except multiples of 9 whose root is 9 itself. This eliminates the need for any iteration or recursion, giving an O(1) solution. The key insight is that the digital root is preserved by the modulo-9 property of our decimal number system.",
       "code": "public int addDigits(int num) {\n    if (num == 0) return 0;\n    if (num % 9 == 0) return 9;\n    return num % 9;\n}",
+      "code_python": "def addDigits(num: int) -> int:\n    if num == 0:\n        return 0\n    if num % 9 == 0:\n        return 9\n    return num % 9",
       "language": "java",
       "complexity": {
         "time": "O(1)",

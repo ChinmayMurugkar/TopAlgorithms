@@ -10,18 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Stack",
-      "description": "Use stack to simulate inorder traversal.",
+      "description": "Simulate inorder traversal lazily using an explicit stack: initialise by pushing all left-spine nodes, then each call to next() pops the top node, pushes the right child's left spine, and returns the value. Because each node is pushed and popped exactly once across all next() calls, the amortized time per call is O(1) while using only O(h) space (h = tree height). The key insight is that the stack always holds the 'pending' left-spine of the current subtree.",
       "code": "class BSTIterator {\n    private Stack stack;\n    \n    public BSTIterator(TreeNode root) {\n        stack = new Stack<>();\n        pushAll(root);\n    }\n    \n    public int next() {\n        TreeNode node = stack.pop();\n        pushAll(node.right);\n        return node.val;\n    }\n    \n    public boolean hasNext() {\n        return !stack.isEmpty();\n    }\n    \n    private void pushAll(TreeNode root) {\n        while (root != null) {\n            stack.push(root);\n            root = root.left;\n        }\n    }\n}",
-      "language": "java",
-      "complexity": {
-        "time": "O(1) amortized",
-        "space": "O(h)"
-      }
-    },
-    {
-      "title": "Solution 1 – Stack",
-      "description": "Use stack to simulate inorder traversal.",
-      "code": "class BSTIterator {\n    private Stack stack;\n    \n    public BSTIterator(TreeNode root) {\n        stack = new Stack<>();\n        pushAll(root);\n    }\n    \n    public int next() {\n        TreeNode node = stack.pop();\n        pushAll(node.right);\n        return node.val;\n    }\n    \n    public boolean hasNext() {\n        return !stack.isEmpty();\n    }\n    \n    private void pushAll(TreeNode root) {\n        while (root != null) {\n            stack.push(root);\n            root = root.left;\n        }\n    }\n}",
+      "code_python": "from typing import Optional\n\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\nclass BSTIterator:\n    def __init__(self, root: Optional['TreeNode']) -> None:\n        self._stack: list['TreeNode'] = []\n        self._push_left(root)\n\n    def next(self) -> int:\n        node = self._stack.pop()\n        self._push_left(node.right)\n        return node.val\n\n    def hasNext(self) -> bool:\n        return bool(self._stack)\n\n    def _push_left(self, node: Optional['TreeNode']) -> None:\n        while node:\n            self._stack.append(node)\n            node = node.left",
       "language": "java",
       "complexity": {
         "time": "O(1) amortized",

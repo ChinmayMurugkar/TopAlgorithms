@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Base 26 Conversion",
-      "description": "Convert number to base 26 column title.",
+      "description": "This is the reverse of column number to title: convert an integer to a bijective base-26 string using letters A-Z. The key trick is to decrement columnNumber by 1 before taking the modulus so that 'Z' (26) maps correctly to index 25 rather than 0. Characters are prepended by repeatedly extracting the least significant 'digit'.",
       "code": "public String convertToTitle(int columnNumber) {\n    StringBuilder result = new StringBuilder();\n    \n    while (columnNumber > 0) {\n        columnNumber--;\n        result.insert(0, (char) ('A' + columnNumber % 26));\n        columnNumber /= 26;\n    }\n    \n    return result.toString();\n}",
+      "code_python": "def convertToTitle(columnNumber: int) -> str:\n    result = []\n    while columnNumber > 0:\n        columnNumber -= 1\n        result.append(chr(ord('A') + columnNumber % 26))\n        columnNumber //= 26\n    return ''.join(reversed(result))",
       "language": "java",
       "complexity": {
         "time": "O(log n)",

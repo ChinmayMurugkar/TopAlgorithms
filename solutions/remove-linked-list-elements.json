@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Two Pointers",
-      "description": "Use two pointers to remove elements with given value.",
+      "description": "Use a dummy head node to eliminate edge cases when the target value appears at the head. Maintain a prev pointer and a curr pointer; when curr's value matches val, bypass the node by linking prev.next to curr.next; otherwise advance prev to curr.",
       "code": "public ListNode removeElements(ListNode head, int val) {\n    ListNode dummy = new ListNode(0);\n    dummy.next = head;\n    ListNode prev = dummy, curr = head;\n    \n    while (curr != null) {\n        if (curr.val == val) {\n            prev.next = curr.next;\n        } else {\n            prev = curr;\n        }\n        curr = curr.next;\n    }\n    \n    return dummy.next;\n}",
+      "code_python": "from typing import Optional\n\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\n\ndef removeElements(head: Optional[object], val: int) -> Optional[object]:\n    dummy = type('ListNode', (), {'val': 0, 'next': head})()\n    prev, curr = dummy, head\n\n    while curr:\n        if curr.val == val:\n            prev.next = curr.next\n        else:\n            prev = curr\n        curr = curr.next\n\n    return dummy.next",
       "language": "java",
       "complexity": {
         "time": "O(n)",

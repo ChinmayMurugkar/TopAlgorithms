@@ -1,0 +1,55 @@
+{
+  "problem": {
+    "title": "Game of Life",
+    "leetcode_id": 289,
+    "category": "Matrix",
+    "description": "Given an m x n board of cells where each cell is either 0 (dead) or 1 (alive), apply Conway's Game of Life rules simultaneously to every cell and return the next state of the board. The board must be updated in-place.",
+    "assumptions": [
+      "m == board.length, n == board[0].length",
+      "1 <= m, n <= 25",
+      "board[i][j] is 0 or 1",
+      "All cells are updated simultaneously — the next state of each cell depends only on the current state of all cells",
+      "Neighbors include all 8 directions: horizontal, vertical, and diagonal"
+    ],
+    "example": {
+      "input": "board = [[0,1,0],[0,0,1],[1,1,1],[0,0,0]]",
+      "output": "[[0,0,0],[1,0,1],[0,1,1],[0,1,0]]",
+      "explanation": "Rules: (1) Any live cell with fewer than 2 live neighbors dies (underpopulation). (2) Any live cell with 2 or 3 live neighbors lives. (3) Any live cell with more than 3 live neighbors dies (overpopulation). (4) Any dead cell with exactly 3 live neighbors becomes alive (reproduction). Applying these simultaneously to every cell yields the output board."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Extra Space (Copy Board)",
+      "description": "Create a full copy of the board to preserve the original state. Then iterate through every cell and count its live neighbors using the copied board (which always reflects the current state). Apply the four Game of Life rules based on the live neighbor count and update the original board. This approach is straightforward since reading and writing are completely decoupled via the copy.",
+      "code": "class Solution {\n    public void gameOfLife(int[][] board) {\n        int m = board.length;\n        int n = board[0].length;\n\n        // Make a copy to read from (preserve original state)\n        int[][] copy = new int[m][n];\n        for (int i = 0; i < m; i++) {\n            copy[i] = board[i].clone();\n        }\n\n        int[] dr = {-1, -1, -1, 0, 0, 1, 1, 1};\n        int[] dc = {-1,  0,  1,-1, 1,-1, 0, 1};\n\n        for (int r = 0; r < m; r++) {\n            for (int c = 0; c < n; c++) {\n                int liveNeighbors = 0;\n                for (int d = 0; d < 8; d++) {\n                    int nr = r + dr[d];\n                    int nc = c + dc[d];\n                    if (nr >= 0 && nr < m && nc >= 0 && nc < n && copy[nr][nc] == 1) {\n                        liveNeighbors++;\n                    }\n                }\n\n                if (copy[r][c] == 1) {\n                    // Rules 1 and 3: live cell dies from under/overpopulation\n                    // Rule 2: live cell with 2 or 3 neighbors survives\n                    board[r][c] = (liveNeighbors == 2 || liveNeighbors == 3) ? 1 : 0;\n                } else {\n                    // Rule 4: dead cell with exactly 3 neighbors becomes alive\n                    board[r][c] = (liveNeighbors == 3) ? 1 : 0;\n                }\n            }\n        }\n    }\n}",
+      "code_python": "class Solution:\n    def gameOfLife(self, board: list[list[int]]) -> None:\n        m, n = len(board), len(board[0])\n\n        # Make a deep copy to read from (preserve original state)\n        copy = [row[:] for row in board]\n\n        directions = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]\n\n        for r in range(m):\n            for c in range(n):\n                live_neighbors = 0\n                for dr, dc in directions:\n                    nr, nc = r + dr, c + dc\n                    if 0 <= nr < m and 0 <= nc < n and copy[nr][nc] == 1:\n                        live_neighbors += 1\n\n                if copy[r][c] == 1:\n                    # Rules 1, 2, 3: live cell survives only with 2 or 3 neighbors\n                    board[r][c] = 1 if live_neighbors in (2, 3) else 0\n                else:\n                    # Rule 4: dead cell with exactly 3 neighbors is born\n                    board[r][c] = 1 if live_neighbors == 3 else 0",
+      "language": "java",
+      "complexity": {
+        "time": "O(m*n) — every cell is visited once and checking 8 neighbors is O(1)",
+        "space": "O(m*n) for the copied board"
+      },
+      "example_walkthrough": {
+        "text": "For board = [[0,1,0],[0,0,1],[1,1,1],[0,0,0]]:<br>Copy the board first. For cell (0,0)=0: neighbors are (0,1)=1,(1,0)=0,(1,1)=0 → 1 live neighbor → stays dead.<br>For cell (0,1)=1: neighbors are (0,0)=0,(0,2)=0,(1,0)=0,(1,1)=0,(1,2)=1 → 1 live neighbor → dies (underpopulation).<br>For cell (1,2)=1: live neighbors = (0,1)=1,(0,2)=0,(2,2)=1,(2,1)=1,(1,1)=0 → 3 live neighbors → survives.<br>Processing all cells using the copy yields the expected output."
+      }
+    },
+    {
+      "title": "Solution 2 – In-Place State Encoding (No Extra Space)",
+      "description": "Avoid the O(m*n) copy by encoding state transitions directly in the board using additional integer values. Use the value -1 to represent a cell that was alive (1) but will die next generation, and 2 to represent a cell that was dead (0) but will become alive. After applying this encoding to every cell, a second pass converts -1 back to 0 and 2 back to 1. When counting live neighbors, treat both 1 (stays alive) and -1 (currently alive, will die) as live neighbors, since neighbor counts are based on the current generation state.",
+      "code": "class Solution {\n    public void gameOfLife(int[][] board) {\n        int m = board.length;\n        int n = board[0].length;\n\n        // Encoding:\n        //  1  -> still alive (1 -> 1)\n        // -1  -> was alive, will die (1 -> 0)\n        //  2  -> was dead, will become alive (0 -> 1)\n        //  0  -> still dead (0 -> 0)\n\n        int[] dr = {-1, -1, -1, 0, 0, 1, 1, 1};\n        int[] dc = {-1,  0,  1,-1, 1,-1, 0, 1};\n\n        for (int r = 0; r < m; r++) {\n            for (int c = 0; c < n; c++) {\n                int liveNeighbors = 0;\n                for (int d = 0; d < 8; d++) {\n                    int nr = r + dr[d];\n                    int nc = c + dc[d];\n                    // Count cells that are currently alive (1 or -1)\n                    if (nr >= 0 && nr < m && nc >= 0 && nc < n\n                            && Math.abs(board[nr][nc]) == 1) {\n                        liveNeighbors++;\n                    }\n                }\n\n                if (board[r][c] == 1) {\n                    if (liveNeighbors < 2 || liveNeighbors > 3) {\n                        board[r][c] = -1; // alive -> dead\n                    }\n                    // else: stays 1 (alive -> alive)\n                } else if (board[r][c] == 0) {\n                    if (liveNeighbors == 3) {\n                        board[r][c] = 2; // dead -> alive\n                    }\n                    // else: stays 0 (dead -> dead)\n                }\n            }\n        }\n\n        // Second pass: convert encoded values to final state\n        for (int r = 0; r < m; r++) {\n            for (int c = 0; c < n; c++) {\n                if (board[r][c] == -1) board[r][c] = 0;\n                if (board[r][c] ==  2) board[r][c] = 1;\n            }\n        }\n    }\n}",
+      "code_python": "class Solution:\n    def gameOfLife(self, board: list[list[int]]) -> None:\n        m, n = len(board), len(board[0])\n\n        # Encoding:\n        #  1  -> stays alive (1 -> 1)\n        # -1  -> was alive, will die (1 -> 0)\n        #  2  -> was dead, will become alive (0 -> 1)\n        #  0  -> stays dead (0 -> 0)\n\n        directions = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]\n\n        for r in range(m):\n            for c in range(n):\n                live_neighbors = 0\n                for dr, dc in directions:\n                    nr, nc = r + dr, c + dc\n                    # Count cells currently alive: original value 1 or -1\n                    if 0 <= nr < m and 0 <= nc < n and abs(board[nr][nc]) == 1:\n                        live_neighbors += 1\n\n                if board[r][c] == 1:\n                    if live_neighbors < 2 or live_neighbors > 3:\n                        board[r][c] = -1  # alive -> dead\n                    # else stays 1\n                elif board[r][c] == 0:\n                    if live_neighbors == 3:\n                        board[r][c] = 2  # dead -> alive\n                    # else stays 0\n\n        # Second pass: finalize encoded transitions\n        for r in range(m):\n            for c in range(n):\n                if board[r][c] == -1:\n                    board[r][c] = 0\n                elif board[r][c] == 2:\n                    board[r][c] = 1",
+      "language": "java",
+      "complexity": {
+        "time": "O(m*n) — two linear passes over the board",
+        "space": "O(1) extra space — the state encoding is stored directly in the board cells"
+      },
+      "example_walkthrough": {
+        "text": "For board = [[0,1,0],[0,0,1],[1,1,1],[0,0,0]]:<br>First pass — encode transitions in place:<br>Cell (0,1)=1 has 1 live neighbor → dies → encode as -1.<br>Cell (1,2)=1 has 3 live neighbors (0,1),(2,1),(2,2) → survives → stays 1.<br>Cell (2,0)=1 has 1 live neighbor → dies → encode as -1.<br>Cell (1,0)=0 has 3 live neighbors (2,0),(2,1),(1,1)? → check → encode as 2 if exactly 3.<br>Second pass — replace -1 with 0 and 2 with 1 to get the final board.<br>Key insight: abs(board[nr][nc]) == 1 correctly reads -1 cells as 'currently alive' when counting neighbors."
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "range-sum-query-2d.html",
+    "next": "rotate-image.html"
+  }
+}

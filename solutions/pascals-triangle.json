@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Dynamic Programming",
-      "description": "Build Pascal's triangle using DP.",
+      "description": "Build Pascal's triangle row by row: the first and last element of every row are 1, and every interior element is the sum of the two elements directly above it in the previous row. This bottom-up DP approach naturally expresses the binomial coefficient recurrence.",
       "code": "public List> generate(int numRows) {\n    List> result = new ArrayList<>();\n    \n    for (int i = 0; i < numRows; i++) {\n        List row = new ArrayList<>();\n        for (int j = 0; j <= i; j++) {\n            if (j == 0 || j == i) {\n                row.add(1);\n            } else {\n                row.add(result.get(i - 1).get(j - 1) + result.get(i - 1).get(j));\n            }\n        }\n        result.add(row);\n    }\n    \n    return result;\n}",
+      "code_python": "from typing import List\n\ndef generate(numRows: int) -> List[List[int]]:\n    result: List[List[int]] = []\n\n    for i in range(numRows):\n        row = [1] * (i + 1)\n        for j in range(1, i):\n            row[j] = result[i - 1][j - 1] + result[i - 1][j]\n        result.append(row)\n\n    return result",
       "language": "java",
       "complexity": {
         "time": "O(n²)",

@@ -1,0 +1,40 @@
+{
+  "problem": {
+    "title": "Sudoku Solver",
+    "leetcode_id": 37,
+    "category": "Combinations & Permutations",
+    "description": "Write a program to solve a Sudoku puzzle by filling the empty cells ('.'). A valid Sudoku solution must satisfy: each row, each column, and each of the nine 3×3 sub-boxes contains the digits 1-9 without repetition. The given puzzle is guaranteed to have a unique solution.",
+    "assumptions": [
+      "The board is always 9×9.",
+      "Empty cells are represented by '.'.",
+      "The input puzzle has exactly one valid solution.",
+      "Numbers already placed are valid."
+    ],
+    "example": {
+      "input": "board = [[\"5\",\"3\",\".\",\".\",\"7\",\".\",\".\",\".\",\".\"],[\"6\",\".\",\".\",\"1\",\"9\",\"5\",\".\",\".\",\".\"],[\".\",\"9\",\"8\",\".\",\".\",\".\",\".\",\"6\",\".\"],[\"8\",\".\",\".\",\".\",\"6\",\".\",\".\",\".\",\"3\"],[\"4\",\".\",\".\",\"8\",\".\",\"3\",\".\",\".\",\"1\"],[\"7\",\".\",\".\",\".\",\"2\",\".\",\".\",\".\",\"6\"],[\".\",\"6\",\".\",\".\",\".\",\".\",\"2\",\"8\",\".\"],[\".\",\".\",\".\",\"4\",\"1\",\"9\",\".\",\".\",\"5\"],[\".\",\".\",\".\",\".\",\"8\",\".\",\".\",\"7\",\"9\"]]",
+      "output": "[[\"5\",\"3\",\"4\",\"6\",\"7\",\"8\",\"9\",\"1\",\"2\"],...]",
+      "explanation": "All empty cells are filled so that each row, column, and 3x3 box contains digits 1-9 exactly once."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Backtracking",
+      "description": "Scan the board for the first empty cell and try placing digits '1' through '9'. For each digit, check whether it is valid in the current row, column, and 3×3 box using boolean sets maintained for efficiency. If valid, place the digit and recurse; if the recursive call returns true the puzzle is solved, otherwise remove the digit (backtrack) and try the next. The worst-case is O(9^m) where m is the number of empty cells, but constraint propagation via the validity check prunes the search tree aggressively.",
+      "code": "public void solveSudoku(char[][] board) {\n    boolean[][] rows = new boolean[9][9];\n    boolean[][] cols = new boolean[9][9];\n    boolean[][] boxes = new boolean[9][9];\n\n    for (int i = 0; i < 9; i++) {\n        for (int j = 0; j < 9; j++) {\n            if (board[i][j] != '.') {\n                int d = board[i][j] - '1';\n                int box = (i / 3) * 3 + j / 3;\n                rows[i][d] = cols[j][d] = boxes[box][d] = true;\n            }\n        }\n    }\n    solve(board, rows, cols, boxes, 0, 0);\n}\n\nprivate boolean solve(char[][] board, boolean[][] rows, boolean[][] cols,\n                      boolean[][] boxes, int r, int c) {\n    if (r == 9) return true;\n    int nr = (c == 8) ? r + 1 : r;\n    int nc = (c == 8) ? 0 : c + 1;\n    if (board[r][c] != '.') return solve(board, rows, cols, boxes, nr, nc);\n    int box = (r / 3) * 3 + c / 3;\n    for (int d = 0; d < 9; d++) {\n        if (!rows[r][d] && !cols[c][d] && !boxes[box][d]) {\n            board[r][c] = (char)('1' + d);\n            rows[r][d] = cols[c][d] = boxes[box][d] = true;\n            if (solve(board, rows, cols, boxes, nr, nc)) return true;\n            board[r][c] = '.';\n            rows[r][d] = cols[c][d] = boxes[box][d] = false;\n        }\n    }\n    return false;\n}",
+      "code_python": "def solveSudoku(board: list[list[str]]) -> None:\n    rows = [[False] * 9 for _ in range(9)]\n    cols = [[False] * 9 for _ in range(9)]\n    boxes = [[False] * 9 for _ in range(9)]\n\n    for i in range(9):\n        for j in range(9):\n            if board[i][j] != '.':\n                d = int(board[i][j]) - 1\n                box = (i // 3) * 3 + j // 3\n                rows[i][d] = cols[j][d] = boxes[box][d] = True\n\n    def solve(r: int, c: int) -> bool:\n        if r == 9:\n            return True\n        nr = r + 1 if c == 8 else r\n        nc = 0 if c == 8 else c + 1\n        if board[r][c] != '.':\n            return solve(nr, nc)\n        box = (r // 3) * 3 + c // 3\n        for d in range(9):\n            if not rows[r][d] and not cols[c][d] and not boxes[box][d]:\n                board[r][c] = str(d + 1)\n                rows[r][d] = cols[c][d] = boxes[box][d] = True\n                if solve(nr, nc):\n                    return True\n                board[r][c] = '.'\n                rows[r][d] = cols[c][d] = boxes[box][d] = False\n        return False\n\n    solve(0, 0)",
+      "language": "java",
+      "complexity": {
+        "time": "O(9^m) where m is the number of empty cells; in practice much faster due to pruning",
+        "space": "O(1) extra beyond the board (the constraint arrays are fixed size 9×9)"
+      },
+      "example_walkthrough": {
+        "text": "Find first empty cell (0,2). Try '1': row 0 already has '5','3' — '1' not in row, not in col, not in box → place '1'. Recurse to next empty. If a conflict is eventually found, backtrack: remove digit and try '2', '3', etc. Because there is a unique solution, the search terminates as soon as r==9."
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "maximal-rectangle.html",
+    "next": "paint-house.html"
+  }
+}

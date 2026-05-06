@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Backtracking",
-      "description": "Use backtracking to generate all permutations.",
+      "description": "Use backtracking with a boolean used-array to generate all permutations: at each recursive step, try every unused number, mark it used, recurse to fill the next position, then unmark it to restore state. Because all elements are distinct, no deduplication logic is needed.",
       "code": "public List> permute(int[] nums) {\n    List> result = new ArrayList<>();\n    backtrack(nums, new ArrayList<>(), new boolean[nums.length], result);\n    return result;\n}\n\nprivate void backtrack(int[] nums, List current, boolean[] used, List> result) {\n    if (current.size() == nums.length) {\n        result.add(new ArrayList<>(current));\n        return;\n    }\n    \n    for (int i = 0; i < nums.length; i++) {\n        if (!used[i]) {\n            used[i] = true;\n            current.add(nums[i]);\n            backtrack(nums, current, used, result);\n            current.remove(current.size() - 1);\n            used[i] = false;\n        }\n    }\n}",
+      "code_python": "from typing import List\n\ndef permute(nums: List[int]) -> List[List[int]]:\n    result: List[List[int]] = []\n    used = [False] * len(nums)\n\n    def backtrack(current: List[int]) -> None:\n        if len(current) == len(nums):\n            result.append(list(current))\n            return\n        for i, num in enumerate(nums):\n            if not used[i]:\n                used[i] = True\n                current.append(num)\n                backtrack(current)\n                current.pop()\n                used[i] = False\n\n    backtrack([])\n    return result",
       "language": "java",
       "complexity": {
         "time": "O(n!)",

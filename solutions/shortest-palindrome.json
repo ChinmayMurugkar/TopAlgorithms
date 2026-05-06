@@ -10,18 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – KMP Algorithm",
-      "description": "Use KMP algorithm to find the longest palindromic prefix.",
+      "description": "Concatenate s, a separator '#', and the reverse of s to form a new string, then compute the KMP failure function on it. The last value of the failure table tells us the length of the longest palindromic prefix of s, so we only need to prepend the remaining suffix (reversed) to make s a palindrome. This avoids O(n²) brute-force checking by reusing the efficient prefix-matching logic of KMP.",
       "code": "public String shortestPalindrome(String s) {\n    String temp = s + \"#\" + new StringBuilder(s).reverse().toString();\n    int[] table = getTable(temp);\n    \n    return new StringBuilder(s.substring(table[table.length - 1])).reverse().toString() + s;\n}\n\nprivate int[] getTable(String s) {\n    int[] table = new int[s.length()];\n    int j = 0;\n    \n    for (int i = 1; i < s.length(); i++) {\n        while (j > 0 && s.charAt(i) != s.charAt(j)) {\n            j = table[j - 1];\n        }\n        if (s.charAt(i) == s.charAt(j)) {\n            j++;\n        }\n        table[i] = j;\n    }\n    \n    return table;\n}",
-      "language": "java",
-      "complexity": {
-        "time": "O(n)",
-        "space": "O(n)"
-      }
-    },
-    {
-      "title": "Solution 1 – KMP Algorithm",
-      "description": "Use KMP algorithm to find the longest palindromic prefix.",
-      "code": "public String shortestPalindrome(String s) {\n    String temp = s + \"#\" + new StringBuilder(s).reverse().toString();\n    int[] table = getTable(temp);\n    \n    return new StringBuilder(s.substring(table[table.length - 1])).reverse().toString() + s;\n}\n\nprivate int[] getTable(String s) {\n    int[] table = new int[s.length()];\n    int j = 0;\n    \n    for (int i = 1; i < s.length(); i++) {\n        while (j > 0 && s.charAt(i) != s.charAt(j)) {\n            j = table[j - 1];\n        }\n        if (s.charAt(i) == s.charAt(j)) {\n            j++;\n        }\n        table[i] = j;\n    }\n    \n    return table;\n}",
+      "code_python": "def shortestPalindrome(s: str) -> str:\n    temp = s + '#' + s[::-1]\n    table = _get_kmp_table(temp)\n    longest_palindrome_prefix_len = table[-1]\n    return s[longest_palindrome_prefix_len:][::-1] + s\n\ndef _get_kmp_table(s: str) -> list[int]:\n    table = [0] * len(s)\n    j = 0\n    for i in range(1, len(s)):\n        while j > 0 and s[i] != s[j]:\n            j = table[j - 1]\n        if s[i] == s[j]:\n            j += 1\n        table[i] = j\n    return table",
       "language": "java",
       "complexity": {
         "time": "O(n)",

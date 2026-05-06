@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Two Heaps",
-      "description": "Use min heap and max heap to maintain median.",
+      "description": "Maintain two heaps: a max-heap for the lower half and a min-heap for the upper half of the data stream. Every new number is first pushed to the max-heap, then the max-heap's top is moved to the min-heap to enforce the partition. If the heaps become unbalanced in size, an element is moved back so the max-heap has at most one more element, giving O(1) median retrieval.",
       "code": "class MedianFinder {\n    private PriorityQueue minHeap;\n    private PriorityQueue maxHeap;\n    \n    public MedianFinder() {\n        minHeap = new PriorityQueue<>();\n        maxHeap = new PriorityQueue<>(Collections.reverseOrder());\n    }\n    \n    public void addNum(int num) {\n        maxHeap.offer(num);\n        minHeap.offer(maxHeap.poll());\n        \n        if (maxHeap.size() < minHeap.size()) {\n            maxHeap.offer(minHeap.poll());\n        }\n    }\n    \n    public double findMedian() {\n        if (maxHeap.size() > minHeap.size()) {\n            return maxHeap.peek();\n        }\n        return (maxHeap.peek() + minHeap.peek()) / 2.0;\n    }\n}",
+      "code_python": "import heapq\n\nclass MedianFinder:\n    def __init__(self) -> None:\n        # max-heap for lower half (negate values for Python's min-heap)\n        self._max_heap: list = []  # negated values\n        # min-heap for upper half\n        self._min_heap: list = []\n\n    def addNum(self, num: int) -> None:\n        heapq.heappush(self._max_heap, -num)\n        heapq.heappush(self._min_heap, -heapq.heappop(self._max_heap))\n        if len(self._max_heap) < len(self._min_heap):\n            heapq.heappush(self._max_heap, -heapq.heappop(self._min_heap))\n\n    def findMedian(self) -> float:\n        if len(self._max_heap) > len(self._min_heap):\n            return float(-self._max_heap[0])\n        return (-self._max_heap[0] + self._min_heap[0]) / 2.0",
       "language": "java",
       "complexity": {
         "time": "O(log n) for add, O(1) for find",
@@ -20,8 +21,9 @@
     },
     {
       "title": "Solution 1 – Two Heaps",
-      "description": "Use min heap and max heap to maintain median.",
+      "description": "Maintain two heaps: a max-heap for the lower half and a min-heap for the upper half of the data stream. Every new number is first pushed to the max-heap, then the max-heap's top is moved to the min-heap to enforce the partition. If the heaps become unbalanced in size, an element is moved back so the max-heap has at most one more element, giving O(1) median retrieval.",
       "code": "class MedianFinder {\n    private PriorityQueue minHeap;\n    private PriorityQueue maxHeap;\n    \n    public MedianFinder() {\n        minHeap = new PriorityQueue<>();\n        maxHeap = new PriorityQueue<>(Collections.reverseOrder());\n    }\n    \n    public void addNum(int num) {\n        maxHeap.offer(num);\n        minHeap.offer(maxHeap.poll());\n        \n        if (maxHeap.size() < minHeap.size()) {\n            maxHeap.offer(minHeap.poll());\n        }\n    }\n    \n    public double findMedian() {\n        if (maxHeap.size() > minHeap.size()) {\n            return maxHeap.peek();\n        }\n        return (maxHeap.peek() + minHeap.peek()) / 2.0;\n    }\n}",
+      "code_python": "import heapq\n\nclass MedianFinder:\n    def __init__(self) -> None:\n        self._max_heap: list = []\n        self._min_heap: list = []\n\n    def addNum(self, num: int) -> None:\n        heapq.heappush(self._max_heap, -num)\n        heapq.heappush(self._min_heap, -heapq.heappop(self._max_heap))\n        if len(self._max_heap) < len(self._min_heap):\n            heapq.heappush(self._max_heap, -heapq.heappop(self._min_heap))\n\n    def findMedian(self) -> float:\n        if len(self._max_heap) > len(self._min_heap):\n            return float(-self._max_heap[0])\n        return (-self._max_heap[0] + self._min_heap[0]) / 2.0",
       "language": "java",
       "complexity": {
         "time": "O(log n) for add, O(1) for find",

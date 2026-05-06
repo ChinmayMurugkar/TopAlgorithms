@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Recursive DFS",
-      "description": "Use recursive DFS to swap left and right children of each node.",
+      "description": "Recursively invert each subtree by first swapping the left and right children of the current node and then recursing into each child. The base case is a null node, which is already inverted. The key insight is that tree inversion satisfies a clean recursive decomposition: inverting a tree is equivalent to swapping its two children and inverting each of them independently.",
       "code": "public TreeNode invertTree(TreeNode root) {\n    if (root == null) {\n        return null;\n    }\n    \n    // Swap left and right children\n    TreeNode temp = root.left;\n    root.left = root.right;\n    root.right = temp;\n    \n    // Recursively invert left and right subtrees\n    invertTree(root.left);\n    invertTree(root.right);\n    \n    return root;\n}",
+      "code_python": "# class TreeNode: def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom typing import Optional\n\ndef invert_tree(root: Optional['TreeNode']) -> Optional['TreeNode']:\n    if root is None:\n        return None\n    root.left, root.right = root.right, root.left\n    invert_tree(root.left)\n    invert_tree(root.right)\n    return root",
       "language": "java",
       "complexity": {
         "time": "O(n)",

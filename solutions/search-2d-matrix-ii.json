@@ -3,15 +3,16 @@
     "title": "Search a 2D Matrix II",
     "leetcode_id": null,
     "category": "String/Array/Matrix",
-    "description": "Write an efficient algorithm that searches for a value target in an m x n integer matrix matrix.",
+    "description": "Write an efficient algorithm that searches for a value target in an m x n integer matrix where integers in each row are sorted left to right and integers in each column are sorted top to bottom.",
     "assumptions": [],
     "example": {}
   },
   "solutions": [
     {
       "title": "Solution 1 – Search from Corner",
-      "description": "Start from top-right corner and move based on comparison.",
+      "description": "Start at the top-right corner: if the current value equals the target, return true; if it is greater, move left (eliminating the column); if it is smaller, move down (eliminating the row). Each step eliminates an entire row or column, giving O(m+n) total comparisons. The key insight is that the top-right corner is the unique position where moving in one direction strictly increases values and moving in the other strictly decreases them.",
       "code": "public boolean searchMatrix(int[][] matrix, int target) {\n    if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {\n        return false;\n    }\n    \n    int row = 0, col = matrix[0].length - 1;\n    \n    while (row < matrix.length && col >= 0) {\n        if (matrix[row][col] == target) {\n            return true;\n        } else if (matrix[row][col] > target) {\n            col--;\n        } else {\n            row++;\n        }\n    }\n    \n    return false;\n}",
+      "code_python": "from typing import List\n\ndef search_matrix(matrix: List[List[int]], target: int) -> bool:\n    if not matrix or not matrix[0]:\n        return False\n    row, col = 0, len(matrix[0]) - 1\n    while row < len(matrix) and col >= 0:\n        if matrix[row][col] == target:\n            return True\n        elif matrix[row][col] > target:\n            col -= 1\n        else:\n            row += 1\n    return False",
       "language": "java",
       "complexity": {
         "time": "O(m + n)",

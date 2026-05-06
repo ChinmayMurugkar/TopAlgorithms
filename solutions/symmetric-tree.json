@@ -14,8 +14,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Recursive Approach",
-      "description": "Compare the left and right subtrees recursively.",
+      "description": "Two subtrees are mirrors of each other if their root values match and each subtree's left child mirrors the other's right child. Recursing on these cross-pairs simultaneously checks symmetry at every level in a single DFS pass. The key insight is rephrasing the single-tree symmetry question as a two-tree equality question with mirrored children.",
       "code": "public boolean isSymmetric(TreeNode root) {\n    if (root == null) {\n        return true;\n    }\n    \n    return isSymmetricHelper(root.left, root.right);\n}\n\nprivate boolean isSymmetricHelper(TreeNode left, TreeNode right) {\n    if (left == null && right == null) {\n        return true;\n    }\n    \n    if (left == null || right == null) {\n        return false;\n    }\n    \n    if (left.val != right.val) {\n        return false;\n    }\n    \n    return isSymmetricHelper(left.left, right.right) && \n           isSymmetricHelper(left.right, right.left);\n}",
+      "code_python": "# class TreeNode: def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom typing import Optional\n\ndef is_symmetric(root: Optional[\"TreeNode\"]) -> bool:\n    def is_mirror(left: Optional[\"TreeNode\"], right: Optional[\"TreeNode\"]) -> bool:\n        if left is None and right is None:\n            return True\n        if left is None or right is None:\n            return False\n        return (\n            left.val == right.val\n            and is_mirror(left.left, right.right)\n            and is_mirror(left.right, right.left)\n        )\n\n    return root is None or is_mirror(root.left, root.right)",
       "language": "java",
       "complexity": {
         "time": "O(n)",
@@ -24,8 +25,9 @@
     },
     {
       "title": "Solution 2 – Iterative with Queue",
-      "description": "Use a queue to compare nodes level by level.",
+      "description": "A queue stores node pairs that must be mirrors of each other; pairs are dequeued, their values compared, and their children enqueued in mirrored order (left.left with right.right, left.right with right.left). The BFS continues until the queue is empty or a mismatch is found. This avoids recursion depth concerns for very tall trees while keeping O(n) time.",
       "code": "public boolean isSymmetric(TreeNode root) {\n    if (root == null) {\n        return true;\n    }\n    \n    Queue queue = new LinkedList<>();\n    queue.offer(root.left);\n    queue.offer(root.right);\n    \n    while (!queue.isEmpty()) {\n        TreeNode left = queue.poll();\n        TreeNode right = queue.poll();\n        \n        if (left == null && right == null) {\n            continue;\n        }\n        \n        if (left == null || right == null) {\n            return false;\n        }\n        \n        if (left.val != right.val) {\n            return false;\n        }\n        \n        queue.offer(left.left);\n        queue.offer(right.right);\n        queue.offer(left.right);\n        queue.offer(right.left);\n    }\n    \n    return true;\n}",
+      "code_python": "# class TreeNode: def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom collections import deque\nfrom typing import Optional\n\ndef is_symmetric_iterative(root: Optional[\"TreeNode\"]) -> bool:\n    if root is None:\n        return True\n\n    queue: deque = deque([root.left, root.right])\n\n    while queue:\n        left = queue.popleft()\n        right = queue.popleft()\n\n        if left is None and right is None:\n            continue\n        if left is None or right is None:\n            return False\n        if left.val != right.val:\n            return False\n\n        queue.append(left.left)\n        queue.append(right.right)\n        queue.append(left.right)\n        queue.append(right.left)\n\n    return True",
       "language": "java",
       "complexity": {
         "time": "O(n)",

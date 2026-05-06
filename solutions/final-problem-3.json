@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Hash Set",
-      "description": "Implementation for Final Problem 3.",
+      "description": "This solution uses a hash set to detect the first duplicate element in an array in a single pass. Each element is checked against the set before insertion; if it already exists, that element is the first duplicate. The key insight is that a hash set provides O(1) average-case lookup, giving an overall O(n) solution with O(n) space.",
       "code": "public class Solution {\n    public int solve(int[] nums) {\n        Set set = new HashSet<>();\n        \n        for (int num : nums) {\n            if (set.contains(num)) {\n                return num;\n            }\n            set.add(num);\n        }\n        \n        return -1;\n    }\n}",
+      "code_python": "from typing import List\n\ndef solve(nums: List[int]) -> int:\n    seen: set = set()\n    for num in nums:\n        if num in seen:\n            return num\n        seen.add(num)\n    return -1",
       "language": "java",
       "complexity": {
         "time": "O(n)",

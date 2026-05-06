@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Prime Factorization",
-      "description": "Check if number has only 2, 3, 5 as prime factors.",
+      "description": "Repeatedly divide n by 2, 3, and 5 until none of them divides it evenly; if the result is 1 then all prime factors were among {2, 3, 5}. This works because every integer has a unique prime factorization, so exhausting these three primes leaves 1 if and only if no other prime factor exists. The key insight is that order of division doesn't matter — any combination of the three primes can be removed in any sequence.",
       "code": "public boolean isUgly(int n) {\n    if (n <= 0) return false;\n    \n    while (n % 2 == 0) n /= 2;\n    while (n % 3 == 0) n /= 3;\n    while (n % 5 == 0) n /= 5;\n    \n    return n == 1;\n}",
+      "code_python": "def is_ugly(n: int) -> bool:\n    if n <= 0:\n        return False\n    for factor in (2, 3, 5):\n        while n % factor == 0:\n            n //= factor\n    return n == 1",
       "language": "java",
       "complexity": {
         "time": "O(log n)",
@@ -20,8 +21,9 @@
     },
     {
       "title": "Solution 1 – Prime Factorization",
-      "description": "Check if number has only 2, 3, 5 as prime factors.",
+      "description": "Repeatedly divide n by 2, 3, and 5 until none of them divides it evenly; if the result is 1 then all prime factors were among {2, 3, 5}. This works because every integer has a unique prime factorization, so exhausting these three primes leaves 1 if and only if no other prime factor exists. The key insight is that order of division doesn't matter — any combination of the three primes can be removed in any sequence.",
       "code": "public boolean isUgly(int n) {\n    if (n <= 0) return false;\n    \n    while (n % 2 == 0) n /= 2;\n    while (n % 3 == 0) n /= 3;\n    while (n % 5 == 0) n /= 5;\n    \n    return n == 1;\n}",
+      "code_python": "def is_ugly(n: int) -> bool:\n    if n <= 0:\n        return False\n    for factor in (2, 3, 5):\n        while n % factor == 0:\n            n //= factor\n    return n == 1",
       "language": "java",
       "complexity": {
         "time": "O(log n)",

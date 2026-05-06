@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Two Pointers",
-      "description": "Use two pointers to remove duplicates.",
+      "description": "Traverse the list with a single pointer: if the next node has the same value as the current node, skip it by pointing current.next to current.next.next; otherwise advance the pointer. Because the list is sorted, all duplicates are adjacent and one pass suffices.",
       "code": "public ListNode deleteDuplicates(ListNode head) {\n    if (head == null || head.next == null) return head;\n    \n    ListNode current = head;\n    while (current.next != null) {\n        if (current.val == current.next.val) {\n            current.next = current.next.next;\n        } else {\n            current = current.next;\n        }\n    }\n    \n    return head;\n}",
+      "code_python": "from typing import Optional\n\ndef deleteDuplicates(head: Optional[object]) -> Optional[object]:\n    current = head\n    while current and current.next:\n        if current.val == current.next.val:\n            current.next = current.next.next\n        else:\n            current = current.next\n    return head",
       "language": "java",
       "complexity": {
         "time": "O(n)",

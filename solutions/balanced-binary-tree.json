@@ -10,18 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Recursive with Height",
-      "description": "Check if tree is balanced by checking height difference.",
+      "description": "Perform a single post-order DFS that returns the subtree height if balanced, or -1 as a sentinel to signal imbalance. By checking balance and computing height in one pass, we avoid the O(n log n) cost of a naive two-pass approach. The key insight is to propagate the failure sentinel upward immediately so no extra work is done once an imbalance is detected.",
       "code": "public boolean isBalanced(TreeNode root) {\n    return getHeight(root) != -1;\n}\n\nprivate int getHeight(TreeNode root) {\n    if (root == null) return 0;\n    \n    int leftHeight = getHeight(root.left);\n    if (leftHeight == -1) return -1;\n    \n    int rightHeight = getHeight(root.right);\n    if (rightHeight == -1) return -1;\n    \n    if (Math.abs(leftHeight - rightHeight) > 1) return -1;\n    \n    return Math.max(leftHeight, rightHeight) + 1;\n}",
-      "language": "java",
-      "complexity": {
-        "time": "O(n)",
-        "space": "O(h)"
-      }
-    },
-    {
-      "title": "Solution 1 – Recursive with Height",
-      "description": "Check if tree is balanced by checking height difference.",
-      "code": "public boolean isBalanced(TreeNode root) {\n    return getHeight(root) != -1;\n}\n\nprivate int getHeight(TreeNode root) {\n    if (root == null) return 0;\n    \n    int leftHeight = getHeight(root.left);\n    if (leftHeight == -1) return -1;\n    \n    int rightHeight = getHeight(root.right);\n    if (rightHeight == -1) return -1;\n    \n    if (Math.abs(leftHeight - rightHeight) > 1) return -1;\n    \n    return Math.max(leftHeight, rightHeight) + 1;\n}",
+      "code_python": "from typing import Optional\n\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\ndef isBalanced(root: Optional['TreeNode']) -> bool:\n    def get_height(node: Optional['TreeNode']) -> int:\n        if node is None:\n            return 0\n        left_h = get_height(node.left)\n        if left_h == -1:\n            return -1\n        right_h = get_height(node.right)\n        if right_h == -1:\n            return -1\n        if abs(left_h - right_h) > 1:\n            return -1\n        return max(left_h, right_h) + 1\n\n    return get_height(root) != -1",
       "language": "java",
       "complexity": {
         "time": "O(n)",

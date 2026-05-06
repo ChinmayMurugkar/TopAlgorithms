@@ -16,7 +16,8 @@
       "complexity": {
         "time": "O(n)",
         "space": "O(n)"
-      }
+      },
+      "code_python": "def wordPattern(pattern: str, s: str) -> bool:\n    words = s.split()\n    if len(pattern) != len(words):\n        return False\n    char_to_word: dict[str, str] = {}\n    word_to_char: dict[str, str] = {}\n    for c, w in zip(pattern, words):\n        if c in char_to_word:\n            if char_to_word[c] != w:\n                return False\n        else:\n            if w in word_to_char:\n                return False\n            char_to_word[c] = w\n            word_to_char[w] = c\n    return True"
     }
   ],
   "variations": [],

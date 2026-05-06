@@ -20,7 +20,8 @@
       "complexity": {
         "time": "O(26 * L * N) where L is word length, N is wordList size",
         "space": "O(N)"
-      }
+      },
+      "code_python": "from collections import deque\n\ndef ladderLength(beginWord: str, endWord: str, wordList: list[str]) -> int:\n    word_set = set(wordList)\n    if endWord not in word_set: return 0\n    queue = deque([(beginWord, 1)])\n    word_set.discard(beginWord)\n    while queue:\n        word, length = queue.popleft()\n        if word == endWord: return length\n        for i in range(len(word)):\n            for c in 'abcdefghijklmnopqrstuvwxyz':\n                nw = word[:i] + c + word[i+1:]\n                if nw in word_set:\n                    word_set.discard(nw)\n                    queue.append((nw, length + 1))\n    return 0"
     },
     {
       "title": "Solution 2 – Bidirectional BFS",
@@ -30,7 +31,8 @@
       "complexity": {
         "time": "O(26 * L * N) but much faster in practice",
         "space": "O(N)"
-      }
+      },
+      "code_python": "from collections import deque\n\ndef ladderLength(beginWord: str, endWord: str, wordList: list[str]) -> int:\n    word_set = set(wordList)\n    if endWord not in word_set: return 0\n    begin_set, end_set = {beginWord}, {endWord}\n    word_set -= {beginWord, endWord}\n    level = 1\n    while begin_set and end_set:\n        if len(begin_set) > len(end_set):\n            begin_set, end_set = end_set, begin_set\n        nxt = set()\n        for word in begin_set:\n            for i in range(len(word)):\n                for c in 'abcdefghijklmnopqrstuvwxyz':\n                    nw = word[:i] + c + word[i+1:]\n                    if nw in end_set: return level + 1\n                    if nw in word_set:\n                        word_set.discard(nw)\n                        nxt.add(nw)\n        begin_set = nxt\n        level += 1\n    return 0"
     },
     {
       "title": "Solution 3 – BFS with Word Pattern",
@@ -40,7 +42,8 @@
       "complexity": {
         "time": "O(L² * N) for preprocessing, O(L * N) for BFS",
         "space": "O(L * N)"
-      }
+      },
+      "code_python": "from collections import deque, defaultdict\n\ndef ladderLength(beginWord: str, endWord: str, wordList: list[str]) -> int:\n    if endWord not in set(wordList): return 0\n    L = len(beginWord)\n    pattern_map: dict[str, list[str]] = defaultdict(list)\n    for word in wordList:\n        for i in range(L):\n            pattern_map[word[:i] + '*' + word[i+1:]].append(word)\n    visited = {beginWord}\n    queue = deque([(beginWord, 1)])\n    while queue:\n        word, level = queue.popleft()\n        if word == endWord: return level\n        for i in range(L):\n            for neighbor in pattern_map[word[:i] + '*' + word[i+1:]]:\n                if neighbor not in visited:\n                    visited.add(neighbor)\n                    queue.append((neighbor, level + 1))\n    return 0"
     },
     {
       "title": "Solution 4 – A* Search with Heuristic",
@@ -50,7 +53,8 @@
       "complexity": {
         "time": "O(26 * L * N * log(N))",
         "space": "O(N)"
-      }
+      },
+      "code_python": "import heapq\n\ndef ladderLength(beginWord: str, endWord: str, wordList: list[str]) -> int:\n    word_set = set(wordList)\n    if endWord not in word_set: return 0\n    def hamming(a, b): return sum(x != y for x, y in zip(a, b))\n    # (f=cost+heuristic, cost, word)\n    heap = [(hamming(beginWord, endWord), 1, beginWord)]\n    visited: set[str] = set()\n    while heap:\n        _, cost, word = heapq.heappop(heap)\n        if word == endWord: return cost\n        if word in visited: continue\n        visited.add(word)\n        for i in range(len(word)):\n            for c in 'abcdefghijklmnopqrstuvwxyz':\n                nw = word[:i] + c + word[i+1:]\n                if nw in word_set and nw not in visited:\n                    heapq.heappush(heap, (cost + 1 + hamming(nw, endWord), cost + 1, nw))\n    return 0"
     }
   ],
   "variations": [],

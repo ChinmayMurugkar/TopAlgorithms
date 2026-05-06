@@ -16,7 +16,8 @@
       "complexity": {
         "time": "O(m * n * 4^L) where L is word length",
         "space": "O(L) for recursion stack"
-      }
+      },
+      "code_python": "def exist(board: list[list[str]], word: str) -> bool:\n    m, n = len(board), len(board[0])\n    def dfs(i, j, idx):\n        if idx == len(word): return True\n        if not (0 <= i < m and 0 <= j < n) or board[i][j] != word[idx]:\n            return False\n        tmp, board[i][j] = board[i][j], '#'  # mark visited\n        found = (dfs(i+1,j,idx+1) or dfs(i-1,j,idx+1) or\n                 dfs(i,j+1,idx+1) or dfs(i,j-1,idx+1))\n        board[i][j] = tmp  # restore\n        return found\n    return any(dfs(i, j, 0) for i in range(m) for j in range(n))"
     }
   ],
   "variations": [],

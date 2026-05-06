@@ -10,18 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Digit by Digit",
-      "description": "Reverse digits one by one, checking for overflow.",
+      "description": "Extract digits one at a time by taking x % 10 and rebuild the reversed number by multiplying the running result by 10. Before each append, check whether the result would overflow the 32-bit signed integer range ([-2^31, 2^31-1]) and return 0 if it would.",
       "code": "public int reverse(int x) {\n    int result = 0;\n    \n    while (x != 0) {\n        int digit = x % 10;\n        x /= 10;\n        \n        if (result > Integer.MAX_VALUE / 10 || \n            (result == Integer.MAX_VALUE / 10 && digit > 7)) return 0;\n        if (result < Integer.MIN_VALUE / 10 || \n            (result == Integer.MIN_VALUE / 10 && digit < -8)) return 0;\n        \n        result = result * 10 + digit;\n    }\n    \n    return result;\n}",
-      "language": "java",
-      "complexity": {
-        "time": "O(log n)",
-        "space": "O(1)"
-      }
-    },
-    {
-      "title": "Solution 1 – Digit by Digit",
-      "description": "Reverse digits one by one, checking for overflow.",
-      "code": "public int reverse(int x) {\n    int result = 0;\n    \n    while (x != 0) {\n        int digit = x % 10;\n        x /= 10;\n        \n        if (result > Integer.MAX_VALUE / 10 || \n            (result == Integer.MAX_VALUE / 10 && digit > 7)) return 0;\n        if (result < Integer.MIN_VALUE / 10 || \n            (result == Integer.MIN_VALUE / 10 && digit < -8)) return 0;\n        \n        result = result * 10 + digit;\n    }\n    \n    return result;\n}",
+      "code_python": "import math\n\ndef reverse(x: int) -> int:\n    INT_MAX = 2**31 - 1\n    INT_MIN = -(2**31)\n    result = 0\n    sign = -1 if x < 0 else 1\n    x = abs(x)\n\n    while x != 0:\n        digit = x % 10\n        x //= 10\n        result = result * 10 + digit\n\n    result *= sign\n    if result < INT_MIN or result > INT_MAX:\n        return 0\n    return result",
       "language": "java",
       "complexity": {
         "time": "O(log n)",

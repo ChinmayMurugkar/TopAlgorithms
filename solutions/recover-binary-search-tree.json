@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Inorder Traversal",
-      "description": "Use inorder traversal to find swapped nodes.",
+      "description": "An inorder traversal of a BST produces a sorted sequence; swapping two nodes creates at most two positions where the current node's value is less than the previous node's value. The first such violation marks the first swapped node, and the last violation marks the second; swapping their values restores the BST.",
       "code": "public void recoverTree(TreeNode root) {\n    TreeNode[] swapped = new TreeNode[2];\n    TreeNode[] prev = {null};\n    inorder(root, prev, swapped);\n    \n    int temp = swapped[0].val;\n    swapped[0].val = swapped[1].val;\n    swapped[1].val = temp;\n}\n\nprivate void inorder(TreeNode node, TreeNode[] prev, TreeNode[] swapped) {\n    if (node == null) return;\n    \n    inorder(node.left, prev, swapped);\n    \n    if (prev[0] != null && prev[0].val > node.val) {\n        if (swapped[0] == null) {\n            swapped[0] = prev[0];\n            swapped[1] = node;\n        } else {\n            swapped[1] = node;\n        }\n    }\n    prev[0] = node;\n    \n    inorder(node.right, prev, swapped);\n}",
+      "code_python": "from typing import Optional\n\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\ndef recoverTree(root: Optional[object]) -> None:\n    first = second = prev = None\n\n    def inorder(node: Optional[object]) -> None:\n        nonlocal first, second, prev\n        if not node:\n            return\n        inorder(node.left)\n        if prev and prev.val > node.val:\n            if not first:\n                first = prev\n                second = node\n            else:\n                second = node\n        prev = node\n        inorder(node.right)\n\n    inorder(root)\n    if first and second:\n        first.val, second.val = second.val, first.val",
       "language": "java",
       "complexity": {
         "time": "O(n)",

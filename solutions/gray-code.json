@@ -10,18 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Recursive",
-      "description": "Generate gray code recursively.",
+      "description": "Build the Gray code sequence iteratively by reflecting the current list and prepending a new high bit to the reflected portion. Start with [0] and for each bit position i, mirror the existing list and OR each mirrored value with (1 << i), then append those to the end. The key insight is that this reflection ensures adjacent entries differ by exactly one bit, satisfying the Gray code property.",
       "code": "public List grayCode(int n) {\n    List result = new ArrayList<>();\n    result.add(0);\n    \n    for (int i = 0; i < n; i++) {\n        int size = result.size();\n        for (int j = size - 1; j >= 0; j--) {\n            result.add(result.get(j) | (1 << i));\n        }\n    }\n    \n    return result;\n}",
-      "language": "java",
-      "complexity": {
-        "time": "O(2^n)",
-        "space": "O(2^n)"
-      }
-    },
-    {
-      "title": "Solution 1 – Recursive",
-      "description": "Generate gray code recursively.",
-      "code": "public List grayCode(int n) {\n    List result = new ArrayList<>();\n    result.add(0);\n    \n    for (int i = 0; i < n; i++) {\n        int size = result.size();\n        for (int j = size - 1; j >= 0; j--) {\n            result.add(result.get(j) | (1 << i));\n        }\n    }\n    \n    return result;\n}",
+      "code_python": "from typing import List\n\ndef gray_code(n: int) -> List[int]:\n    result = [0]\n    for i in range(n):\n        result += [x | (1 << i) for x in reversed(result)]\n    return result",
       "language": "java",
       "complexity": {
         "time": "O(2^n)",

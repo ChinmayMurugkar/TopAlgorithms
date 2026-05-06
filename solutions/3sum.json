@@ -10,18 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Two Pointers",
-      "description": "Sort the array and use two pointers for each element.",
+      "description": "Sort the array so that for each fixed element we can find a pair summing to its negation using two pointers converging from both ends. Duplicate values are skipped at each pointer position to avoid repeating the same triplet in the output. The key insight is that sorting lets us deterministically shrink the search space in O(n) per outer element.",
       "code": "public List> threeSum(int[] nums) {\n    List> result = new ArrayList<>();\n    Arrays.sort(nums);\n    \n    for (int i = 0; i < nums.length - 2; i++) {\n        if (i > 0 && nums[i] == nums[i-1]) continue;\n        \n        int left = i + 1, right = nums.length - 1;\n        \n        while (left < right) {\n            int sum = nums[i] + nums[left] + nums[right];\n            \n            if (sum == 0) {\n                result.add(Arrays.asList(nums[i], nums[left], nums[right]));\n                while (left < right && nums[left] == nums[left+1]) left++;\n                while (left < right && nums[right] == nums[right-1]) right--;\n                left++;\n                right--;\n            } else if (sum < 0) {\n                left++;\n            } else {\n                right--;\n            }\n        }\n    }\n    \n    return result;\n}",
-      "language": "java",
-      "complexity": {
-        "time": "O(n²)",
-        "space": "O(1)"
-      }
-    },
-    {
-      "title": "Solution 1 – Two Pointers",
-      "description": "Sort the array and use two pointers for each element.",
-      "code": "public List> threeSum(int[] nums) {\n    List> result = new ArrayList<>();\n    Arrays.sort(nums);\n    \n    for (int i = 0; i < nums.length - 2; i++) {\n        if (i > 0 && nums[i] == nums[i-1]) continue;\n        \n        int left = i + 1, right = nums.length - 1;\n        \n        while (left < right) {\n            int sum = nums[i] + nums[left] + nums[right];\n            \n            if (sum == 0) {\n                result.add(Arrays.asList(nums[i], nums[left], nums[right]));\n                while (left < right && nums[left] == nums[left+1]) left++;\n                while (left < right && nums[right] == nums[right-1]) right--;\n                left++;\n                right--;\n            } else if (sum < 0) {\n                left++;\n            } else {\n                right--;\n            }\n        }\n    }\n    \n    return result;\n}",
+      "code_python": "def threeSum(nums: list[int]) -> list[list[int]]:\n    nums.sort()\n    result: list[list[int]] = []\n\n    for i in range(len(nums) - 2):\n        if i > 0 and nums[i] == nums[i - 1]:\n            continue\n\n        left, right = i + 1, len(nums) - 1\n\n        while left < right:\n            total = nums[i] + nums[left] + nums[right]\n\n            if total == 0:\n                result.append([nums[i], nums[left], nums[right]])\n                while left < right and nums[left] == nums[left + 1]:\n                    left += 1\n                while left < right and nums[right] == nums[right - 1]:\n                    right -= 1\n                left += 1\n                right -= 1\n            elif total < 0:\n                left += 1\n            else:\n                right -= 1\n\n    return result",
       "language": "java",
       "complexity": {
         "time": "O(n²)",

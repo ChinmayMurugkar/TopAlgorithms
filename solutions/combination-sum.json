@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Backtracking",
-      "description": "Use backtracking to find all combinations.",
+      "description": "Use backtracking to explore all candidate combinations, passing a `start` index to avoid revisiting earlier candidates and prevent duplicate combinations. Because each candidate can be reused, the recursive call passes the same index `i` rather than `i+1`, and we prune by returning early when the remaining target goes negative.",
       "code": "public List> combinationSum(int[] candidates, int target) {\n    List> result = new ArrayList<>();\n    backtrack(candidates, target, 0, new ArrayList<>(), result);\n    return result;\n}\n\nprivate void backtrack(int[] candidates, int target, int start, List current, List> result) {\n    if (target == 0) {\n        result.add(new ArrayList<>(current));\n        return;\n    }\n    \n    if (target < 0) return;\n    \n    for (int i = start; i < candidates.length; i++) {\n        current.add(candidates[i]);\n        backtrack(candidates, target - candidates[i], i, current, result);\n        current.remove(current.size() - 1);\n    }\n}",
+      "code_python": "from typing import List\n\ndef combinationSum(candidates: List[int], target: int) -> List[List[int]]:\n    result: List[List[int]] = []\n\n    def backtrack(start: int, current: List[int], remaining: int) -> None:\n        if remaining == 0:\n            result.append(list(current))\n            return\n        if remaining < 0:\n            return\n        for i in range(start, len(candidates)):\n            current.append(candidates[i])\n            backtrack(i, current, remaining - candidates[i])\n            current.pop()\n\n    backtrack(0, [], target)\n    return result",
       "language": "java",
       "complexity": {
         "time": "O(n^(target/min))",

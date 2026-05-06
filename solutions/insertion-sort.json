@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Insertion Sort Implementation",
-      "description": "Implement insertion sort by building the final sorted array one item at a time.",
+      "description": "Pick each element starting from index 1 as the 'key' and shift all larger elements in the already-sorted prefix one position to the right to open a slot for it. Repeat until the key is placed in its correct position, maintaining a growing sorted prefix at every step. The key insight is that the algorithm mimics the way a card player inserts a new card into a sorted hand, making it naturally adaptive and stable.",
       "code": "public void insertionSort(int[] arr) {\n    int n = arr.length;\n    \n    for (int i = 1; i < n; i++) {\n        int key = arr[i];\n        int j = i - 1;\n        \n        // Move elements of arr[0..i-1] that are greater than key\n        // to one position ahead of their current position\n        while (j >= 0 && arr[j] > key) {\n            arr[j + 1] = arr[j];\n            j = j - 1;\n        }\n        arr[j + 1] = key;\n    }\n}",
+      "code_python": "from typing import List\n\ndef insertion_sort(arr: List[int]) -> None:\n    for i in range(1, len(arr)):\n        key = arr[i]\n        j = i - 1\n        while j >= 0 and arr[j] > key:\n            arr[j + 1] = arr[j]\n            j -= 1\n        arr[j + 1] = key",
       "language": "java",
       "complexity": {
         "time": "O(n²) worst and average case, O(n) best case",

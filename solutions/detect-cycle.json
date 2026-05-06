@@ -14,8 +14,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Floyd's Cycle Finding Algorithm (Two Pointers)",
-      "description": "Use fast and slow pointers. If there's a cycle, they will eventually meet.",
+      "description": "Use two pointers: slow advances one step at a time and fast advances two steps. If a cycle exists, fast will eventually lap slow and they will meet inside the cycle. If fast reaches null, the list is acyclic. This runs in O(n) time and O(1) space with no extra data structures.",
       "code": "public boolean hasCycle(ListNode head) {\n    if (head == null || head.next == null) {\n        return false;\n    }\n    \n    ListNode slow = head;\n    ListNode fast = head;\n    \n    while (fast != null && fast.next != null) {\n        slow = slow.next;\n        fast = fast.next.next;\n        \n        if (slow == fast) {\n            return true;\n        }\n    }\n    \n    return false;\n}",
+      "code_python": "# class ListNode: def __init__(self, val=0): self.val=val; self.next=None\nfrom typing import Optional\n\ndef hasCycle(head: Optional[object]) -> bool:\n    slow = head\n    fast = head\n    while fast is not None and fast.next is not None:\n        slow = slow.next\n        fast = fast.next.next\n        if slow is fast:\n            return True\n    return False",
       "language": "java",
       "complexity": {
         "time": "O(n)",
@@ -26,6 +27,7 @@
       "title": "Solution 2 – Hash Set Approach",
       "description": "Use a hash set to track visited nodes.",
       "code": "public boolean hasCycle(ListNode head) {\n    Set visited = new HashSet<>();\n    ListNode current = head;\n    \n    while (current != null) {\n        if (visited.contains(current)) {\n            return true;\n        }\n        visited.add(current);\n        current = current.next;\n    }\n    \n    return false;\n}",
+      "code_python": "# class ListNode: def __init__(self, val=0): self.val=val; self.next=None\nfrom typing import Optional\n\ndef hasCycleHashSet(head: Optional[object]) -> bool:\n    visited: set = set()\n    current = head\n    while current is not None:\n        if current in visited:\n            return True\n        visited.add(current)\n        current = current.next\n    return False",
       "language": "java",
       "complexity": {
         "time": "O(n)",

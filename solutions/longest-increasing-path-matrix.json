@@ -1,0 +1,40 @@
+{
+  "problem": {
+    "title": "Longest Increasing Path in a Matrix",
+    "leetcode_id": 329,
+    "category": "Graph",
+    "description": "Given an m×n integer matrix, return the length of the longest increasing path. From each cell you may move in 4 directions (up, down, left, right) to adjacent cells with strictly greater values. You may not move diagonally or outside the boundary.",
+    "assumptions": [
+      "m and n are at least 1.",
+      "Values can be any integer.",
+      "Movement requires strictly increasing values.",
+      "You cannot wrap around edges."
+    ],
+    "example": {
+      "input": "matrix = [[9,9,4],[6,6,8],[2,1,1]]",
+      "output": "4",
+      "explanation": "The longest increasing path is [1, 2, 6, 9], length 4."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – DFS + Memoization",
+      "description": "For each cell, perform a DFS that explores all 4 neighbors with strictly greater values and returns the maximum path length starting from that cell. Memoize each cell's result so repeated subproblems are resolved in O(1). Because the path must be strictly increasing, there are no cycles and the recursion is always well-founded, allowing the cache to be filled correctly.",
+      "code": "public int longestIncreasingPath(int[][] matrix) {\n    int m = matrix.length, n = matrix[0].length;\n    int[][] memo = new int[m][n];\n    int ans = 0;\n    for (int i = 0; i < m; i++)\n        for (int j = 0; j < n; j++)\n            ans = Math.max(ans, dfs(matrix, memo, i, j, m, n));\n    return ans;\n}\n\nprivate int dfs(int[][] mat, int[][] memo, int r, int c, int m, int n) {\n    if (memo[r][c] != 0) return memo[r][c];\n    int[][] dirs = {{0,1},{0,-1},{1,0},{-1,0}};\n    int best = 1;\n    for (int[] d : dirs) {\n        int nr = r + d[0], nc = c + d[1];\n        if (nr >= 0 && nr < m && nc >= 0 && nc < n && mat[nr][nc] > mat[r][c])\n            best = Math.max(best, 1 + dfs(mat, memo, nr, nc, m, n));\n    }\n    memo[r][c] = best;\n    return best;\n}",
+      "code_python": "def longestIncreasingPath(matrix: list[list[int]]) -> int:\n    m, n = len(matrix), len(matrix[0])\n    memo: dict[tuple[int, int], int] = {}\n    dirs = [(0, 1), (0, -1), (1, 0), (-1, 0)]\n\n    def dfs(r: int, c: int) -> int:\n        if (r, c) in memo:\n            return memo[(r, c)]\n        best = 1\n        for dr, dc in dirs:\n            nr, nc = r + dr, c + dc\n            if 0 <= nr < m and 0 <= nc < n and matrix[nr][nc] > matrix[r][c]:\n                best = max(best, 1 + dfs(nr, nc))\n        memo[(r, c)] = best\n        return best\n\n    return max(dfs(i, j) for i in range(m) for j in range(n))",
+      "language": "java",
+      "complexity": {
+        "time": "O(mn) — each cell computed once and cached",
+        "space": "O(mn) for the memoization table and recursion stack"
+      },
+      "example_walkthrough": {
+        "text": "For matrix [[9,9,4],[6,6,8],[2,1,1]], starting at cell (2,1) with value 1: neighbors with greater values are (2,0)=2 and (1,1)=6. DFS(2,0)=2 extends to (1,0)=6 → (0,0)=9, giving length 3. DFS(2,1) therefore returns max(1+3, 1+dfs(1,1))=4. The answer is 4."
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "number-connected-components.html",
+    "next": "maximal-square.html"
+  }
+}

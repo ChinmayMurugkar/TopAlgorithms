@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Transpose and Reverse",
-      "description": "Transpose the matrix and reverse each row.",
+      "description": "A 90-degree clockwise rotation can be decomposed into two simpler operations: first transpose the matrix (swap matrix[i][j] with matrix[j][i] for all i < j), then reverse each row. Both operations are in-place and together produce the correct rotation without any extra space.",
       "code": "public void rotate(int[][] matrix) {\n    int n = matrix.length;\n    \n    // Transpose\n    for (int i = 0; i < n; i++) {\n        for (int j = i; j < n; j++) {\n            int temp = matrix[i][j];\n            matrix[i][j] = matrix[j][i];\n            matrix[j][i] = temp;\n        }\n    }\n    \n    // Reverse each row\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < n / 2; j++) {\n            int temp = matrix[i][j];\n            matrix[i][j] = matrix[i][n - 1 - j];\n            matrix[i][n - 1 - j] = temp;\n        }\n    }\n}",
+      "code_python": "from typing import List\n\ndef rotate(matrix: List[List[int]]) -> None:\n    n = len(matrix)\n\n    # Step 1: Transpose (swap across main diagonal)\n    for i in range(n):\n        for j in range(i + 1, n):\n            matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]\n\n    # Step 2: Reverse each row\n    for row in matrix:\n        row.reverse()",
       "language": "java",
       "complexity": {
         "time": "O(n²)",

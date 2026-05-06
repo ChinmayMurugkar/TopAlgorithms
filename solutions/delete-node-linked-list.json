@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Value Copy",
-      "description": "Copy next node's value and delete next node.",
+      "description": "Since we only have a reference to the node to delete (not its predecessor), copy the next node's value into the current node and then skip the next node. This effectively removes the target node's data from the list in O(1) time without needing to traverse from the head.",
       "code": "public void deleteNode(ListNode node) {\n    node.val = node.next.val;\n    node.next = node.next.next;\n}",
+      "code_python": "# class ListNode: def __init__(self, val=0): self.val=val; self.next=None\ndef deleteNode(node: object) -> None:\n    node.val = node.next.val\n    node.next = node.next.next",
       "language": "java",
       "complexity": {
         "time": "O(1)",

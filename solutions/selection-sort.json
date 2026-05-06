@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Selection Sort Implementation",
-      "description": "Implement selection sort algorithm to sort an array.",
+      "description": "Selection sort repeatedly finds the minimum element in the unsorted portion of the array and swaps it into its correct position, growing the sorted prefix one element at a time. It always performs O(n²) comparisons regardless of input order, making it inefficient on large lists. The key advantage is that it makes at most O(n) swaps, which is useful when write operations are costly.",
       "code": "public void selectionSort(int[] arr) {\n    int n = arr.length;\n    \n    for (int i = 0; i < n - 1; i++) {\n        // Find the minimum element in unsorted array\n        int minIndex = i;\n        for (int j = i + 1; j < n; j++) {\n            if (arr[j] < arr[minIndex]) {\n                minIndex = j;\n            }\n        }\n        \n        // Swap the found minimum element with the first element\n        int temp = arr[minIndex];\n        arr[minIndex] = arr[i];\n        arr[i] = temp;\n    }\n}",
+      "code_python": "from typing import List\n\ndef selection_sort(arr: List[int]) -> None:\n    n = len(arr)\n\n    for i in range(n - 1):\n        # Find index of minimum element in unsorted portion\n        min_index = i\n        for j in range(i + 1, n):\n            if arr[j] < arr[min_index]:\n                min_index = j\n\n        # Swap minimum element into its sorted position\n        arr[i], arr[min_index] = arr[min_index], arr[i]",
       "language": "java",
       "complexity": {
         "time": "O(n²)",
@@ -20,8 +21,9 @@
     },
     {
       "title": "Solution 1 – Selection Sort Implementation",
-      "description": "Implement selection sort algorithm to sort an array.",
+      "description": "Selection sort repeatedly finds the minimum element in the unsorted portion of the array and swaps it into its correct position, growing the sorted prefix one element at a time. It always performs O(n²) comparisons regardless of input order, making it inefficient on large lists. The key advantage is that it makes at most O(n) swaps, which is useful when write operations are costly.",
       "code": "public void selectionSort(int[] arr) {\n    int n = arr.length;\n    \n    for (int i = 0; i < n - 1; i++) {\n        // Find the minimum element in unsorted array\n        int minIndex = i;\n        for (int j = i + 1; j < n; j++) {\n            if (arr[j] < arr[minIndex]) {\n                minIndex = j;\n            }\n        }\n        \n        // Swap the found minimum element with the first element\n        int temp = arr[minIndex];\n        arr[minIndex] = arr[i];\n        arr[i] = temp;\n    }\n}",
+      "code_python": "from typing import List\n\ndef selection_sort(arr: List[int]) -> None:\n    n = len(arr)\n\n    for i in range(n - 1):\n        # Find index of minimum element in unsorted portion\n        min_index = i\n        for j in range(i + 1, n):\n            if arr[j] < arr[min_index]:\n                min_index = j\n\n        # Swap minimum element into its sorted position\n        arr[i], arr[min_index] = arr[min_index], arr[i]",
       "language": "java",
       "complexity": {
         "time": "O(n²)",

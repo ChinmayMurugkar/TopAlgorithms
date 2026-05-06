@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Character Count",
-      "description": "Count characters in both strings and compare.",
+      "description": "Increment a frequency counter for each character in s and decrement it for each character in t; if any count drops below zero a character appears more times in t than in s, so return false immediately. If all counts end at zero the strings are anagrams. The key insight is that one pass with a single fixed-size array (26 entries for lowercase letters) avoids sorting and achieves O(n) time with O(1) space.",
       "code": "public boolean isAnagram(String s, String t) {\n    if (s.length() != t.length()) return false;\n    \n    int[] count = new int[26];\n    \n    for (char c : s.toCharArray()) {\n        count[c - 'a']++;\n    }\n    \n    for (char c : t.toCharArray()) {\n        count[c - 'a']--;\n        if (count[c - 'a'] < 0) return false;\n    }\n    \n    return true;\n}",
+      "code_python": "from collections import Counter\n\ndef is_anagram(s: str, t: str) -> bool:\n    if len(s) != len(t):\n        return False\n    return Counter(s) == Counter(t)",
       "language": "java",
       "complexity": {
         "time": "O(n)",
@@ -20,8 +21,9 @@
     },
     {
       "title": "Solution 1 – Character Count",
-      "description": "Count characters in both strings and compare.",
+      "description": "Increment a frequency counter for each character in s and decrement it for each character in t; if any count drops below zero a character appears more times in t than in s, so return false immediately. If all counts end at zero the strings are anagrams. The key insight is that one pass with a single fixed-size array (26 entries for lowercase letters) avoids sorting and achieves O(n) time with O(1) space.",
       "code": "public boolean isAnagram(String s, String t) {\n    if (s.length() != t.length()) return false;\n    \n    int[] count = new int[26];\n    \n    for (char c : s.toCharArray()) {\n        count[c - 'a']++;\n    }\n    \n    for (char c : t.toCharArray()) {\n        count[c - 'a']--;\n        if (count[c - 'a'] < 0) return false;\n    }\n    \n    return true;\n}",
+      "code_python": "from collections import Counter\n\ndef is_anagram(s: str, t: str) -> bool:\n    if len(s) != len(t):\n        return False\n    return Counter(s) == Counter(t)",
       "language": "java",
       "complexity": {
         "time": "O(n)",

@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Two Pointers from End",
-      "description": "Use two pointers starting from the end of both arrays.",
+      "description": "Use three pointers starting from the ends of both arrays and the end of the allocated space in nums1, filling in values from largest to smallest. Working backwards avoids overwriting elements in nums1 that haven't been processed yet. The key insight is that the tail of nums1 is always empty buffer space, so we can safely write there without a temporary array.",
       "code": "public void merge(int[] nums1, int m, int[] nums2, int n) {\n    int p1 = m - 1, p2 = n - 1, p = m + n - 1;\n    \n    while (p1 >= 0 && p2 >= 0) {\n        if (nums1[p1] > nums2[p2]) {\n            nums1[p--] = nums1[p1--];\n        } else {\n            nums1[p--] = nums2[p2--];\n        }\n    }\n    \n    // Copy remaining elements from nums2\n    while (p2 >= 0) {\n        nums1[p--] = nums2[p2--];\n    }\n}",
+      "code_python": "from typing import List\n\ndef merge(nums1: List[int], m: int, nums2: List[int], n: int) -> None:\n    p1, p2, p = m - 1, n - 1, m + n - 1\n    while p1 >= 0 and p2 >= 0:\n        if nums1[p1] > nums2[p2]:\n            nums1[p] = nums1[p1]\n            p1 -= 1\n        else:\n            nums1[p] = nums2[p2]\n            p2 -= 1\n        p -= 1\n    # Copy remaining elements from nums2\n    while p2 >= 0:\n        nums1[p] = nums2[p2]\n        p -= 1\n        p2 -= 1",
       "language": "java",
       "complexity": {
         "time": "O(m + n)",

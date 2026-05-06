@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – HashSet",
-      "description": "Use HashSet to find intersection.",
+      "description": "Load all elements of the first array into a set, then iterate over the second array and collect any element that appears in the set into a result set. Using a set for the result automatically deduplicates the output so each value appears at most once. The key insight is that two set lookups replace the O(n*m) brute-force comparison, reducing the time complexity to O(n+m).",
       "code": "public int[] intersection(int[] nums1, int[] nums2) {\n    Set set1 = new HashSet<>();\n    Set result = new HashSet<>();\n    \n    for (int num : nums1) {\n        set1.add(num);\n    }\n    \n    for (int num : nums2) {\n        if (set1.contains(num)) {\n            result.add(num);\n        }\n    }\n    \n    int[] intersection = new int[result.size()];\n    int i = 0;\n    for (int num : result) {\n        intersection[i++] = num;\n    }\n    \n    return intersection;\n}",
+      "code_python": "from typing import List\n\ndef intersection(nums1: List[int], nums2: List[int]) -> List[int]:\n    return list(set(nums1) & set(nums2))",
       "language": "java",
       "complexity": {
         "time": "O(n + m)",

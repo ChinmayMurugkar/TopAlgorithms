@@ -10,18 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Binary Indexed Tree",
-      "description": "Use Binary Indexed Tree for efficient range sum and updates.",
+      "description": "A Fenwick (Binary Indexed) Tree stores partial sums indexed by the lowest set bit of each position, allowing both point updates and prefix-sum queries in O(log n) time. Range sums are derived as the difference of two prefix queries, and updates propagate by repeatedly adding the lowest set bit.",
       "code": "class NumArray {\n    private int[] tree;\n    private int[] nums;\n    private int n;\n    \n    public NumArray(int[] nums) {\n        this.nums = nums;\n        this.n = nums.length;\n        this.tree = new int[n + 1];\n        \n        for (int i = 0; i < n; i++) {\n            updateTree(i + 1, nums[i]);\n        }\n    }\n    \n    public void update(int index, int val) {\n        int diff = val - nums[index];\n        nums[index] = val;\n        updateTree(index + 1, diff);\n    }\n    \n    public int sumRange(int left, int right) {\n        return query(right + 1) - query(left);\n    }\n    \n    private void updateTree(int index, int val) {\n        while (index <= n) {\n            tree[index] += val;\n            index += index & -index;\n        }\n    }\n    \n    private int query(int index) {\n        int sum = 0;\n        while (index > 0) {\n            sum += tree[index];\n            index -= index & -index;\n        }\n        return sum;\n    }\n}",
-      "language": "java",
-      "complexity": {
-        "time": "O(log n) for update and query",
-        "space": "O(n)"
-      }
-    },
-    {
-      "title": "Solution 1 – Binary Indexed Tree",
-      "description": "Use Binary Indexed Tree for efficient range sum and updates.",
-      "code": "class NumArray {\n    private int[] tree;\n    private int[] nums;\n    private int n;\n    \n    public NumArray(int[] nums) {\n        this.nums = nums;\n        this.n = nums.length;\n        this.tree = new int[n + 1];\n        \n        for (int i = 0; i < n; i++) {\n            updateTree(i + 1, nums[i]);\n        }\n    }\n    \n    public void update(int index, int val) {\n        int diff = val - nums[index];\n        nums[index] = val;\n        updateTree(index + 1, diff);\n    }\n    \n    public int sumRange(int left, int right) {\n        return query(right + 1) - query(left);\n    }\n    \n    private void updateTree(int index, int val) {\n        while (index <= n) {\n            tree[index] += val;\n            index += index & -index;\n        }\n    }\n    \n    private int query(int index) {\n        int sum = 0;\n        while (index > 0) {\n            sum += tree[index];\n            index -= index & -index;\n        }\n        return sum;\n    }\n}",
+      "code_python": "from typing import List\n\nclass NumArray:\n    def __init__(self, nums: List[int]) -> None:\n        self.n = len(nums)\n        self.nums = nums[:]\n        self.tree = [0] * (self.n + 1)\n        for i, val in enumerate(nums):\n            self._update_tree(i + 1, val)\n\n    def update(self, index: int, val: int) -> None:\n        diff = val - self.nums[index]\n        self.nums[index] = val\n        self._update_tree(index + 1, diff)\n\n    def sumRange(self, left: int, right: int) -> int:\n        return self._query(right + 1) - self._query(left)\n\n    def _update_tree(self, index: int, val: int) -> None:\n        while index <= self.n:\n            self.tree[index] += val\n            index += index & (-index)\n\n    def _query(self, index: int) -> int:\n        total = 0\n        while index > 0:\n            total += self.tree[index]\n            index -= index & (-index)\n        return total",
       "language": "java",
       "complexity": {
         "time": "O(log n) for update and query",

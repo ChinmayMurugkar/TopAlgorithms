@@ -10,18 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Character by Character",
-      "description": "Parse the string character by character, handling edge cases.",
+      "description": "Strip leading whitespace, detect an optional sign character, then parse consecutive digit characters into a running integer value. Clamp the result to 32-bit signed integer bounds (−2³¹ to 2³¹−1) as digits are accumulated to prevent overflow. The key insight is checking bounds during accumulation rather than after, which correctly handles very large digit sequences.",
       "code": "public int myAtoi(String s) {\n    if (s == null || s.length() == 0) return 0;\n    \n    int i = 0;\n    while (i < s.length() && s.charAt(i) == ' ') {\n        i++;\n    }\n    \n    if (i == s.length()) return 0;\n    \n    boolean negative = false;\n    if (s.charAt(i) == '+' || s.charAt(i) == '-') {\n        negative = s.charAt(i) == '-';\n        i++;\n    }\n    \n    long result = 0;\n    while (i < s.length() && Character.isDigit(s.charAt(i))) {\n        result = result * 10 + (s.charAt(i) - '0');\n        \n        if (negative && -result <= Integer.MIN_VALUE) return Integer.MIN_VALUE;\n        if (!negative && result >= Integer.MAX_VALUE) return Integer.MAX_VALUE;\n        \n        i++;\n    }\n    \n    return negative ? (int) -result : (int) result;\n}",
-      "language": "java",
-      "complexity": {
-        "time": "O(n)",
-        "space": "O(1)"
-      }
-    },
-    {
-      "title": "Solution 1 – Character by Character",
-      "description": "Parse the string character by character, handling edge cases.",
-      "code": "public int myAtoi(String s) {\n    if (s == null || s.length() == 0) return 0;\n    \n    int i = 0;\n    while (i < s.length() && s.charAt(i) == ' ') {\n        i++;\n    }\n    \n    if (i == s.length()) return 0;\n    \n    boolean negative = false;\n    if (s.charAt(i) == '+' || s.charAt(i) == '-') {\n        negative = s.charAt(i) == '-';\n        i++;\n    }\n    \n    long result = 0;\n    while (i < s.length() && Character.isDigit(s.charAt(i))) {\n        result = result * 10 + (s.charAt(i) - '0');\n        \n        if (negative && -result <= Integer.MIN_VALUE) return Integer.MIN_VALUE;\n        if (!negative && result >= Integer.MAX_VALUE) return Integer.MAX_VALUE;\n        \n        i++;\n    }\n    \n    return negative ? (int) -result : (int) result;\n}",
+      "code_python": "import math\n\ndef myAtoi(s: str) -> int:\n    INT_MIN, INT_MAX = -(2 ** 31), 2 ** 31 - 1\n    i, n = 0, len(s)\n\n    # Skip leading spaces\n    while i < n and s[i] == ' ':\n        i += 1\n\n    if i == n:\n        return 0\n\n    # Read optional sign\n    negative = False\n    if s[i] in ('+', '-'):\n        negative = s[i] == '-'\n        i += 1\n\n    result = 0\n    while i < n and s[i].isdigit():\n        result = result * 10 + int(s[i])\n        if negative and -result <= INT_MIN:\n            return INT_MIN\n        if not negative and result >= INT_MAX:\n            return INT_MAX\n        i += 1\n\n    return -result if negative else result",
       "language": "java",
       "complexity": {
         "time": "O(n)",

@@ -3,15 +3,16 @@
     "title": "Minimum Path Sum",
     "leetcode_id": null,
     "category": "String/Array/Matrix",
-    "description": "Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right, which minimizes the sum of all numbers along its path.",
+    "description": "Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right, which minimizes the sum of all numbers along its path. You can only move right or down.",
     "assumptions": [],
     "example": {}
   },
   "solutions": [
     {
       "title": "Solution 1 – Dynamic Programming",
-      "description": "Use DP to find minimum path sum.",
+      "description": "Build the solution in-place by transforming each cell to the minimum cumulative cost to reach it, first filling the top row and left column as forced paths, then using dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1]) for the rest. The answer is the value at the bottom-right cell after the pass. The key insight is that since we can only move right or down, each cell's optimal cost depends only on the cell above and to the left.",
       "code": "public int minPathSum(int[][] grid) {\n    int m = grid.length, n = grid[0].length;\n    \n    for (int i = 1; i < m; i++) {\n        grid[i][0] += grid[i - 1][0];\n    }\n    \n    for (int j = 1; j < n; j++) {\n        grid[0][j] += grid[0][j - 1];\n    }\n    \n    for (int i = 1; i < m; i++) {\n        for (int j = 1; j < n; j++) {\n            grid[i][j] += Math.min(grid[i - 1][j], grid[i][j - 1]);\n        }\n    }\n    \n    return grid[m - 1][n - 1];\n}",
+      "code_python": "from typing import List\n\ndef min_path_sum(grid: List[List[int]]) -> int:\n    m, n = len(grid), len(grid[0])\n    for i in range(1, m):\n        grid[i][0] += grid[i - 1][0]\n    for j in range(1, n):\n        grid[0][j] += grid[0][j - 1]\n    for i in range(1, m):\n        for j in range(1, n):\n            grid[i][j] += min(grid[i - 1][j], grid[i][j - 1])\n    return grid[m - 1][n - 1]",
       "language": "java",
       "complexity": {
         "time": "O(m × n)",

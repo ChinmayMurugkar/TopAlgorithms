@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Dynamic Programming",
-      "description": "Use DP to count bits efficiently.",
+      "description": "Use the identity: the number of set bits in i equals the number of set bits in i>>1 (i with its last bit dropped) plus the value of i's least significant bit. This lets each dp[i] be computed in O(1) from a previously computed entry, achieving an O(n) total with no bit-counting per number.",
       "code": "public int[] countBits(int n) {\n    int[] result = new int[n + 1];\n    \n    for (int i = 1; i <= n; i++) {\n        result[i] = result[i >> 1] + (i & 1);\n    }\n    \n    return result;\n}",
+      "code_python": "from typing import List\n\ndef countBits(n: int) -> List[int]:\n    dp = [0] * (n + 1)\n    for i in range(1, n + 1):\n        dp[i] = dp[i >> 1] + (i & 1)\n    return dp",
       "language": "java",
       "complexity": {
         "time": "O(n)",

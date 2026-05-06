@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Dynamic Programming",
-      "description": "Use DP to calculate the number of unique paths to each cell.",
+      "description": "dp[i][j] holds the number of distinct paths to cell (i, j); since the robot can only come from the top or the left, dp[i][j] = dp[i-1][j] + dp[i][j-1]. All cells in the first row and column have exactly one path (move only right or only down), forming the base cases. The key insight is that the grid's recurrence is a simple additive one — equivalent to computing binomial coefficients — and requires no backtracking.",
       "code": "public int uniquePaths(int m, int n) {\n    int[][] dp = new int[m][n];\n    \n    // Fill first row and column with 1\n    for (int i = 0; i < m; i++) {\n        dp[i][0] = 1;\n    }\n    for (int j = 0; j < n; j++) {\n        dp[0][j] = 1;\n    }\n    \n    // Fill the rest of the grid\n    for (int i = 1; i < m; i++) {\n        for (int j = 1; j < n; j++) {\n            dp[i][j] = dp[i - 1][j] + dp[i][j - 1];\n        }\n    }\n    \n    return dp[m - 1][n - 1];\n}",
+      "code_python": "def unique_paths(m: int, n: int) -> int:\n    dp = [[1] * n for _ in range(m)]\n\n    for i in range(1, m):\n        for j in range(1, n):\n            dp[i][j] = dp[i - 1][j] + dp[i][j - 1]\n\n    return dp[m - 1][n - 1]",
       "language": "java",
       "complexity": {
         "time": "O(m * n)",

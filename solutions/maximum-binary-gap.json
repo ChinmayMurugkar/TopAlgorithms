@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Bit Manipulation",
-      "description": "Find maximum gap between 1s in binary representation.",
+      "description": "Scan each bit position of the integer and record the position of the last seen '1' bit. Whenever a new '1' is found, compute the gap from the previous '1' and update the maximum. The key insight is that iterating bit-by-bit with a running index directly gives the positional distance without converting to a string.",
       "code": "public int binaryGap(int n) {\n    int maxGap = 0;\n    int lastOne = -1;\n    \n    for (int i = 0; i < 32; i++) {\n        if ((n & (1 << i)) != 0) {\n            if (lastOne != -1) {\n                maxGap = Math.max(maxGap, i - lastOne);\n            }\n            lastOne = i;\n        }\n    }\n    \n    return maxGap;\n}",
+      "code_python": "def binary_gap(n: int) -> int:\n    max_gap = 0\n    last_one = -1\n    i = 0\n    while n:\n        if n & 1:\n            if last_one != -1:\n                max_gap = max(max_gap, i - last_one)\n            last_one = i\n        n >>= 1\n        i += 1\n    return max_gap",
       "language": "java",
       "complexity": {
         "time": "O(log n)",

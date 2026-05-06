@@ -1,0 +1,40 @@
+{
+  "problem": {
+    "title": "Shortest Distance from All Buildings",
+    "leetcode_id": 317,
+    "category": "Graph",
+    "description": "Given a grid where 0 represents empty land, 1 represents a building, and 2 represents an obstacle, find an empty land cell that minimizes the total travel distance to all buildings. You can only move up, down, left, or right. Return the minimum total distance, or -1 if it is not possible.",
+    "assumptions": [
+      "Grid is non-empty.",
+      "You must be able to reach all buildings from the chosen empty land.",
+      "Movement is 4-directional.",
+      "Obstacles (2) cannot be traversed."
+    ],
+    "example": {
+      "input": "grid = [[1,0,2,0,1],[0,0,0,0,0],[0,0,1,0,0]]",
+      "output": "7",
+      "explanation": "The best empty land is at (1,2). Distances to the three buildings are 3+3+1=7."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Multi-Source BFS from Each Building",
+      "description": "For every building, run a BFS across all reachable empty cells and accumulate distances in a dist[][] grid. A reach[][] counter tracks how many buildings can reach each cell. After processing all k buildings, scan every empty cell: if reach[i][j] == k it means all buildings can reach it, and dist[i][j] is the total distance. Return the minimum such value. This correctly handles cases where some empty cells are isolated from certain buildings.",
+      "code": "public int shortestDistance(int[][] grid) {\n    int m = grid.length, n = grid[0].length;\n    int[][] dist = new int[m][n];\n    int[][] reach = new int[m][n];\n    int buildings = 0;\n    int[][] dirs = {{0,1},{0,-1},{1,0},{-1,0}};\n\n    for (int i = 0; i < m; i++) {\n        for (int j = 0; j < n; j++) {\n            if (grid[i][j] == 1) {\n                buildings++;\n                Queue<int[]> queue = new LinkedList<>();\n                queue.offer(new int[]{i, j});\n                boolean[][] visited = new boolean[m][n];\n                visited[i][j] = true;\n                int level = 1;\n                while (!queue.isEmpty()) {\n                    int size = queue.size();\n                    for (int k = 0; k < size; k++) {\n                        int[] cell = queue.poll();\n                        for (int[] d : dirs) {\n                            int nr = cell[0] + d[0], nc = cell[1] + d[1];\n                            if (nr >= 0 && nr < m && nc >= 0 && nc < n\n                                    && !visited[nr][nc] && grid[nr][nc] == 0) {\n                                visited[nr][nc] = true;\n                                dist[nr][nc] += level;\n                                reach[nr][nc]++;\n                                queue.offer(new int[]{nr, nc});\n                            }\n                        }\n                    }\n                    level++;\n                }\n            }\n        }\n    }\n\n    int ans = Integer.MAX_VALUE;\n    for (int i = 0; i < m; i++)\n        for (int j = 0; j < n; j++)\n            if (grid[i][j] == 0 && reach[i][j] == buildings)\n                ans = Math.min(ans, dist[i][j]);\n    return ans == Integer.MAX_VALUE ? -1 : ans;\n}",
+      "code_python": "from collections import deque\n\ndef shortestDistance(grid: list[list[int]]) -> int:\n    m, n = len(grid), len(grid[0])\n    dist = [[0] * n for _ in range(m)]\n    reach = [[0] * n for _ in range(m)]\n    buildings = 0\n    dirs = [(0,1),(0,-1),(1,0),(-1,0)]\n\n    for i in range(m):\n        for j in range(n):\n            if grid[i][j] == 1:\n                buildings += 1\n                visited = [[False]*n for _ in range(m)]\n                visited[i][j] = True\n                queue: deque[tuple[int,int]] = deque([(i, j)])\n                level = 1\n                while queue:\n                    for _ in range(len(queue)):\n                        r, c = queue.popleft()\n                        for dr, dc in dirs:\n                            nr, nc = r+dr, c+dc\n                            if (0 <= nr < m and 0 <= nc < n\n                                    and not visited[nr][nc] and grid[nr][nc] == 0):\n                                visited[nr][nc] = True\n                                dist[nr][nc] += level\n                                reach[nr][nc] += 1\n                                queue.append((nr, nc))\n                    level += 1\n\n    ans = min(\n        (dist[i][j] for i in range(m) for j in range(n)\n         if grid[i][j] == 0 and reach[i][j] == buildings),\n        default=-1\n    )\n    return ans if ans != float('inf') else -1",
+      "language": "java",
+      "complexity": {
+        "time": "O(k·mn) where k is the number of buildings — one BFS per building",
+        "space": "O(mn) for dist, reach, and visited arrays"
+      },
+      "example_walkthrough": {
+        "text": "3 buildings at (0,0),(0,4),(2,2). BFS from (0,0) populates dist/reach for reachable empty cells. BFS from (0,4) adds distances. BFS from (2,2) adds distances. Cell (1,2): reach=3 (all buildings can reach it), dist = 3+3+1 = 7. This is the minimum among all cells with reach==3."
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "best-meeting-point.html",
+    "next": "tic-tac-toe.html"
+  }
+}

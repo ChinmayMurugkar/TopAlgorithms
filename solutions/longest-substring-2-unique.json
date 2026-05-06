@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Sliding Window",
-      "description": "Use sliding window with HashMap.",
+      "description": "Use a sliding window with a HashMap tracking the frequency of each character inside the window. When the map contains more than two distinct characters, shrink the window from the left by decrementing counts and removing characters that reach zero. This guarantees the window always contains at most two distinct characters, and the maximum window size seen is the answer.",
       "code": "public int lengthOfLongestSubstringTwoDistinct(String s) {\n    Map map = new HashMap<>();\n    int left = 0, maxLen = 0;\n    \n    for (int right = 0; right < s.length(); right++) {\n        char c = s.charAt(right);\n        map.put(c, map.getOrDefault(c, 0) + 1);\n        \n        while (map.size() > 2) {\n            char leftChar = s.charAt(left);\n            map.put(leftChar, map.get(leftChar) - 1);\n            if (map.get(leftChar) == 0) {\n                map.remove(leftChar);\n            }\n            left++;\n        }\n        \n        maxLen = Math.max(maxLen, right - left + 1);\n    }\n    \n    return maxLen;\n}",
+      "code_python": "from collections import defaultdict\n\nclass Solution:\n    def lengthOfLongestSubstringTwoDistinct(self, s: str) -> int:\n        freq: dict[str, int] = defaultdict(int)\n        left = 0\n        max_len = 0\n\n        for right, c in enumerate(s):\n            freq[c] += 1\n\n            while len(freq) > 2:\n                left_char = s[left]\n                freq[left_char] -= 1\n                if freq[left_char] == 0:\n                    del freq[left_char]\n                left += 1\n\n            max_len = max(max_len, right - left + 1)\n\n        return max_len",
       "language": "java",
       "complexity": {
         "time": "O(n)",

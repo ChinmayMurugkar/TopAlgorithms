@@ -16,7 +16,8 @@
       "complexity": {
         "time": "O(m × n × 4^L)",
         "space": "O(k × L)"
-      }
+      },
+      "code_python": "def findWords(board: list[list[str]], words: list[str]) -> list[str]:\n    # Build trie\n    trie: dict = {}\n    for w in words:\n        node = trie\n        for c in w:\n            node = node.setdefault(c, {})\n        node['$'] = w  # mark end with the word itself\n\n    m, n = len(board), len(board[0])\n    result = []\n\n    def dfs(i, j, node):\n        c = board[i][j]\n        if c == '#' or c not in node: return\n        nxt = node[c]\n        if '$' in nxt:\n            result.append(nxt.pop('$'))  # avoid duplicates\n        board[i][j] = '#'\n        for di, dj in ((1,0),(-1,0),(0,1),(0,-1)):\n            ni, nj = i+di, j+dj\n            if 0 <= ni < m and 0 <= nj < n:\n                dfs(ni, nj, nxt)\n        board[i][j] = c\n\n    for i in range(m):\n        for j in range(n):\n            dfs(i, j, trie)\n    return result"
     }
   ],
   "variations": [],

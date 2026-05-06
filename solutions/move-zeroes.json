@@ -10,18 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Two Pointers",
-      "description": "Move non-zero elements to the front, then fill with zeros.",
+      "description": "Use a slow pointer that tracks the next position to write a non-zero element. The fast pointer scans all elements and copies every non-zero value to the slow pointer's position, then advances both. After the scan, fill all remaining positions with zeros. The key insight is that the slow pointer always points to a position that has already been processed, so overwriting it with a non-zero value never loses data.",
       "code": "public void moveZeroes(int[] nums) {\n    int nonZeroIndex = 0;\n    \n    for (int i = 0; i < nums.length; i++) {\n        if (nums[i] != 0) {\n            nums[nonZeroIndex] = nums[i];\n            nonZeroIndex++;\n        }\n    }\n    \n    for (int i = nonZeroIndex; i < nums.length; i++) {\n        nums[i] = 0;\n    }\n}",
-      "language": "java",
-      "complexity": {
-        "time": "O(n)",
-        "space": "O(1)"
-      }
-    },
-    {
-      "title": "Solution 1 – Two Pointers",
-      "description": "Move non-zero elements to the front, then fill with zeros.",
-      "code": "public void moveZeroes(int[] nums) {\n    int nonZeroIndex = 0;\n    \n    for (int i = 0; i < nums.length; i++) {\n        if (nums[i] != 0) {\n            nums[nonZeroIndex] = nums[i];\n            nonZeroIndex++;\n        }\n    }\n    \n    for (int i = nonZeroIndex; i < nums.length; i++) {\n        nums[i] = 0;\n    }\n}",
+      "code_python": "from typing import List\n\ndef move_zeroes(nums: List[int]) -> None:\n    non_zero_idx = 0\n    for val in nums:\n        if val != 0:\n            nums[non_zero_idx] = val\n            non_zero_idx += 1\n    for i in range(non_zero_idx, len(nums)):\n        nums[i] = 0",
       "language": "java",
       "complexity": {
         "time": "O(n)",

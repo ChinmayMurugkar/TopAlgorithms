@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Binary Search",
-      "description": "Use binary search to find the first bad version.",
+      "description": "Since all versions after the first bad one are also bad, the version space is partitioned into [good...good, bad...bad]. Binary search exploits this monotone property: if isBadVersion(mid) is true, the first bad version is at mid or earlier, so we move right to mid; otherwise it must be strictly after mid. This minimises API calls to O(log n).",
       "code": "public int firstBadVersion(int n) {\n    int left = 1;\n    int right = n;\n    \n    while (left < right) {\n        int mid = left + (right - left) / 2;\n        \n        if (isBadVersion(mid)) {\n            right = mid;\n        } else {\n            left = mid + 1;\n        }\n    }\n    \n    return left;\n}",
+      "code_python": "# The isBadVersion API is already defined.\n# def isBadVersion(version: int) -> bool:\n\ndef firstBadVersion(n: int) -> int:\n    left, right = 1, n\n    while left < right:\n        mid = left + (right - left) // 2\n        if isBadVersion(mid):  # type: ignore[name-defined]\n            right = mid\n        else:\n            left = mid + 1\n    return left",
       "language": "java",
       "complexity": {
         "time": "O(log n)",
@@ -20,8 +21,9 @@
     },
     {
       "title": "Solution 1 – Binary Search",
-      "description": "Use binary search to find the first bad version.",
+      "description": "Since all versions after the first bad one are also bad, the version space is partitioned into [good...good, bad...bad]. Binary search exploits this monotone property: if isBadVersion(mid) is true, the first bad version is at mid or earlier, so we move right to mid; otherwise it must be strictly after mid. This minimises API calls to O(log n).",
       "code": "public int firstBadVersion(int n) {\n    int left = 1;\n    int right = n;\n    \n    while (left < right) {\n        int mid = left + (right - left) / 2;\n        \n        if (isBadVersion(mid)) {\n            right = mid;\n        } else {\n            left = mid + 1;\n        }\n    }\n    \n    return left;\n}",
+      "code_python": "# The isBadVersion API is already defined.\n# def isBadVersion(version: int) -> bool:\n\ndef firstBadVersion(n: int) -> int:\n    left, right = 1, n\n    while left < right:\n        mid = left + (right - left) // 2\n        if isBadVersion(mid):  # type: ignore[name-defined]\n            right = mid\n        else:\n            left = mid + 1\n    return left",
       "language": "java",
       "complexity": {
         "time": "O(log n)",

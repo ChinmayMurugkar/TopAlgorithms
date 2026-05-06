@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Sliding Window",
-      "description": "Use sliding window to find minimum subarray.",
+      "description": "Expand the window right by adding each element, and whenever the window sum meets or exceeds the target, shrink from the left while recording the window length. Because all values are positive, shrinking always decreases the sum and expanding always increases it, making the greedy two-pointer approach correct. The key insight is that positivity guarantees the window sum is monotone with respect to window size.",
       "code": "public int minSubArrayLen(int target, int[] nums) {\n    int left = 0, sum = 0, minLen = Integer.MAX_VALUE;\n    \n    for (int right = 0; right < nums.length; right++) {\n        sum += nums[right];\n        \n        while (sum >= target) {\n            minLen = Math.min(minLen, right - left + 1);\n            sum -= nums[left];\n            left++;\n        }\n    }\n    \n    return minLen == Integer.MAX_VALUE ? 0 : minLen;\n}",
+      "code_python": "from typing import List\n\ndef min_sub_array_len(target: int, nums: List[int]) -> int:\n    left = 0\n    current_sum = 0\n    min_len = float('inf')\n    for right, val in enumerate(nums):\n        current_sum += val\n        while current_sum >= target:\n            min_len = min(min_len, right - left + 1)\n            current_sum -= nums[left]\n            left += 1\n    return 0 if min_len == float('inf') else int(min_len)",
       "language": "java",
       "complexity": {
         "time": "O(n)",

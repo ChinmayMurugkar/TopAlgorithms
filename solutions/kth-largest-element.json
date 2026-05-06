@@ -10,18 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Quick Select",
-      "description": "Use quick select algorithm to find kth largest element.",
+      "description": "Apply the QuickSelect algorithm, which adapts the partitioning step of QuickSort to recurse only into the half containing the target index (nums.length - k in sorted order). After partitioning around a pivot, if the pivot lands exactly at the target index the answer is found; otherwise recurse left or right accordingly. The key insight is that unlike full sorting, QuickSelect discards one partition at each step, giving O(n) average time with O(1) extra space.",
       "code": "public int findKthLargest(int[] nums, int k) {\n    return quickSelect(nums, 0, nums.length - 1, nums.length - k);\n}\n\nprivate int quickSelect(int[] nums, int left, int right, int k) {\n    if (left == right) return nums[left];\n    \n    int pivotIndex = partition(nums, left, right);\n    \n    if (k == pivotIndex) {\n        return nums[k];\n    } else if (k < pivotIndex) {\n        return quickSelect(nums, left, pivotIndex - 1, k);\n    } else {\n        return quickSelect(nums, pivotIndex + 1, right, k);\n    }\n}\n\nprivate int partition(int[] nums, int left, int right) {\n    int pivot = nums[right];\n    int i = left;\n    \n    for (int j = left; j < right; j++) {\n        if (nums[j] <= pivot) {\n            swap(nums, i, j);\n            i++;\n        }\n    }\n    \n    swap(nums, i, right);\n    return i;\n}\n\nprivate void swap(int[] nums, int i, int j) {\n    int temp = nums[i];\n    nums[i] = nums[j];\n    nums[j] = temp;\n}",
-      "language": "java",
-      "complexity": {
-        "time": "O(n) average, O(n²) worst case",
-        "space": "O(1)"
-      }
-    },
-    {
-      "title": "Solution 1 – Quick Select",
-      "description": "Use quick select algorithm to find kth largest element.",
-      "code": "public int findKthLargest(int[] nums, int k) {\n    return quickSelect(nums, 0, nums.length - 1, nums.length - k);\n}\n\nprivate int quickSelect(int[] nums, int left, int right, int k) {\n    if (left == right) return nums[left];\n    \n    int pivotIndex = partition(nums, left, right);\n    \n    if (k == pivotIndex) {\n        return nums[k];\n    } else if (k < pivotIndex) {\n        return quickSelect(nums, left, pivotIndex - 1, k);\n    } else {\n        return quickSelect(nums, pivotIndex + 1, right, k);\n    }\n}\n\nprivate int partition(int[] nums, int left, int right) {\n    int pivot = nums[right];\n    int i = left;\n    \n    for (int j = left; j < right; j++) {\n        if (nums[j] <= pivot) {\n            swap(nums, i, j);\n            i++;\n        }\n    }\n    \n    swap(nums, i, right);\n    return i;\n}\n\nprivate void swap(int[] nums, int i, int j) {\n    int temp = nums[i];\n    nums[i] = nums[j];\n    nums[j] = temp;\n}",
+      "code_python": "import random\nfrom typing import List\n\ndef find_kth_largest(nums: List[int], k: int) -> int:\n    target = len(nums) - k\n\n    def quick_select(left: int, right: int) -> int:\n        pivot_idx = random.randint(left, right)\n        nums[pivot_idx], nums[right] = nums[right], nums[pivot_idx]\n        pivot = nums[right]\n        i = left\n        for j in range(left, right):\n            if nums[j] <= pivot:\n                nums[i], nums[j] = nums[j], nums[i]\n                i += 1\n        nums[i], nums[right] = nums[right], nums[i]\n        if i == target:\n            return nums[i]\n        elif i < target:\n            return quick_select(i + 1, right)\n        else:\n            return quick_select(left, i - 1)\n\n    return quick_select(0, len(nums) - 1)",
       "language": "java",
       "complexity": {
         "time": "O(n) average, O(n²) worst case",

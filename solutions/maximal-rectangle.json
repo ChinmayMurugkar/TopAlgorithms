@@ -1,0 +1,39 @@
+{
+  "problem": {
+    "title": "Maximal Rectangle",
+    "leetcode_id": 85,
+    "category": "Dynamic Programming",
+    "description": "Given a binary matrix filled with '0's and '1's, find the largest rectangle containing only '1's and return its area.",
+    "assumptions": [
+      "Matrix contains only '0' and '1' characters.",
+      "m and n are at least 1.",
+      "Return 0 if no '1' exists."
+    ],
+    "example": {
+      "input": "matrix = [[\"1\",\"0\",\"1\",\"0\",\"0\"],[\"1\",\"0\",\"1\",\"1\",\"1\"],[\"1\",\"1\",\"1\",\"1\",\"1\"],[\"1\",\"0\",\"0\",\"1\",\"0\"]]",
+      "output": "6",
+      "explanation": "The largest rectangle of '1's has area 6 (3 columns × 2 rows in the middle region)."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Stack (Histogram per Row)",
+      "description": "Build a running height array where heights[j] is the number of consecutive '1's ending at the current row in column j. For each row, apply the classic 'largest rectangle in histogram' algorithm using a monotonic stack to compute the maximum rectangle that can be formed with that row as the bottom boundary. The key insight is that the 2D rectangle problem decomposes row-by-row into 1D histogram problems.",
+      "code": "public int maximalRectangle(char[][] matrix) {\n    int m = matrix.length, n = matrix[0].length;\n    int[] heights = new int[n];\n    int maxArea = 0;\n\n    for (int i = 0; i < m; i++) {\n        // Update histogram heights\n        for (int j = 0; j < n; j++)\n            heights[j] = matrix[i][j] == '1' ? heights[j] + 1 : 0;\n        maxArea = Math.max(maxArea, largestRectangleInHistogram(heights));\n    }\n    return maxArea;\n}\n\nprivate int largestRectangleInHistogram(int[] heights) {\n    Deque<Integer> stack = new ArrayDeque<>();\n    int maxArea = 0;\n    int n = heights.length;\n    for (int i = 0; i <= n; i++) {\n        int h = (i == n) ? 0 : heights[i];\n        while (!stack.isEmpty() && heights[stack.peek()] > h) {\n            int height = heights[stack.pop()];\n            int width = stack.isEmpty() ? i : i - stack.peek() - 1;\n            maxArea = Math.max(maxArea, height * width);\n        }\n        stack.push(i);\n    }\n    return maxArea;\n}",
+      "code_python": "def maximalRectangle(matrix: list[list[str]]) -> int:\n    if not matrix:\n        return 0\n    n = len(matrix[0])\n    heights = [0] * n\n    max_area = 0\n\n    def largest_in_histogram(h: list[int]) -> int:\n        stack: list[int] = []\n        area = 0\n        for i in range(len(h) + 1):\n            cur = h[i] if i < len(h) else 0\n            while stack and h[stack[-1]] > cur:\n                height = h[stack.pop()]\n                width = i if not stack else i - stack[-1] - 1\n                area = max(area, height * width)\n            stack.append(i)\n        return area\n\n    for row in matrix:\n        for j in range(n):\n            heights[j] = heights[j] + 1 if row[j] == '1' else 0\n        max_area = max(max_area, largest_in_histogram(heights))\n\n    return max_area",
+      "language": "java",
+      "complexity": {
+        "time": "O(mn) — O(n) histogram pass per row, m rows",
+        "space": "O(n) for heights array and stack"
+      },
+      "example_walkthrough": {
+        "text": "After row 2 (index 2), heights = [3,1,3,3,3]. The histogram algorithm finds the rectangle of height 3 spanning columns 2-4 (width=3), giving area 9. But the actual answer from row 1 heights=[2,0,2,2,2] gives the 2×3 rectangle of area 6 at columns 2-4. Scanning all rows, the maximum found is 6."
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "maximal-square.html",
+    "next": "sudoku-solver.html"
+  }
+}

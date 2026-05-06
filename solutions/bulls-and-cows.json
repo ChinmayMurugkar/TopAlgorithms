@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – HashMap",
-      "description": "Use HashMap to count bulls and cows.",
+      "description": "Count bulls (exact position matches) in a single pass, and simultaneously tally digit frequencies for non-bull positions in two arrays. A second pass over digit frequencies computes cows as the sum of minimums, capturing digits that appear in both strings but at different positions.",
       "code": "public String getHint(String secret, String guess) {\n    int bulls = 0, cows = 0;\n    int[] secretCount = new int[10];\n    int[] guessCount = new int[10];\n    \n    for (int i = 0; i < secret.length(); i++) {\n        if (secret.charAt(i) == guess.charAt(i)) {\n            bulls++;\n        } else {\n            secretCount[secret.charAt(i) - '0']++;\n            guessCount[guess.charAt(i) - '0']++;\n        }\n    }\n    \n    for (int i = 0; i < 10; i++) {\n        cows += Math.min(secretCount[i], guessCount[i]);\n    }\n    \n    return bulls + \"A\" + cows + \"B\";\n}",
+      "code_python": "def getHint(secret: str, guess: str) -> str:\n    bulls = 0\n    secret_count = [0] * 10\n    guess_count = [0] * 10\n\n    for s, g in zip(secret, guess):\n        if s == g:\n            bulls += 1\n        else:\n            secret_count[int(s)] += 1\n            guess_count[int(g)] += 1\n\n    cows = sum(min(secret_count[i], guess_count[i]) for i in range(10))\n    return f\"{bulls}A{cows}B\"",
       "language": "java",
       "complexity": {
         "time": "O(n)",

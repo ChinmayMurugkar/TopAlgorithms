@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Min Heap",
-      "description": "Use min heap to find k pairs with smallest sums.",
+      "description": "Use a min-heap seeded with (nums1[i], nums2[0]) for the first min(len(nums1), k) indices of nums1. Each time we extract the smallest pair, we push the next candidate from nums2 for that same nums1 index. This works because both arrays are sorted, so the next smallest sum involving nums1[i] must use nums2[j+1] after using nums2[j].",
       "code": "public List> kSmallestPairs(int[] nums1, int[] nums2, int k) {\n    List> result = new ArrayList<>();\n    if (nums1.length == 0 || nums2.length == 0 || k == 0) return result;\n    \n    PriorityQueue pq = new PriorityQueue<>((a, b) -> \n        nums1[a[0]] + nums2[a[1]] - nums1[b[0]] - nums2[b[1]]);\n    \n    for (int i = 0; i < Math.min(nums1.length, k); i++) {\n        pq.offer(new int[]{i, 0});\n    }\n    \n    while (k > 0 && !pq.isEmpty()) {\n        int[] pair = pq.poll();\n        result.add(Arrays.asList(nums1[pair[0]], nums2[pair[1]]));\n        \n        if (pair[1] + 1 < nums2.length) {\n            pq.offer(new int[]{pair[0], pair[1] + 1});\n        }\n        k--;\n    }\n    \n    return result;\n}",
+      "code_python": "import heapq\nfrom typing import List\n\ndef kSmallestPairs(nums1: List[int], nums2: List[int], k: int) -> List[List[int]]:\n    if not nums1 or not nums2 or k == 0:\n        return []\n    result: List[List[int]] = []\n    # heap entries: (sum, i, j)\n    heap = [(nums1[i] + nums2[0], i, 0) for i in range(min(len(nums1), k))]\n    heapq.heapify(heap)\n    while k > 0 and heap:\n        _sum, i, j = heapq.heappop(heap)\n        result.append([nums1[i], nums2[j]])\n        if j + 1 < len(nums2):\n            heapq.heappush(heap, (nums1[i] + nums2[j + 1], i, j + 1))\n        k -= 1\n    return result",
       "language": "java",
       "complexity": {
         "time": "O(k log k)",

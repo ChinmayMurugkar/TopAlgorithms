@@ -10,18 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Find Middle, Reverse, Merge",
-      "description": "Find middle, reverse second half, then merge the two halves.",
+      "description": "Split the list at its midpoint using slow/fast pointers, reverse the second half, then interleave the two halves by alternating nodes from each. This in-place approach avoids any auxiliary data structures and runs in O(n) time.",
       "code": "public void reorderList(ListNode head) {\n    if (head == null || head.next == null) return;\n    \n    // Find the middle\n    ListNode slow = head, fast = head;\n    while (fast.next != null && fast.next.next != null) {\n        slow = slow.next;\n        fast = fast.next.next;\n    }\n    \n    // Reverse the second half\n    ListNode second = reverseList(slow.next);\n    slow.next = null;\n    \n    // Merge the two halves\n    ListNode first = head;\n    while (second != null) {\n        ListNode temp1 = first.next;\n        ListNode temp2 = second.next;\n        \n        first.next = second;\n        second.next = temp1;\n        \n        first = temp1;\n        second = temp2;\n    }\n}\n\nprivate ListNode reverseList(ListNode head) {\n    ListNode prev = null;\n    ListNode current = head;\n    \n    while (current != null) {\n        ListNode next = current.next;\n        current.next = prev;\n        prev = current;\n        current = next;\n    }\n    \n    return prev;\n}",
-      "language": "java",
-      "complexity": {
-        "time": "O(n)",
-        "space": "O(1)"
-      }
-    },
-    {
-      "title": "Solution 1 – Find Middle, Reverse, Merge",
-      "description": "Find middle, reverse second half, then merge the two halves.",
-      "code": "public void reorderList(ListNode head) {\n    if (head == null || head.next == null) return;\n    \n    // Find the middle\n    ListNode slow = head, fast = head;\n    while (fast.next != null && fast.next.next != null) {\n        slow = slow.next;\n        fast = fast.next.next;\n    }\n    \n    // Reverse the second half\n    ListNode second = reverseList(slow.next);\n    slow.next = null;\n    \n    // Merge the two halves\n    ListNode first = head;\n    while (second != null) {\n        ListNode temp1 = first.next;\n        ListNode temp2 = second.next;\n        \n        first.next = second;\n        second.next = temp1;\n        \n        first = temp1;\n        second = temp2;\n    }\n}\n\nprivate ListNode reverseList(ListNode head) {\n    ListNode prev = null;\n    ListNode current = head;\n    \n    while (current != null) {\n        ListNode next = current.next;\n        current.next = prev;\n        prev = current;\n        current = next;\n    }\n    \n    return prev;\n}",
+      "code_python": "from typing import Optional\n\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\n\ndef reorderList(head: Optional[object]) -> None:\n    if not head or not head.next:\n        return\n\n    # Step 1: find the middle\n    slow, fast = head, head\n    while fast.next and fast.next.next:\n        slow = slow.next\n        fast = fast.next.next\n\n    # Step 2: reverse the second half\n    second = slow.next\n    slow.next = None\n    prev = None\n    while second:\n        nxt = second.next\n        second.next = prev\n        prev = second\n        second = nxt\n    second = prev  # head of reversed second half\n\n    # Step 3: interleave the two halves\n    first = head\n    while second:\n        tmp1, tmp2 = first.next, second.next\n        first.next = second\n        second.next = tmp1\n        first = tmp1\n        second = tmp2",
       "language": "java",
       "complexity": {
         "time": "O(n)",

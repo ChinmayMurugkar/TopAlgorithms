@@ -16,7 +16,8 @@
       "complexity": {
         "time": "O(n)",
         "space": "O(n)"
-      }
+      },
+      "code_python": "def convert(s: str, numRows: int) -> str:\n    if numRows == 1:\n        return s\n    rows = [''] * numRows\n    curr_row, going_down = 0, False\n    for c in s:\n        rows[curr_row] += c\n        if curr_row == 0 or curr_row == numRows - 1:\n            going_down = not going_down\n        curr_row += 1 if going_down else -1\n    return ''.join(rows)"
     }
   ],
   "variations": [],

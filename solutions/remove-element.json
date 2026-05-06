@@ -10,18 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Two Pointers",
-      "description": "Use two pointers to remove elements in-place.",
+      "description": "Use a write pointer i and a read pointer j: copy nums[j] to nums[i] only when nums[j] differs from the target value, then advance i. After the scan, i equals the count of remaining elements, and all non-val values are compacted at the front of the array.",
       "code": "public int removeElement(int[] nums, int val) {\n    int i = 0;\n    \n    for (int j = 0; j < nums.length; j++) {\n        if (nums[j] != val) {\n            nums[i] = nums[j];\n            i++;\n        }\n    }\n    \n    return i;\n}",
-      "language": "java",
-      "complexity": {
-        "time": "O(n)",
-        "space": "O(1)"
-      }
-    },
-    {
-      "title": "Solution 1 – Two Pointers",
-      "description": "Use two pointers to remove elements in-place.",
-      "code": "public int removeElement(int[] nums, int val) {\n    int i = 0;\n    \n    for (int j = 0; j < nums.length; j++) {\n        if (nums[j] != val) {\n            nums[i] = nums[j];\n            i++;\n        }\n    }\n    \n    return i;\n}",
+      "code_python": "from typing import List\n\ndef removeElement(nums: List[int], val: int) -> int:\n    i = 0\n    for j in range(len(nums)):\n        if nums[j] != val:\n            nums[i] = nums[j]\n            i += 1\n    return i",
       "language": "java",
       "complexity": {
         "time": "O(n)",

@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Backtracking",
-      "description": "Use backtracking to generate all subsets.",
+      "description": "Backtracking explores every choice of including or skipping each element from a start index onward, recording a copy of the current path at every recursive call — not just at leaves — because every prefix is a valid subset. This avoids duplicates by always advancing the start index forward. The key insight is that each of the 2^n subsets corresponds to exactly one path through this decision tree.",
       "code": "public List> subsets(int[] nums) {\n    List> result = new ArrayList<>();\n    backtrack(nums, 0, new ArrayList<>(), result);\n    return result;\n}\n\nprivate void backtrack(int[] nums, int start, List current, List> result) {\n    result.add(new ArrayList<>(current));\n    \n    for (int i = start; i < nums.length; i++) {\n        current.add(nums[i]);\n        backtrack(nums, i + 1, current, result);\n        current.remove(current.size() - 1);\n    }\n}",
+      "code_python": "from typing import List\n\ndef subsets(nums: List[int]) -> List[List[int]]:\n    result: List[List[int]] = []\n\n    def backtrack(start: int, current: List[int]) -> None:\n        result.append(list(current))\n        for i in range(start, len(nums)):\n            current.append(nums[i])\n            backtrack(i + 1, current)\n            current.pop()\n\n    backtrack(0, [])\n    return result",
       "language": "java",
       "complexity": {
         "time": "O(2^n)",

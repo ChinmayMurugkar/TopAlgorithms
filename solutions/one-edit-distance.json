@@ -3,25 +3,16 @@
     "title": "One Edit Distance",
     "leetcode_id": null,
     "category": "String/Array/Matrix",
-    "description": "Given two strings s and t, return true if they are both one edit distance apart, otherwise return false.",
+    "description": "Given two strings s and t, return true if they are both one edit distance apart, otherwise return false. An edit is an insertion, deletion, or substitution of a single character.",
     "assumptions": [],
     "example": {}
   },
   "solutions": [
     {
       "title": "Solution 1 – Character Comparison",
-      "description": "Compare characters and allow one edit.",
+      "description": "Walk both strings with two pointers; the moment a mismatch is found, count it as the single allowed edit and advance the pointer(s) appropriately — advance both for a substitution, only the longer-string pointer for an insertion/deletion. If a second mismatch is found, return false. The key insight is handling the three edit types differently based on which string is longer, and counting any leftover character at the end as the final edit.",
       "code": "public boolean isOneEditDistance(String s, String t) {\n    int m = s.length();\n    int n = t.length();\n    \n    if (Math.abs(m - n) > 1) return false;\n    \n    int i = 0, j = 0;\n    int diff = 0;\n    \n    while (i < m && j < n) {\n        if (s.charAt(i) == t.charAt(j)) {\n            i++;\n            j++;\n        } else {\n            diff++;\n            if (diff > 1) return false;\n            \n            if (m > n) {\n                i++;\n            } else if (m < n) {\n                j++;\n            } else {\n                i++;\n                j++;\n            }\n        }\n    }\n    \n    if (i < m || j < n) diff++;\n    \n    return diff == 1;\n}",
-      "language": "java",
-      "complexity": {
-        "time": "O(min(m,n))",
-        "space": "O(1)"
-      }
-    },
-    {
-      "title": "Solution 1 – Character Comparison",
-      "description": "Compare characters and allow one edit.",
-      "code": "public boolean isOneEditDistance(String s, String t) {\n    int m = s.length();\n    int n = t.length();\n    \n    if (Math.abs(m - n) > 1) return false;\n    \n    int i = 0, j = 0;\n    int diff = 0;\n    \n    while (i < m && j < n) {\n        if (s.charAt(i) == t.charAt(j)) {\n            i++;\n            j++;\n        } else {\n            diff++;\n            if (diff > 1) return false;\n            \n            if (m > n) {\n                i++;\n            } else if (m < n) {\n                j++;\n            } else {\n                i++;\n                j++;\n            }\n        }\n    }\n    \n    if (i < m || j < n) diff++;\n    \n    return diff == 1;\n}",
+      "code_python": "def is_one_edit_distance(s: str, t: str) -> bool:\n    m, n = len(s), len(t)\n    if abs(m - n) > 1:\n        return False\n    i = j = diff = 0\n    while i < m and j < n:\n        if s[i] == t[j]:\n            i += 1\n            j += 1\n        else:\n            diff += 1\n            if diff > 1:\n                return False\n            if m > n:\n                i += 1\n            elif m < n:\n                j += 1\n            else:\n                i += 1\n                j += 1\n    if i < m or j < n:\n        diff += 1\n    return diff == 1",
       "language": "java",
       "complexity": {
         "time": "O(min(m,n))",

@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – String Traversal",
-      "description": "Traverse string from end to find last word length.",
+      "description": "Scan the string from right to left, first skipping any trailing spaces, then counting characters until another space or the start of the string is reached. This single-pass approach runs in O(n) time and uses O(1) space without needing to split the string.",
       "code": "public int lengthOfLastWord(String s) {\n    int length = 0;\n    int i = s.length() - 1;\n    \n    // Skip trailing spaces\n    while (i >= 0 && s.charAt(i) == ' ') {\n        i--;\n    }\n    \n    // Count characters of last word\n    while (i >= 0 && s.charAt(i) != ' ') {\n        length++;\n        i--;\n    }\n    \n    return length;\n}",
+      "code_python": "class Solution:\n    def lengthOfLastWord(self, s: str) -> int:\n        i = len(s) - 1\n        length = 0\n\n        # Skip trailing spaces\n        while i >= 0 and s[i] == ' ':\n            i -= 1\n\n        # Count characters of the last word\n        while i >= 0 and s[i] != ' ':\n            length += 1\n            i -= 1\n\n        return length",
       "language": "java",
       "complexity": {
         "time": "O(n)",

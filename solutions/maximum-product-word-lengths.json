@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Bit Manipulation",
-      "description": "Use bit manipulation to check character overlap.",
+      "description": "Encode each word as a 26-bit integer where bit i is set if the character 'a'+i appears in the word. Two words share no common letters if and only if the bitwise AND of their masks is zero. This reduces the character-overlap check to a single O(1) bitwise operation, making the overall pair comparison O(n²) after an O(L) preprocessing pass.",
       "code": "public int maxProduct(String[] words) {\n    int n = words.length;\n    int[] masks = new int[n];\n    \n    for (int i = 0; i < n; i++) {\n        for (char c : words[i].toCharArray()) {\n            masks[i] |= 1 << (c - 'a');\n        }\n    }\n    \n    int maxProduct = 0;\n    for (int i = 0; i < n; i++) {\n        for (int j = i + 1; j < n; j++) {\n            if ((masks[i] & masks[j]) == 0) {\n                maxProduct = Math.max(maxProduct, words[i].length() * words[j].length());\n            }\n        }\n    }\n    \n    return maxProduct;\n}",
+      "code_python": "from typing import List\n\ndef max_product(words: List[str]) -> int:\n    n = len(words)\n    masks = [0] * n\n    for i, word in enumerate(words):\n        for ch in word:\n            masks[i] |= 1 << (ord(ch) - ord('a'))\n\n    max_prod = 0\n    for i in range(n):\n        for j in range(i + 1, n):\n            if (masks[i] & masks[j]) == 0:\n                max_prod = max(max_prod, len(words[i]) * len(words[j]))\n    return max_prod",
       "language": "java",
       "complexity": {
         "time": "O(n² + L)",

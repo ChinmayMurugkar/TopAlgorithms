@@ -10,18 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Bit by Bit",
-      "description": "Add binary strings bit by bit with carry.",
+      "description": "Traverse both binary strings from right to left, summing corresponding bits along with a carry value, and prepend each resulting bit to the answer. The carry propagates naturally through the loop, and any leftover carry after both strings are exhausted appends a final '1'. This mirrors the grade-school addition algorithm adapted to base 2.",
       "code": "public String addBinary(String a, String b) {\n    StringBuilder result = new StringBuilder();\n    int carry = 0;\n    int i = a.length() - 1;\n    int j = b.length() - 1;\n    \n    while (i >= 0 || j >= 0 || carry > 0) {\n        int sum = carry;\n        \n        if (i >= 0) {\n            sum += a.charAt(i) - '0';\n            i--;\n        }\n        \n        if (j >= 0) {\n            sum += b.charAt(j) - '0';\n            j--;\n        }\n        \n        result.insert(0, (char) (sum % 2 + '0'));\n        carry = sum / 2;\n    }\n    \n    return result.toString();\n}",
-      "language": "java",
-      "complexity": {
-        "time": "O(max(m,n))",
-        "space": "O(max(m,n))"
-      }
-    },
-    {
-      "title": "Solution 1 – Bit by Bit",
-      "description": "Add binary strings bit by bit with carry.",
-      "code": "public String addBinary(String a, String b) {\n    StringBuilder result = new StringBuilder();\n    int carry = 0;\n    int i = a.length() - 1;\n    int j = b.length() - 1;\n    \n    while (i >= 0 || j >= 0 || carry > 0) {\n        int sum = carry;\n        \n        if (i >= 0) {\n            sum += a.charAt(i) - '0';\n            i--;\n        }\n        \n        if (j >= 0) {\n            sum += b.charAt(j) - '0';\n            j--;\n        }\n        \n        result.insert(0, (char) (sum % 2 + '0'));\n        carry = sum / 2;\n    }\n    \n    return result.toString();\n}",
+      "code_python": "def addBinary(a: str, b: str) -> str:\n    result: list[str] = []\n    carry = 0\n    i, j = len(a) - 1, len(b) - 1\n\n    while i >= 0 or j >= 0 or carry:\n        total = carry\n        if i >= 0:\n            total += int(a[i])\n            i -= 1\n        if j >= 0:\n            total += int(b[j])\n            j -= 1\n        result.append(str(total % 2))\n        carry = total // 2\n\n    return \"\".join(reversed(result))",
       "language": "java",
       "complexity": {
         "time": "O(max(m,n))",

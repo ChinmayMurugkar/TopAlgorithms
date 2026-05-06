@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – String Manipulation",
-      "description": "Find all possible moves by replacing ++ with --.",
+      "description": "Scan the string for every pair of consecutive '+' characters and generate a new state by replacing that pair with '--'. Each valid replacement represents one possible move the current player can make. The key insight is that only '+'+' pairs are legal moves, so a single linear scan is sufficient to enumerate all possibilities.",
       "code": "public List generatePossibleNextMoves(String s) {\n    List result = new ArrayList<>();\n    \n    for (int i = 0; i < s.length() - 1; i++) {\n        if (s.charAt(i) == '+' && s.charAt(i + 1) == '+') {\n            result.add(s.substring(0, i) + \"--\" + s.substring(i + 2));\n        }\n    }\n    \n    return result;\n}",
+      "code_python": "from typing import List\n\ndef generate_possible_next_moves(s: str) -> List[str]:\n    result = []\n    for i in range(len(s) - 1):\n        if s[i] == '+' and s[i + 1] == '+':\n            result.append(s[:i] + '--' + s[i + 2:])\n    return result",
       "language": "java",
       "complexity": {
         "time": "O(n)",

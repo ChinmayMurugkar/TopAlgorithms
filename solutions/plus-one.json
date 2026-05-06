@@ -10,18 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Carry Over",
-      "description": "Add one and handle carry over from right to left.",
+      "description": "Traverse the digits from right to left, incrementing each digit and propagating any carry. If a digit is less than 9 it absorbs the increment immediately and we return early; otherwise it becomes 0 and carry continues left. If all digits were 9, a new leading 1 must be prepended.",
       "code": "public int[] plusOne(int[] digits) {\n    int n = digits.length;\n    \n    for (int i = n - 1; i >= 0; i--) {\n        if (digits[i] < 9) {\n            digits[i]++;\n            return digits;\n        }\n        digits[i] = 0;\n    }\n    \n    int[] newDigits = new int[n + 1];\n    newDigits[0] = 1;\n    return newDigits;\n}",
-      "language": "java",
-      "complexity": {
-        "time": "O(n)",
-        "space": "O(1)"
-      }
-    },
-    {
-      "title": "Solution 1 – Carry Over",
-      "description": "Add one and handle carry over from right to left.",
-      "code": "public int[] plusOne(int[] digits) {\n    int n = digits.length;\n    \n    for (int i = n - 1; i >= 0; i--) {\n        if (digits[i] < 9) {\n            digits[i]++;\n            return digits;\n        }\n        digits[i] = 0;\n    }\n    \n    int[] newDigits = new int[n + 1];\n    newDigits[0] = 1;\n    return newDigits;\n}",
+      "code_python": "from typing import List\n\ndef plusOne(digits: List[int]) -> List[int]:\n    for i in range(len(digits) - 1, -1, -1):\n        if digits[i] < 9:\n            digits[i] += 1\n            return digits\n        digits[i] = 0\n    # All digits were 9; prepend a 1\n    return [1] + digits",
       "language": "java",
       "complexity": {
         "time": "O(n)",

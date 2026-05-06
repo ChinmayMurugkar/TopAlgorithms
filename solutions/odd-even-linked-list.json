@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Two Pointers",
-      "description": "Separate odd and even nodes, then reconnect.",
+      "description": "Maintain two pointers — one advancing through odd-indexed nodes and one through even-indexed nodes — weaving them apart in a single pass. Save the head of the even list, then after the loop reconnect the tail of the odd list to that saved even head. The key insight is that both pointers always move two steps at a time, so the relative order within each group is preserved automatically.",
       "code": "public ListNode oddEvenList(ListNode head) {\n    if (head == null || head.next == null) return head;\n    \n    ListNode odd = head, even = head.next, evenHead = even;\n    \n    while (even != null && even.next != null) {\n        odd.next = even.next;\n        odd = odd.next;\n        even.next = odd.next;\n        even = even.next;\n    }\n    \n    odd.next = evenHead;\n    return head;\n}",
+      "code_python": "# class ListNode:\n#     def __init__(self, val=0): self.val=val; self.next=None\nfrom typing import Optional\n\ndef odd_even_list(head: Optional['ListNode']) -> Optional['ListNode']:\n    if not head or not head.next:\n        return head\n    odd = head\n    even = head.next\n    even_head = even\n    while even and even.next:\n        odd.next = even.next\n        odd = odd.next\n        even.next = odd.next\n        even = even.next\n    odd.next = even_head\n    return head",
       "language": "java",
       "complexity": {
         "time": "O(n)",

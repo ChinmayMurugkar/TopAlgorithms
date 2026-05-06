@@ -10,18 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Binary Search",
-      "description": "Treat matrix as sorted array and use binary search.",
+      "description": "Treat the m×n matrix as a single sorted array of length m×n and apply binary search using index arithmetic to convert a 1D mid-point back to 2D coordinates (row = mid / n, col = mid % n). Because the rows are sorted and each row starts after the previous ends, the entire matrix is globally sorted, making this O(log(mn)) binary search valid. The key insight is the index mapping that lets us avoid flattening the matrix.",
       "code": "public boolean searchMatrix(int[][] matrix, int target) {\n    if (matrix == null || matrix.length == 0) return false;\n    \n    int m = matrix.length;\n    int n = matrix[0].length;\n    int left = 0;\n    int right = m * n - 1;\n    \n    while (left <= right) {\n        int mid = left + (right - left) / 2;\n        int row = mid / n;\n        int col = mid % n;\n        \n        if (matrix[row][col] == target) {\n            return true;\n        } else if (matrix[row][col] < target) {\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n    \n    return false;\n}",
-      "language": "java",
-      "complexity": {
-        "time": "O(log(mn))",
-        "space": "O(1)"
-      }
-    },
-    {
-      "title": "Solution 1 – Binary Search",
-      "description": "Treat matrix as sorted array and use binary search.",
-      "code": "public boolean searchMatrix(int[][] matrix, int target) {\n    if (matrix == null || matrix.length == 0) return false;\n    \n    int m = matrix.length;\n    int n = matrix[0].length;\n    int left = 0;\n    int right = m * n - 1;\n    \n    while (left <= right) {\n        int mid = left + (right - left) / 2;\n        int row = mid / n;\n        int col = mid % n;\n        \n        if (matrix[row][col] == target) {\n            return true;\n        } else if (matrix[row][col] < target) {\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n    \n    return false;\n}",
+      "code_python": "from typing import List\n\ndef search_matrix(matrix: List[List[int]], target: int) -> bool:\n    if not matrix or not matrix[0]:\n        return False\n    m, n = len(matrix), len(matrix[0])\n    left, right = 0, m * n - 1\n    while left <= right:\n        mid = (left + right) // 2\n        val = matrix[mid // n][mid % n]\n        if val == target:\n            return True\n        elif val < target:\n            left = mid + 1\n        else:\n            right = mid - 1\n    return False",
       "language": "java",
       "complexity": {
         "time": "O(log(mn))",

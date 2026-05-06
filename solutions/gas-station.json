@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Greedy",
-      "description": "Use greedy approach to find starting gas station.",
+      "description": "Traverse all stations once, maintaining both a running current-tank balance and a global total balance. Whenever the current tank goes negative, the current starting station cannot be the answer, so reset the start to the next station and clear the tank. The key insight is that if the total gas is at least the total cost a solution is guaranteed to exist, and the candidate start found during the greedy scan is always that solution.",
       "code": "public int canCompleteCircuit(int[] gas, int[] cost) {\n    int totalGas = 0, totalCost = 0;\n    int start = 0, currentGas = 0;\n    \n    for (int i = 0; i < gas.length; i++) {\n        totalGas += gas[i];\n        totalCost += cost[i];\n        currentGas += gas[i] - cost[i];\n        \n        if (currentGas < 0) {\n            start = i + 1;\n            currentGas = 0;\n        }\n    }\n    \n    return totalGas >= totalCost ? start : -1;\n}",
+      "code_python": "from typing import List\n\ndef can_complete_circuit(gas: List[int], cost: List[int]) -> int:\n    total_gas = total_cost = current_gas = 0\n    start = 0\n\n    for i in range(len(gas)):\n        total_gas += gas[i]\n        total_cost += cost[i]\n        current_gas += gas[i] - cost[i]\n\n        if current_gas < 0:\n            start = i + 1\n            current_gas = 0\n\n    return start if total_gas >= total_cost else -1",
       "language": "java",
       "complexity": {
         "time": "O(n)",

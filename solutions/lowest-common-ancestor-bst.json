@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – BST Property",
-      "description": "Use BST property to find LCA.",
+      "description": "Exploit the BST ordering property: if both p and q are smaller than the current node, the LCA must be in the left subtree; if both are larger, it must be in the right subtree. The first node where p and q fall on opposite sides (or one equals the node) is the LCA. This gives O(h) time without visiting the whole tree.",
       "code": "public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {\n    if (root == null) return null;\n    \n    if (p.val < root.val && q.val < root.val) {\n        return lowestCommonAncestor(root.left, p, q);\n    }\n    \n    if (p.val > root.val && q.val > root.val) {\n        return lowestCommonAncestor(root.right, p, q);\n    }\n    \n    return root;\n}",
+      "code_python": "from typing import Optional\n\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val; self.left = left; self.right = right\n\nclass Solution:\n    def lowestCommonAncestor(\n        self,\n        root: Optional['TreeNode'],\n        p: 'TreeNode',\n        q: 'TreeNode',\n    ) -> Optional['TreeNode']:\n        if root is None:\n            return None\n\n        if p.val < root.val and q.val < root.val:\n            return self.lowestCommonAncestor(root.left, p, q)\n\n        if p.val > root.val and q.val > root.val:\n            return self.lowestCommonAncestor(root.right, p, q)\n\n        return root",
       "language": "java",
       "complexity": {
         "time": "O(h)",

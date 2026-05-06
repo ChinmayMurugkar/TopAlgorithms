@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Dutch National Flag",
-      "description": "Use three pointers to sort the array in one pass.",
+      "description": "Use three pointers — low, mid, and high — to partition the array in a single pass without extra space. Elements before low are all 0s, elements after high are all 2s, and elements between low and mid are all 1s. When mid encounters a 0 it swaps with low; when it encounters a 2 it swaps with high (without advancing mid), correctly sorting all three values simultaneously.",
       "code": "public void sortColors(int[] nums) {\n    int low = 0, mid = 0, high = nums.length - 1;\n    \n    while (mid <= high) {\n        if (nums[mid] == 0) {\n            swap(nums, low, mid);\n            low++;\n            mid++;\n        } else if (nums[mid] == 1) {\n            mid++;\n        } else {\n            swap(nums, mid, high);\n            high--;\n        }\n    }\n}\n\nprivate void swap(int[] nums, int i, int j) {\n    int temp = nums[i];\n    nums[i] = nums[j];\n    nums[j] = temp;\n}",
+      "code_python": "from typing import List\n\ndef sortColors(nums: List[int]) -> None:\n    low, mid, high = 0, 0, len(nums) - 1\n\n    while mid <= high:\n        if nums[mid] == 0:\n            nums[low], nums[mid] = nums[mid], nums[low]\n            low += 1\n            mid += 1\n        elif nums[mid] == 1:\n            mid += 1\n        else:\n            nums[mid], nums[high] = nums[high], nums[mid]\n            high -= 1",
       "language": "java",
       "complexity": {
         "time": "O(n)",

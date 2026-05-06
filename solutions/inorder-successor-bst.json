@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – BST Traversal",
-      "description": "Use BST property to find successor.",
+      "description": "Exploit the BST ordering property: if the current node's value is greater than p's value, it is a candidate successor and we move left to find a potentially smaller one; otherwise we move right because the successor must be in the right subtree. The last candidate recorded before falling off the tree is the answer. The key insight is that we never need to visit the entire tree — the BST property guides us directly to the successor in O(h) time.",
       "code": "public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {\n    TreeNode successor = null;\n    \n    while (root != null) {\n        if (p.val >= root.val) {\n            root = root.right;\n        } else {\n            successor = root;\n            root = root.left;\n        }\n    }\n    \n    return successor;\n}",
+      "code_python": "# class TreeNode: def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom typing import Optional\n\ndef inorder_successor(root: Optional['TreeNode'], p: 'TreeNode') -> Optional['TreeNode']:\n    successor = None\n    while root:\n        if p.val >= root.val:\n            root = root.right\n        else:\n            successor = root\n            root = root.left\n    return successor",
       "language": "java",
       "complexity": {
         "time": "O(h)",

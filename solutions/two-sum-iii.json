@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – HashMap",
-      "description": "Use HashMap to store numbers and find pairs.",
+      "description": "A hash map stores each added number along with its occurrence count, enabling O(1) add operations. For find, iterating over stored keys and checking whether the complement (value − num) exists handles both the case where two distinct numbers sum to the target and the special case where a number is used twice (requires count ≥ 2). The key insight is that tracking counts rather than just presence handles duplicate numbers correctly.",
       "code": "class TwoSum {\n    private Map map;\n    \n    public TwoSum() {\n        map = new HashMap<>();\n    }\n    \n    public void add(int number) {\n        map.put(number, map.getOrDefault(number, 0) + 1);\n    }\n    \n    public boolean find(int value) {\n        for (int num : map.keySet()) {\n            int complement = value - num;\n            if (complement == num) {\n                if (map.get(num) > 1) return true;\n            } else {\n                if (map.containsKey(complement)) return true;\n            }\n        }\n        return false;\n    }\n}",
+      "code_python": "from collections import defaultdict\n\nclass TwoSum:\n    def __init__(self) -> None:\n        self._counts: dict[int, int] = defaultdict(int)\n\n    def add(self, number: int) -> None:\n        self._counts[number] += 1\n\n    def find(self, value: int) -> bool:\n        for num, cnt in self._counts.items():\n            complement = value - num\n            if complement == num:\n                if cnt > 1:\n                    return True\n            elif complement in self._counts:\n                return True\n        return False",
       "language": "java",
       "complexity": {
         "time": "O(n) for find, O(1) for add",

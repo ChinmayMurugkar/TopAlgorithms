@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Min Heap",
-      "description": "Use min heap to merge k sorted lists.",
+      "description": "Seed a min-heap with the head of each non-null list, then repeatedly extract the smallest node, append it to the result list, and push that node's next pointer back into the heap. This ensures each extraction is O(log k) since the heap never grows beyond k elements, giving O(n log k) total where n is the total number of nodes.",
       "code": "public ListNode mergeKLists(ListNode[] lists) {\n    if (lists == null || lists.length == 0) return null;\n    \n    PriorityQueue pq = new PriorityQueue<>((a, b) -> a.val - b.val);\n    \n    for (ListNode list : lists) {\n        if (list != null) {\n            pq.offer(list);\n        }\n    }\n    \n    ListNode dummy = new ListNode(0);\n    ListNode current = dummy;\n    \n    while (!pq.isEmpty()) {\n        ListNode node = pq.poll();\n        current.next = node;\n        current = current.next;\n        \n        if (node.next != null) {\n            pq.offer(node.next);\n        }\n    }\n    \n    return dummy.next;\n}",
+      "code_python": "# class ListNode:\n#     def __init__(self, val=0): self.val=val; self.next=None\nimport heapq\nfrom typing import Optional, List\n\ndef merge_k_lists(lists: List[Optional['ListNode']]) -> Optional['ListNode']:\n    heap: list = []\n    for i, node in enumerate(lists):\n        if node:\n            heapq.heappush(heap, (node.val, i, node))\n\n    dummy = type('ListNode', (), {'val': 0, 'next': None})()\n    current = dummy\n    while heap:\n        val, i, node = heapq.heappop(heap)\n        current.next = node\n        current = current.next\n        if node.next:\n            heapq.heappush(heap, (node.next.val, i, node.next))\n    return dummy.next",
       "language": "java",
       "complexity": {
         "time": "O(n log k)",

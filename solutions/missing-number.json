@@ -10,18 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – XOR",
-      "description": "Use XOR to find the missing number.",
+      "description": "XOR every index i and every element nums[i] together, starting with n. Because XOR is self-inverse, every number that appears in both the index range and the array cancels out, leaving only the missing number. The key insight is that XOR-ing the complete set 0..n with all elements of nums eliminates all present numbers and isolates the absent one.",
       "code": "public int missingNumber(int[] nums) {\n    int result = nums.length;\n    \n    for (int i = 0; i < nums.length; i++) {\n        result ^= i ^ nums[i];\n    }\n    \n    return result;\n}",
-      "language": "java",
-      "complexity": {
-        "time": "O(n)",
-        "space": "O(1)"
-      }
-    },
-    {
-      "title": "Solution 1 – XOR",
-      "description": "Use XOR to find the missing number.",
-      "code": "public int missingNumber(int[] nums) {\n    int result = nums.length;\n    \n    for (int i = 0; i < nums.length; i++) {\n        result ^= i ^ nums[i];\n    }\n    \n    return result;\n}",
+      "code_python": "from typing import List\n\ndef missing_number(nums: List[int]) -> int:\n    result = len(nums)\n    for i, val in enumerate(nums):\n        result ^= i ^ val\n    return result",
       "language": "java",
       "complexity": {
         "time": "O(n)",

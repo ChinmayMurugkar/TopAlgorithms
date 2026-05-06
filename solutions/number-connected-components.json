@@ -1,0 +1,54 @@
+{
+  "problem": {
+    "title": "Number of Connected Components in an Undirected Graph",
+    "leetcode_id": 323,
+    "category": "Graph",
+    "description": "Given n nodes labeled 0 to n-1 and a list of undirected edges, return the number of connected components in the graph.",
+    "assumptions": [
+      "n >= 1.",
+      "No duplicate edges.",
+      "Edges are undirected.",
+      "Self-loops are not present."
+    ],
+    "example": {
+      "input": "n = 5, edges = [[0,1],[1,2],[3,4]]",
+      "output": "2",
+      "explanation": "Nodes {0,1,2} form one component and nodes {3,4} form another."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Union-Find (Path Compression + Union by Rank)",
+      "description": "Maintain a parent and rank array. For each edge, union the two endpoints; if they already share a root the edge is within an existing component and the count decreases by one. Path compression during find keeps the tree nearly flat, making each operation effectively constant time. This is the most efficient approach with near-linear overall complexity.",
+      "code": "public int countComponents(int n, int[][] edges) {\n    int[] parent = new int[n];\n    int[] rank = new int[n];\n    for (int i = 0; i < n; i++) parent[i] = i;\n    int components = n;\n\n    for (int[] edge : edges) {\n        int p1 = find(parent, edge[0]);\n        int p2 = find(parent, edge[1]);\n        if (p1 != p2) {\n            if (rank[p1] > rank[p2]) parent[p2] = p1;\n            else if (rank[p1] < rank[p2]) parent[p1] = p2;\n            else { parent[p2] = p1; rank[p1]++; }\n            components--;\n        }\n    }\n    return components;\n}\n\nprivate int find(int[] parent, int x) {\n    if (parent[x] != x) parent[x] = find(parent, parent[x]);\n    return parent[x];\n}",
+      "code_python": "def countComponents(n: int, edges: list[list[int]]) -> int:\n    parent = list(range(n))\n    rank = [0] * n\n    components = n\n\n    def find(x: int) -> int:\n        if parent[x] != x:\n            parent[x] = find(parent[x])\n        return parent[x]\n\n    for u, v in edges:\n        pu, pv = find(u), find(v)\n        if pu != pv:\n            if rank[pu] > rank[pv]:\n                parent[pv] = pu\n            elif rank[pu] < rank[pv]:\n                parent[pu] = pv\n            else:\n                parent[pv] = pu\n                rank[pu] += 1\n            components -= 1\n\n    return components",
+      "language": "java",
+      "complexity": {
+        "time": "O(n · α(n)) where α is the inverse Ackermann function — essentially O(n)",
+        "space": "O(n) for parent and rank arrays"
+      },
+      "example_walkthrough": {
+        "text": "Start with 5 components. Process edge [0,1]: union → 4 components. Process edge [1,2]: union → 3 components. Process edge [3,4]: union → 2 components. Answer: 2."
+      }
+    },
+    {
+      "title": "Solution 2 – BFS/DFS",
+      "description": "Build an adjacency list and iterate over all nodes. When an unvisited node is found, run BFS/DFS from it marking all reachable nodes visited, then increment the component count. Every node and edge is visited exactly once, giving O(V+E) time.",
+      "code": "public int countComponents(int n, int[][] edges) {\n    List<List<Integer>> adj = new ArrayList<>();\n    for (int i = 0; i < n; i++) adj.add(new ArrayList<>());\n    for (int[] e : edges) {\n        adj.get(e[0]).add(e[1]);\n        adj.get(e[1]).add(e[0]);\n    }\n\n    boolean[] visited = new boolean[n];\n    int components = 0;\n    for (int i = 0; i < n; i++) {\n        if (!visited[i]) {\n            bfs(adj, visited, i);\n            components++;\n        }\n    }\n    return components;\n}\n\nprivate void bfs(List<List<Integer>> adj, boolean[] visited, int src) {\n    Queue<Integer> queue = new LinkedList<>();\n    queue.offer(src);\n    visited[src] = true;\n    while (!queue.isEmpty()) {\n        int node = queue.poll();\n        for (int neighbor : adj.get(node)) {\n            if (!visited[neighbor]) {\n                visited[neighbor] = true;\n                queue.offer(neighbor);\n            }\n        }\n    }\n}",
+      "code_python": "from collections import deque, defaultdict\n\ndef countComponents(n: int, edges: list[list[int]]) -> int:\n    adj: dict[int, list[int]] = defaultdict(list)\n    for u, v in edges:\n        adj[u].append(v)\n        adj[v].append(u)\n\n    visited = [False] * n\n    components = 0\n\n    def bfs(src: int) -> None:\n        queue: deque[int] = deque([src])\n        visited[src] = True\n        while queue:\n            node = queue.popleft()\n            for neighbor in adj[node]:\n                if not visited[neighbor]:\n                    visited[neighbor] = True\n                    queue.append(neighbor)\n\n    for i in range(n):\n        if not visited[i]:\n            bfs(i)\n            components += 1\n\n    return components",
+      "language": "java",
+      "complexity": {
+        "time": "O(V + E) — each node and edge is processed once",
+        "space": "O(V + E) for the adjacency list and visited array"
+      },
+      "example_walkthrough": {
+        "text": "Build adjacency list: 0↔1, 1↔2, 3↔4. Iterate: node 0 unvisited → BFS visits 0,1,2, components=1. Node 3 unvisited → BFS visits 3,4, components=2. Nodes 1,2,4 already visited. Return 2."
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {
+    "previous": "walls-and-gates.html",
+    "next": "longest-increasing-path-matrix.html"
+  }
+}

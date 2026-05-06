@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Two Pointers",
-      "description": "Use two pointers to calculate trapped water.",
+      "description": "Two pointers converge inward, and at each step the pointer on the shorter side is processed: if its height is less than the running max on that side, the deficit is trapped water; otherwise the running max is updated. Moving the shorter side guarantees the limiting wall has already been seen, making the trapped-water calculation exact. The key insight is that the amount of water above any bar is determined entirely by the shorter of the two tallest walls seen so far on each side.",
       "code": "public int trap(int[] height) {\n    int left = 0, right = height.length - 1;\n    int leftMax = 0, rightMax = 0;\n    int water = 0;\n    \n    while (left < right) {\n        if (height[left] < height[right]) {\n            if (height[left] >= leftMax) {\n                leftMax = height[left];\n            } else {\n                water += leftMax - height[left];\n            }\n            left++;\n        } else {\n            if (height[right] >= rightMax) {\n                rightMax = height[right];\n            } else {\n                water += rightMax - height[right];\n            }\n            right--;\n        }\n    }\n    \n    return water;\n}",
+      "code_python": "from typing import List\n\ndef trap(height: List[int]) -> int:\n    left, right = 0, len(height) - 1\n    left_max = right_max = 0\n    water = 0\n\n    while left < right:\n        if height[left] < height[right]:\n            if height[left] >= left_max:\n                left_max = height[left]\n            else:\n                water += left_max - height[left]\n            left += 1\n        else:\n            if height[right] >= right_max:\n                right_max = height[right]\n            else:\n                water += right_max - height[right]\n            right -= 1\n\n    return water",
       "language": "java",
       "complexity": {
         "time": "O(n)",

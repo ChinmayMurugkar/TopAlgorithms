@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Bit Manipulation",
-      "description": "Use bit manipulation to divide without multiplication.",
+      "description": "Repeatedly double the divisor (using left shifts) until it would exceed the dividend, subtract the largest such multiple, and accumulate the corresponding power of two into the result. This is analogous to long division in binary and runs in O(log n) iterations. Overflow is handled by clamping INT_MIN / -1 to INT_MAX.",
       "code": "public int divide(int dividend, int divisor) {\n    if (dividend == Integer.MIN_VALUE && divisor == -1) {\n        return Integer.MAX_VALUE;\n    }\n    \n    boolean negative = (dividend < 0) ^ (divisor < 0);\n    long dvd = Math.abs((long) dividend);\n    long dvs = Math.abs((long) divisor);\n    \n    int result = 0;\n    while (dvd >= dvs) {\n        long temp = dvs;\n        int multiple = 1;\n        \n        while (dvd >= (temp << 1)) {\n            temp <<= 1;\n            multiple <<= 1;\n        }\n        \n        dvd -= temp;\n        result += multiple;\n    }\n    \n    return negative ? -result : result;\n}",
+      "code_python": "import math\n\ndef divide(dividend: int, divisor: int) -> int:\n    INT_MAX = 2**31 - 1\n    INT_MIN = -(2**31)\n\n    if dividend == INT_MIN and divisor == -1:\n        return INT_MAX\n\n    negative = (dividend < 0) ^ (divisor < 0)\n    dvd = abs(dividend)\n    dvs = abs(divisor)\n\n    result = 0\n    while dvd >= dvs:\n        temp = dvs\n        multiple = 1\n        while dvd >= (temp << 1):\n            temp <<= 1\n            multiple <<= 1\n        dvd -= temp\n        result += multiple\n\n    return -result if negative else result",
       "language": "java",
       "complexity": {
         "time": "O(log n)",

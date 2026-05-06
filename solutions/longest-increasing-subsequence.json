@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Dynamic Programming",
-      "description": "Use DP to find longest increasing subsequence.",
+      "description": "Define dp[i] as the length of the longest increasing subsequence ending at index i, initialized to 1. For each element, scan all previous elements and extend any subsequence whose last element is smaller. The answer is the maximum value in dp. The O(n²) approach is straightforward; an O(n log n) variant using binary search on a patience-sorting tails array is also possible.",
       "code": "public int lengthOfLIS(int[] nums) {\n    if (nums == null || nums.length == 0) return 0;\n    \n    int[] dp = new int[nums.length];\n    Arrays.fill(dp, 1);\n    \n    int maxLength = 1;\n    \n    for (int i = 1; i < nums.length; i++) {\n        for (int j = 0; j < i; j++) {\n            if (nums[i] > nums[j]) {\n                dp[i] = Math.max(dp[i], dp[j] + 1);\n            }\n        }\n        maxLength = Math.max(maxLength, dp[i]);\n    }\n    \n    return maxLength;\n}",
+      "code_python": "from typing import List\n\nclass Solution:\n    def lengthOfLIS(self, nums: List[int]) -> int:\n        if not nums:\n            return 0\n\n        dp = [1] * len(nums)\n\n        for i in range(1, len(nums)):\n            for j in range(i):\n                if nums[i] > nums[j]:\n                    dp[i] = max(dp[i], dp[j] + 1)\n\n        return max(dp)",
       "language": "java",
       "complexity": {
         "time": "O(n²)",
@@ -20,7 +21,7 @@
     },
     {
       "title": "Solution 1 – Dynamic Programming",
-      "description": "Use DP to find longest increasing subsequence.",
+      "description": "Define dp[i] as the length of the longest increasing subsequence ending at index i, initialized to 1. For each element, scan all previous elements and extend any subsequence whose last element is smaller. The answer is the maximum value in dp. The O(n²) approach is straightforward; an O(n log n) variant using binary search on a patience-sorting tails array is also possible.",
       "code": "public int lengthOfLIS(int[] nums) {\n    if (nums == null || nums.length == 0) return 0;\n    \n    int[] dp = new int[nums.length];\n    Arrays.fill(dp, 1);\n    \n    int maxLength = 1;\n    \n    for (int i = 1; i < nums.length; i++) {\n        for (int j = 0; j < i; j++) {\n            if (nums[i] > nums[j]) {\n                dp[i] = Math.max(dp[i], dp[j] + 1);\n            }\n        }\n        maxLength = Math.max(maxLength, dp[i]);\n    }\n    \n    return maxLength;\n}",
       "language": "java",
       "complexity": {

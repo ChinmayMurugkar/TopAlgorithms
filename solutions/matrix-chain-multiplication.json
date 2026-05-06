@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Dynamic Programming",
-      "description": "Use dynamic programming to find the optimal parenthesization.",
+      "description": "Use interval DP where dp[i][j] stores the minimum scalar multiplications needed to compute the product of matrices i through j. For each interval length and each split point k, the cost is dp[i][k] + dp[k+1][j] plus the cost of multiplying the two resulting matrices. The optimal parenthesization is built bottom-up from length-2 intervals to length-n.",
       "code": "public int matrixChainMultiplication(int[] dimensions) {\n    int n = dimensions.length - 1;\n    int[][] dp = new int[n][n];\n    \n    // Fill diagonal with 0s\n    for (int i = 0; i < n; i++) {\n        dp[i][i] = 0;\n    }\n    \n    // Fill dp table\n    for (int len = 2; len <= n; len++) {\n        for (int i = 0; i <= n - len; i++) {\n            int j = i + len - 1;\n            dp[i][j] = Integer.MAX_VALUE;\n            \n            for (int k = i; k < j; k++) {\n                int cost = dp[i][k] + dp[k + 1][j] + \n                          dimensions[i] * dimensions[k + 1] * dimensions[j + 1];\n                dp[i][j] = Math.min(dp[i][j], cost);\n            }\n        }\n    }\n    \n    return dp[0][n - 1];\n}",
+      "code_python": "import math\nfrom typing import List\n\nclass Solution:\n    def matrixChainMultiplication(self, dimensions: List[int]) -> int:\n        n = len(dimensions) - 1  # number of matrices\n        dp = [[0] * n for _ in range(n)]\n\n        for length in range(2, n + 1):\n            for i in range(n - length + 1):\n                j = i + length - 1\n                dp[i][j] = math.inf\n                for k in range(i, j):\n                    cost = (dp[i][k] + dp[k + 1][j]\n                            + dimensions[i] * dimensions[k + 1] * dimensions[j + 1])\n                    dp[i][j] = min(dp[i][j], cost)\n\n        return dp[0][n - 1]",
       "language": "java",
       "complexity": {
         "time": "O(n³)",

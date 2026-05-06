@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Two Queues",
-      "description": "Use two queues to implement stack.",
+      "description": "On every push, enqueue the new element to the empty secondary queue and then drain the primary queue into it, making the newly added element the front of the queue (i.e., the top of the stack). Then swap the two queue references so the primary queue always holds the correctly ordered elements. The key insight is that reversing into a fresh queue on each push keeps pop and peek at O(1) at the cost of O(n) push.",
       "code": "class MyStack {\n    private Queue q1;\n    private Queue q2;\n    \n    public MyStack() {\n        q1 = new LinkedList<>();\n        q2 = new LinkedList<>();\n    }\n    \n    public void push(int x) {\n        q2.offer(x);\n        while (!q1.isEmpty()) {\n            q2.offer(q1.poll());\n        }\n        Queue temp = q1;\n        q1 = q2;\n        q2 = temp;\n    }\n    \n    public int pop() {\n        return q1.poll();\n    }\n    \n    public int top() {\n        return q1.peek();\n    }\n    \n    public boolean empty() {\n        return q1.isEmpty();\n    }\n}",
+      "code_python": "from collections import deque\n\nclass MyStack:\n    def __init__(self) -> None:\n        self._q1: deque[int] = deque()\n        self._q2: deque[int] = deque()\n\n    def push(self, x: int) -> None:\n        self._q2.append(x)\n        while self._q1:\n            self._q2.append(self._q1.popleft())\n        self._q1, self._q2 = self._q2, self._q1\n\n    def pop(self) -> int:\n        return self._q1.popleft()\n\n    def top(self) -> int:\n        return self._q1[0]\n\n    def empty(self) -> bool:\n        return not self._q1",
       "language": "java",
       "complexity": {
         "time": "O(n) for push, O(1) for others",

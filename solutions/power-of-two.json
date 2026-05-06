@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Bit Manipulation",
-      "description": "Use bit manipulation to check if a number is power of two.",
+      "description": "A power of two has exactly one bit set in its binary representation. The expression n & (n-1) clears the lowest set bit; if the result is 0 (and n is positive), only one bit was set, confirming n is a power of two.",
       "code": "public boolean isPowerOfTwo(int n) {\n    if (n <= 0) {\n        return false;\n    }\n    \n    return (n & (n - 1)) == 0;\n}",
+      "code_python": "def isPowerOfTwo(n: int) -> bool:\n    if n <= 0:\n        return False\n    return (n & (n - 1)) == 0",
       "language": "java",
       "complexity": {
         "time": "O(1)",

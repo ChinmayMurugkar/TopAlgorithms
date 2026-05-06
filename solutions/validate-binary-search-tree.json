@@ -13,8 +13,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Inorder Traversal",
-      "description": "Use inorder traversal to check if the sequence is strictly increasing.",
+      "description": "An inorder traversal of a valid BST visits nodes in strictly increasing order; collecting all values and verifying each consecutive pair satisfies this condition confirms BST validity. Any violation — a value not greater than its predecessor — immediately reveals an invalid tree. The key insight is that the sorted-order property of inorder traversal provides a simple, equivalent reformulation of the BST definition.",
       "code": "public boolean isValidBST(TreeNode root) {\n    List inorder = new ArrayList<>();\n    inorderTraversal(root, inorder);\n    \n    for (int i = 1; i < inorder.size(); i++) {\n        if (inorder.get(i) <= inorder.get(i - 1)) {\n            return false;\n        }\n    }\n    \n    return true;\n}\n\nprivate void inorderTraversal(TreeNode root, List inorder) {\n    if (root == null) {\n        return;\n    }\n    \n    inorderTraversal(root.left, inorder);\n    inorder.add(root.val);\n    inorderTraversal(root.right, inorder);\n}",
+      "code_python": "# class TreeNode: def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom typing import Optional, List\n\ndef is_valid_bst_inorder(root: Optional[\"TreeNode\"]) -> bool:\n    inorder: List[int] = []\n\n    def traverse(node: Optional[\"TreeNode\"]) -> None:\n        if node is None:\n            return\n        traverse(node.left)\n        inorder.append(node.val)\n        traverse(node.right)\n\n    traverse(root)\n    return all(inorder[i] < inorder[i + 1] for i in range(len(inorder) - 1))",
       "language": "java",
       "complexity": {
         "time": "O(n)",
@@ -23,8 +24,9 @@
     },
     {
       "title": "Solution 2 – Recursive with Range",
-      "description": "Pass valid ranges to each node and check if the node's value falls within the range.",
+      "description": "Each node is validated against a (min, max) range that tightens as the recursion descends: going left narrows the upper bound to the parent's value, going right narrows the lower bound. A node is invalid if its value falls outside its allowed range. The key insight is that a single recursive pass with propagated bounds subsumes the BST condition for all ancestors simultaneously, avoiding the need for an extra traversal.",
       "code": "public boolean isValidBST(TreeNode root) {\n    return isValidBSTHelper(root, Long.MIN_VALUE, Long.MAX_VALUE);\n}\n\nprivate boolean isValidBSTHelper(TreeNode root, long min, long max) {\n    if (root == null) {\n        return true;\n    }\n    \n    if (root.val <= min || root.val >= max) {\n        return false;\n    }\n    \n    return isValidBSTHelper(root.left, min, root.val) && \n           isValidBSTHelper(root.right, root.val, max);\n}",
+      "code_python": "# class TreeNode: def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom typing import Optional\nimport math\n\ndef is_valid_bst(root: Optional[\"TreeNode\"]) -> bool:\n    def validate(node: Optional[\"TreeNode\"], lo: float, hi: float) -> bool:\n        if node is None:\n            return True\n        if not (lo < node.val < hi):\n            return False\n        return validate(node.left, lo, node.val) and validate(node.right, node.val, hi)\n\n    return validate(root, -math.inf, math.inf)",
       "language": "java",
       "complexity": {
         "time": "O(n)",
@@ -33,8 +35,9 @@
     },
     {
       "title": "Solution 3 – Iterative Inorder",
-      "description": "Use iterative inorder traversal to avoid recursion stack space.",
+      "description": "An explicit stack simulates inorder traversal without recursion; a 'prev' pointer tracks the last visited node and any out-of-order value immediately returns false. This eliminates recursion stack overhead for very deep trees. The key insight is that iterative inorder traversal with a pointer to the previous value detects the first BST violation as early as possible, without collecting all values first.",
       "code": "public boolean isValidBST(TreeNode root) {\n    Stack stack = new Stack<>();\n    TreeNode prev = null;\n    TreeNode current = root;\n    \n    while (current != null || !stack.isEmpty()) {\n        while (current != null) {\n            stack.push(current);\n            current = current.left;\n        }\n        \n        current = stack.pop();\n        \n        if (prev != null && current.val <= prev.val) {\n            return false;\n        }\n        \n        prev = current;\n        current = current.right;\n    }\n    \n    return true;\n}",
+      "code_python": "# class TreeNode: def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom typing import Optional\n\ndef is_valid_bst_iterative(root: Optional[\"TreeNode\"]) -> bool:\n    stack: list = []\n    prev: Optional[\"TreeNode\"] = None\n    current = root\n\n    while current or stack:\n        while current:\n            stack.append(current)\n            current = current.left\n\n        current = stack.pop()\n\n        if prev is not None and current.val <= prev.val:\n            return False\n\n        prev = current\n        current = current.right\n\n    return True",
       "language": "java",
       "complexity": {
         "time": "O(n)",

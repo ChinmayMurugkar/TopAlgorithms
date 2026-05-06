@@ -10,18 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Mathematical",
-      "description": "Use mathematical approach to find kth permutation.",
+      "description": "Use factorial number system arithmetic to directly determine each digit of the k-th permutation without generating all permutations. At each position, dividing the remaining k by (n-1)! gives the index into the remaining digits, and the remainder becomes the new k for subsequent positions.",
       "code": "public String getPermutation(int n, int k) {\n    List numbers = new ArrayList<>();\n    int[] factorial = new int[n + 1];\n    factorial[0] = 1;\n    \n    for (int i = 1; i <= n; i++) {\n        factorial[i] = factorial[i - 1] * i;\n        numbers.add(i);\n    }\n    \n    k--;\n    StringBuilder result = new StringBuilder();\n    \n    for (int i = n; i > 0; i--) {\n        int index = k / factorial[i - 1];\n        result.append(numbers.get(index));\n        numbers.remove(index);\n        k %= factorial[i - 1];\n    }\n    \n    return result.toString();\n}",
-      "language": "java",
-      "complexity": {
-        "time": "O(n²)",
-        "space": "O(n)"
-      }
-    },
-    {
-      "title": "Solution 1 – Mathematical",
-      "description": "Use mathematical approach to find kth permutation.",
-      "code": "public String getPermutation(int n, int k) {\n    List numbers = new ArrayList<>();\n    int[] factorial = new int[n + 1];\n    factorial[0] = 1;\n    \n    for (int i = 1; i <= n; i++) {\n        factorial[i] = factorial[i - 1] * i;\n        numbers.add(i);\n    }\n    \n    k--;\n    StringBuilder result = new StringBuilder();\n    \n    for (int i = n; i > 0; i--) {\n        int index = k / factorial[i - 1];\n        result.append(numbers.get(index));\n        numbers.remove(index);\n        k %= factorial[i - 1];\n    }\n    \n    return result.toString();\n}",
+      "code_python": "from math import factorial\n\ndef getPermutation(n: int, k: int) -> str:\n    digits = list(range(1, n + 1))\n    k -= 1  # convert to 0-indexed\n    result = []\n\n    for i in range(n, 0, -1):\n        fact = factorial(i - 1)\n        index = k // fact\n        result.append(str(digits[index]))\n        digits.pop(index)\n        k %= fact\n\n    return ''.join(result)",
       "language": "java",
       "complexity": {
         "time": "O(n²)",

@@ -16,7 +16,8 @@
       "complexity": {
         "time": "O(n log n)",
         "space": "O(n)"
-      }
+      },
+      "code_python": "# class TreeNode:\n#     def __init__(self, val=0): self.val=val; self.left=self.right=None\n\ndef verticalTraversal(root) -> list[list[int]]:\n    nodes = []  # (col, row, val)\n    def dfs(node, row, col):\n        if not node: return\n        nodes.append((col, row, node.val))\n        dfs(node.left,  row+1, col-1)\n        dfs(node.right, row+1, col+1)\n    dfs(root, 0, 0)\n    nodes.sort()  # sort by col, then row, then val\n    result, curr_col, curr_list = [], nodes[0][0], []\n    for col, row, val in nodes:\n        if col != curr_col:\n            result.append(curr_list)\n            curr_list = []\n            curr_col = col\n        curr_list.append(val)\n    result.append(curr_list)\n    return result"
     }
   ],
   "variations": [],

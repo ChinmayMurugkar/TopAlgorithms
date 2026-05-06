@@ -15,6 +15,7 @@
       "title": "Solution 1 – Iterative Approach",
       "description": "Use three pointers to reverse the links iteratively.",
       "code": "public ListNode reverseList(ListNode head) {\n    ListNode prev = null;\n    ListNode current = head;\n    \n    while (current != null) {\n        ListNode nextTemp = current.next;\n        current.next = prev;\n        prev = current;\n        current = nextTemp;\n    }\n    \n    return prev;\n}",
+      "code_python": "from typing import Optional\n\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\n\ndef reverseList(head: Optional[object]) -> Optional[object]:\n    prev = None\n    current = head\n    while current:\n        next_temp = current.next\n        current.next = prev\n        prev = current\n        current = next_temp\n    return prev",
       "language": "java",
       "complexity": {
         "time": "O(n)",
@@ -25,6 +26,7 @@
       "title": "Solution 2 – Recursive Approach",
       "description": "Use recursion to reverse the list by reversing the rest and updating the head.",
       "code": "public ListNode reverseList(ListNode head) {\n    if (head == null || head.next == null) {\n        return head;\n    }\n    \n    ListNode newHead = reverseList(head.next);\n    head.next.next = head;\n    head.next = null;\n    \n    return newHead;\n}",
+      "code_python": "from typing import Optional\n\ndef reverseList_recursive(head: Optional[object]) -> Optional[object]:\n    if not head or not head.next:\n        return head\n    new_head = reverseList_recursive(head.next)\n    head.next.next = head\n    head.next = None\n    return new_head",
       "language": "java",
       "complexity": {
         "time": "O(n)",
@@ -35,6 +37,7 @@
       "title": "Solution 3 – Stack-based Approach",
       "description": "Use a stack to store nodes and rebuild the list in reverse order.",
       "code": "public ListNode reverseList(ListNode head) {\n    if (head == null) return null;\n    \n    Stack stack = new Stack<>();\n    ListNode current = head;\n    \n    // Push all nodes onto stack\n    while (current != null) {\n        stack.push(current);\n        current = current.next;\n    }\n    \n    // Pop nodes and rebuild list\n    ListNode newHead = stack.pop();\n    current = newHead;\n    \n    while (!stack.isEmpty()) {\n        current.next = stack.pop();\n        current = current.next;\n    }\n    \n    current.next = null;\n    return newHead;\n}",
+      "code_python": "from typing import Optional\n\ndef reverseList_stack(head: Optional[object]) -> Optional[object]:\n    if not head:\n        return None\n    stack = []\n    current = head\n    while current:\n        stack.append(current)\n        current = current.next\n    new_head = stack.pop()\n    current = new_head\n    while stack:\n        current.next = stack.pop()\n        current = current.next\n    current.next = None\n    return new_head",
       "language": "java",
       "complexity": {
         "time": "O(n)",
@@ -45,6 +48,7 @@
       "title": "Solution 4 – Reverse in Groups",
       "description": "Reverse the list in groups of k (generalization of the problem).",
       "code": "public ListNode reverseKGroup(ListNode head, int k) {\n    if (head == null || k == 1) return head;\n    \n    ListNode dummy = new ListNode(0);\n    dummy.next = head;\n    ListNode prev = dummy;\n    \n    int count = 0;\n    ListNode current = head;\n    \n    while (current != null) {\n        count++;\n        if (count % k == 0) {\n            prev = reverse(prev, current.next);\n            current = prev.next;\n        } else {\n            current = current.next;\n        }\n    }\n    \n    return dummy.next;\n}\n\nprivate ListNode reverse(ListNode start, ListNode end) {\n    ListNode prev = start;\n    ListNode current = start.next;\n    ListNode first = current;\n    \n    while (current != end) {\n        ListNode next = current.next;\n        current.next = prev;\n        prev = current;\n        current = next;\n    }\n    \n    start.next = prev;\n    first.next = current;\n    \n    return first;\n}",
+      "code_python": "from typing import Optional\n\ndef reverseKGroup(head: Optional[object], k: int) -> Optional[object]:\n    dummy = type('ListNode', (), {'val': 0, 'next': head})()\n    prev_group_tail = dummy\n    current = head\n\n    while True:\n        # Check if there are k nodes remaining\n        check = current\n        for _ in range(k):\n            if not check:\n                return dummy.next\n            check = check.next\n\n        # Reverse k nodes starting at current\n        prev, node = None, current\n        for _ in range(k):\n            nxt = node.next\n            node.next = prev\n            prev = node\n            node = nxt\n\n        # Connect reversed group\n        prev_group_tail.next = prev\n        current.next = node\n        prev_group_tail = current\n        current = node",
       "language": "java",
       "complexity": {
         "time": "O(n)",
@@ -55,6 +59,7 @@
       "title": "Edge Cases and Validation",
       "description": "Robust implementation handling edge cases:",
       "code": "public ListNode reverseList(ListNode head) {\n    // Handle null and single node cases\n    if (head == null || head.next == null) {\n        return head;\n    }\n    \n    ListNode prev = null;\n    ListNode current = head;\n    \n    while (current != null) {\n        // Store next node before changing links\n        ListNode nextTemp = current.next;\n        \n        // Reverse the link\n        current.next = prev;\n        \n        // Move pointers forward\n        prev = current;\n        current = nextTemp;\n    }\n    \n    return prev;\n}\n\n// ListNode class definition\nclass ListNode {\n    int val;\n    ListNode next;\n    \n    ListNode() {}\n    ListNode(int val) { this.val = val; }\n    ListNode(int val, ListNode next) { \n        this.val = val; \n        this.next = next; \n    }\n}",
+      "code_python": "from typing import Optional\n\nclass ListNode:\n    def __init__(self, val: int = 0, next: Optional['ListNode'] = None) -> None:\n        self.val = val\n        self.next = next\n\ndef reverseList_safe(head: Optional[ListNode]) -> Optional[ListNode]:\n    if not head or not head.next:\n        return head\n    prev = None\n    current = head\n    while current:\n        next_temp = current.next\n        current.next = prev\n        prev = current\n        current = next_temp\n    return prev",
       "language": "java"
     }
   ],

@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Two Pointers",
-      "description": "Use two pointers to find intersection point.",
+      "description": "Advance two pointers simultaneously through both lists; when a pointer reaches the end of its list, redirect it to the head of the other list. After at most m+n steps both pointers will have traversed the same total distance and will meet at the intersection node (or both become null if there is no intersection). The key insight is that the path equalization trick cancels out the length difference between the two lists without needing to measure either length explicitly.",
       "code": "public ListNode getIntersectionNode(ListNode headA, ListNode headB) {\n    if (headA == null || headB == null) return null;\n    \n    ListNode a = headA, b = headB;\n    \n    while (a != b) {\n        a = (a == null) ? headB : a.next;\n        b = (b == null) ? headA : b.next;\n    }\n    \n    return a;\n}",
+      "code_python": "# class ListNode: def __init__(self, val=0): self.val=val; self.next=None\nfrom typing import Optional\n\ndef get_intersection_node(head_a: Optional['ListNode'], head_b: Optional['ListNode']) -> Optional['ListNode']:\n    a, b = head_a, head_b\n    while a is not b:\n        a = head_b if a is None else a.next\n        b = head_a if b is None else b.next\n    return a",
       "language": "java",
       "complexity": {
         "time": "O(m + n)",

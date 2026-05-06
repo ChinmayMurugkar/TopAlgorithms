@@ -10,18 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – BFS",
-      "description": "Use BFS to find the minimum depth.",
+      "description": "Use BFS (level-order traversal) and return the depth of the first leaf node encountered. Because BFS explores nodes level by level, the very first leaf found is guaranteed to be at minimum depth. This is more efficient than DFS for wide trees because BFS stops as soon as the first leaf is reached.",
       "code": "public int minDepth(TreeNode root) {\n    if (root == null) return 0;\n    \n    Queue queue = new LinkedList<>();\n    queue.offer(root);\n    int depth = 1;\n    \n    while (!queue.isEmpty()) {\n        int size = queue.size();\n        \n        for (int i = 0; i < size; i++) {\n            TreeNode current = queue.poll();\n            \n            if (current.left == null && current.right == null) {\n                return depth;\n            }\n            \n            if (current.left != null) {\n                queue.offer(current.left);\n            }\n            if (current.right != null) {\n                queue.offer(current.right);\n            }\n        }\n        \n        depth++;\n    }\n    \n    return depth;\n}",
-      "language": "java",
-      "complexity": {
-        "time": "O(n)",
-        "space": "O(n)"
-      }
-    },
-    {
-      "title": "Solution 1 – BFS",
-      "description": "Use BFS to find the minimum depth.",
-      "code": "public int minDepth(TreeNode root) {\n    if (root == null) return 0;\n    \n    Queue queue = new LinkedList<>();\n    queue.offer(root);\n    int depth = 1;\n    \n    while (!queue.isEmpty()) {\n        int size = queue.size();\n        \n        for (int i = 0; i < size; i++) {\n            TreeNode current = queue.poll();\n            \n            if (current.left == null && current.right == null) {\n                return depth;\n            }\n            \n            if (current.left != null) {\n                queue.offer(current.left);\n            }\n            if (current.right != null) {\n                queue.offer(current.right);\n            }\n        }\n        \n        depth++;\n    }\n    \n    return depth;\n}",
+      "code_python": "# class TreeNode:\n#     def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom collections import deque\nfrom typing import Optional\n\ndef min_depth(root: Optional['TreeNode']) -> int:\n    if root is None:\n        return 0\n    queue: deque = deque([(root, 1)])\n    while queue:\n        node, depth = queue.popleft()\n        if node.left is None and node.right is None:\n            return depth\n        if node.left:\n            queue.append((node.left, depth + 1))\n        if node.right:\n            queue.append((node.right, depth + 1))\n    return 0",
       "language": "java",
       "complexity": {
         "time": "O(n)",

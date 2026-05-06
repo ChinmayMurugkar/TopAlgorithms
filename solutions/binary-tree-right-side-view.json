@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – BFS",
-      "description": "Use BFS to get the rightmost node at each level.",
+      "description": "Use BFS level-order traversal and collect the last node in each level, since that is the node visible from the right side. Processing nodes left-to-right per level ensures the rightmost node is always the final element polled in each level iteration.",
       "code": "public List rightSideView(TreeNode root) {\n    List result = new ArrayList<>();\n    if (root == null) return result;\n    \n    Queue queue = new LinkedList<>();\n    queue.offer(root);\n    \n    while (!queue.isEmpty()) {\n        int size = queue.size();\n        \n        for (int i = 0; i < size; i++) {\n            TreeNode current = queue.poll();\n            \n            if (i == size - 1) {\n                result.add(current.val);\n            }\n            \n            if (current.left != null) {\n                queue.offer(current.left);\n            }\n            if (current.right != null) {\n                queue.offer(current.right);\n            }\n        }\n    }\n    \n    return result;\n}",
+      "code_python": "# class TreeNode: def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom typing import Optional, List\nfrom collections import deque\n\ndef rightSideView(root: Optional[object]) -> List[int]:\n    result: List[int] = []\n    if root is None:\n        return result\n\n    queue: deque = deque([root])\n    while queue:\n        level_size = len(queue)\n        for i in range(level_size):\n            node = queue.popleft()\n            if i == level_size - 1:\n                result.append(node.val)\n            if node.left:\n                queue.append(node.left)\n            if node.right:\n                queue.append(node.right)\n\n    return result",
       "language": "java",
       "complexity": {
         "time": "O(n)",
@@ -20,8 +21,9 @@
     },
     {
       "title": "Solution 1 – BFS",
-      "description": "Use BFS to get the rightmost node at each level.",
+      "description": "Use BFS level-order traversal and collect the last node in each level, since that is the node visible from the right side. Processing nodes left-to-right per level ensures the rightmost node is always the final element polled in each level iteration.",
       "code": "public List rightSideView(TreeNode root) {\n    List result = new ArrayList<>();\n    if (root == null) return result;\n    \n    Queue queue = new LinkedList<>();\n    queue.offer(root);\n    \n    while (!queue.isEmpty()) {\n        int size = queue.size();\n        \n        for (int i = 0; i < size; i++) {\n            TreeNode current = queue.poll();\n            \n            if (i == size - 1) {\n                result.add(current.val);\n            }\n            \n            if (current.left != null) {\n                queue.offer(current.left);\n            }\n            if (current.right != null) {\n                queue.offer(current.right);\n            }\n        }\n    }\n    \n    return result;\n}",
+      "code_python": "# class TreeNode: def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom typing import Optional, List\nfrom collections import deque\n\ndef rightSideView(root: Optional[object]) -> List[int]:\n    result: List[int] = []\n    if root is None:\n        return result\n\n    queue: deque = deque([root])\n    while queue:\n        level_size = len(queue)\n        for i in range(level_size):\n            node = queue.popleft()\n            if i == level_size - 1:\n                result.append(node.val)\n            if node.left:\n                queue.append(node.left)\n            if node.right:\n                queue.append(node.right)\n\n    return result",
       "language": "java",
       "complexity": {
         "time": "O(n)",

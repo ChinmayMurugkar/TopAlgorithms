@@ -13,8 +13,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Recursive (Reverse Preorder)",
-      "description": "Flatten the right subtree, then the left subtree, and rewire the pointers.",
+      "description": "This approach processes the tree in reverse preorder (right, left, root) and threads nodes together using a trailing pointer. By visiting right before left, each node's right pointer can be safely rewired to the previously visited node, effectively building the flattened list from back to front. The key insight is that reverse preorder naturally yields the correct linking order without needing extra storage.",
       "code": "public void flatten(TreeNode root) {\n    flattenHelper(root, null);\n}\n\nprivate TreeNode flattenHelper(TreeNode node, TreeNode prev) {\n    if (node == null) {\n        return prev;\n    }\n    \n    prev = flattenHelper(node.right, prev);\n    prev = flattenHelper(node.left, prev);\n    \n    node.right = prev;\n    node.left = null;\n    prev = node;\n    \n    return prev;\n}",
+      "code_python": "# class TreeNode: def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom typing import Optional\n\ndef flatten(root: Optional['TreeNode']) -> None:\n    def helper(node: Optional['TreeNode'], prev: Optional['TreeNode']) -> Optional['TreeNode']:\n        if not node:\n            return prev\n        prev = helper(node.right, prev)\n        prev = helper(node.left, prev)\n        node.right = prev\n        node.left = None\n        return node\n\n    helper(root, None)",
       "language": "java",
       "complexity": {
         "time": "O(n)",
@@ -23,8 +24,9 @@
     },
     {
       "title": "Solution 2 – Iterative with Stack",
-      "description": "Use a stack to simulate preorder traversal and rewire pointers.",
+      "description": "This approach uses an explicit stack to simulate preorder traversal and rewires right pointers on the fly. Pushing right before left ensures left children are processed first (LIFO), and each popped node's right pointer is set to the next node on the stack. The key insight is that a stack cleanly mirrors the recursive call structure of preorder traversal.",
       "code": "public void flatten(TreeNode root) {\n    if (root == null) {\n        return;\n    }\n    \n    Stack stack = new Stack<>();\n    stack.push(root);\n    \n    while (!stack.isEmpty()) {\n        TreeNode current = stack.pop();\n        \n        if (current.right != null) {\n            stack.push(current.right);\n        }\n        if (current.left != null) {\n            stack.push(current.left);\n        }\n        \n        if (!stack.isEmpty()) {\n            current.right = stack.peek();\n        }\n        current.left = null;\n    }\n}",
+      "code_python": "# class TreeNode: def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom typing import Optional\n\ndef flatten(root: Optional['TreeNode']) -> None:\n    if not root:\n        return\n    stack = [root]\n    while stack:\n        current = stack.pop()\n        if current.right:\n            stack.append(current.right)\n        if current.left:\n            stack.append(current.left)\n        if stack:\n            current.right = stack[-1]\n        current.left = None",
       "language": "java",
       "complexity": {
         "time": "O(n)",

@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Dynamic Programming",
-      "description": "Use DP to solve 0/1 knapsack problem.",
+      "description": "Build a 2D dp table where dp[i][w] is the maximum value achievable using the first i items with a weight limit of w. For each item, either skip it (inheriting dp[i-1][w]) or include it (adding its value to dp[i-1][w - weight[i]]) — taking whichever option yields a higher value. The key insight is that each sub-problem depends only on the previous row, so the recurrence captures all include/exclude decisions without explicit enumeration.",
       "code": "public int knapsack(int[] weights, int[] values, int capacity) {\n    int n = weights.length;\n    int[][] dp = new int[n + 1][capacity + 1];\n    \n    for (int i = 1; i <= n; i++) {\n        for (int w = 0; w <= capacity; w++) {\n            if (weights[i - 1] <= w) {\n                dp[i][w] = Math.max(dp[i - 1][w], \n                                   dp[i - 1][w - weights[i - 1]] + values[i - 1]);\n            } else {\n                dp[i][w] = dp[i - 1][w];\n            }\n        }\n    }\n    \n    return dp[n][capacity];\n}",
+      "code_python": "from typing import List\n\ndef knapsack(weights: List[int], values: List[int], capacity: int) -> int:\n    n = len(weights)\n    dp = [[0] * (capacity + 1) for _ in range(n + 1)]\n\n    for i in range(1, n + 1):\n        for w in range(capacity + 1):\n            if weights[i - 1] <= w:\n                dp[i][w] = max(dp[i - 1][w],\n                               dp[i - 1][w - weights[i - 1]] + values[i - 1])\n            else:\n                dp[i][w] = dp[i - 1][w]\n\n    return dp[n][capacity]",
       "language": "java",
       "complexity": {
         "time": "O(n × W)",

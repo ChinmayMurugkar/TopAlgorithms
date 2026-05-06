@@ -10,18 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Recursive",
-      "description": "Recursively compare two binary trees.",
+      "description": "Recursively verify that two trees are identical by checking three conditions at every node: both nodes must be null (base case returning true), exactly one is null (mismatch returning false), or both have equal values and their left and right subtrees are also identical.",
       "code": "public boolean isSameTree(TreeNode p, TreeNode q) {\n    if (p == null && q == null) return true;\n    if (p == null || q == null) return false;\n    \n    return p.val == q.val && \n           isSameTree(p.left, q.left) && \n           isSameTree(p.right, q.right);\n}",
-      "language": "java",
-      "complexity": {
-        "time": "O(n)",
-        "space": "O(h)"
-      }
-    },
-    {
-      "title": "Solution 1 – Recursive",
-      "description": "Recursively compare two binary trees.",
-      "code": "public boolean isSameTree(TreeNode p, TreeNode q) {\n    if (p == null && q == null) return true;\n    if (p == null || q == null) return false;\n    \n    return p.val == q.val && \n           isSameTree(p.left, q.left) && \n           isSameTree(p.right, q.right);\n}",
+      "code_python": "from typing import Optional\n\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\ndef isSameTree(p: Optional[object], q: Optional[object]) -> bool:\n    if not p and not q:\n        return True\n    if not p or not q:\n        return False\n    return (p.val == q.val and\n            isSameTree(p.left, q.left) and\n            isSameTree(p.right, q.right))",
       "language": "java",
       "complexity": {
         "time": "O(n)",

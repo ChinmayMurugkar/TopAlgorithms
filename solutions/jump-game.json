@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Greedy",
-      "description": "Use greedy approach to check if can reach end.",
+      "description": "Track the farthest index reachable from any position visited so far; if the current index ever exceeds that maximum reach, the end cannot be reached and the function returns false. Otherwise, update the maximum reach at each step and return true at the end. The key insight is that we never need to enumerate specific jump paths — simply knowing the furthest reachable index is sufficient to determine feasibility.",
       "code": "public boolean canJump(int[] nums) {\n    int maxReach = 0;\n    \n    for (int i = 0; i < nums.length; i++) {\n        if (i > maxReach) return false;\n        maxReach = Math.max(maxReach, i + nums[i]);\n    }\n    \n    return true;\n}",
+      "code_python": "from typing import List\n\ndef can_jump(nums: List[int]) -> bool:\n    max_reach = 0\n    for i, jump in enumerate(nums):\n        if i > max_reach:\n            return False\n        max_reach = max(max_reach, i + jump)\n    return True",
       "language": "java",
       "complexity": {
         "time": "O(n)",

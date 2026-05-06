@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Deque",
-      "description": "Use deque to maintain maximum elements in sliding window.",
+      "description": "Use a monotonic deque that stores indices in decreasing order of their corresponding values. Before adding each new element, evict indices outside the current window from the front and remove smaller elements from the back (they can never be the maximum while the new element is in the window). The front of the deque always holds the index of the current window's maximum.",
       "code": "public int[] maxSlidingWindow(int[] nums, int k) {\n    if (nums == null || nums.length == 0) return new int[0];\n    \n    int n = nums.length;\n    int[] result = new int[n - k + 1];\n    Deque deque = new LinkedList<>();\n    \n    for (int i = 0; i < n; i++) {\n        // Remove elements outside window\n        while (!deque.isEmpty() && deque.peekFirst() < i - k + 1) {\n            deque.pollFirst();\n        }\n        \n        // Remove smaller elements\n        while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {\n            deque.pollLast();\n        }\n        \n        deque.offerLast(i);\n        \n        if (i >= k - 1) {\n            result[i - k + 1] = nums[deque.peekFirst()];\n        }\n    }\n    \n    return result;\n}",
+      "code_python": "from collections import deque\nfrom typing import List\n\ndef maxSlidingWindow(nums: List[int], k: int) -> List[int]:\n    if not nums:\n        return []\n\n    dq: deque[int] = deque()  # stores indices, decreasing value order\n    result: List[int] = []\n\n    for i, num in enumerate(nums):\n        # Remove indices outside the window\n        if dq and dq[0] < i - k + 1:\n            dq.popleft()\n\n        # Remove indices whose values are smaller than current\n        while dq and nums[dq[-1]] < num:\n            dq.pop()\n\n        dq.append(i)\n\n        if i >= k - 1:\n            result.append(nums[dq[0]])\n\n    return result",
       "language": "java",
       "complexity": {
         "time": "O(n)",

@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – DFS",
-      "description": "Use DFS to calculate sum of all root-to-leaf numbers.",
+      "description": "A depth-first traversal carries a running number formed by appending each node's digit (current = current × 10 + node.val); when a leaf is reached, that number is one complete root-to-leaf value that gets added to the total. Passing the accumulated sum down rather than up avoids the need to store any intermediate path. The key insight is that shifting left by one decimal place (×10) before adding the next digit correctly reconstructs the number encoded by each root-to-leaf path.",
       "code": "public int sumNumbers(TreeNode root) {\n    return dfs(root, 0);\n}\n\nprivate int dfs(TreeNode root, int sum) {\n    if (root == null) return 0;\n    \n    sum = sum * 10 + root.val;\n    \n    if (root.left == null && root.right == null) {\n        return sum;\n    }\n    \n    return dfs(root.left, sum) + dfs(root.right, sum);\n}",
+      "code_python": "# class TreeNode: def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom typing import Optional\n\ndef sum_numbers(root: Optional[\"TreeNode\"]) -> int:\n    def dfs(node: Optional[\"TreeNode\"], current: int) -> int:\n        if node is None:\n            return 0\n        current = current * 10 + node.val\n        if node.left is None and node.right is None:\n            return current\n        return dfs(node.left, current) + dfs(node.right, current)\n\n    return dfs(root, 0)",
       "language": "java",
       "complexity": {
         "time": "O(n)",
@@ -20,8 +21,9 @@
     },
     {
       "title": "Solution 1 – DFS",
-      "description": "Use DFS to calculate sum of all root-to-leaf numbers.",
+      "description": "A depth-first traversal carries a running number formed by appending each node's digit (current = current × 10 + node.val); when a leaf is reached, that number is one complete root-to-leaf value that gets added to the total. Passing the accumulated sum down rather than up avoids the need to store any intermediate path. The key insight is that shifting left by one decimal place (×10) before adding the next digit correctly reconstructs the number encoded by each root-to-leaf path.",
       "code": "public int sumNumbers(TreeNode root) {\n    return dfs(root, 0);\n}\n\nprivate int dfs(TreeNode root, int sum) {\n    if (root == null) return 0;\n    \n    sum = sum * 10 + root.val;\n    \n    if (root.left == null && root.right == null) {\n        return sum;\n    }\n    \n    return dfs(root.left, sum) + dfs(root.right, sum);\n}",
+      "code_python": "# class TreeNode: def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom typing import Optional\n\ndef sum_numbers(root: Optional[\"TreeNode\"]) -> int:\n    def dfs(node: Optional[\"TreeNode\"], current: int) -> int:\n        if node is None:\n            return 0\n        current = current * 10 + node.val\n        if node.left is None and node.right is None:\n            return current\n        return dfs(node.left, current) + dfs(node.right, current)\n\n    return dfs(root, 0)",
       "language": "java",
       "complexity": {
         "time": "O(n)",

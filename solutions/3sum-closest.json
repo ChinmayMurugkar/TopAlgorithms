@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Two Pointers",
-      "description": "Use two pointers to find closest sum.",
+      "description": "Sort the array and fix one element, then use two pointers to scan the remaining elements for the pair whose sum brings the triplet closest to the target. Moving the left pointer up when the sum is too small and the right pointer down when too large ensures every candidate pair is considered in O(n) per fixed element. The key insight is that sorting enables greedy pointer movement without missing the optimal answer.",
       "code": "public int threeSumClosest(int[] nums, int target) {\n    Arrays.sort(nums);\n    int closest = nums[0] + nums[1] + nums[2];\n    \n    for (int i = 0; i < nums.length - 2; i++) {\n        int left = i + 1, right = nums.length - 1;\n        \n        while (left < right) {\n            int sum = nums[i] + nums[left] + nums[right];\n            \n            if (Math.abs(sum - target) < Math.abs(closest - target)) {\n                closest = sum;\n            }\n            \n            if (sum < target) {\n                left++;\n            } else {\n                right--;\n            }\n        }\n    }\n    \n    return closest;\n}",
+      "code_python": "def threeSumClosest(nums: list[int], target: int) -> int:\n    nums.sort()\n    closest = nums[0] + nums[1] + nums[2]\n\n    for i in range(len(nums) - 2):\n        left, right = i + 1, len(nums) - 1\n\n        while left < right:\n            total = nums[i] + nums[left] + nums[right]\n\n            if abs(total - target) < abs(closest - target):\n                closest = total\n\n            if total < target:\n                left += 1\n            else:\n                right -= 1\n\n    return closest",
       "language": "java",
       "complexity": {
         "time": "O(n²)",

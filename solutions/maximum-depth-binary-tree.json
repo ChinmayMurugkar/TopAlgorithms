@@ -14,8 +14,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Recursive DFS",
-      "description": "Use recursion to find the maximum depth of left and right subtrees.",
+      "description": "Recursively compute the depth of the left and right subtrees and return the larger value plus one. The base case is a null node which contributes depth 0. This elegantly expresses the fact that a tree's depth equals the maximum depth of its subtrees plus the root itself.",
       "code": "public int maxDepth(TreeNode root) {\n    if (root == null) {\n        return 0;\n    }\n    \n    int leftDepth = maxDepth(root.left);\n    int rightDepth = maxDepth(root.right);\n    \n    return Math.max(leftDepth, rightDepth) + 1;\n}",
+      "code_python": "# class TreeNode:\n#     def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom typing import Optional\n\ndef max_depth(root: Optional['TreeNode']) -> int:\n    if root is None:\n        return 0\n    return max(max_depth(root.left), max_depth(root.right)) + 1",
       "language": "java",
       "complexity": {
         "time": "O(n)",
@@ -26,6 +27,7 @@
       "title": "Solution 2 – Iterative BFS",
       "description": "Use level-order traversal to count the number of levels.",
       "code": "public int maxDepth(TreeNode root) {\n    if (root == null) {\n        return 0;\n    }\n    \n    Queue queue = new LinkedList<>();\n    queue.offer(root);\n    int depth = 0;\n    \n    while (!queue.isEmpty()) {\n        int levelSize = queue.size();\n        \n        for (int i = 0; i < levelSize; i++) {\n            TreeNode current = queue.poll();\n            \n            if (current.left != null) {\n                queue.offer(current.left);\n            }\n            if (current.right != null) {\n                queue.offer(current.right);\n            }\n        }\n        \n        depth++;\n    }\n    \n    return depth;\n}",
+      "code_python": "# class TreeNode:\n#     def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom collections import deque\nfrom typing import Optional\n\ndef max_depth(root: Optional['TreeNode']) -> int:\n    if root is None:\n        return 0\n    queue: deque = deque([root])\n    depth = 0\n    while queue:\n        for _ in range(len(queue)):\n            node = queue.popleft()\n            if node.left:\n                queue.append(node.left)\n            if node.right:\n                queue.append(node.right)\n        depth += 1\n    return depth",
       "language": "java",
       "complexity": {
         "time": "O(n)",
@@ -36,6 +38,7 @@
       "title": "Solution 3 – Iterative DFS with Stack",
       "description": "Use a stack to simulate recursive calls iteratively.",
       "code": "public int maxDepth(TreeNode root) {\n    if (root == null) {\n        return 0;\n    }\n    \n    Stack nodeStack = new Stack<>();\n    Stack depthStack = new Stack<>();\n    \n    nodeStack.push(root);\n    depthStack.push(1);\n    \n    int maxDepth = 0;\n    \n    while (!nodeStack.isEmpty()) {\n        TreeNode current = nodeStack.pop();\n        int currentDepth = depthStack.pop();\n        \n        maxDepth = Math.max(maxDepth, currentDepth);\n        \n        if (current.right != null) {\n            nodeStack.push(current.right);\n            depthStack.push(currentDepth + 1);\n        }\n        \n        if (current.left != null) {\n            nodeStack.push(current.left);\n            depthStack.push(currentDepth + 1);\n        }\n    }\n    \n    return maxDepth;\n}",
+      "code_python": "# class TreeNode:\n#     def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom typing import Optional\n\ndef max_depth(root: Optional['TreeNode']) -> int:\n    if root is None:\n        return 0\n    stack = [(root, 1)]\n    max_d = 0\n    while stack:\n        node, depth = stack.pop()\n        max_d = max(max_d, depth)\n        if node.right:\n            stack.append((node.right, depth + 1))\n        if node.left:\n            stack.append((node.left, depth + 1))\n    return max_d",
       "language": "java",
       "complexity": {
         "time": "O(n)",

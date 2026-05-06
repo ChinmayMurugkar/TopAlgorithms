@@ -16,7 +16,8 @@
       "complexity": {
         "time": "O(26 × wordLength × wordListSize)",
         "space": "O(wordListSize)"
-      }
+      },
+      "code_python": "from collections import deque, defaultdict\n\ndef findLadders(beginWord: str, endWord: str, wordList: list[str]) -> list[list[str]]:\n    word_set = set(wordList)\n    if endWord not in word_set: return []\n    graph: dict[str, list[str]] = defaultdict(list)\n    distance: dict[str, int] = {beginWord: 0}\n    queue = deque([beginWord])\n    while queue:\n        word = queue.popleft()\n        if word == endWord: break\n        for i in range(len(word)):\n            for c in 'abcdefghijklmnopqrstuvwxyz':\n                nw = word[:i] + c + word[i+1:]\n                if nw in word_set:\n                    if nw not in distance:\n                        distance[nw] = distance[word] + 1\n                        queue.append(nw)\n                    if distance[nw] == distance[word] + 1:\n                        graph[word].append(nw)\n    result: list[list[str]] = []\n    def dfs(path):\n        if path[-1] == endWord:\n            result.append(path[:])\n            return\n        for nxt in graph.get(path[-1], []):\n            if distance.get(nxt, -1) == distance[path[-1]] + 1:\n                path.append(nxt)\n                dfs(path)\n                path.pop()\n    dfs([beginWord])\n    return result"
     },
     {
       "title": "Solution 1 – BFS + DFS",
@@ -26,7 +27,8 @@
       "complexity": {
         "time": "O(26 × wordLength × wordListSize)",
         "space": "O(wordListSize)"
-      }
+      },
+      "code_python": "from collections import deque, defaultdict\n\ndef findLadders(beginWord: str, endWord: str, wordList: list[str]) -> list[list[str]]:\n    word_set = set(wordList)\n    if endWord not in word_set: return []\n    graph: dict[str, list[str]] = defaultdict(list)\n    distance: dict[str, int] = {beginWord: 0}\n    queue = deque([beginWord])\n    while queue:\n        word = queue.popleft()\n        if word == endWord: break\n        for i in range(len(word)):\n            for c in 'abcdefghijklmnopqrstuvwxyz':\n                nw = word[:i] + c + word[i+1:]\n                if nw in word_set:\n                    if nw not in distance:\n                        distance[nw] = distance[word] + 1\n                        queue.append(nw)\n                    if distance[nw] == distance[word] + 1:\n                        graph[word].append(nw)\n    result: list[list[str]] = []\n    def dfs(path):\n        if path[-1] == endWord:\n            result.append(path[:])\n            return\n        for nxt in graph.get(path[-1], []):\n            if distance.get(nxt, -1) == distance[path[-1]] + 1:\n                path.append(nxt)\n                dfs(path)\n                path.pop()\n    dfs([beginWord])\n    return result"
     }
   ],
   "variations": [],

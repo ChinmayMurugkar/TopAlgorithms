@@ -12,6 +12,7 @@
       "title": "Solution 1 – Intermediate Array",
       "description": "In a straightforward way, we can create a new array and then copy elements to the new array. Then change the original array by using System.arraycopy().",
       "code": "public void rotate(int[] nums, int k) {\n    if(k > nums.length) \n        k=k%nums.length;\n \n    int[] result = new int[nums.length];\n \n    for(int i=0; i < k; i++){\n        result[i] = nums[nums.length-k+i];\n    }\n \n    int j=0;\n    for(int i=k; i\n\nTime Complexity: O(n)\nSpace Complexity: O(n)\n                \nYou can check out the difference between System.arraycopy() and Arrays.copyOf().",
+      "code_python": "from typing import List\n\ndef rotate_extra_space(nums: List[int], k: int) -> None:\n    n = len(nums)\n    k %= n\n    result = nums[-k:] + nums[:-k]\n    nums[:] = result",
       "language": "java",
       "complexity": {
         "time": "O(n)",
@@ -22,6 +23,7 @@
       "title": "Solution 2 – Bubble Rotate",
       "description": "Can we do this in O(1) space?",
       "code": "public static void rotate(int[] arr, int order) {\n    if (arr == null || order < 0) {\n        throw new IllegalArgumentException(\"Illegal argument!\");\n    }\n \n    for (int i = 0; i < order; i++) {\n        for (int j = arr.length - 1; j > 0; j--) {\n            int temp = arr[j];\n            arr[j] = arr[j - 1];\n            arr[j - 1] = temp;\n        }\n    }\n}",
+      "code_python": "from typing import List\n\ndef rotate_bubble(arr: List[int], order: int) -> None:\n    if order < 0:\n        raise ValueError('Illegal argument!')\n    n = len(arr)\n    for _ in range(order):\n        for j in range(n - 1, 0, -1):\n            arr[j], arr[j - 1] = arr[j - 1], arr[j]",
       "language": "java",
       "complexity": {
         "time": "O(n*k)",
@@ -32,6 +34,7 @@
       "title": "Solution 3 – Reversal",
       "description": "Can we do this in O(1) space and in O(n) time? The following solution does.",
       "code": "public static void rotate(int[] arr, int order) {    \n    if (arr == null || arr.length==0 || order < 0) {\n        throw new IllegalArgumentException(\"Illegal argument!\");\n    }\n \n    if(order > arr.length){\n        order = order %arr.length;\n    }\n \n    //length of first part\n    int a = arr.length - order; \n \n    reverse(arr, 0, a-1);\n    reverse(arr, a, arr.length-1);\n    reverse(arr, 0, arr.length-1);\n \n}\n \npublic static void reverse(int[] arr, int left, int right){\n    if(arr == null || arr.length == 1) \n        return;\n \n    while(left < right){\n        int temp = arr[left];\n        arr[left] = arr[right];\n        arr[right] = temp;\n        left++;\n        right--;\n    }    \n}",
+      "code_python": "from typing import List\n\ndef rotate_reversal(arr: List[int], order: int) -> None:\n    if not arr or order < 0:\n        raise ValueError('Illegal argument!')\n    n = len(arr)\n    order %= n\n    if order == 0:\n        return\n\n    def reverse(l: int, r: int) -> None:\n        while l < r:\n            arr[l], arr[r] = arr[r], arr[l]\n            l += 1\n            r -= 1\n\n    a = n - order\n    reverse(0, a - 1)\n    reverse(a, n - 1)\n    reverse(0, n - 1)",
       "language": "java",
       "complexity": {
         "time": "O(n)",

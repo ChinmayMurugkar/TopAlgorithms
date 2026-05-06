@@ -3,15 +3,16 @@
     "title": "Search for a Range",
     "leetcode_id": null,
     "category": "String/Array/Matrix",
-    "description": "Given an array of integers nums sorted in non-decreasing order, find the starting and ending position of a given target value.",
+    "description": "Given an array of integers nums sorted in non-decreasing order, find the starting and ending position of a given target value. If target is not found, return [-1, -1].",
     "assumptions": [],
     "example": {}
   },
   "solutions": [
     {
       "title": "Solution 1 – Binary Search",
-      "description": "Use binary search to find first and last occurrence.",
+      "description": "Run two binary searches: the first finds the leftmost occurrence by continuing to search left after each hit, and the second finds the rightmost occurrence by continuing to search right. Each search is O(log n), so the combined solution is O(log n). The key insight is that a standard binary search can be biased left or right simply by updating the result and continuing to narrow the same half after a match.",
       "code": "public int[] searchRange(int[] nums, int target) {\n    int[] result = {-1, -1};\n    if (nums == null || nums.length == 0) return result;\n    \n    result[0] = findFirst(nums, target);\n    result[1] = findLast(nums, target);\n    \n    return result;\n}\n\nprivate int findFirst(int[] nums, int target) {\n    int left = 0, right = nums.length - 1;\n    int result = -1;\n    \n    while (left <= right) {\n        int mid = left + (right - left) / 2;\n        if (nums[mid] == target) {\n            result = mid;\n            right = mid - 1;\n        } else if (nums[mid] < target) {\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n    \n    return result;\n}\n\nprivate int findLast(int[] nums, int target) {\n    int left = 0, right = nums.length - 1;\n    int result = -1;\n    \n    while (left <= right) {\n        int mid = left + (right - left) / 2;\n        if (nums[mid] == target) {\n            result = mid;\n            left = mid + 1;\n        } else if (nums[mid] < target) {\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n    \n    return result;\n}",
+      "code_python": "from typing import List\n\ndef search_range(nums: List[int], target: int) -> List[int]:\n    def find_first() -> int:\n        left, right, result = 0, len(nums) - 1, -1\n        while left <= right:\n            mid = (left + right) // 2\n            if nums[mid] == target:\n                result = mid\n                right = mid - 1\n            elif nums[mid] < target:\n                left = mid + 1\n            else:\n                right = mid - 1\n        return result\n\n    def find_last() -> int:\n        left, right, result = 0, len(nums) - 1, -1\n        while left <= right:\n            mid = (left + right) // 2\n            if nums[mid] == target:\n                result = mid\n                left = mid + 1\n            elif nums[mid] < target:\n                left = mid + 1\n            else:\n                right = mid - 1\n        return result\n\n    if not nums:\n        return [-1, -1]\n    return [find_first(), find_last()]",
       "language": "java",
       "complexity": {
         "time": "O(log n)",

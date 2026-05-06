@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Binary Search",
-      "description": "Use binary search to find peak element.",
+      "description": "Binary search works here because if nums[mid] < nums[mid+1], there must be a peak to the right (the sequence is still ascending). Otherwise there is a peak at mid or to its left. This invariant guarantees convergence to a peak in O(log n) without requiring a fully sorted array.",
       "code": "public int findPeakElement(int[] nums) {\n    int left = 0, right = nums.length - 1;\n    \n    while (left < right) {\n        int mid = left + (right - left) / 2;\n        \n        if (nums[mid] > nums[mid + 1]) {\n            right = mid;\n        } else {\n            left = mid + 1;\n        }\n    }\n    \n    return left;\n}",
+      "code_python": "from typing import List\n\ndef findPeakElement(nums: List[int]) -> int:\n    left, right = 0, len(nums) - 1\n    while left < right:\n        mid = left + (right - left) // 2\n        if nums[mid] > nums[mid + 1]:\n            right = mid\n        else:\n            left = mid + 1\n    return left",
       "language": "java",
       "complexity": {
         "time": "O(log n)",

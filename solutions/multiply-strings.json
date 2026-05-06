@@ -3,15 +3,16 @@
     "title": "Multiply Strings",
     "leetcode_id": null,
     "category": "String/Array/Matrix",
-    "description": "Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2, also represented as a string.",
+    "description": "Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2, also represented as a string. You must not use any built-in BigInteger library or convert the inputs to integer directly.",
     "assumptions": [],
     "example": {}
   },
   "solutions": [
     {
       "title": "Solution 1 – Grade School Multiplication",
-      "description": "Implement grade school multiplication algorithm.",
+      "description": "Simulate long multiplication digit by digit: the product of digits at positions i and j (from the right) contributes to result positions i+j and i+j+1. Accumulate into an integer array of size m+n, handle carries in-place, then convert to a string skipping leading zeros. The key insight is the index mapping — multiplying the i-th digit from the end of num1 by the j-th digit from the end of num2 always lands at position i+j+1 with carry at i+j.",
       "code": "public String multiply(String num1, String num2) {\n    int m = num1.length(), n = num2.length();\n    int[] result = new int[m + n];\n    \n    for (int i = m - 1; i >= 0; i--) {\n        for (int j = n - 1; j >= 0; j--) {\n            int product = (num1.charAt(i) - '0') * (num2.charAt(j) - '0');\n            int sum = result[i + j + 1] + product;\n            \n            result[i + j + 1] = sum % 10;\n            result[i + j] += sum / 10;\n        }\n    }\n    \n    StringBuilder sb = new StringBuilder();\n    for (int digit : result) {\n        if (!(sb.length() == 0 && digit == 0)) {\n            sb.append(digit);\n        }\n    }\n    \n    return sb.length() == 0 ? \"0\" : sb.toString();\n}",
+      "code_python": "def multiply(num1: str, num2: str) -> str:\n    m, n = len(num1), len(num2)\n    result = [0] * (m + n)\n    for i in range(m - 1, -1, -1):\n        for j in range(n - 1, -1, -1):\n            product = (ord(num1[i]) - ord('0')) * (ord(num2[j]) - ord('0'))\n            total = result[i + j + 1] + product\n            result[i + j + 1] = total % 10\n            result[i + j] += total // 10\n    # Skip leading zeros\n    digits = ''.join(str(d) for d in result).lstrip('0')\n    return digits if digits else '0'",
       "language": "java",
       "complexity": {
         "time": "O(m × n)",

@@ -15,6 +15,7 @@
       "title": "Solution 1 – Using Built-in Functions",
       "description": "The simplest approach is to split the string by spaces, reverse the array, and join it back.",
       "code": "public String reverseWords(String s) {\n    // Remove leading and trailing spaces, split by one or more spaces\n    String[] words = s.trim().split(\"\\\\s+\");\n    \n    // Reverse the array\n    for (int i = 0; i < words.length / 2; i++) {\n        String temp = words[i];\n        words[i] = words[words.length - 1 - i];\n        words[words.length - 1 - i] = temp;\n    }\n    \n    // Join with single space\n    return String.join(\" \", words);\n}",
+      "code_python": "def reverseWords(s: str) -> str:\n    words = s.split()  # split() handles multiple spaces and strips ends\n    words.reverse()\n    return ' '.join(words)",
       "language": "java",
       "complexity": {
         "time": "O(n)",
@@ -25,6 +26,7 @@
       "title": "Solution 2 – Two Pointers (In-place for char array)",
       "description": "If we're given a char array and need to do it in-place:",
       "code": "public void reverseWords(char[] s) {\n    // Reverse the entire string\n    reverse(s, 0, s.length - 1);\n    \n    // Reverse each word\n    int start = 0;\n    for (int i = 0; i < s.length; i++) {\n        if (s[i] == ' ') {\n            reverse(s, start, i - 1);\n            start = i + 1;\n        }\n    }\n    \n    // Reverse the last word\n    reverse(s, start, s.length - 1);\n}\n\nprivate void reverse(char[] s, int left, int right) {\n    while (left < right) {\n        char temp = s[left];\n        s[left] = s[right];\n        s[right] = temp;\n        left++;\n        right--;\n    }\n}",
+      "code_python": "from typing import List\n\ndef reverseWords_inplace(chars: List[str]) -> None:\n    \"\"\"Reverse words in a char list in-place (e.g. chars = list(s)).\"\"\"\n    def reverse(l: int, r: int) -> None:\n        while l < r:\n            chars[l], chars[r] = chars[r], chars[l]\n            l += 1\n            r -= 1\n\n    # Step 1: reverse entire array\n    reverse(0, len(chars) - 1)\n\n    # Step 2: reverse each word\n    start = 0\n    for i in range(len(chars)):\n        if chars[i] == ' ':\n            reverse(start, i - 1)\n            start = i + 1\n\n    # Step 3: reverse last word\n    reverse(start, len(chars) - 1)",
       "language": "java",
       "complexity": {
         "time": "O(n)",
@@ -35,6 +37,7 @@
       "title": "Solution 3 – Using Stack",
       "description": "We can use a stack to reverse the order of words:",
       "code": "public String reverseWords(String s) {\n    Stack stack = new Stack<>();\n    StringBuilder word = new StringBuilder();\n    \n    for (int i = 0; i < s.length(); i++) {\n        char c = s.charAt(i);\n        if (c == ' ') {\n            if (word.length() > 0) {\n                stack.push(word.toString());\n                word.setLength(0);\n            }\n        } else {\n            word.append(c);\n        }\n    }\n    \n    // Don't forget the last word\n    if (word.length() > 0) {\n        stack.push(word.toString());\n    }\n    \n    // Build result\n    StringBuilder result = new StringBuilder();\n    while (!stack.isEmpty()) {\n        result.append(stack.pop());\n        if (!stack.isEmpty()) {\n            result.append(\" \");\n        }\n    }\n    \n    return result.toString();\n}",
+      "code_python": "def reverseWords_stack(s: str) -> str:\n    stack: list = []\n    word: list = []\n\n    for ch in s:\n        if ch == ' ':\n            if word:\n                stack.append(''.join(word))\n                word = []\n        else:\n            word.append(ch)\n\n    if word:\n        stack.append(''.join(word))\n\n    result = []\n    while stack:\n        result.append(stack.pop())\n        if stack:\n            result.append(' ')\n\n    return ''.join(result)",
       "language": "java",
       "complexity": {
         "time": "O(n)",

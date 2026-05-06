@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Backtracking",
-      "description": "Use backtracking to generate valid parentheses.",
+      "description": "Build valid sequences character by character using backtracking, tracking the remaining count of open and close parentheses that can still be placed. An open parenthesis can be added whenever the open count is positive, and a close parenthesis can be added only when more close parentheses remain than open ones, which guarantees the sequence stays well-formed. The key insight is that these two constraints together are both necessary and sufficient for producing all valid combinations.",
       "code": "public List generateParenthesis(int n) {\n    List result = new ArrayList<>();\n    backtrack(n, n, \"\", result);\n    return result;\n}\n\nprivate void backtrack(int open, int close, String current, List result) {\n    if (open == 0 && close == 0) {\n        result.add(current);\n        return;\n    }\n    \n    if (open > 0) {\n        backtrack(open - 1, close, current + \"(\", result);\n    }\n    \n    if (close > open) {\n        backtrack(open, close - 1, current + \")\", result);\n    }\n}",
+      "code_python": "from typing import List\n\ndef generate_parenthesis(n: int) -> List[str]:\n    result: List[str] = []\n\n    def backtrack(open_rem: int, close_rem: int, current: str) -> None:\n        if open_rem == 0 and close_rem == 0:\n            result.append(current)\n            return\n        if open_rem > 0:\n            backtrack(open_rem - 1, close_rem, current + '(')\n        if close_rem > open_rem:\n            backtrack(open_rem, close_rem - 1, current + ')')\n\n    backtrack(n, n, '')\n    return result",
       "language": "java",
       "complexity": {
         "time": "O(4^n/√n)",

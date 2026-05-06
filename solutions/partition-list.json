@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Two Pointers",
-      "description": "Use two pointers to partition list.",
+      "description": "Maintain two separate dummy-headed lists — one for nodes less than x and one for nodes greater than or equal to x — then concatenate them. A single pass through the original list suffices, and the relative order within each partition is naturally preserved.",
       "code": "public ListNode partition(ListNode head, int x) {\n    ListNode beforeHead = new ListNode(0);\n    ListNode afterHead = new ListNode(0);\n    ListNode before = beforeHead;\n    ListNode after = afterHead;\n    \n    while (head != null) {\n        if (head.val < x) {\n            before.next = head;\n            before = before.next;\n        } else {\n            after.next = head;\n            after = after.next;\n        }\n        head = head.next;\n    }\n    \n    after.next = null;\n    before.next = afterHead.next;\n    \n    return beforeHead.next;\n}",
+      "code_python": "from typing import Optional\n\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\n\ndef partition(head: Optional[object], x: int) -> Optional[object]:\n    before_head = before = type('ListNode', (), {'val': 0, 'next': None})()\n    after_head = after = type('ListNode', (), {'val': 0, 'next': None})()\n\n    current = head\n    while current:\n        if current.val < x:\n            before.next = current\n            before = before.next\n        else:\n            after.next = current\n            after = after.next\n        current = current.next\n\n    after.next = None\n    before.next = after_head.next\n    return before_head.next",
       "language": "java",
       "complexity": {
         "time": "O(n)",

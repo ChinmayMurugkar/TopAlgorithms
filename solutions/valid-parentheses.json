@@ -10,8 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Stack",
-      "description": "Use a stack to keep track of opening brackets and match them with closing brackets.",
+      "description": "A stack stores each opening bracket as it is encountered; when a closing bracket is seen, the top of the stack must be its matching opener, otherwise the string is invalid. An empty stack at the end confirms every opener was properly closed. The key insight is that the most recently opened bracket must always be closed first — a LIFO structure mirrors this nesting constraint exactly.",
       "code": "public boolean isValid(String s) {\n    Stack stack = new Stack<>();\n    \n    for (char c : s.toCharArray()) {\n        if (c == '(' || c == '{' || c == '[') {\n            stack.push(c);\n        } else {\n            if (stack.isEmpty()) {\n                return false;\n            }\n            \n            char top = stack.pop();\n            if ((c == ')' && top != '(') || \n                (c == '}' && top != '{') || \n                (c == ']' && top != '[')) {\n                return false;\n            }\n        }\n    }\n    \n    return stack.isEmpty();\n}",
+      "code_python": "def is_valid(s: str) -> bool:\n    stack: list[str] = []\n    matching = {')': '(', '}': '{', ']': '['}\n\n    for ch in s:\n        if ch in '({[':\n            stack.append(ch)\n        else:\n            if not stack or stack[-1] != matching[ch]:\n                return False\n            stack.pop()\n\n    return not stack",
       "language": "java",
       "complexity": {
         "time": "O(n)",

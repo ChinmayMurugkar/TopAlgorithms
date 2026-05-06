@@ -10,18 +10,9 @@
   "solutions": [
     {
       "title": "Solution 1 – Radix Sort Implementation",
-      "description": "Implement radix sort algorithm for integers.",
+      "description": "Radix sort processes integers digit by digit from least to most significant, applying a stable counting sort at each digit position. Because counting sort is stable, the relative order established by earlier digits is preserved, yielding a fully sorted array after d passes where d is the number of digits in the maximum value.",
       "code": "public void radixSort(int[] arr) {\n    int n = arr.length;\n    if (n <= 1) return;\n    \n    // Find the maximum element\n    int max = arr[0];\n    for (int i = 1; i < n; i++) {\n        if (arr[i] > max) {\n            max = arr[i];\n        }\n    }\n    \n    // Do counting sort for every digit\n    for (int exp = 1; max / exp > 0; exp *= 10) {\n        countingSortByDigit(arr, exp);\n    }\n}\n\nprivate void countingSortByDigit(int[] arr, int exp) {\n    int n = arr.length;\n    int[] output = new int[n];\n    int[] count = new int[10];\n    \n    // Count occurrences\n    for (int i = 0; i < n; i++) {\n        count[(arr[i] / exp) % 10]++;\n    }\n    \n    // Modify count array to store actual positions\n    for (int i = 1; i < 10; i++) {\n        count[i] += count[i - 1];\n    }\n    \n    // Build output array\n    for (int i = n - 1; i >= 0; i--) {\n        int digit = (arr[i] / exp) % 10;\n        output[count[digit] - 1] = arr[i];\n        count[digit]--;\n    }\n    \n    // Copy output array back to original array\n    for (int i = 0; i < n; i++) {\n        arr[i] = output[i];\n    }\n}",
-      "language": "java",
-      "complexity": {
-        "time": "O(d(n + k))",
-        "space": "O(n + k)"
-      }
-    },
-    {
-      "title": "Solution 1 – Radix Sort Implementation",
-      "description": "Implement radix sort algorithm for integers.",
-      "code": "public void radixSort(int[] arr) {\n    int n = arr.length;\n    if (n <= 1) return;\n    \n    // Find the maximum element\n    int max = arr[0];\n    for (int i = 1; i < n; i++) {\n        if (arr[i] > max) {\n            max = arr[i];\n        }\n    }\n    \n    // Do counting sort for every digit\n    for (int exp = 1; max / exp > 0; exp *= 10) {\n        countingSortByDigit(arr, exp);\n    }\n}\n\nprivate void countingSortByDigit(int[] arr, int exp) {\n    int n = arr.length;\n    int[] output = new int[n];\n    int[] count = new int[10];\n    \n    // Count occurrences\n    for (int i = 0; i < n; i++) {\n        count[(arr[i] / exp) % 10]++;\n    }\n    \n    // Modify count array to store actual positions\n    for (int i = 1; i < 10; i++) {\n        count[i] += count[i - 1];\n    }\n    \n    // Build output array\n    for (int i = n - 1; i >= 0; i--) {\n        int digit = (arr[i] / exp) % 10;\n        output[count[digit] - 1] = arr[i];\n        count[digit]--;\n    }\n    \n    // Copy output array back to original array\n    for (int i = 0; i < n; i++) {\n        arr[i] = output[i];\n    }\n}",
+      "code_python": "from typing import List\n\ndef radix_sort(arr: List[int]) -> None:\n    if len(arr) <= 1:\n        return\n\n    max_val = max(arr)\n    exp = 1\n    while max_val // exp > 0:\n        counting_sort_by_digit(arr, exp)\n        exp *= 10\n\ndef counting_sort_by_digit(arr: List[int], exp: int) -> None:\n    n = len(arr)\n    output = [0] * n\n    count = [0] * 10\n\n    for val in arr:\n        digit = (val // exp) % 10\n        count[digit] += 1\n\n    # Prefix sums to get actual positions\n    for i in range(1, 10):\n        count[i] += count[i - 1]\n\n    # Build output in stable order (traverse right to left)\n    for i in range(n - 1, -1, -1):\n        digit = (arr[i] // exp) % 10\n        output[count[digit] - 1] = arr[i]\n        count[digit] -= 1\n\n    arr[:] = output",
       "language": "java",
       "complexity": {
         "time": "O(d(n + k))",
