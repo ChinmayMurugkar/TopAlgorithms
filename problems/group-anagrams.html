@@ -999,7 +999,7 @@
 
             var problem = document.getElementById('problem-title').textContent || '';
 
-            fetch('/api/chat', {
+            fetch('https://topalgorithms.vercel.app/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ messages: chatHistory, problem: problem })
