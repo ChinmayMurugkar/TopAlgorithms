@@ -325,26 +325,27 @@
             return code + '\n\n# Test your solution:\n# print(your_function(args))';
         }
 
-        /* ── Piston API ───────────────────────────────────────────────────── */
+        /* ── Judge0 CE API ────────────────────────────────────────────────── */
+        // Language IDs: Java=62, Python3=71
         function runCode(code, lang, cb) {
-            var pistonLang = lang === 'java' ? 'java' : 'python3';
+            var langId = lang === 'java' ? 62 : 71;
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'https://emkc.org/api/v2/piston/execute');
+            xhr.open('POST', 'https://ce.judge0.com/submissions?base64_encoded=false&wait=true');
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.onload = function () {
                 try {
                     var d = JSON.parse(xhr.responseText);
-                    var out = (d.run && d.run.stdout) || '';
-                    var err = (d.run && d.run.stderr) || (d.compile && d.compile.stderr) || '';
+                    var out = d.stdout || '';
+                    var err = d.stderr || d.compile_output || '';
+                    // Non-accepted status: surface description as error
+                    if (d.status && d.status.id > 3 && !err) {
+                        err = d.status.description;
+                    }
                     cb(null, out, err);
                 } catch(e) { cb('Invalid response from server'); }
             };
             xhr.onerror = function () { cb('Network error — check your connection'); };
-            xhr.send(JSON.stringify({
-                language: pistonLang,
-                version: '*',
-                files: [{ name: lang === 'java' ? 'Main.java' : 'solution.py', content: code }]
-            }));
+            xhr.send(JSON.stringify({ source_code: code, language_id: langId }));
         }
 
         /* ── Display tab switcher ─────────────────────────────────────────── */
