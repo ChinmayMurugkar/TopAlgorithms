@@ -42,11 +42,20 @@
             color: white; padding: 30px 0; margin-bottom: 30px;
         }
         .header-content { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
-        .breadcrumb { margin-bottom: 10px; font-size: 0.9rem; opacity: 0.8; }
+        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .breadcrumb { font-size: 0.9rem; opacity: 0.8; }
         .breadcrumb a { color: white; text-decoration: none; }
         .breadcrumb a:hover { text-decoration: underline; }
         h1 { font-size: 2.2rem; margin-bottom: 10px; }
         .meta { font-size: 0.9rem; opacity: 0.8; }
+
+        #global-theme-btn {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.35);
+            color: white; padding: 6px 16px; border-radius: 20px;
+            cursor: pointer; font-size: 0.84rem; font-weight: 600;
+            transition: background .2s; white-space: nowrap; flex-shrink: 0;
+        }
+        #global-theme-btn:hover { background: rgba(255,255,255,0.28); }
 
         .content {
             background: white; border-radius: 10px;
@@ -196,6 +205,24 @@
         body.light .pg-output.has-error { color: #cf222e; }
         body.light .out-label { color: #8c959f; }
 
+        /* ── Full-page dark mode ── */
+        body.dark { background-color: #0d1117; color: #c9d1d9; }
+        body.dark .content { background: #161b22; box-shadow: 0 4px 6px rgba(0,0,0,0.4); }
+        body.dark .problem-description { background: #1c2938; border-left-color: #388bfd; color: #adbac7; }
+        body.dark .solution h3 { color: #e6edf3; border-bottom-color: #388bfd; }
+        body.dark p, body.dark li { color: #adbac7; }
+        body.dark .complexity { background: #272115; border-color: #4d4117; color: #e3b341; }
+        body.dark .complexity strong { color: #e3b341; }
+        body.dark .example { background: #182125; border-color: #1f4a52; color: #adbac7; }
+        body.dark .example strong { color: #79c0ff; }
+        body.dark .nav-btn { background: #1f6feb; }
+        body.dark .nav-btn:hover { background: #388bfd; }
+        body.dark .try-it-section { border-color: #388bfd; }
+        /* dark mode also darkens playground components */
+        body.dark .code-tab-bar, body.dark .code-label-bar { background: #1a202c; }
+        body.dark .pg-header { background: #1a202c; }
+        body.dark .playground-panel { border-color: #4a5568; }
+
         /* ── Top playground section ── */
         .try-it-section {
             margin-bottom: 30px;
@@ -245,10 +272,13 @@
 <body>
     <div class="header">
         <div class="header-content">
-            <div class="breadcrumb">
-                <a href="../index.html">Home</a> &gt;
-                <span id="breadcrumb-category">Category</span> &gt;
-                <span id="breadcrumb-title">Problem</span>
+            <div class="header-top">
+                <div class="breadcrumb">
+                    <a href="../index.html">Home</a> &gt;
+                    <span id="breadcrumb-category">Category</span> &gt;
+                    <span id="breadcrumb-title">Problem</span>
+                </div>
+                <button id="global-theme-btn" onclick="togglePageTheme()">🌙 Dark</button>
             </div>
             <h1 id="problem-title">Loading...</h1>
             <div class="meta" id="problem-meta">Loading...</div>
@@ -278,11 +308,38 @@
     <script>
         /* ── Theme ─────────────────────────────────────────────────────────── */
         (function () {
-            if (localStorage.getItem('pg-theme') === 'light')
-                document.body.classList.add('light');
+            var t = localStorage.getItem('pg-theme');
+            if (t === 'dark')  document.body.classList.add('dark');
+            if (t === 'light') document.body.classList.add('light');
         })();
 
-        function isDark() { return !document.body.classList.contains('light'); }
+        function isDark() {
+            return document.body.classList.contains('dark') || !document.body.classList.contains('light');
+        }
+
+        function togglePageTheme() {
+            var goingDark = !document.body.classList.contains('dark');
+            document.body.classList.toggle('dark', goingDark);
+            document.body.classList.toggle('light', !goingDark);
+            localStorage.setItem('pg-theme', goingDark ? 'dark' : 'light');
+            var newCmTheme = goingDark ? 'dracula' : 'eclipse';
+            document.querySelectorAll('.CodeMirror').forEach(function(el) {
+                if (el.CodeMirror) el.CodeMirror.setOption('theme', newCmTheme);
+            });
+            syncThemeButtons();
+        }
+
+        function syncThemeButtons() {
+            var dark = document.body.classList.contains('dark');
+            var globalBtn = document.getElementById('global-theme-btn');
+            if (globalBtn) globalBtn.textContent = dark ? '☀ Light' : '🌙 Dark';
+            document.querySelectorAll('.pg-theme-btn').forEach(function(btn) {
+                btn.textContent = dark ? '☀ Light' : '🌙 Dark';
+            });
+        }
+
+        // Set initial button label after DOM ready
+        document.addEventListener('DOMContentLoaded', syncThemeButtons);
 
         /* ── CodeMirror 5 lazy loader ─────────────────────────────────────── */
         var cmLoaded = false, cmLoading = false, cmCallbacks = [];
@@ -442,19 +499,9 @@
                 });
             });
 
-            /* Theme toggle */
+            /* Theme toggle — delegates to global toggle */
             var themeBtn = panel.querySelector('.pg-theme-btn');
-            themeBtn.addEventListener('click', function () {
-                var goLight = isDark();
-                document.body.classList.toggle('light', goLight);
-                localStorage.setItem('pg-theme', goLight ? 'light' : 'dark');
-                var newTheme = goLight ? 'eclipse' : 'dracula';
-                themeBtn.textContent = goLight ? '🌙 Dark' : '☀ Light';
-                // Update all editors on page
-                document.querySelectorAll('.CodeMirror').forEach(function(cmEl) {
-                    if (cmEl.CodeMirror) cmEl.CodeMirror.setOption('theme', newTheme);
-                });
-            });
+            themeBtn.addEventListener('click', togglePageTheme);
 
             /* Run button */
             var runBtn = panel.querySelector('.pg-run-btn');
