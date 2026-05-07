@@ -327,7 +327,13 @@
 
         /* ── Judge0 CE API ────────────────────────────────────────────────── */
         // Language IDs: Java=62, Python3=71
+        // Judge0 saves Java files as Main.java — public class must match
+        function prepareJava(code) {
+            return code.replace(/public\s+class\s+\w+/, 'public class Main');
+        }
+
         function runCode(code, lang, cb) {
+            if (lang === 'java') code = prepareJava(code);
             var langId = lang === 'java' ? 62 : 71;
             var xhr = new XMLHttpRequest();
             xhr.open('POST', 'https://ce.judge0.com/submissions?base64_encoded=false&wait=true');
@@ -537,14 +543,14 @@
             var themeLabel = isDark() ? '☀ Light' : '🌙 Dark';
 
             var javaStarter =
-                'public class Solution {\n' +
+                'public class Main {\n' +
                 '    // Write your solution here\n' +
                 '    public int solve(/* add params */) {\n' +
                 '        \n' +
                 '        return 0;\n' +
                 '    }\n\n' +
                 '    public static void main(String[] args) {\n' +
-                '        Solution sol = new Solution();\n' +
+                '        Main sol = new Main();\n' +
                 '        // Test your solution:\n' +
                 '        // System.out.println(sol.solve(...));\n' +
                 '    }\n' +
