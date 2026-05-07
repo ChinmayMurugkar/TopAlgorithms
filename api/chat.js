@@ -1,4 +1,4 @@
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
     }
@@ -25,7 +25,7 @@ Do not just give away the full solution — guide them to think through it.`;
                 model: 'llama-3.3-70b-versatile',
                 messages: [
                     { role: 'system', content: systemPrompt },
-                    ...messages.slice(-12), // keep last 12 messages for context
+                    ...messages.slice(-12),
                 ],
                 max_tokens: 1024,
                 temperature: 0.7,
@@ -46,4 +46,4 @@ Do not just give away the full solution — guide them to think through it.`;
         console.error('Handler error:', e);
         res.status(500).json({ error: 'Server error — try again' });
     }
-}
+};
