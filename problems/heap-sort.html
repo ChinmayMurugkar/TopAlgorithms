@@ -440,7 +440,7 @@
         <button class="bubble-dismiss" onclick="dismissBubble()" title="Dismiss">✕</button>
     </div>
     <button id="chat-fab" onclick="toggleChat()" title="Ask AI">🤖</button>
-    <div id="chat-window">
+    <div id="chat-window" class="open">
         <div class="chat-header">
             <div class="chat-header-left">
                 <div class="chat-avatar">🤖</div>
@@ -464,8 +464,9 @@
         /* ── Theme ─────────────────────────────────────────────────────────── */
         (function () {
             var t = localStorage.getItem('pg-theme');
-            if (t === 'dark')  document.body.classList.add('dark');
+            // Default to dark mode unless user has explicitly chosen light
             if (t === 'light') document.body.classList.add('light');
+            else document.body.classList.add('dark');
         })();
 
         function isDark() {
@@ -949,11 +950,11 @@
 
         /* ── AI Chat ──────────────────────────────────────────────────────── */
         var chatHistory = [];
-        var chatOpen = false;
+        var chatOpen = true;
 
-        // Show bubble after 4s if user hasn't dismissed or opened chat this session
+        // Bubble only shows if chat was manually closed this session
         document.addEventListener('DOMContentLoaded', function() {
-            if (!sessionStorage.getItem('chat-bubble-dismissed')) {
+            if (!sessionStorage.getItem('chat-bubble-dismissed') && !chatOpen) {
                 setTimeout(function() {
                     if (!chatOpen) {
                         document.getElementById('chat-bubble').classList.add('visible');
