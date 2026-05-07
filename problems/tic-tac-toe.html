@@ -279,6 +279,40 @@
         }
         #chat-fab:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(102,126,234,0.65); }
 
+        #chat-bubble {
+            position: fixed; bottom: 92px; right: 20px; z-index: 1000;
+            background: white; border-radius: 14px 14px 4px 14px;
+            padding: 10px 14px 10px 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border: 1px solid #e2e8f0; max-width: 210px;
+            display: none; align-items: flex-start; gap: 8px;
+            animation: bubblePop .3s cubic-bezier(.175,.885,.32,1.275);
+        }
+        #chat-bubble.visible { display: flex; }
+        @keyframes bubblePop {
+            from { opacity: 0; transform: scale(0.8) translateY(10px); }
+            to   { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        #chat-bubble p {
+            margin: 0; font-size: 0.83rem; line-height: 1.4;
+            color: #2c3e50; font-weight: 500;
+        }
+        #chat-bubble .bubble-dismiss {
+            background: none; border: none; cursor: pointer;
+            color: #a0aec0; font-size: 0.9rem; padding: 0; line-height: 1;
+            flex-shrink: 0; margin-top: 1px;
+        }
+        #chat-bubble .bubble-dismiss:hover { color: #718096; }
+        /* little tail pointing down-right */
+        #chat-bubble::after {
+            content: ''; position: absolute; bottom: -8px; right: 22px;
+            border: 8px solid transparent;
+            border-top-color: white; border-bottom: none;
+            filter: drop-shadow(0 2px 1px rgba(0,0,0,0.08));
+        }
+        body.dark #chat-bubble { background: #21262d; border-color: #30363d; }
+        body.dark #chat-bubble p { color: #c9d1d9; }
+        body.dark #chat-bubble::after { border-top-color: #21262d; }
+
         #chat-window {
             position: fixed; bottom: 94px; right: 28px; z-index: 1000;
             width: 360px; max-width: calc(100vw - 40px);
@@ -401,6 +435,10 @@
     </div>
 
     <!-- ── AI Chat Widget ─────────────────────────────────────────── -->
+    <div id="chat-bubble">
+        <p>Need help? Ask your<br><strong>Study Buddy!</strong> 💡</p>
+        <button class="bubble-dismiss" onclick="dismissBubble()" title="Dismiss">✕</button>
+    </div>
     <button id="chat-fab" onclick="toggleChat()" title="Ask AI">🤖</button>
     <div id="chat-window">
         <div class="chat-header">
@@ -913,9 +951,27 @@
         var chatHistory = [];
         var chatOpen = false;
 
+        // Show bubble after 4s if user hasn't dismissed or opened chat this session
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!sessionStorage.getItem('chat-bubble-dismissed')) {
+                setTimeout(function() {
+                    if (!chatOpen) {
+                        document.getElementById('chat-bubble').classList.add('visible');
+                    }
+                }, 4000);
+            }
+        });
+
+        function dismissBubble() {
+            document.getElementById('chat-bubble').classList.remove('visible');
+            sessionStorage.setItem('chat-bubble-dismissed', '1');
+        }
+
         function toggleChat() {
             chatOpen = !chatOpen;
             document.getElementById('chat-window').classList.toggle('open', chatOpen);
+            document.getElementById('chat-bubble').classList.remove('visible');
+            sessionStorage.setItem('chat-bubble-dismissed', '1');
             if (chatOpen) {
                 setTimeout(function(){ document.getElementById('chat-input').focus(); }, 80);
             }
