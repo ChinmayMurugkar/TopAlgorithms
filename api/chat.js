@@ -8,6 +8,10 @@ module.exports = async function handler(req, res) {
         return res.status(400).json({ error: 'Invalid request' });
     }
 
+    if (!process.env.GROQ_API_KEY) {
+        return res.status(500).json({ error: 'GROQ_API_KEY not configured on server' });
+    }
+
     const systemPrompt = `You are a coding interview assistant helping users on TopAlgorithms.com.
 ${problem ? `The user is currently working on: "${problem}".` : ''}
 Help them understand algorithms, data structures, time/space complexity, and problem-solving approaches.
@@ -34,8 +38,11 @@ Do not just give away the full solution — guide them to think through it.`;
 
         if (!response.ok) {
             const err = await response.text();
-            console.error('Groq error:', err);
-            return res.status(502).json({ error: 'AI service error — try again' });
+            console.error('Groq error:', response.status, err);
+            // Surface actual error in response so we can diagnose
+            let detail = '';
+            try { detail = JSON.parse(err)?.error?.message || err; } catch { detail = err; }
+            return res.status(502).json({ error: `Groq ${response.status}: ${detail}` });
         }
 
         const data = await response.json();
