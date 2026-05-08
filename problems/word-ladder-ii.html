@@ -173,9 +173,36 @@
         }
         .solution { margin-bottom: 36px; }
         .solution h3 {
-            color: #2c3e50; font-size: 1.3rem; margin-bottom: 12px;
+            color: #2c3e50; font-size: 1.3rem; margin: 0;
             padding-bottom: 7px; border-bottom: 2px solid #3498db;
+            flex: 1;
         }
+
+        /* ── Collapsible solution header ── */
+        .sol-header {
+            display: flex; align-items: center; gap: 14px;
+            cursor: pointer; padding: 6px 0; border-radius: 6px;
+            margin-bottom: 4px;
+        }
+        .sol-header:hover h3 { color: #2980b9; }
+        .sol-toggle-btn {
+            flex-shrink: 0;
+            padding: 5px 14px;
+            background: transparent;
+            border: 1.5px solid #3498db;
+            border-radius: 20px;
+            color: #3498db;
+            font-size: 0.78rem; font-weight: 600; cursor: pointer;
+            transition: background .15s, color .15s;
+            white-space: nowrap;
+        }
+        .sol-toggle-btn:hover { background: #3498db; color: white; }
+        .sol-body { margin-top: 12px; }
+
+        body.dark .solution h3 { color: #e6edf3; border-bottom-color: #388bfd; }
+        body.dark .sol-header:hover h3 { color: #79c0ff; }
+        body.dark .sol-toggle-btn { border-color: #388bfd; color: #79c0ff; }
+        body.dark .sol-toggle-btn:hover { background: #388bfd; color: white; }
 
         /* ── Display language tabs ── */
         .code-tabs-wrapper { margin: 12px 0; }
@@ -341,7 +368,6 @@
         body.dark { background-color: #0d1117; color: #c9d1d9; }
         body.dark .content { background: #161b22; box-shadow: 0 4px 6px rgba(0,0,0,0.4); }
         body.dark .problem-description { background: #1c2938; border-left-color: #388bfd; color: #adbac7; }
-        body.dark .solution h3 { color: #e6edf3; border-bottom-color: #388bfd; }
         body.dark p, body.dark li { color: #adbac7; }
         body.dark .complexity { background: #272115; border-color: #4d4117; color: #e3b341; }
         body.dark .complexity strong { color: #e3b341; }
@@ -1113,30 +1139,50 @@
             return displayHtml + loadBtn + playHtml;
         }
 
+        function toggleSolution(bodyId, btn) {
+            var body = document.getElementById(bodyId);
+            var open = body.style.display !== 'none';
+            body.style.display = open ? 'none' : 'block';
+            btn.textContent = open ? '👁 Show Solution' : '🙈 Hide';
+        }
+
         function renderSolutions(solutions, containerId) {
             var container = document.getElementById(containerId);
             if (!container) return;
             container.innerHTML = '';
-            solutions.forEach(function(sol) {
+            solutions.forEach(function(sol, idx) {
                 var div = document.createElement('div');
                 div.className = 'solution';
-                var html = '<h3>' + sol.title + '</h3>';
-                if (sol.description) html += '<p>' + sol.description + '</p>';
-                if (sol.code || sol.code_python) html += renderCodeSection(sol);
+
+                // Build body content (hidden by default)
+                var bodyHtml = '';
+                if (sol.description) bodyHtml += '<p>' + sol.description + '</p>';
+                if (sol.code || sol.code_python) bodyHtml += renderCodeSection(sol);
                 if (sol.complexity) {
-                    html += '<div class="complexity">';
-                    if (sol.complexity.time)  html += '<strong>Time Complexity:</strong> ' + sol.complexity.time + '<br>';
-                    if (sol.complexity.space) html += '<strong>Space Complexity:</strong> ' + sol.complexity.space;
-                    html += '</div>';
+                    bodyHtml += '<div class="complexity">';
+                    if (sol.complexity.time)  bodyHtml += '<strong>Time Complexity:</strong> ' + sol.complexity.time + '<br>';
+                    if (sol.complexity.space) bodyHtml += '<strong>Space Complexity:</strong> ' + sol.complexity.space;
+                    bodyHtml += '</div>';
                 }
                 if (sol.example_walkthrough) {
-                    html += '<div class="example"><strong>Example Walkthrough:</strong><br><br>';
+                    bodyHtml += '<div class="example"><strong>Example Walkthrough:</strong><br><br>';
                     if (sol.example_walkthrough.text)
-                        html += sol.example_walkthrough.text;
+                        bodyHtml += sol.example_walkthrough.text;
                     else if (sol.example_walkthrough.steps)
-                        sol.example_walkthrough.steps.forEach(function(s){ html += s + '<br>'; });
-                    html += '</div>';
+                        sol.example_walkthrough.steps.forEach(function(s){ bodyHtml += s + '<br>'; });
+                    bodyHtml += '</div>';
                 }
+
+                var bodyId = 'sol-body-' + containerId + '-' + idx;
+                var html =
+                    '<div class="sol-header">' +
+                    '<h3>' + sol.title + '</h3>' +
+                    '<button class="sol-toggle-btn" onclick="toggleSolution(\'' + bodyId + '\', this)">👁 Show Solution</button>' +
+                    '</div>' +
+                    '<div class="sol-body" id="' + bodyId + '" style="display:none">' +
+                    bodyHtml +
+                    '</div>';
+
                 div.innerHTML = html;
                 container.appendChild(div);
             });
