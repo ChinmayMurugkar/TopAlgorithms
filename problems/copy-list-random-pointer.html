@@ -33,21 +33,24 @@
             line-height: 1.6;
             color: #333;
             background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
         }
 
-        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
-
+        /* ── Header ── */
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white; padding: 30px 0; margin-bottom: 30px;
+            color: white; padding: 20px 0; flex-shrink: 0;
         }
-        .header-content { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
-        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .header-content { max-width: none; margin: 0; padding: 0 20px; }
+        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
         .breadcrumb { font-size: 0.9rem; opacity: 0.8; }
         .breadcrumb a { color: white; text-decoration: none; }
         .breadcrumb a:hover { text-decoration: underline; }
-        h1 { font-size: 2.2rem; margin-bottom: 10px; }
-        .meta { font-size: 0.9rem; opacity: 0.8; }
+        h1 { font-size: 1.8rem; margin-bottom: 4px; }
+        .meta { font-size: 0.85rem; opacity: 0.8; }
 
         #global-theme-btn {
             background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.35);
@@ -57,22 +60,125 @@
         }
         #global-theme-btn:hover { background: rgba(255,255,255,0.28); }
 
+        /* ── Split layout ── */
+        .split-layout {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .left-pane {
+            flex: 1;
+            min-width: 300px;
+            overflow-y: auto;
+            padding: 20px 24px;
+        }
+
         .content {
             background: white; border-radius: 10px;
-            padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 30px;
+            padding: 28px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 30px;
         }
+
+        .split-divider {
+            width: 6px;
+            cursor: col-resize;
+            background: #cbd5e0;
+            flex-shrink: 0;
+            transition: background .15s;
+            position: relative;
+        }
+        .split-divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 3px;
+            height: 40px;
+            border-left: 1px solid #a0aec0;
+            border-right: 1px solid #a0aec0;
+        }
+        .split-divider:hover, .split-divider.dragging { background: #667eea; }
+        .split-divider:hover::after, .split-divider.dragging::after {
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .right-pane {
+            width: 45%;
+            min-width: 280px;
+            display: flex;
+            flex-direction: column;
+            background: #1e2330;
+            overflow: hidden;
+            border-left: 1px solid #2d3748;
+        }
+
+        /* ── Right pane: editor ── */
+        .rp-title-bar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 10px 16px; color: white;
+            font-size: 0.88rem; font-weight: 600;
+            flex-shrink: 0;
+            display: flex; align-items: center; justify-content: space-between; gap: 8px;
+        }
+        .rp-title-bar .rp-hint {
+            font-size: 0.74rem; opacity: 0.75; font-weight: 400;
+        }
+
+        .right-pane .playground-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: none;
+            border-radius: 0;
+            margin: 0;
+        }
+        .right-pane .playground-panel.open { display: flex; }
+
+        .right-pane .pg-editor-pane {
+            flex: 1;
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+        }
+        .right-pane .pg-editor-pane.active { display: flex; }
+
+        .right-pane .CodeMirror {
+            flex: 1;
+            height: 100% !important;
+            max-height: none !important;
+        }
+        .right-pane .CodeMirror-scroll {
+            max-height: none !important;
+            overflow-y: auto !important;
+        }
+        .right-pane .pg-output { max-height: 170px; flex-shrink: 0; }
+
+        /* ── Load in Editor button on solutions ── */
+        .load-in-editor-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            margin-top: 10px; padding: 6px 14px;
+            background: transparent; border: 1.5px solid #667eea;
+            border-radius: 6px; color: #667eea;
+            font-size: 0.82rem; font-weight: 600; cursor: pointer;
+            transition: background .15s, color .15s;
+        }
+        .load-in-editor-btn:hover { background: #667eea; color: white; }
+
+        /* ── Problem content ── */
         .problem-description {
             background: #e3f2fd; border-left: 4px solid #2196f3;
-            padding: 20px; margin-bottom: 30px; border-radius: 0 6px 6px 0;
+            padding: 18px; margin-bottom: 24px; border-radius: 0 6px 6px 0;
         }
-        .solution { margin-bottom: 40px; }
+        .solution { margin-bottom: 36px; }
         .solution h3 {
-            color: #2c3e50; font-size: 1.4rem; margin-bottom: 15px;
-            padding-bottom: 8px; border-bottom: 2px solid #3498db;
+            color: #2c3e50; font-size: 1.3rem; margin-bottom: 12px;
+            padding-bottom: 7px; border-bottom: 2px solid #3498db;
         }
 
         /* ── Display language tabs ── */
-        .code-tabs-wrapper { margin: 15px 0; }
+        .code-tabs-wrapper { margin: 12px 0; }
         .code-tab-bar {
             display: flex; background: #1a202c;
             border-radius: 8px 8px 0 0; border: 1px solid #4a5568;
@@ -116,13 +222,13 @@
 
         .code-block {
             background: #2d3748; border: 1px solid #4a5568; border-radius: 8px;
-            padding: 20px; margin: 15px 0; overflow-x: auto;
+            padding: 18px; margin: 12px 0; overflow-x: auto;
             font-family: 'Courier New', 'Monaco', monospace;
-            font-size: 0.95rem; line-height: 1.5; white-space: pre;
+            font-size: 0.92rem; line-height: 1.5; white-space: pre;
             color: #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        /* ── Playground ── */
+        /* ── Playground (inline per-solution) ── */
         .playground-toggle {
             margin-top: 8px; padding: 7px 16px;
             background: transparent; border: 1.5px solid #667eea;
@@ -143,6 +249,7 @@
         .pg-header {
             display: flex; align-items: center; justify-content: space-between;
             background: #1a202c; padding: 8px 12px; gap: 8px; flex-wrap: wrap;
+            flex-shrink: 0;
         }
         .pg-lang-tabs { display: flex; gap: 4px; }
         .pg-lang-btn {
@@ -174,7 +281,7 @@
         .pg-editor-pane { display: none; }
         .pg-editor-pane.active { display: block; }
 
-        /* CodeMirror 5 overrides */
+        /* CodeMirror 5 overrides (for inline per-solution editors) */
         .CodeMirror {
             height: auto; min-height: 180px; max-height: 380px;
             font-family: 'Courier New', 'Monaco', monospace;
@@ -191,7 +298,30 @@
         .pg-output.has-error { color: #ff6b6b; }
         .out-label { color: #4a5568; font-size: 0.72rem; font-family: 'Segoe UI', sans-serif; margin-bottom: 4px; }
 
-        /* Light mode */
+        /* Misc */
+        .complexity {
+            background: #fff3cd; border: 1px solid #ffeaa7;
+            border-radius: 6px; padding: 15px; margin: 12px 0;
+        }
+        .complexity strong { color: #856404; }
+        .example {
+            background: #d1ecf1; border: 1px solid #bee5eb;
+            border-radius: 6px; padding: 15px; margin: 12px 0;
+        }
+        .example strong { color: #0c5460; }
+        .navigation { display: flex; justify-content: space-between; margin-top: 24px; }
+        .nav-btn {
+            padding: 10px 20px; background: #3498db; color: white;
+            text-decoration: none; border-radius: 6px; transition: background .2s;
+        }
+        .nav-btn:hover { background: #2980b9; }
+        .loading { text-align: center; padding: 40px; color: #666; }
+        .error {
+            background: #f8d7da; border: 1px solid #f5c6cb;
+            border-radius: 6px; padding: 20px; margin: 20px 0; color: #721c24;
+        }
+
+        /* ── Light mode ── */
         body.light .code-block { background: #f6f8fa; color: #24292e; border-color: #d0d7de; }
         body.light .code-tab-bar, body.light .code-label-bar { background: #f0f0f0; }
         body.light .code-tab-btn.active, body.light .code-label { background: #f6f8fa; color: #24292e; }
@@ -204,6 +334,8 @@
         body.light .pg-output { background: #f6f8fa; color: #24292e; border-top-color: #d0d7de; }
         body.light .pg-output.has-error { color: #cf222e; }
         body.light .out-label { color: #8c959f; }
+        body.light .split-divider { background: #d0d7de; }
+        body.light .right-pane { background: #f6f8fa; border-left-color: #d0d7de; }
 
         /* ── Full-page dark mode ── */
         body.dark { background-color: #0d1117; color: #c9d1d9; }
@@ -217,55 +349,21 @@
         body.dark .example strong { color: #79c0ff; }
         body.dark .nav-btn { background: #1f6feb; }
         body.dark .nav-btn:hover { background: #388bfd; }
-        body.dark .try-it-section { border-color: #388bfd; }
-        /* dark mode also darkens playground components */
         body.dark .code-tab-bar, body.dark .code-label-bar { background: #1a202c; }
         body.dark .pg-header { background: #1a202c; }
         body.dark .playground-panel { border-color: #4a5568; }
+        body.dark .split-divider { background: #2d3748; }
+        body.dark .split-divider::after { border-color: rgba(255,255,255,0.2); }
 
-        /* ── Top playground section ── */
-        .try-it-section {
-            margin-bottom: 30px;
-            border: 1.5px solid #667eea;
-            border-radius: 10px; overflow: hidden;
-        }
-        .try-it-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 14px 18px;
-        }
-        .try-it-header h3 { margin: 0; color: white; font-size: 1.1rem; }
-        .try-it-header p  { margin: 3px 0 0; font-size: 0.84rem; color: rgba(255,255,255,0.8); }
-        .try-it-section .playground-panel {
-            border: none; border-radius: 0; margin: 0;
-        }
-        .try-it-section .playground-panel.open { display: block; }
-
-        /* Misc */
-        .complexity {
-            background: #fff3cd; border: 1px solid #ffeaa7;
-            border-radius: 6px; padding: 15px; margin: 15px 0;
-        }
-        .complexity strong { color: #856404; }
-        .example {
-            background: #d1ecf1; border: 1px solid #bee5eb;
-            border-radius: 6px; padding: 15px; margin: 15px 0;
-        }
-        .example strong { color: #0c5460; }
-        .navigation { display: flex; justify-content: space-between; margin-top: 30px; }
-        .nav-btn {
-            padding: 10px 20px; background: #3498db; color: white;
-            text-decoration: none; border-radius: 6px; transition: background .2s;
-        }
-        .nav-btn:hover { background: #2980b9; }
-        .loading { text-align: center; padding: 40px; color: #666; }
-        .error {
-            background: #f8d7da; border: 1px solid #f5c6cb;
-            border-radius: 6px; padding: 20px; margin: 20px 0; color: #721c24;
-        }
+        /* ── Mobile: stack vertically ── */
         @media (max-width: 768px) {
-            .container { padding: 10px; }
-            .content { padding: 20px; }
-            h1 { font-size: 1.8rem; }
+            body { height: auto; overflow: auto; }
+            .split-layout { flex-direction: column; overflow: visible; }
+            .left-pane { padding: 10px; min-width: 0; overflow-y: visible; }
+            .split-divider { display: none; }
+            .right-pane { width: 100%; min-width: 0; height: 520px; border-left: none; border-top: 2px solid #667eea; }
+            .content { padding: 16px; }
+            h1 { font-size: 1.5rem; }
         }
 
         /* ── AI Chat Widget ── */
@@ -302,7 +400,6 @@
             flex-shrink: 0; margin-top: 1px;
         }
         #chat-bubble .bubble-dismiss:hover { color: #718096; }
-        /* little tail pointing down-right */
         #chat-bubble::after {
             content: ''; position: absolute; bottom: -8px; right: 22px;
             border: 8px solid transparent;
@@ -315,12 +412,13 @@
 
         #chat-window {
             position: fixed; bottom: 94px; right: 28px; z-index: 1000;
-            width: 360px; max-width: calc(100vw - 40px);
-            height: 500px; max-height: calc(100vh - 120px);
+            width: 360px; height: 500px;
+            max-width: calc(100vw - 40px); max-height: calc(100vh - 120px);
             background: white; border-radius: 14px;
             box-shadow: 0 8px 40px rgba(0,0,0,0.18);
             display: none; flex-direction: column; overflow: hidden;
             border: 1px solid #e2e8f0;
+            min-width: 280px; min-height: 240px;
         }
         #chat-window.open { display: flex; }
 
@@ -328,7 +426,7 @@
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white; padding: 14px 16px;
             display: flex; align-items: center; justify-content: space-between;
-            flex-shrink: 0;
+            flex-shrink: 0; cursor: move; user-select: none;
         }
         .chat-header-left { display: flex; align-items: center; gap: 10px; }
         .chat-avatar {
@@ -396,6 +494,15 @@
         body.dark #chat-input:focus { border-color: #667eea; }
         body.dark .chat-input-row { border-top-color: #30363d; }
         body.dark .chat-typing { background: #21262d; }
+
+        /* ── Resize handle for chat ── */
+        .resize-handle {
+            position: absolute; bottom: 0; right: 0;
+            width: 20px; height: 20px; cursor: se-resize; z-index: 10;
+            background: linear-gradient(135deg,
+                transparent 40%, rgba(102,126,234,0.5) 40%, rgba(102,126,234,0.5) 55%, transparent 55%,
+                transparent 65%, rgba(102,126,234,0.5) 65%, rgba(102,126,234,0.5) 80%, transparent 80%);
+        }
     </style>
 </head>
 <body>
@@ -414,23 +521,37 @@
         </div>
     </div>
 
-    <div class="container">
-        <div class="content">
-            <div id="loading" class="loading">
-                <h3>Loading problem...</h3>
-                <p>Please wait while we load the problem details.</p>
+    <div class="split-layout">
+        <!-- ── Left: problem + solutions ── -->
+        <div class="left-pane" id="left-pane">
+            <div class="content">
+                <div id="loading" class="loading">
+                    <h3>Loading problem...</h3>
+                    <p>Please wait while we load the problem details.</p>
+                </div>
+                <div id="error" class="error" style="display:none;">
+                    <h3>Error Loading Problem</h3>
+                    <p id="error-message">Failed to load the problem. Please try refreshing the page.</p>
+                </div>
+                <div id="problem-content" style="display:none;">
+                    <div class="problem-description" id="problem-description"></div>
+                    <div id="solutions-container"></div>
+                    <div id="variations-container"></div>
+                    <div class="navigation" id="navigation"></div>
+                </div>
             </div>
-            <div id="error" class="error" style="display:none;">
-                <h3>Error Loading Problem</h3>
-                <p id="error-message">Failed to load the problem. Please try refreshing the page.</p>
+        </div>
+
+        <!-- ── Divider ── -->
+        <div class="split-divider" id="split-divider"></div>
+
+        <!-- ── Right: Try It Yourself editor ── -->
+        <div class="right-pane" id="right-pane">
+            <div class="rp-title-bar">
+                <span>✏️ Try It Yourself</span>
+                <span class="rp-hint">Load a solution or write from scratch</span>
             </div>
-            <div id="problem-content" style="display:none;">
-                <div class="problem-description" id="problem-description"></div>
-                <div id="try-it-container"></div>
-                <div id="solutions-container"></div>
-                <div id="variations-container"></div>
-                <div class="navigation" id="navigation"></div>
-            </div>
+            <!-- playground injected by renderTopPlayground() -->
         </div>
     </div>
 
@@ -464,7 +585,6 @@
         /* ── Theme ─────────────────────────────────────────────────────────── */
         (function () {
             var t = localStorage.getItem('pg-theme');
-            // Default to dark mode unless user has explicitly chosen light
             if (t === 'light') document.body.classList.add('light');
             else document.body.classList.add('dark');
         })();
@@ -494,8 +614,64 @@
             });
         }
 
-        // Set initial button label after DOM ready
-        document.addEventListener('DOMContentLoaded', syncThemeButtons);
+        document.addEventListener('DOMContentLoaded', function() {
+            syncThemeButtons();
+            // Make chat window draggable + resizable
+            var chatWin = document.getElementById('chat-window');
+            var chatHdr = chatWin.querySelector('.chat-header');
+            chatWin._minW = 280; chatWin._minH = 240;
+            makeFloating(chatWin, chatHdr);
+            // Init split divider
+            initSplitDivider();
+        });
+
+        /* ── Split-pane divider drag ──────────────────────────────────────── */
+        function initSplitDivider() {
+            var divider  = document.getElementById('split-divider');
+            var leftPane = document.getElementById('left-pane');
+            var rightPane= document.getElementById('right-pane');
+            var layout   = divider.parentElement;
+
+            // Restore saved width
+            var saved = localStorage.getItem('split-right-width');
+            if (saved) rightPane.style.width = saved + 'px';
+
+            var dragging = false, startX = 0, startW = 0;
+
+            divider.addEventListener('mousedown', function(e) {
+                dragging = true;
+                startX = e.clientX;
+                startW = rightPane.offsetWidth;
+                divider.classList.add('dragging');
+                document.body.style.cursor = 'col-resize';
+                document.body.style.userSelect = 'none';
+                e.preventDefault();
+            });
+
+            document.addEventListener('mousemove', function(e) {
+                if (!dragging) return;
+                var delta = startX - e.clientX;  // positive = making right pane wider
+                var layoutW = layout.offsetWidth;
+                var newW = Math.min(
+                    Math.max(280, startW + delta),
+                    layoutW - 320  // always leave at least 320px for left
+                );
+                rightPane.style.width = newW + 'px';
+                // Refresh CodeMirror after resize
+                rightPane.querySelectorAll('.CodeMirror').forEach(function(el) {
+                    if (el.CodeMirror) el.CodeMirror.refresh();
+                });
+            });
+
+            document.addEventListener('mouseup', function() {
+                if (!dragging) return;
+                dragging = false;
+                divider.classList.remove('dragging');
+                document.body.style.cursor = '';
+                document.body.style.userSelect = '';
+                localStorage.setItem('split-right-width', rightPane.offsetWidth);
+            });
+        }
 
         /* ── CodeMirror 5 lazy loader ─────────────────────────────────────── */
         var cmLoaded = false, cmLoading = false, cmCallbacks = [];
@@ -512,7 +688,6 @@
                 document.head.appendChild(s);
             }
 
-            // Load CM core first, then language modes in parallel
             addScript('https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js', function () {
                 var done = 0;
                 function check() { if (++done === 2) { cmLoaded = true; cmCallbacks.forEach(function(f){f();}); cmCallbacks = []; } }
@@ -539,8 +714,6 @@
         }
 
         /* ── Judge0 CE API ────────────────────────────────────────────────── */
-        // Language IDs: Java=62, Python3=71
-        // Judge0 saves Java files as Main.java — public class must match
         function prepareJava(code) {
             return code.replace(/public\s+class\s+\w+/, 'public class Main');
         }
@@ -556,10 +729,7 @@
                     var d = JSON.parse(xhr.responseText);
                     var out = d.stdout || '';
                     var err = d.stderr || d.compile_output || '';
-                    // Non-accepted status: surface description as error
-                    if (d.status && d.status.id > 3 && !err) {
-                        err = d.status.description;
-                    }
+                    if (d.status && d.status.id > 3 && !err) err = d.status.description;
                     cb(null, out, err);
                 } catch(e) { cb('Invalid response from server'); }
             };
@@ -576,7 +746,7 @@
             wrapper.querySelector('#' + tabId + '-' + lang).classList.add('active');
         }
 
-        /* ── Playground open/close ────────────────────────────────────────── */
+        /* ── Per-solution playground open/close ──────────────────────────── */
         function openPlayground(pgId) {
             var panel  = document.getElementById(pgId);
             var toggle = panel.previousElementSibling;
@@ -593,7 +763,6 @@
                 return;
             }
 
-            // First open — load CM then init
             toggle.disabled = true;
             toggle.textContent = 'Loading editor…';
 
@@ -636,11 +805,12 @@
             if (javaCode && javaHost)     editors.java   = makeEditor(javaHost,   javaCode,   'text/x-java');
             if (pythonCode && pythonHost) editors.python = makeEditor(pythonHost, pythonCode, 'python');
 
-            // Active lang — whichever has code
+            // Expose editors so loadInEditor can access them
+            panel._editors = editors;
+
             var activeLang = javaCode ? 'java' : 'python';
             panel._activeLang = activeLang;
 
-            /* Lang tabs */
             panel.querySelectorAll('.pg-lang-btn').forEach(function(btn) {
                 btn.addEventListener('click', function () {
                     if (btn.classList.contains('disabled')) return;
@@ -649,17 +819,14 @@
                     panel.querySelectorAll('.pg-editor-pane').forEach(function(p){ p.classList.remove('active'); });
                     panel.querySelector('.pg-editor-pane[data-lang="' + btn.dataset.lang + '"]').classList.add('active');
                     panel._activeLang = btn.dataset.lang;
-                    // Refresh CM to fix display glitch after display:none
                     var ed = editors[btn.dataset.lang];
                     if (ed) setTimeout(function(){ ed.refresh(); }, 10);
                 });
             });
 
-            /* Theme toggle — delegates to global toggle */
             var themeBtn = panel.querySelector('.pg-theme-btn');
             themeBtn.addEventListener('click', togglePageTheme);
 
-            /* Run button */
             var runBtn = panel.querySelector('.pg-run-btn');
             var outEl  = panel.querySelector('.pg-output');
 
@@ -692,6 +859,52 @@
                     }
                 });
             });
+        }
+
+        /* ── Load solution into right-pane editor ─────────────────────────── */
+        function loadInEditor(btn) {
+            var panel = document.getElementById('pg-top');
+            if (!panel || !panel._editors) return;
+
+            var lang = panel._activeLang || 'java';
+
+            // Try to get code for active lang, fallback to other
+            var raw = '';
+            if (lang === 'java') {
+                raw = btn.dataset.java || btn.dataset.python || '';
+            } else {
+                raw = btn.dataset.python || btn.dataset.java || '';
+                // If we got java code when we wanted python, switch lang preference
+                if (!btn.dataset.python && btn.dataset.java) lang = 'java';
+            }
+            if (!raw) return;
+
+            var editor = panel._editors[lang];
+            if (!editor) {
+                // Try the other lang
+                lang = lang === 'java' ? 'python' : 'java';
+                editor = panel._editors[lang];
+            }
+            if (!editor) return;
+
+            // Switch to the right lang tab
+            panel.querySelectorAll('.pg-lang-btn').forEach(function(b){ b.classList.remove('active'); });
+            var targetBtn = panel.querySelector('.pg-lang-btn[data-lang="' + lang + '"]');
+            if (targetBtn) targetBtn.classList.add('active');
+            panel.querySelectorAll('.pg-editor-pane').forEach(function(p){ p.classList.remove('active'); });
+            var targetPane = panel.querySelector('.pg-editor-pane[data-lang="' + lang + '"]');
+            if (targetPane) targetPane.classList.add('active');
+            panel._activeLang = lang;
+
+            editor.setValue(raw);
+            setTimeout(function(){ editor.refresh(); editor.focus(); }, 20);
+
+            // Flash the right pane title bar as feedback
+            var bar = document.querySelector('.rp-title-bar');
+            if (bar) {
+                bar.style.background = '#38a169';
+                setTimeout(function(){ bar.style.background = ''; }, 600);
+            }
         }
 
         function escHtml(s) {
@@ -738,9 +951,10 @@
             renderNavigation(data.navigation);
         }
 
+        /* ── Right-pane playground ────────────────────────────────────────── */
         function renderTopPlayground() {
-            var container = document.getElementById('try-it-container');
-            if (!container) return;
+            var rightPane = document.getElementById('right-pane');
+            if (!rightPane) return;
 
             var pgId = 'pg-top';
             var themeLabel = isDark() ? '☀ Light' : '🌙 Dark';
@@ -761,19 +975,15 @@
 
             var pythonStarter =
                 '# Write your solution here\n\n' +
-                'def solve(# add params):\n' +
+                'def solve():  # add params\n' +
                 '    pass\n\n\n' +
-                '# Test your solution:\n' +
+                '# Test:\n' +
                 '# print(solve(...))';
 
-            container.innerHTML =
-                '<div class="try-it-section">' +
-                '<div class="try-it-header">' +
-                '<h3>✏️ Try It Yourself</h3>' +
-                '<p>Write and run your solution before checking the answers below</p>' +
-                '</div>' +
+            // Insert playground HTML after the title bar
+            var pgHtml =
                 '<div class="playground-panel open" id="' + pgId + '" ' +
-                'data-java="' + escAttr(javaStarter) + '" ' +
+                'data-java="'   + escAttr(javaStarter)   + '" ' +
                 'data-python="' + escAttr(pythonStarter) + '" data-nowrap="1">' +
                 '<div class="pg-header">' +
                 '<div class="pg-lang-tabs">' +
@@ -788,13 +998,26 @@
                 '<div class="pg-editor-pane active" data-lang="java"><div class="cm-java-host"></div></div>' +
                 '<div class="pg-editor-pane" data-lang="python"><div class="cm-python-host"></div></div>' +
                 '<div class="pg-output"><div class="out-label">Output</div></div>' +
-                '</div>' +
                 '</div>';
 
-            // Auto-init: load CM immediately (no click needed)
+            // Append after title bar (which is already in the DOM)
+            var titleBar = rightPane.querySelector('.rp-title-bar');
+            var temp = document.createElement('div');
+            temp.innerHTML = pgHtml;
+            rightPane.appendChild(temp.firstChild);
+
+            // Load CM and init
             loadCM(function () {
                 var panel = document.getElementById(pgId);
-                if (panel) initPlayground(panel);
+                if (panel) {
+                    initPlayground(panel);
+                    // Refresh so CodeMirror fills the pane correctly
+                    setTimeout(function() {
+                        panel.querySelectorAll('.CodeMirror').forEach(function(el) {
+                            if (el.CodeMirror) el.CodeMirror.refresh();
+                        });
+                    }, 50);
+                }
             });
         }
 
@@ -850,16 +1073,22 @@
                     '</div>';
             }
 
-            /* Playground */
+            // "Load in Editor" button
+            var loadBtn =
+                '<button class="load-in-editor-btn" ' +
+                (jCode ? 'data-java="' + escAttr(jCode) + '" ' : '') +
+                (pCode ? 'data-python="' + escAttr(pCode) + '" ' : '') +
+                'onclick="loadInEditor(this)">▶ Load in Editor</button>';
+
+            /* Per-solution inline playground */
             var pgId = 'pg-' + (++pgCounter);
             var themeLabel = isDark() ? '☀ Light' : '🌙 Dark';
 
-            var jAttr = jCode   ? ' data-java="'   + escAttr(jCode)  + '"' : '';
-            var pAttr = pCode   ? ' data-python="' + escAttr(pCode)  + '"' : '';
+            var jAttr = jCode ? ' data-java="'   + escAttr(jCode) + '"' : '';
+            var pAttr = pCode ? ' data-python="' + escAttr(pCode) + '"' : '';
 
             var jBtnCls = !jCode ? ' disabled' : ' active';
             var pBtnCls = !pCode ? ' disabled' : (jCode ? '' : ' active');
-
             var jPaneCls = jCode ? ' active' : '';
             var pPaneCls = !jCode && pCode ? ' active' : '';
 
@@ -881,7 +1110,7 @@
                   '<div class="pg-output"><div class="out-label">Output</div></div>' +
                 '</div>';
 
-            return displayHtml + playHtml;
+            return displayHtml + loadBtn + playHtml;
         }
 
         function renderSolutions(solutions, containerId) {
@@ -948,11 +1177,55 @@
             return s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
         }
 
+        /* ── Floating panel: drag + resize (used by chat) ─────────────────── */
+        function makeFloating(panel, dragHandle) {
+            var dragging = false, ox = 0, oy = 0;
+            dragHandle.addEventListener('mousedown', function(e) {
+                if (e.target.closest('button')) return;
+                dragging = true;
+                var r = panel.getBoundingClientRect();
+                panel.style.left   = r.left + 'px';
+                panel.style.top    = r.top  + 'px';
+                panel.style.right  = 'auto';
+                panel.style.bottom = 'auto';
+                ox = e.clientX - r.left;
+                oy = e.clientY - r.top;
+                e.preventDefault();
+            });
+            document.addEventListener('mousemove', function(e) {
+                if (!dragging) return;
+                var l = Math.max(0, Math.min(e.clientX - ox, window.innerWidth  - panel.offsetWidth));
+                var t = Math.max(0, Math.min(e.clientY - oy, window.innerHeight - 40));
+                panel.style.left = l + 'px';
+                panel.style.top  = t + 'px';
+            });
+            document.addEventListener('mouseup', function() { dragging = false; });
+
+            var rh = document.createElement('div');
+            rh.className = 'resize-handle';
+            panel.appendChild(rh);
+            var resizing = false, rox = 0, roy = 0, rw = 0, rht = 0;
+            rh.addEventListener('mousedown', function(e) {
+                resizing = true;
+                rox = e.clientX; roy = e.clientY;
+                rw  = panel.offsetWidth; rht = panel.offsetHeight;
+                e.preventDefault(); e.stopPropagation();
+            });
+            document.addEventListener('mousemove', function(e) {
+                if (!resizing) return;
+                panel.style.width  = Math.max(panel._minW || 280, rw  + (e.clientX - rox)) + 'px';
+                panel.style.height = Math.max(panel._minH || 240, rht + (e.clientY - roy)) + 'px';
+                panel.querySelectorAll('.CodeMirror').forEach(function(el) {
+                    if (el.CodeMirror) el.CodeMirror.refresh();
+                });
+            });
+            document.addEventListener('mouseup', function() { resizing = false; });
+        }
+
         /* ── AI Chat ──────────────────────────────────────────────────────── */
         var chatHistory = [];
         var chatOpen = true;
 
-        // Bubble only shows if chat was manually closed this session
         document.addEventListener('DOMContentLoaded', function() {
             if (!sessionStorage.getItem('chat-bubble-dismissed') && !chatOpen) {
                 setTimeout(function() {
@@ -1035,7 +1308,6 @@
             msgs.scrollTop = msgs.scrollHeight;
         }
 
-        // Send on Enter (Shift+Enter for newline)
         document.addEventListener('DOMContentLoaded', function() {
             var input = document.getElementById('chat-input');
             input.addEventListener('keydown', function(e) {
@@ -1044,7 +1316,6 @@
                     sendChat();
                 }
             });
-            // Auto-resize textarea
             input.addEventListener('input', function() {
                 this.style.height = '';
                 this.style.height = Math.min(this.scrollHeight, 90) + 'px';
