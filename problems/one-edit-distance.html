@@ -20,7 +20,7 @@
       gtag('config', 'G-MGQNX8KHDE');
     </script>
 
-    <!-- CodeMirror 5 CSS (tiny, loads instantly) -->
+    <!-- CodeMirror 5 CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/eclipse.min.css">
@@ -42,23 +42,35 @@
         /* ── Header ── */
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white; padding: 20px 0; flex-shrink: 0;
+            color: white; padding: 14px 0; flex-shrink: 0;
         }
-        .header-content { max-width: none; margin: 0; padding: 0 20px; }
-        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-        .breadcrumb { font-size: 0.9rem; opacity: 0.8; }
+        .header-content { padding: 0 20px; }
+        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+        .breadcrumb { font-size: 0.85rem; opacity: 0.8; }
         .breadcrumb a { color: white; text-decoration: none; }
         .breadcrumb a:hover { text-decoration: underline; }
-        h1 { font-size: 1.8rem; margin-bottom: 4px; }
-        .meta { font-size: 0.85rem; opacity: 0.8; }
+        h1 { font-size: 1.6rem; margin-bottom: 2px; }
+        .meta { font-size: 0.82rem; opacity: 0.8; }
+
+        .header-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 
         #global-theme-btn {
             background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.35);
-            color: white; padding: 6px 16px; border-radius: 20px;
-            cursor: pointer; font-size: 0.84rem; font-weight: 600;
-            transition: background .2s; white-space: nowrap; flex-shrink: 0;
+            color: white; padding: 5px 14px; border-radius: 20px;
+            cursor: pointer; font-size: 0.82rem; font-weight: 600;
+            transition: background .2s; white-space: nowrap;
         }
         #global-theme-btn:hover { background: rgba(255,255,255,0.28); }
+
+        #ai-toggle-btn {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.35);
+            color: white; padding: 5px 14px; border-radius: 20px;
+            cursor: pointer; font-size: 0.82rem; font-weight: 600;
+            transition: background .2s; white-space: nowrap;
+            display: flex; align-items: center; gap: 6px;
+        }
+        #ai-toggle-btn:hover { background: rgba(255,255,255,0.28); }
+        #ai-toggle-btn.active { background: rgba(255,255,255,0.3); border-color: rgba(255,255,255,0.6); }
 
         /* ── Split layout ── */
         .split-layout {
@@ -67,18 +79,20 @@
             overflow: hidden;
         }
 
+        /* ── Left pane (problem + solutions) ── */
         .left-pane {
             flex: 1;
-            min-width: 300px;
+            min-width: 280px;
             overflow-y: auto;
-            padding: 20px 24px;
+            padding: 18px 20px;
         }
 
         .content {
             background: white; border-radius: 10px;
-            padding: 28px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 30px;
+            padding: 24px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 24px;
         }
 
+        /* ── Divider ── */
         .split-divider {
             width: 6px;
             cursor: col-resize;
@@ -99,13 +113,12 @@
             border-right: 1px solid #a0aec0;
         }
         .split-divider:hover, .split-divider.dragging { background: #667eea; }
-        .split-divider:hover::after, .split-divider.dragging::after {
-            border-color: rgba(255,255,255,0.5);
-        }
+        .split-divider:hover::after, .split-divider.dragging::after { border-color: rgba(255,255,255,0.5); }
 
-        .right-pane {
-            width: 45%;
-            min-width: 280px;
+        /* ── Middle pane (editor) ── */
+        .mid-pane {
+            width: 38%;
+            min-width: 260px;
             display: flex;
             flex-direction: column;
             background: #1e2330;
@@ -113,55 +126,143 @@
             border-left: 1px solid #2d3748;
         }
 
-        /* ── Right pane: editor ── */
         .rp-title-bar {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 10px 16px; color: white;
-            font-size: 0.88rem; font-weight: 600;
+            padding: 9px 14px; color: white;
+            font-size: 0.86rem; font-weight: 600;
             flex-shrink: 0;
             display: flex; align-items: center; justify-content: space-between; gap: 8px;
         }
-        .rp-title-bar .rp-hint {
-            font-size: 0.74rem; opacity: 0.75; font-weight: 400;
-        }
+        .rp-title-bar .rp-hint { font-size: 0.72rem; opacity: 0.75; font-weight: 400; }
 
-        .right-pane .playground-panel {
-            flex: 1;
+        .mid-pane .playground-panel {
+            flex: 1; display: flex; flex-direction: column;
+            overflow: hidden; border: none; border-radius: 0; margin: 0;
+        }
+        .mid-pane .playground-panel.open { display: flex; }
+        .mid-pane .pg-editor-pane { flex: 1; overflow: hidden; display: none; flex-direction: column; }
+        .mid-pane .pg-editor-pane.active { display: flex; }
+        .mid-pane .CodeMirror { flex: 1; height: 100% !important; max-height: none !important; }
+        .mid-pane .CodeMirror-scroll { max-height: none !important; overflow-y: auto !important; }
+        .mid-pane .pg-output { max-height: 160px; flex-shrink: 0; }
+
+        /* ── Right pane (AI Chat) ── */
+        .chat-pane {
+            width: 320px;
+            min-width: 240px;
             display: flex;
             flex-direction: column;
+            background: white;
+            border-left: 1px solid #e2e8f0;
             overflow: hidden;
-            border: none;
-            border-radius: 0;
-            margin: 0;
+            transition: width 0.25s ease;
         }
-        .right-pane .playground-panel.open { display: flex; }
-
-        .right-pane .pg-editor-pane {
-            flex: 1;
+        .chat-pane.closed {
+            width: 0 !important;
+            min-width: 0;
+            border-left: none;
             overflow: hidden;
-            display: none;
-            flex-direction: column;
         }
-        .right-pane .pg-editor-pane.active { display: flex; }
+        .chat-pane.closed + .split-divider-chat { display: none; }
 
-        .right-pane .CodeMirror {
-            flex: 1;
-            height: 100% !important;
-            max-height: none !important;
+        /* Chat pane header */
+        .chat-pane-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white; padding: 12px 14px;
+            display: flex; align-items: center; justify-content: space-between;
+            flex-shrink: 0;
         }
-        .right-pane .CodeMirror-scroll {
-            max-height: none !important;
-            overflow-y: auto !important;
+        .chat-pane-header-left { display: flex; align-items: center; gap: 10px; }
+        .chat-pane-avatar {
+            width: 28px; height: 28px; border-radius: 50%;
+            background: rgba(255,255,255,0.25);
+            display: flex; align-items: center; justify-content: center; font-size: 0.9rem;
         }
-        .right-pane .pg-output { max-height: 170px; flex-shrink: 0; }
+        .chat-pane-header h4 { margin: 0; font-size: 0.9rem; }
+        .chat-pane-header p  { margin: 0; font-size: 0.72rem; opacity: 0.8; }
+        .chat-pane-close {
+            background: rgba(255,255,255,0.15); border: none; color: white;
+            border-radius: 50%; width: 24px; height: 24px; cursor: pointer;
+            font-size: 0.8rem; display: flex; align-items: center; justify-content: center;
+            transition: background .15s; flex-shrink: 0;
+        }
+        .chat-pane-close:hover { background: rgba(255,255,255,0.3); }
 
-        /* ── Load in Editor button on solutions ── */
+        /* Chat messages */
+        #chat-messages {
+            flex: 1; overflow-y: auto; padding: 12px 12px 6px;
+            display: flex; flex-direction: column; gap: 8px;
+        }
+
+        /* Welcome state */
+        .chat-welcome {
+            flex: 1; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            padding: 20px; text-align: center; gap: 10px;
+            color: #718096;
+        }
+        .chat-welcome .welcome-emoji { font-size: 2.4rem; }
+        .chat-welcome p { font-size: 0.84rem; line-height: 1.5; }
+
+        .chat-msg {
+            max-width: 90%; padding: 8px 12px; border-radius: 14px;
+            font-size: 0.84rem; line-height: 1.5; white-space: pre-wrap; word-break: break-word;
+        }
+        .chat-msg.user {
+            align-self: flex-end; background: #667eea; color: white;
+            border-bottom-right-radius: 4px;
+        }
+        .chat-msg.assistant {
+            align-self: flex-start; background: #f1f3f5; color: #2c3e50;
+            border-bottom-left-radius: 4px;
+        }
+        .chat-msg.error { background: #ffe3e3; color: #c0392b; align-self: flex-start; }
+        .chat-typing {
+            align-self: flex-start; background: #f1f3f5;
+            padding: 8px 12px; border-radius: 14px; border-bottom-left-radius: 4px;
+            font-size: 0.84rem; color: #718096;
+        }
+
+        /* Quick chips */
+        .chat-chips {
+            padding: 8px 12px 4px; display: flex; flex-wrap: wrap; gap: 6px; flex-shrink: 0;
+        }
+        .chat-chip {
+            padding: 4px 10px; background: transparent; border: 1px solid #667eea;
+            border-radius: 14px; color: #667eea; font-size: 0.75rem; font-weight: 600;
+            cursor: pointer; transition: background .15s, color .15s; white-space: nowrap;
+        }
+        .chat-chip:hover { background: #667eea; color: white; }
+
+        /* Chat input */
+        .chat-input-row {
+            display: flex; gap: 7px; padding: 8px 10px 10px; flex-shrink: 0;
+            border-top: 1px solid #e2e8f0;
+        }
+        #chat-input {
+            flex: 1; border: 1px solid #d0d7de; border-radius: 18px;
+            padding: 7px 12px; font-size: 0.84rem; font-family: inherit;
+            resize: none; outline: none; line-height: 1.4; max-height: 80px;
+            transition: border-color .15s;
+        }
+        #chat-input:focus { border-color: #667eea; }
+        #chat-send {
+            background: #667eea; border: none; color: white;
+            border-radius: 50%; width: 32px; height: 32px; flex-shrink: 0;
+            cursor: pointer; font-size: 0.95rem; display: flex;
+            align-items: center; justify-content: center;
+            transition: background .15s; align-self: flex-end;
+        }
+        #chat-send:hover { background: #5a6fd6; }
+        #chat-send:disabled { background: #a0aec0; cursor: not-allowed; }
+
+        /* ── Load in Editor button ── */
         .load-in-editor-btn {
             display: inline-flex; align-items: center; gap: 6px;
-            margin-top: 10px; padding: 6px 14px;
+            margin-top: 10px; padding: 5px 12px;
             background: transparent; border: 1.5px solid #667eea;
             border-radius: 6px; color: #667eea;
-            font-size: 0.82rem; font-weight: 600; cursor: pointer;
+            font-size: 0.8rem; font-weight: 600; cursor: pointer;
             transition: background .15s, color .15s;
         }
         .load-in-editor-btn:hover { background: #667eea; color: white; }
@@ -169,54 +270,43 @@
         /* ── Problem content ── */
         .problem-description {
             background: #e3f2fd; border-left: 4px solid #2196f3;
-            padding: 18px; margin-bottom: 24px; border-radius: 0 6px 6px 0;
+            padding: 16px; margin-bottom: 20px; border-radius: 0 6px 6px 0;
         }
-        .solution { margin-bottom: 36px; }
+        .solution { margin-bottom: 32px; }
         .solution h3 {
-            color: #2c3e50; font-size: 1.3rem; margin: 0;
-            padding-bottom: 7px; border-bottom: 2px solid #3498db;
-            flex: 1;
+            color: #2c3e50; font-size: 1.2rem; margin: 0;
+            padding-bottom: 6px; border-bottom: 2px solid #3498db; flex: 1;
         }
 
         /* ── Collapsible solution header ── */
         .sol-header {
             display: flex; align-items: center; gap: 14px;
-            cursor: pointer; padding: 6px 0; border-radius: 6px;
-            margin-bottom: 4px;
+            cursor: pointer; padding: 6px 0; border-radius: 6px; margin-bottom: 4px;
         }
         .sol-header:hover h3 { color: #2980b9; }
         .sol-toggle-btn {
-            flex-shrink: 0;
-            padding: 5px 14px;
-            background: transparent;
-            border: 1.5px solid #3498db;
-            border-radius: 20px;
-            color: #3498db;
-            font-size: 0.78rem; font-weight: 600; cursor: pointer;
-            transition: background .15s, color .15s;
-            white-space: nowrap;
+            flex-shrink: 0; padding: 4px 12px;
+            background: transparent; border: 1.5px solid #3498db;
+            border-radius: 20px; color: #3498db;
+            font-size: 0.76rem; font-weight: 600; cursor: pointer;
+            transition: background .15s, color .15s; white-space: nowrap;
         }
         .sol-toggle-btn:hover { background: #3498db; color: white; }
-        .sol-body { margin-top: 12px; }
-
-        body.dark .solution h3 { color: #e6edf3; border-bottom-color: #388bfd; }
-        body.dark .sol-header:hover h3 { color: #79c0ff; }
-        body.dark .sol-toggle-btn { border-color: #388bfd; color: #79c0ff; }
-        body.dark .sol-toggle-btn:hover { background: #388bfd; color: white; }
+        .sol-body { margin-top: 10px; }
 
         /* ── Display language tabs ── */
-        .code-tabs-wrapper { margin: 12px 0; }
+        .code-tabs-wrapper { margin: 10px 0; }
         .code-tab-bar {
             display: flex; background: #1a202c;
             border-radius: 8px 8px 0 0; border: 1px solid #4a5568;
-            border-bottom: none; padding: 6px 8px 0;
+            border-bottom: none; padding: 5px 7px 0;
         }
         .code-tab-btn {
-            padding: 7px 20px; background: transparent; color: #718096;
+            padding: 6px 18px; background: transparent; color: #718096;
             border: none; border-radius: 6px 6px 0 0; cursor: pointer;
-            font-family: 'Segoe UI', sans-serif; font-size: 0.82rem; font-weight: 600;
+            font-family: 'Segoe UI', sans-serif; font-size: 0.8rem; font-weight: 600;
             letter-spacing: 0.4px; transition: color .15s, background .15s;
-            display: flex; align-items: center; gap: 6px; position: relative;
+            display: flex; align-items: center; gap: 5px; position: relative;
         }
         .code-tab-btn.active { background: #2d3748; color: #e2e8f0; }
         .code-tab-btn.active::after {
@@ -226,8 +316,8 @@
         .code-tab-btn:hover:not(.active) { color: #a0aec0; background: #252f3e; }
 
         .lang-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-        .java-tab .lang-dot, .java-label .lang-dot       { background: #f89820; }
-        .python-tab .lang-dot, .python-label .lang-dot   { background: #3572A5; }
+        .java-tab .lang-dot, .java-label .lang-dot     { background: #f89820; }
+        .python-tab .lang-dot, .python-label .lang-dot { background: #3572A5; }
 
         .code-panel { display: none; }
         .code-panel.active { display: block; }
@@ -235,12 +325,12 @@
 
         .code-label-bar {
             display: flex; background: #1a202c; border-radius: 8px 8px 0 0;
-            border: 1px solid #4a5568; border-bottom: none; padding: 6px 8px 0;
+            border: 1px solid #4a5568; border-bottom: none; padding: 5px 7px 0;
         }
         .code-label {
-            padding: 7px 20px; background: #2d3748; color: #e2e8f0;
-            border-radius: 6px 6px 0 0; font-size: 0.82rem; font-weight: 600;
-            letter-spacing: 0.4px; display: flex; align-items: center; gap: 6px; position: relative;
+            padding: 6px 18px; background: #2d3748; color: #e2e8f0;
+            border-radius: 6px 6px 0 0; font-size: 0.8rem; font-weight: 600;
+            letter-spacing: 0.4px; display: flex; align-items: center; gap: 5px; position: relative;
         }
         .code-label::after {
             content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
@@ -249,18 +339,18 @@
 
         .code-block {
             background: #2d3748; border: 1px solid #4a5568; border-radius: 8px;
-            padding: 18px; margin: 12px 0; overflow-x: auto;
+            padding: 16px; margin: 10px 0; overflow-x: auto;
             font-family: 'Courier New', 'Monaco', monospace;
-            font-size: 0.92rem; line-height: 1.5; white-space: pre;
+            font-size: 0.88rem; line-height: 1.5; white-space: pre;
             color: #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        /* ── Playground (inline per-solution) ── */
+        /* ── Playground ── */
         .playground-toggle {
-            margin-top: 8px; padding: 7px 16px;
+            margin-top: 8px; padding: 6px 14px;
             background: transparent; border: 1.5px solid #667eea;
             border-radius: 6px; color: #667eea;
-            font-size: 0.84rem; font-weight: 600; cursor: pointer;
+            font-size: 0.82rem; font-weight: 600; cursor: pointer;
             transition: background .15s, color .15s;
             display: inline-flex; align-items: center; gap: 6px;
         }
@@ -275,32 +365,31 @@
 
         .pg-header {
             display: flex; align-items: center; justify-content: space-between;
-            background: #1a202c; padding: 8px 12px; gap: 8px; flex-wrap: wrap;
-            flex-shrink: 0;
+            background: #1a202c; padding: 7px 10px; gap: 8px; flex-wrap: wrap; flex-shrink: 0;
         }
         .pg-lang-tabs { display: flex; gap: 4px; }
         .pg-lang-btn {
-            padding: 5px 14px; background: transparent; color: #718096;
+            padding: 4px 12px; background: transparent; color: #718096;
             border: 1px solid transparent; border-radius: 5px; cursor: pointer;
-            font-size: 0.8rem; font-weight: 600;
-            display: inline-flex; align-items: center; gap: 5px; transition: all .15s;
+            font-size: 0.78rem; font-weight: 600;
+            display: inline-flex; align-items: center; gap: 4px; transition: all .15s;
         }
         .pg-lang-btn.active { background: #2d3748; color: #e2e8f0; border-color: #4a5568; }
         .pg-lang-btn:hover:not(.active):not(.disabled) { color: #a0aec0; }
         .pg-lang-btn.disabled { opacity: .35; cursor: not-allowed; }
 
-        .pg-controls { display: flex; align-items: center; gap: 8px; }
+        .pg-controls { display: flex; align-items: center; gap: 7px; }
         .pg-theme-btn {
             background: transparent; border: 1px solid #4a5568;
-            border-radius: 5px; color: #a0aec0; padding: 5px 10px;
-            font-size: 0.8rem; cursor: pointer; transition: all .15s;
+            border-radius: 5px; color: #a0aec0; padding: 4px 9px;
+            font-size: 0.78rem; cursor: pointer; transition: all .15s;
         }
         .pg-theme-btn:hover { border-color: #718096; color: #e2e8f0; }
         .pg-run-btn {
-            padding: 5px 16px; background: #48bb78; color: white;
-            border: none; border-radius: 5px; font-size: 0.82rem; font-weight: 700;
+            padding: 4px 14px; background: #48bb78; color: white;
+            border: none; border-radius: 5px; font-size: 0.8rem; font-weight: 700;
             cursor: pointer; transition: background .15s;
-            display: inline-flex; align-items: center; gap: 5px;
+            display: inline-flex; align-items: center; gap: 4px;
         }
         .pg-run-btn:hover { background: #38a169; }
         .pg-run-btn:disabled { background: #718096; cursor: not-allowed; }
@@ -308,38 +397,38 @@
         .pg-editor-pane { display: none; }
         .pg-editor-pane.active { display: block; }
 
-        /* CodeMirror 5 overrides (for inline per-solution editors) */
+        /* CodeMirror overrides (inline per-solution) */
         .CodeMirror {
-            height: auto; min-height: 180px; max-height: 380px;
+            height: auto; min-height: 160px; max-height: 340px;
             font-family: 'Courier New', 'Monaco', monospace;
-            font-size: 0.88rem; line-height: 1.55;
+            font-size: 0.86rem; line-height: 1.5;
         }
-        .CodeMirror-scroll { max-height: 380px; }
+        .CodeMirror-scroll { max-height: 340px; }
 
         .pg-output {
             background: #0d1117; border-top: 1px solid #30363d;
-            padding: 12px 16px; font-family: 'Courier New', monospace;
-            font-size: 0.85rem; color: #c9d1d9;
-            min-height: 44px; max-height: 220px; overflow-y: auto; white-space: pre-wrap;
+            padding: 10px 14px; font-family: 'Courier New', monospace;
+            font-size: 0.83rem; color: #c9d1d9;
+            min-height: 40px; max-height: 200px; overflow-y: auto; white-space: pre-wrap;
         }
         .pg-output.has-error { color: #ff6b6b; }
-        .out-label { color: #4a5568; font-size: 0.72rem; font-family: 'Segoe UI', sans-serif; margin-bottom: 4px; }
+        .out-label { color: #4a5568; font-size: 0.7rem; font-family: 'Segoe UI', sans-serif; margin-bottom: 4px; }
 
         /* Misc */
         .complexity {
             background: #fff3cd; border: 1px solid #ffeaa7;
-            border-radius: 6px; padding: 15px; margin: 12px 0;
+            border-radius: 6px; padding: 12px; margin: 10px 0;
         }
         .complexity strong { color: #856404; }
         .example {
             background: #d1ecf1; border: 1px solid #bee5eb;
-            border-radius: 6px; padding: 15px; margin: 12px 0;
+            border-radius: 6px; padding: 12px; margin: 10px 0;
         }
         .example strong { color: #0c5460; }
-        .navigation { display: flex; justify-content: space-between; margin-top: 24px; }
+        .navigation { display: flex; justify-content: space-between; margin-top: 20px; }
         .nav-btn {
-            padding: 10px 20px; background: #3498db; color: white;
-            text-decoration: none; border-radius: 6px; transition: background .2s;
+            padding: 9px 18px; background: #3498db; color: white;
+            text-decoration: none; border-radius: 6px; transition: background .2s; font-size: 0.9rem;
         }
         .nav-btn:hover { background: #2980b9; }
         .loading { text-align: center; padding: 40px; color: #666; }
@@ -362,12 +451,17 @@
         body.light .pg-output.has-error { color: #cf222e; }
         body.light .out-label { color: #8c959f; }
         body.light .split-divider { background: #d0d7de; }
-        body.light .right-pane { background: #f6f8fa; border-left-color: #d0d7de; }
+        body.light .mid-pane { background: #f6f8fa; border-left-color: #d0d7de; }
+        body.light .chat-pane { background: #fff; border-left-color: #d0d7de; }
 
-        /* ── Full-page dark mode ── */
+        /* ── Dark mode ── */
         body.dark { background-color: #0d1117; color: #c9d1d9; }
         body.dark .content { background: #161b22; box-shadow: 0 4px 6px rgba(0,0,0,0.4); }
         body.dark .problem-description { background: #1c2938; border-left-color: #388bfd; color: #adbac7; }
+        body.dark .solution h3 { color: #e6edf3; border-bottom-color: #388bfd; }
+        body.dark .sol-header:hover h3 { color: #79c0ff; }
+        body.dark .sol-toggle-btn { border-color: #388bfd; color: #79c0ff; }
+        body.dark .sol-toggle-btn:hover { background: #388bfd; color: white; }
         body.dark p, body.dark li { color: #adbac7; }
         body.dark .complexity { background: #272115; border-color: #4d4117; color: #e3b341; }
         body.dark .complexity strong { color: #e3b341; }
@@ -380,154 +474,28 @@
         body.dark .playground-panel { border-color: #4a5568; }
         body.dark .split-divider { background: #2d3748; }
         body.dark .split-divider::after { border-color: rgba(255,255,255,0.2); }
-
-        /* ── Mobile: stack vertically ── */
-        @media (max-width: 768px) {
-            body { height: auto; overflow: auto; }
-            .split-layout { flex-direction: column; overflow: visible; }
-            .left-pane { padding: 10px; min-width: 0; overflow-y: visible; }
-            .split-divider { display: none; }
-            .right-pane { width: 100%; min-width: 0; height: 520px; border-left: none; border-top: 2px solid #667eea; }
-            .content { padding: 16px; }
-            h1 { font-size: 1.5rem; }
-        }
-
-        /* ── AI Chat Widget ── */
-        #chat-fab {
-            position: fixed; bottom: 28px; right: 28px; z-index: 1000;
-            width: 54px; height: 54px; border-radius: 50%;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border: none; cursor: pointer; box-shadow: 0 4px 16px rgba(102,126,234,0.5);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.4rem; transition: transform .2s, box-shadow .2s;
-        }
-        #chat-fab:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(102,126,234,0.65); }
-
-        #chat-bubble {
-            position: fixed; bottom: 92px; right: 20px; z-index: 1000;
-            background: white; border-radius: 14px 14px 4px 14px;
-            padding: 10px 14px 10px 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            border: 1px solid #e2e8f0; max-width: 210px;
-            display: none; align-items: flex-start; gap: 8px;
-            animation: bubblePop .3s cubic-bezier(.175,.885,.32,1.275);
-        }
-        #chat-bubble.visible { display: flex; }
-        @keyframes bubblePop {
-            from { opacity: 0; transform: scale(0.8) translateY(10px); }
-            to   { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        #chat-bubble p {
-            margin: 0; font-size: 0.83rem; line-height: 1.4;
-            color: #2c3e50; font-weight: 500;
-        }
-        #chat-bubble .bubble-dismiss {
-            background: none; border: none; cursor: pointer;
-            color: #a0aec0; font-size: 0.9rem; padding: 0; line-height: 1;
-            flex-shrink: 0; margin-top: 1px;
-        }
-        #chat-bubble .bubble-dismiss:hover { color: #718096; }
-        #chat-bubble::after {
-            content: ''; position: absolute; bottom: -8px; right: 22px;
-            border: 8px solid transparent;
-            border-top-color: white; border-bottom: none;
-            filter: drop-shadow(0 2px 1px rgba(0,0,0,0.08));
-        }
-        body.dark #chat-bubble { background: #21262d; border-color: #30363d; }
-        body.dark #chat-bubble p { color: #c9d1d9; }
-        body.dark #chat-bubble::after { border-top-color: #21262d; }
-
-        #chat-window {
-            position: fixed; bottom: 94px; right: 28px; z-index: 1000;
-            width: 360px; height: 500px;
-            max-width: calc(100vw - 40px); max-height: calc(100vh - 120px);
-            background: white; border-radius: 14px;
-            box-shadow: 0 8px 40px rgba(0,0,0,0.18);
-            display: none; flex-direction: column; overflow: hidden;
-            border: 1px solid #e2e8f0;
-            min-width: 280px; min-height: 240px;
-        }
-        #chat-window.open { display: flex; }
-
-        .chat-header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white; padding: 14px 16px;
-            display: flex; align-items: center; justify-content: space-between;
-            flex-shrink: 0; cursor: move; user-select: none;
-        }
-        .chat-header-left { display: flex; align-items: center; gap: 10px; }
-        .chat-avatar {
-            width: 32px; height: 32px; border-radius: 50%;
-            background: rgba(255,255,255,0.25);
-            display: flex; align-items: center; justify-content: center; font-size: 1rem;
-        }
-        .chat-header h4 { margin: 0; font-size: 0.95rem; }
-        .chat-header p  { margin: 0; font-size: 0.75rem; opacity: 0.8; }
-        .chat-close-btn {
-            background: transparent; border: none; color: white;
-            font-size: 1.2rem; cursor: pointer; opacity: 0.8; line-height: 1;
-            padding: 2px 6px; border-radius: 4px;
-        }
-        .chat-close-btn:hover { opacity: 1; background: rgba(255,255,255,0.15); }
-
-        #chat-messages {
-            flex: 1; overflow-y: auto; padding: 14px 14px 6px;
-            display: flex; flex-direction: column; gap: 10px;
-        }
-        .chat-msg {
-            max-width: 88%; padding: 9px 13px; border-radius: 14px;
-            font-size: 0.87rem; line-height: 1.5; white-space: pre-wrap; word-break: break-word;
-        }
-        .chat-msg.user {
-            align-self: flex-end; background: #667eea; color: white;
-            border-bottom-right-radius: 4px;
-        }
-        .chat-msg.assistant {
-            align-self: flex-start; background: #f1f3f5; color: #2c3e50;
-            border-bottom-left-radius: 4px;
-        }
-        .chat-msg.error { background: #ffe3e3; color: #c0392b; }
-        .chat-typing {
-            align-self: flex-start; background: #f1f3f5;
-            padding: 9px 13px; border-radius: 14px; border-bottom-left-radius: 4px;
-            font-size: 0.87rem; color: #718096;
-        }
-
-        .chat-input-row {
-            display: flex; gap: 8px; padding: 10px 12px 12px; flex-shrink: 0;
-            border-top: 1px solid #e2e8f0;
-        }
-        #chat-input {
-            flex: 1; border: 1px solid #d0d7de; border-radius: 20px;
-            padding: 8px 14px; font-size: 0.87rem; font-family: inherit;
-            resize: none; outline: none; line-height: 1.4; max-height: 90px;
-            transition: border-color .15s;
-        }
-        #chat-input:focus { border-color: #667eea; }
-        #chat-send {
-            background: #667eea; border: none; color: white;
-            border-radius: 50%; width: 36px; height: 36px; flex-shrink: 0;
-            cursor: pointer; font-size: 1rem; display: flex;
-            align-items: center; justify-content: center;
-            transition: background .15s; align-self: flex-end;
-        }
-        #chat-send:hover { background: #5a6fd6; }
-        #chat-send:disabled { background: #a0aec0; cursor: not-allowed; }
-
-        /* dark mode chat */
-        body.dark #chat-window { background: #161b22; border-color: #30363d; }
+        body.dark .chat-pane { background: #161b22; border-left-color: #30363d; }
+        body.dark .chat-pane-header { /* already gradient */ }
         body.dark .chat-msg.assistant { background: #21262d; color: #c9d1d9; }
         body.dark #chat-input { background: #21262d; border-color: #30363d; color: #c9d1d9; }
         body.dark #chat-input:focus { border-color: #667eea; }
         body.dark .chat-input-row { border-top-color: #30363d; }
         body.dark .chat-typing { background: #21262d; }
+        body.dark .chat-chip { border-color: #667eea; color: #a78bfa; }
+        body.dark .chat-chip:hover { background: #667eea; color: white; }
+        body.dark .chat-welcome { color: #718096; }
 
-        /* ── Resize handle for chat ── */
-        .resize-handle {
-            position: absolute; bottom: 0; right: 0;
-            width: 20px; height: 20px; cursor: se-resize; z-index: 10;
-            background: linear-gradient(135deg,
-                transparent 40%, rgba(102,126,234,0.5) 40%, rgba(102,126,234,0.5) 55%, transparent 55%,
-                transparent 65%, rgba(102,126,234,0.5) 65%, rgba(102,126,234,0.5) 80%, transparent 80%);
+        /* ── Mobile ── */
+        @media (max-width: 768px) {
+            body { height: auto; overflow: auto; }
+            .split-layout { flex-direction: column; overflow: visible; }
+            .left-pane { padding: 10px; min-width: 0; overflow-y: visible; }
+            .split-divider { display: none !important; }
+            .mid-pane { width: 100%; min-width: 0; height: 480px; border-left: none; border-top: 2px solid #667eea; }
+            .chat-pane { width: 100% !important; min-width: 0; height: 400px; border-left: none; border-top: 2px solid #764ba2; }
+            .chat-pane.closed { height: 0 !important; }
+            .content { padding: 14px; }
+            h1 { font-size: 1.3rem; }
         }
     </style>
 </head>
@@ -540,7 +508,10 @@
                     <span id="breadcrumb-category">Category</span> &gt;
                     <span id="breadcrumb-title">Problem</span>
                 </div>
-                <button id="global-theme-btn" onclick="togglePageTheme()">🌙 Dark</button>
+                <div class="header-actions">
+                    <button id="global-theme-btn" onclick="togglePageTheme()">🌙 Dark</button>
+                    <button id="ai-toggle-btn" onclick="toggleChatPane()" class="active">🤖 AI Buddy</button>
+                </div>
             </div>
             <h1 id="problem-title">Loading...</h1>
             <div class="meta" id="problem-meta">Loading...</div>
@@ -568,42 +539,53 @@
             </div>
         </div>
 
-        <!-- ── Divider ── -->
-        <div class="split-divider" id="split-divider"></div>
+        <!-- ── Divider 1 (left | editor) ── -->
+        <div class="split-divider" id="split-divider-1"></div>
 
-        <!-- ── Right: Try It Yourself editor ── -->
-        <div class="right-pane" id="right-pane">
+        <!-- ── Middle: editor ── -->
+        <div class="mid-pane" id="mid-pane">
             <div class="rp-title-bar">
                 <span>✏️ Try It Yourself</span>
                 <span class="rp-hint">Load a solution or write from scratch</span>
             </div>
             <!-- playground injected by renderTopPlayground() -->
         </div>
-    </div>
 
-    <!-- ── AI Chat Widget ─────────────────────────────────────────── -->
-    <div id="chat-bubble">
-        <p>Need help? Ask your<br><strong>Study Buddy!</strong> 💡</p>
-        <button class="bubble-dismiss" onclick="dismissBubble()" title="Dismiss">✕</button>
-    </div>
-    <button id="chat-fab" onclick="toggleChat()" title="Ask AI">🤖</button>
-    <div id="chat-window" class="open">
-        <div class="chat-header">
-            <div class="chat-header-left">
-                <div class="chat-avatar">🤖</div>
-                <div>
-                    <h4>AI Study Buddy</h4>
-                    <p>Powered by Llama 3.3 · Ask anything</p>
+        <!-- ── Divider 2 (editor | chat) ── -->
+        <div class="split-divider" id="split-divider-2"></div>
+
+        <!-- ── Right: AI Study Buddy ── -->
+        <div class="chat-pane" id="chat-pane">
+            <div class="chat-pane-header">
+                <div class="chat-pane-header-left">
+                    <div class="chat-pane-avatar">🤖</div>
+                    <div>
+                        <h4>AI Study Buddy</h4>
+                        <p>Powered by Llama 3.3</p>
+                    </div>
+                </div>
+                <button class="chat-pane-close" onclick="toggleChatPane()" title="Close">✕</button>
+            </div>
+
+            <div id="chat-messages">
+                <div class="chat-welcome" id="chat-welcome">
+                    <span class="welcome-emoji">🤖</span>
+                    <p>Hi! I'm here to help you work through this problem.</p>
+                    <p style="font-size:0.78rem;opacity:0.75">Ask me about the approach, complexity, hints — anything!</p>
                 </div>
             </div>
-            <button class="chat-close-btn" onclick="toggleChat()">✕</button>
-        </div>
-        <div id="chat-messages">
-            <div class="chat-msg assistant">Hi! I'm here to help you work through this problem. Ask me about the approach, time complexity, hints — anything! 👋</div>
-        </div>
-        <div class="chat-input-row">
-            <textarea id="chat-input" placeholder="Ask a question…" rows="1"></textarea>
-            <button id="chat-send" onclick="sendChat()">➤</button>
+
+            <div class="chat-chips" id="chat-chips">
+                <button class="chat-chip" onclick="sendChip('Give me a hint without spoiling the solution')">💡 Hint</button>
+                <button class="chat-chip" onclick="sendChip('What is the optimal time complexity for this problem?')">⏱ Complexity</button>
+                <button class="chat-chip" onclick="sendChip('Explain the key algorithm or data structure needed')">📖 Approach</button>
+                <button class="chat-chip" onclick="sendChip('Give me a step-by-step walkthrough of the example')">🔍 Walkthrough</button>
+            </div>
+
+            <div class="chat-input-row">
+                <textarea id="chat-input" placeholder="Ask anything…" rows="1"></textarea>
+                <button id="chat-send" onclick="sendChat()">➤</button>
+            </div>
         </div>
     </div>
 
@@ -642,32 +624,74 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             syncThemeButtons();
-            // Make chat window draggable + resizable
-            var chatWin = document.getElementById('chat-window');
-            var chatHdr = chatWin.querySelector('.chat-header');
-            chatWin._minW = 280; chatWin._minH = 240;
-            makeFloating(chatWin, chatHdr);
-            // Init split divider
-            initSplitDivider();
+            initSplitDividers();
+
+            // Restore chat pane state
+            if (localStorage.getItem('chat-pane-closed') === '1') {
+                var pane = document.getElementById('chat-pane');
+                var div2 = document.getElementById('split-divider-2');
+                var btn  = document.getElementById('ai-toggle-btn');
+                pane.classList.add('closed');
+                if (div2) div2.style.display = 'none';
+                btn.classList.remove('active');
+            }
+
+            // Chat textarea behaviour
+            var input = document.getElementById('chat-input');
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChat(); }
+            });
+            input.addEventListener('input', function() {
+                this.style.height = '';
+                this.style.height = Math.min(this.scrollHeight, 80) + 'px';
+            });
         });
 
-        /* ── Split-pane divider drag ──────────────────────────────────────── */
-        function initSplitDivider() {
-            var divider  = document.getElementById('split-divider');
-            var leftPane = document.getElementById('left-pane');
-            var rightPane= document.getElementById('right-pane');
-            var layout   = divider.parentElement;
+        /* ── Chat pane toggle ─────────────────────────────────────────────── */
+        function toggleChatPane() {
+            var pane = document.getElementById('chat-pane');
+            var div2 = document.getElementById('split-divider-2');
+            var btn  = document.getElementById('ai-toggle-btn');
+            var closing = !pane.classList.contains('closed');
 
-            // Restore saved width
-            var saved = localStorage.getItem('split-right-width');
-            if (saved) rightPane.style.width = saved + 'px';
+            pane.classList.toggle('closed', closing);
+            if (div2) div2.style.display = closing ? 'none' : '';
+            btn.classList.toggle('active', !closing);
+            localStorage.setItem('chat-pane-closed', closing ? '1' : '0');
 
-            var dragging = false, startX = 0, startW = 0;
+            // Refresh editor after resize
+            setTimeout(function() {
+                document.querySelectorAll('.mid-pane .CodeMirror').forEach(function(el) {
+                    if (el.CodeMirror) el.CodeMirror.refresh();
+                });
+            }, 280);
+        }
+
+        /* ── Split dividers ───────────────────────────────────────────────── */
+        function initSplitDividers() {
+            makeDivider('split-divider-1', 'left-pane', null, 'mid-pane', true);
+            makeDivider('split-divider-2', 'mid-pane',  null, 'chat-pane', false);
+
+            // Restore saved widths
+            var savedMid  = localStorage.getItem('split-mid-width');
+            var savedChat = localStorage.getItem('split-chat-width');
+            if (savedMid)  document.getElementById('mid-pane').style.width  = savedMid  + 'px';
+            if (savedChat) document.getElementById('chat-pane').style.width = savedChat + 'px';
+        }
+
+        function makeDivider(dividerId, leftId, rightId, rightPaneId, saveLeft) {
+            var divider   = document.getElementById(dividerId);
+            var layout    = divider.parentElement;
+            var leftEl    = document.getElementById(leftId);
+            var rightEl   = document.getElementById(rightPaneId);
+
+            var dragging = false, startX = 0, startLeftW = 0, startRightW = 0;
 
             divider.addEventListener('mousedown', function(e) {
                 dragging = true;
                 startX = e.clientX;
-                startW = rightPane.offsetWidth;
+                startLeftW  = leftEl.offsetWidth;
+                startRightW = rightEl.offsetWidth;
                 divider.classList.add('dragging');
                 document.body.style.cursor = 'col-resize';
                 document.body.style.userSelect = 'none';
@@ -676,15 +700,22 @@
 
             document.addEventListener('mousemove', function(e) {
                 if (!dragging) return;
-                var delta = startX - e.clientX;  // positive = making right pane wider
+                var delta = e.clientX - startX;
                 var layoutW = layout.offsetWidth;
-                var newW = Math.min(
-                    Math.max(280, startW + delta),
-                    layoutW - 320  // always leave at least 320px for left
-                );
-                rightPane.style.width = newW + 'px';
-                // Refresh CodeMirror after resize
-                rightPane.querySelectorAll('.CodeMirror').forEach(function(el) {
+
+                if (dividerId === 'split-divider-1') {
+                    // Moving divider 1: grow/shrink mid-pane
+                    var newMid = Math.max(220, Math.min(startRightW - delta, layoutW - 300));
+                    rightEl.style.width = newMid + 'px';
+                    localStorage.setItem('split-mid-width', newMid);
+                } else {
+                    // Moving divider 2: grow/shrink chat-pane
+                    var newChat = Math.max(220, Math.min(startRightW - delta, layoutW - 400));
+                    rightEl.style.width = newChat + 'px';
+                    localStorage.setItem('split-chat-width', newChat);
+                }
+
+                document.querySelectorAll('.mid-pane .CodeMirror').forEach(function(el) {
                     if (el.CodeMirror) el.CodeMirror.refresh();
                 });
             });
@@ -695,7 +726,6 @@
                 divider.classList.remove('dragging');
                 document.body.style.cursor = '';
                 document.body.style.userSelect = '';
-                localStorage.setItem('split-right-width', rightPane.offsetWidth);
             });
         }
 
@@ -739,7 +769,7 @@
             return code + '\n\n# Test your solution:\n# print(your_function(args))';
         }
 
-        /* ── Judge0 CE API ────────────────────────────────────────────────── */
+        /* ── Judge0 CE ────────────────────────────────────────────────────── */
         function prepareJava(code) {
             return code.replace(/public\s+class\s+\w+/, 'public class Main');
         }
@@ -772,26 +802,22 @@
             wrapper.querySelector('#' + tabId + '-' + lang).classList.add('active');
         }
 
-        /* ── Per-solution playground open/close ──────────────────────────── */
+        /* ── Per-solution playground ──────────────────────────────────────── */
         function openPlayground(pgId) {
             var panel  = document.getElementById(pgId);
             var toggle = panel.previousElementSibling;
-
             if (panel.classList.contains('open')) {
                 panel.classList.remove('open');
                 toggle.textContent = '▶  Try it';
                 return;
             }
-
             if (panel.dataset.ready) {
                 panel.classList.add('open');
                 toggle.textContent = '▼  Close editor';
                 return;
             }
-
             toggle.disabled = true;
             toggle.textContent = 'Loading editor…';
-
             loadCM(function () {
                 initPlayground(panel);
                 panel.classList.add('open');
@@ -802,27 +828,20 @@
 
         function initPlayground(panel) {
             panel.dataset.ready = '1';
-
             var javaCodeRaw   = panel.dataset.java   || '';
             var pythonCodeRaw = panel.dataset.python || '';
             var noWrap        = !!panel.dataset.nowrap;
-            var javaCode      = javaCodeRaw   ? (noWrap ? javaCodeRaw   : wrapJava(javaCodeRaw))   : '';
-            var pythonCode    = pythonCodeRaw ? (noWrap ? pythonCodeRaw : wrapPython(pythonCodeRaw)) : '';
+            var javaCode   = javaCodeRaw   ? (noWrap ? javaCodeRaw   : wrapJava(javaCodeRaw))   : '';
+            var pythonCode = pythonCodeRaw ? (noWrap ? pythonCodeRaw : wrapPython(pythonCodeRaw)) : '';
 
             var editors = {};
             var currentTheme = isDark() ? 'dracula' : 'eclipse';
 
             function makeEditor(host, code, mode) {
                 return CodeMirror(host, {
-                    value: code,
-                    mode: mode,
-                    theme: currentTheme,
-                    lineNumbers: true,
-                    indentWithTabs: false,
-                    tabSize: 4,
-                    indentUnit: 4,
-                    lineWrapping: false,
-                    autofocus: false
+                    value: code, mode: mode, theme: currentTheme,
+                    lineNumbers: true, indentWithTabs: false, tabSize: 4,
+                    indentUnit: 4, lineWrapping: false, autofocus: false
                 });
             }
 
@@ -831,11 +850,8 @@
             if (javaCode && javaHost)     editors.java   = makeEditor(javaHost,   javaCode,   'text/x-java');
             if (pythonCode && pythonHost) editors.python = makeEditor(pythonHost, pythonCode, 'python');
 
-            // Expose editors so loadInEditor can access them
-            panel._editors = editors;
-
-            var activeLang = javaCode ? 'java' : 'python';
-            panel._activeLang = activeLang;
+            panel._editors    = editors;
+            panel._activeLang = javaCode ? 'java' : 'python';
 
             panel.querySelectorAll('.pg-lang-btn').forEach(function(btn) {
                 btn.addEventListener('click', function () {
@@ -850,24 +866,19 @@
                 });
             });
 
-            var themeBtn = panel.querySelector('.pg-theme-btn');
-            themeBtn.addEventListener('click', togglePageTheme);
+            panel.querySelector('.pg-theme-btn').addEventListener('click', togglePageTheme);
 
             var runBtn = panel.querySelector('.pg-run-btn');
             var outEl  = panel.querySelector('.pg-output');
-
             runBtn.addEventListener('click', function () {
                 var lang   = panel._activeLang;
                 var editor = editors[lang];
                 if (!editor) return;
-                var code   = editor.getValue();
-
                 runBtn.disabled = true;
                 runBtn.textContent = 'Running…';
                 outEl.className = 'pg-output';
                 outEl.innerHTML = '<div class="out-label">Output</div>Running…';
-
-                runCode(code, lang, function (err, out, stderr) {
+                runCode(editor.getValue(), lang, function (err, out, stderr) {
                     runBtn.disabled = false;
                     runBtn.textContent = '▶ Run';
                     if (err) {
@@ -887,33 +898,20 @@
             });
         }
 
-        /* ── Load solution into right-pane editor ─────────────────────────── */
+        /* ── Load solution into mid-pane editor ───────────────────────────── */
         function loadInEditor(btn) {
             var panel = document.getElementById('pg-top');
             if (!panel || !panel._editors) return;
-
             var lang = panel._activeLang || 'java';
-
-            // Try to get code for active lang, fallback to other
-            var raw = '';
-            if (lang === 'java') {
-                raw = btn.dataset.java || btn.dataset.python || '';
-            } else {
-                raw = btn.dataset.python || btn.dataset.java || '';
-                // If we got java code when we wanted python, switch lang preference
-                if (!btn.dataset.python && btn.dataset.java) lang = 'java';
-            }
+            var raw = lang === 'java'
+                ? (btn.dataset.java || btn.dataset.python || '')
+                : (btn.dataset.python || btn.dataset.java || '');
             if (!raw) return;
-
-            var editor = panel._editors[lang];
-            if (!editor) {
-                // Try the other lang
+            if ((lang === 'java' && !panel._editors.java) || (lang === 'python' && !panel._editors.python)) {
                 lang = lang === 'java' ? 'python' : 'java';
-                editor = panel._editors[lang];
+                raw = btn.dataset[lang] || '';
             }
-            if (!editor) return;
-
-            // Switch to the right lang tab
+            if (!panel._editors[lang] || !raw) return;
             panel.querySelectorAll('.pg-lang-btn').forEach(function(b){ b.classList.remove('active'); });
             var targetBtn = panel.querySelector('.pg-lang-btn[data-lang="' + lang + '"]');
             if (targetBtn) targetBtn.classList.add('active');
@@ -921,33 +919,24 @@
             var targetPane = panel.querySelector('.pg-editor-pane[data-lang="' + lang + '"]');
             if (targetPane) targetPane.classList.add('active');
             panel._activeLang = lang;
+            panel._editors[lang].setValue(raw);
+            setTimeout(function(){ panel._editors[lang].refresh(); panel._editors[lang].focus(); }, 20);
 
-            editor.setValue(raw);
-            setTimeout(function(){ editor.refresh(); editor.focus(); }, 20);
-
-            // Flash the right pane title bar as feedback
             var bar = document.querySelector('.rp-title-bar');
-            if (bar) {
-                bar.style.background = '#38a169';
-                setTimeout(function(){ bar.style.background = ''; }, 600);
-            }
+            if (bar) { bar.style.background = '#38a169'; setTimeout(function(){ bar.style.background = ''; }, 600); }
         }
 
         function escHtml(s) {
             return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
         }
 
-        /* ── ProblemLoader ────────────────────────────────────────────────── */
+        /* ── Problem loader ───────────────────────────────────────────────── */
         var tabCounter = 0, pgCounter = 0;
 
         document.addEventListener('DOMContentLoaded', function () {
             var problemId = window.location.pathname.split('/').pop().replace('.html','');
-
             fetch('/solutions/' + problemId + '.json')
-                .then(function(r) {
-                    if (!r.ok) throw new Error('HTTP ' + r.status);
-                    return r.json();
-                })
+                .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
                 .then(renderProblem)
                 .catch(function(e) {
                     document.getElementById('loading').style.display = 'none';
@@ -959,7 +948,6 @@
         function renderProblem(data) {
             document.getElementById('loading').style.display = 'none';
             document.getElementById('problem-content').style.display = 'block';
-
             var title = data.problem.title + ' - Coding Interview Problems';
             document.title = title;
             document.getElementById('page-title').textContent = title;
@@ -968,48 +956,30 @@
             document.getElementById('breadcrumb-title').textContent = data.problem.title;
             document.getElementById('problem-meta').textContent =
                 data.problem.leetcode_id ? 'LeetCode Problem ' + data.problem.leetcode_id : 'Coding Interview Problem';
-
             renderDescription(data.problem);
             renderTopPlayground();
             renderSolutions(data.solutions, 'solutions-container');
-            if (data.variations && data.variations.length)
-                renderVariations(data.variations);
+            if (data.variations && data.variations.length) renderVariations(data.variations);
             renderNavigation(data.navigation);
         }
 
-        /* ── Right-pane playground ────────────────────────────────────────── */
+        /* ── Mid-pane playground ──────────────────────────────────────────── */
         function renderTopPlayground() {
-            var rightPane = document.getElementById('right-pane');
-            if (!rightPane) return;
-
+            var midPane = document.getElementById('mid-pane');
+            if (!midPane) return;
             var pgId = 'pg-top';
             var themeLabel = isDark() ? '☀ Light' : '🌙 Dark';
-
             var javaStarter =
-                'public class Main {\n' +
-                '    // Write your solution here\n' +
-                '    public int solve(/* add params */) {\n' +
-                '        \n' +
-                '        return 0;\n' +
-                '    }\n\n' +
-                '    public static void main(String[] args) {\n' +
-                '        Main sol = new Main();\n' +
-                '        // Test your solution:\n' +
-                '        // System.out.println(sol.solve(...));\n' +
-                '    }\n' +
-                '}';
-
+                'public class Main {\n    // Write your solution here\n' +
+                '    public int solve(/* add params */) {\n        \n        return 0;\n    }\n\n' +
+                '    public static void main(String[] args) {\n        Main sol = new Main();\n' +
+                '        // System.out.println(sol.solve(...));\n    }\n}';
             var pythonStarter =
-                '# Write your solution here\n\n' +
-                'def solve():  # add params\n' +
-                '    pass\n\n\n' +
-                '# Test:\n' +
-                '# print(solve(...))';
+                '# Write your solution here\n\ndef solve():  # add params\n    pass\n\n\n# print(solve(...))';
 
-            // Insert playground HTML after the title bar
             var pgHtml =
                 '<div class="playground-panel open" id="' + pgId + '" ' +
-                'data-java="'   + escAttr(javaStarter)   + '" ' +
+                'data-java="' + escAttr(javaStarter) + '" ' +
                 'data-python="' + escAttr(pythonStarter) + '" data-nowrap="1">' +
                 '<div class="pg-header">' +
                 '<div class="pg-lang-tabs">' +
@@ -1019,25 +989,20 @@
                 '<div class="pg-controls">' +
                 '<button class="pg-theme-btn">' + themeLabel + '</button>' +
                 '<button class="pg-run-btn">▶ Run</button>' +
-                '</div>' +
-                '</div>' +
+                '</div></div>' +
                 '<div class="pg-editor-pane active" data-lang="java"><div class="cm-java-host"></div></div>' +
                 '<div class="pg-editor-pane" data-lang="python"><div class="cm-python-host"></div></div>' +
                 '<div class="pg-output"><div class="out-label">Output</div></div>' +
                 '</div>';
 
-            // Append after title bar (which is already in the DOM)
-            var titleBar = rightPane.querySelector('.rp-title-bar');
             var temp = document.createElement('div');
             temp.innerHTML = pgHtml;
-            rightPane.appendChild(temp.firstChild);
+            midPane.appendChild(temp.firstChild);
 
-            // Load CM and init
             loadCM(function () {
                 var panel = document.getElementById(pgId);
                 if (panel) {
                     initPlayground(panel);
-                    // Refresh so CodeMirror fills the pane correctly
                     setTimeout(function() {
                         panel.querySelectorAll('.CodeMirror').forEach(function(el) {
                             if (el.CodeMirror) el.CodeMirror.refresh();
@@ -1070,20 +1035,16 @@
             var hasPython = !!sol.code_python || isPyOnly;
             var jCode     = hasJava   ? sol.code        : null;
             var pCode     = hasPython ? (sol.code_python || sol.code) : null;
-
             if (!jCode && !pCode) return '';
 
             var displayHtml = '';
-
             if (jCode && pCode) {
                 var tid = 'tab-' + (++tabCounter);
                 displayHtml =
                     '<div class="code-tabs-wrapper">' +
                     '<div class="code-tab-bar">' +
-                    '<button class="code-tab-btn java-tab active" onclick="switchTab(\'' + tid + '\',\'java\',this)">' +
-                    '<span class="lang-dot"></span>Java</button>' +
-                    '<button class="code-tab-btn python-tab" onclick="switchTab(\'' + tid + '\',\'python\',this)">' +
-                    '<span class="lang-dot"></span>Python</button>' +
+                    '<button class="code-tab-btn java-tab active" onclick="switchTab(\'' + tid + '\',\'java\',this)"><span class="lang-dot"></span>Java</button>' +
+                    '<button class="code-tab-btn python-tab" onclick="switchTab(\'' + tid + '\',\'python\',this)"><span class="lang-dot"></span>Python</button>' +
                     '</div>' +
                     '<div id="' + tid + '-java" class="code-panel active"><div class="code-block">' + escHtml(jCode) + '</div></div>' +
                     '<div id="' + tid + '-python" class="code-panel"><div class="code-block">' + escHtml(pCode) + '</div></div>' +
@@ -1099,20 +1060,16 @@
                     '</div>';
             }
 
-            // "Load in Editor" button
             var loadBtn =
                 '<button class="load-in-editor-btn" ' +
                 (jCode ? 'data-java="' + escAttr(jCode) + '" ' : '') +
                 (pCode ? 'data-python="' + escAttr(pCode) + '" ' : '') +
                 'onclick="loadInEditor(this)">▶ Load in Editor</button>';
 
-            /* Per-solution inline playground */
             var pgId = 'pg-' + (++pgCounter);
             var themeLabel = isDark() ? '☀ Light' : '🌙 Dark';
-
             var jAttr = jCode ? ' data-java="'   + escAttr(jCode) + '"' : '';
             var pAttr = pCode ? ' data-python="' + escAttr(pCode) + '"' : '';
-
             var jBtnCls = !jCode ? ' disabled' : ' active';
             var pBtnCls = !pCode ? ' disabled' : (jCode ? '' : ' active');
             var jPaneCls = jCode ? ' active' : '';
@@ -1153,8 +1110,6 @@
             solutions.forEach(function(sol, idx) {
                 var div = document.createElement('div');
                 div.className = 'solution';
-
-                // Build body content (hidden by default)
                 var bodyHtml = '';
                 if (sol.description) bodyHtml += '<p>' + sol.description + '</p>';
                 if (sol.code || sol.code_python) bodyHtml += renderCodeSection(sol);
@@ -1172,18 +1127,13 @@
                         sol.example_walkthrough.steps.forEach(function(s){ bodyHtml += s + '<br>'; });
                     bodyHtml += '</div>';
                 }
-
                 var bodyId = 'sol-body-' + containerId + '-' + idx;
-                var html =
+                div.innerHTML =
                     '<div class="sol-header">' +
                     '<h3>' + sol.title + '</h3>' +
                     '<button class="sol-toggle-btn" onclick="toggleSolution(\'' + bodyId + '\', this)">👁 Show Solution</button>' +
                     '</div>' +
-                    '<div class="sol-body" id="' + bodyId + '" style="display:none">' +
-                    bodyHtml +
-                    '</div>';
-
-                div.innerHTML = html;
+                    '<div class="sol-body" id="' + bodyId + '" style="display:none">' + bodyHtml + '</div>';
                 container.appendChild(div);
             });
         }
@@ -1206,12 +1156,8 @@
         function renderNavigation(nav) {
             if (!nav) return;
             var el = document.getElementById('navigation');
-            var prev = nav.previous
-                ? '<a href="' + nav.previous + '" class="nav-btn">← Previous: ' + titleFromFile(nav.previous) + '</a>'
-                : '<span></span>';
-            var next = nav.next
-                ? '<a href="' + nav.next + '" class="nav-btn">Next: ' + titleFromFile(nav.next) + ' →</a>'
-                : '<span></span>';
+            var prev = nav.previous ? '<a href="' + nav.previous + '" class="nav-btn">← Previous: ' + titleFromFile(nav.previous) + '</a>' : '<span></span>';
+            var next = nav.next     ? '<a href="' + nav.next     + '" class="nav-btn">Next: '     + titleFromFile(nav.next)     + ' →</a>' : '<span></span>';
             el.innerHTML = prev + next;
         }
 
@@ -1223,84 +1169,24 @@
             return s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
         }
 
-        /* ── Floating panel: drag + resize (used by chat) ─────────────────── */
-        function makeFloating(panel, dragHandle) {
-            var dragging = false, ox = 0, oy = 0;
-            dragHandle.addEventListener('mousedown', function(e) {
-                if (e.target.closest('button')) return;
-                dragging = true;
-                var r = panel.getBoundingClientRect();
-                panel.style.left   = r.left + 'px';
-                panel.style.top    = r.top  + 'px';
-                panel.style.right  = 'auto';
-                panel.style.bottom = 'auto';
-                ox = e.clientX - r.left;
-                oy = e.clientY - r.top;
-                e.preventDefault();
-            });
-            document.addEventListener('mousemove', function(e) {
-                if (!dragging) return;
-                var l = Math.max(0, Math.min(e.clientX - ox, window.innerWidth  - panel.offsetWidth));
-                var t = Math.max(0, Math.min(e.clientY - oy, window.innerHeight - 40));
-                panel.style.left = l + 'px';
-                panel.style.top  = t + 'px';
-            });
-            document.addEventListener('mouseup', function() { dragging = false; });
-
-            var rh = document.createElement('div');
-            rh.className = 'resize-handle';
-            panel.appendChild(rh);
-            var resizing = false, rox = 0, roy = 0, rw = 0, rht = 0;
-            rh.addEventListener('mousedown', function(e) {
-                resizing = true;
-                rox = e.clientX; roy = e.clientY;
-                rw  = panel.offsetWidth; rht = panel.offsetHeight;
-                e.preventDefault(); e.stopPropagation();
-            });
-            document.addEventListener('mousemove', function(e) {
-                if (!resizing) return;
-                panel.style.width  = Math.max(panel._minW || 280, rw  + (e.clientX - rox)) + 'px';
-                panel.style.height = Math.max(panel._minH || 240, rht + (e.clientY - roy)) + 'px';
-                panel.querySelectorAll('.CodeMirror').forEach(function(el) {
-                    if (el.CodeMirror) el.CodeMirror.refresh();
-                });
-            });
-            document.addEventListener('mouseup', function() { resizing = false; });
-        }
-
         /* ── AI Chat ──────────────────────────────────────────────────────── */
         var chatHistory = [];
-        var chatOpen = true;
 
-        document.addEventListener('DOMContentLoaded', function() {
-            if (!sessionStorage.getItem('chat-bubble-dismissed') && !chatOpen) {
-                setTimeout(function() {
-                    if (!chatOpen) {
-                        document.getElementById('chat-bubble').classList.add('visible');
-                    }
-                }, 4000);
-            }
-        });
-
-        function dismissBubble() {
-            document.getElementById('chat-bubble').classList.remove('visible');
-            sessionStorage.setItem('chat-bubble-dismissed', '1');
-        }
-
-        function toggleChat() {
-            chatOpen = !chatOpen;
-            document.getElementById('chat-window').classList.toggle('open', chatOpen);
-            document.getElementById('chat-bubble').classList.remove('visible');
-            sessionStorage.setItem('chat-bubble-dismissed', '1');
-            if (chatOpen) {
-                setTimeout(function(){ document.getElementById('chat-input').focus(); }, 80);
-            }
+        function sendChip(text) {
+            document.getElementById('chat-input').value = text;
+            sendChat();
         }
 
         function sendChat() {
             var input = document.getElementById('chat-input');
             var text = input.value.trim();
             if (!text) return;
+
+            // Hide welcome state and chips after first message
+            var welcome = document.getElementById('chat-welcome');
+            if (welcome) welcome.remove();
+            var chips = document.getElementById('chat-chips');
+            if (chips) chips.style.display = 'none';
 
             appendMsg('user', text);
             chatHistory.push({ role: 'user', content: text });
@@ -1353,20 +1239,6 @@
             var msgs = document.getElementById('chat-messages');
             msgs.scrollTop = msgs.scrollHeight;
         }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            var input = document.getElementById('chat-input');
-            input.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    sendChat();
-                }
-            });
-            input.addEventListener('input', function() {
-                this.style.height = '';
-                this.style.height = Math.min(this.scrollHeight, 90) + 'px';
-            });
-        });
     </script>
 </body>
 </html>
