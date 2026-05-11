@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "You are given an empty 2D binary grid of size m x n. The grid represents a map where 0's represent water and 1's represent land. Land cells are added one at a time via positions; after each addition return the number of islands.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Dynamic island addition.",
+      "Use Union-Find for O(α) per operation."
+    ],
+    "example": {
+      "input": "m=3, n=3, positions=[[0,0],[0,1],[1,2],[2,1]]",
+      "output": "[1,1,2,3]",
+      "explanation": "After each land addition, count islands using Union-Find. Merge with adjacent land cells."
+    }
   },
   "solutions": [
     {

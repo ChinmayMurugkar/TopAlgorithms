@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "You are given a sorted unique integer array nums.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Sorted unique array.",
+      "Consecutive numbers form a range 'a->b'; single number is just 'a'."
+    ],
+    "example": {
+      "input": "nums = [0,1,2,4,5,7]",
+      "output": "[\"0->2\",\"4->5\",\"7\"]",
+      "explanation": "Consecutive ranges: 0-2 written as '0->2', 4-5 as '4->5', lone 7 as '7'."
+    }
   },
   "solutions": [
     {

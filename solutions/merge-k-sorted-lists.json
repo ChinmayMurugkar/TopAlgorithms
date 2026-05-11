@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "k sorted linked lists.",
+      "O(N log k) using priority queue."
+    ],
+    "example": {
+      "input": "lists = [[1,4,5],[1,3,4],[2,6]]",
+      "output": "[1,1,2,3,4,4,5,6]",
+      "explanation": "Merge k sorted linked lists using a min-heap of size k tracking (value, list index)."
+    }
   },
   "solutions": [
     {

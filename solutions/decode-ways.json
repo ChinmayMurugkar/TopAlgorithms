@@ -4,8 +4,16 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "A message containing letters from A-Z can be encoded into numbers using the following mapping: 'A' -> '1', 'B' -> '2', ..., 'Z' -> '26'.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "'A'=1, 'B'=2, ..., 'Z'=26.",
+      "Leading zeros like '06' are invalid.",
+      "Return number of ways to decode the string."
+    ],
+    "example": {
+      "input": "s = \"226\"",
+      "output": "3",
+      "explanation": "\"226\" → \"BZ\"(2,26), \"VF\"(22,6), \"BBF\"(2,2,6). 3 ways."
+    }
   },
   "solutions": [
     {

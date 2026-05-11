@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Implement a last-in-first-out (LIFO) stack using only two queues.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Simulate LIFO stack using only queues.",
+      "push O(n), pop/top O(1) — or vice versa."
+    ],
+    "example": {
+      "input": "push(1), push(2), top() → 2, pop() → 2",
+      "output": "2, 2",
+      "explanation": "Use two queues. On push, enqueue to q2 then move all q1 elements to q2, swap q1 and q2."
+    }
   },
   "solutions": [
     {

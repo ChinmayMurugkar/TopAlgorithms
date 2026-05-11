@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given a list of numbers and a target, find if you can reach the target using arithmetic operations.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Numbers cannot have leading zeros.",
+      "Return any valid expression, or empty string if impossible."
+    ],
+    "example": {
+      "input": "nums = [1,2,3], target = 6",
+      "output": "\"1+2+3=6\"",
+      "explanation": "Insert +, -, or * between digits to reach target. Return expression if found."
+    }
   },
   "solutions": [
     {

@@ -4,8 +4,14 @@
     "leetcode_id": 3,
     "category": "String/Array/Matrix",
     "description": "Given a string s, find the length of the longest substring without repeating characters.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Return length of the longest substring without repeating characters."
+    ],
+    "example": {
+      "input": "s = \"abcabcbb\"",
+      "output": "3",
+      "explanation": "\"abc\" has length 3 with no repeating characters. Sliding window with seen-char index map."
+    }
   },
   "solutions": [
     {

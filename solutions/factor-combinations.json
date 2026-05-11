@@ -4,8 +4,16 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Numbers can be regarded as the product of their factors. Given an integer n, return all possible combinations of its factors.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Factors must be ≥ 2.",
+      "Each combination is non-decreasing.",
+      "n is guaranteed to be > 1."
+    ],
+    "example": {
+      "input": "n = 12",
+      "output": "[[2,6],[2,2,3],[3,4]]",
+      "explanation": "12 = 2×6 = 2×2×3 = 3×4. The number itself (12) is not included."
+    }
   },
   "solutions": [
     {

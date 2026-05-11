@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "nums contains n distinct numbers in range [0, n].",
+      "Exactly one number is missing."
+    ],
+    "example": {
+      "input": "nums = [3,0,1]",
+      "output": "2",
+      "explanation": "Array contains 0..3 except 2. Use sum formula: n*(n+1)/2 - sum(nums), or XOR."
+    }
   },
   "solutions": [
     {

@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given an integer x, return true if x is a palindrome, and false otherwise.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Negative numbers are not palindromes.",
+      "Try without converting to string."
+    ],
+    "example": {
+      "input": "x = 121",
+      "output": "true",
+      "explanation": "121 reversed is 121. Negative numbers and numbers ending in 0 (except 0) are not palindromes."
+    }
   },
   "solutions": [
     {

@@ -4,8 +4,15 @@
     "leetcode_id": 322,
     "category": "Dynamic Programming",
     "description": "You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money. Return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "You have an infinite supply of each coin.",
+      "Return -1 if the amount cannot be made."
+    ],
+    "example": {
+      "input": "coins = [1,5,10,25], amount = 36",
+      "output": "3",
+      "explanation": "25 + 10 + 1 = 36 uses 3 coins (minimum)."
+    }
   },
   "solutions": [
     {

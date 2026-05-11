@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given the root of a binary search tree and a node p in it, return the in-order successor of that node in the BST.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "In-order successor = next node in in-order traversal (next larger value).",
+      "Return null if no successor."
+    ],
+    "example": {
+      "input": "root = [2,1,3], p = 1",
+      "output": "2",
+      "explanation": "In-order of BST: 1,2,3. Successor of 1 is 2 (next larger value)."
+    }
   },
   "solutions": [
     {

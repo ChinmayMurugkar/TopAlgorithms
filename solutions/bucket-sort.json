@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Implement bucket sort algorithm for sorting floating point numbers.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Input values are uniformly distributed over [0, 1).",
+      "O(n) average time."
+    ],
+    "example": {
+      "input": "arr = [0.897, 0.565, 0.656, 0.123, 0.665, 0.343]",
+      "output": "[0.123, 0.343, 0.565, 0.656, 0.665, 0.897]",
+      "explanation": "Distribute elements into buckets, sort each bucket, then concatenate."
+    }
   },
   "solutions": [
     {

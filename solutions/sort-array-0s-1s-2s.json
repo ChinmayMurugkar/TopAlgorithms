@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given an array containing only 0s, 1s, and 2s, sort it in linear time.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "In-place, one pass (Dutch National Flag algorithm).",
+      "No extra space."
+    ],
+    "example": {
+      "input": "nums = [2,0,2,1,1,0]",
+      "output": "[0,0,1,1,2,2]",
+      "explanation": "Dutch National Flag problem: three pointers (low, mid, high). One pass, O(1) space."
+    }
   },
   "solutions": [
     {

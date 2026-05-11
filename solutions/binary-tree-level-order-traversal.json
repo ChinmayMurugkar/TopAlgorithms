@@ -4,8 +4,15 @@
     "leetcode_id": 102,
     "category": "Tree, Heap & Trie",
     "description": "Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Return a list of lists, one per level.",
+      "Left child appears before right child in each level."
+    ],
+    "example": {
+      "input": "root = [3,9,20,null,null,15,7]",
+      "output": "[[3],[9,20],[15,7]]",
+      "explanation": "Level 0: [3], Level 1: [9,20], Level 2: [15,7]."
+    }
   },
   "solutions": [
     {

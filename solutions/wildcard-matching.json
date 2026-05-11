@@ -4,8 +4,16 @@
     "leetcode_id": 44,
     "category": "String/Array/Matrix",
     "description": "Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for '?' and '*'.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "'?' matches any single char.",
+      "'*' matches any sequence (including empty).",
+      "Full string must match."
+    ],
+    "example": {
+      "input": "s = \"adceb\", p = \"*a*b\"",
+      "output": "true",
+      "explanation": "'*' matches 'adc', 'a' matches 'a', '*' matches empty, 'b' matches 'b'. DP or two-pointer."
+    }
   },
   "solutions": [
     {

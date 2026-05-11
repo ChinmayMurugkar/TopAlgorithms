@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Find minimum operations to make all elements distinct in an array. Each operation increments a chosen element by 1.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Can only remove from the end of the array.",
+      "Return minimum removals for all distinct elements."
+    ],
+    "example": {
+      "input": "nums = [1,1,2,2,3,3]",
+      "output": "3",
+      "explanation": "Remove from the end until all remaining elements are distinct. Count removals."
+    }
   },
   "solutions": [
     {

@@ -4,7 +4,10 @@
     "leetcode_id": 116,
     "category": "Tree, Heap & Trie",
     "description": "You are given a perfect binary tree where all leaves are on the same level, and every parent has two children. Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.",
-    "assumptions": [],
+    "assumptions": [
+      "Perfect binary tree (all leaves at same level, all non-leaves have two children).",
+      "O(1) extra space using existing next pointers."
+    ],
     "example": {
       "input": "root = [1,2,3,4,5,6,7]",
       "output": "[1,#,2,3,#,4,5,6,7,#]",

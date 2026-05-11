@@ -4,8 +4,15 @@
     "leetcode_id": 200,
     "category": "Graph",
     "description": "Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "'1' = land, '0' = water.",
+      "Islands are 4-directionally connected."
+    ],
+    "example": {
+      "input": "grid = [[\"1\",\"1\",\"0\",\"0\"],[\"1\",\"1\",\"0\",\"0\"],[\"0\",\"0\",\"1\",\"0\"],[\"0\",\"0\",\"0\",\"1\"]]",
+      "output": "3",
+      "explanation": "3 groups of connected '1's (islands). BFS/DFS to mark visited cells."
+    }
   },
   "solutions": [
     {

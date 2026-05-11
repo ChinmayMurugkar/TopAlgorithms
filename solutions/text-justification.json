@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given an array of strings words and a width maxWidth, format the text such that each line has exactly maxWidth characters and is fully (left and right) justified.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Extra spaces distributed left to right.",
+      "Last line is left-justified (spaces only at right)."
+    ],
+    "example": {
+      "input": "words = [\"This\",\"is\",\"an\",\"example\",\"of\",\"text\",\"justification.\"], maxWidth = 16",
+      "output": "[\"This    is    an\",\"example  of text\",\"justification.  \"]",
+      "explanation": "Each line has exactly maxWidth chars. Distribute spaces evenly; last line is left-justified."
+    }
   },
   "solutions": [
     {

@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given a linked list, swap every two adjacent nodes and return its head.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Swap node links, not values.",
+      "If odd number of nodes, last node stays."
+    ],
+    "example": {
+      "input": "head = [1,2,3,4]",
+      "output": "[2,1,4,3]",
+      "explanation": "Swap every two adjacent nodes. 1↔2, 3↔4. Iterative or recursive."
+    }
   },
   "solutions": [
     {

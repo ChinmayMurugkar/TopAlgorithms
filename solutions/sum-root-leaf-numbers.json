@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "You are given the root of a binary tree containing digits from 0 to 9 only.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Each root-to-leaf path represents a number.",
+      "Return sum of all such numbers."
+    ],
+    "example": {
+      "input": "root = [1,2,3]",
+      "output": "25",
+      "explanation": "Root-to-leaf numbers: 12 and 13. Sum = 25. DFS passing current number as 10*cur + node.val."
+    }
   },
   "solutions": [
     {

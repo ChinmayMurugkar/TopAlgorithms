@@ -4,8 +4,16 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given a string path, which is an absolute path (starting with a slash '/') to a file or directory in a Unix-style file system, convert it to the simplified canonical path.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Unix-style path.",
+      "'..' goes up one directory.",
+      "'.' is current directory."
+    ],
+    "example": {
+      "input": "path = \"/home//foo/\"",
+      "output": "\"/home/foo\"",
+      "explanation": "Split by '/', handle '.' (current dir), '..' (parent dir), empty parts. Use stack."
+    }
   },
   "solutions": [
     {

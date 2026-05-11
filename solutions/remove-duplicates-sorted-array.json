@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "In-place modification.",
+      "Return new length k; first k elements must be unique and sorted."
+    ],
+    "example": {
+      "input": "nums = [0,0,1,1,1,2,2,3,3,4]",
+      "output": "5, nums = [0,1,2,3,4,...]",
+      "explanation": "Two pointers: slow tracks position of next unique, fast scans ahead. In-place O(1) space."
+    }
   },
   "solutions": [
     {

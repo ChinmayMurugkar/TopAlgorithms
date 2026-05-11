@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given a string containing just the characters '(' and ')', find the length of the longest valid (well-formed) parentheses substring.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Return the length of the longest valid parentheses substring.",
+      "Valid = properly nested '(' and ')'."
+    ],
+    "example": {
+      "input": "s = \")()())\"",
+      "output": "4",
+      "explanation": "\"()()\" is the longest valid substring, length 4. Use stack or DP."
+    }
   },
   "solutions": [
     {

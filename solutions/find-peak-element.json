@@ -4,8 +4,16 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "A peak element is an element that is strictly greater than its neighbors.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "nums[-1] = nums[n] = -∞ (boundaries are -infinity).",
+      "Any peak index is acceptable.",
+      "O(log n) solution exists using binary search."
+    ],
+    "example": {
+      "input": "nums = [1,2,3,1]",
+      "output": "2",
+      "explanation": "nums[2]=3 is a peak since nums[1]=2 < 3 > nums[3]=1. Return any peak index."
+    }
   },
   "solutions": [
     {

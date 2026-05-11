@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Return empty list if input is empty.",
+      "Phone mapping: 2=abc, 3=def, 4=ghi, 5=jkl, 6=mno, 7=pqrs, 8=tuv, 9=wxyz."
+    ],
+    "example": {
+      "input": "digits = \"23\"",
+      "output": "[\"ad\",\"ae\",\"af\",\"bd\",\"be\",\"bf\",\"cd\",\"ce\",\"cf\"]",
+      "explanation": "2→abc, 3→def. All combinations of one letter from each digit group."
+    }
   },
   "solutions": [
     {

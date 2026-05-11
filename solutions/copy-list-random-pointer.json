@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "A linked list of length n is given such that each node contains an additional random pointer, which could point to any node in the list, or null. Construct a deep copy of the list.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "random pointer can point to any node or null.",
+      "Return the head of the deep-copied list."
+    ],
+    "example": {
+      "input": "head = [[7,null],[13,0],[11,4],[10,2],[1,0]]",
+      "output": "Deep copy of list",
+      "explanation": "Each node has val, next, and random pointer. Create new nodes with same structure; no original nodes in result."
+    }
   },
   "solutions": [
     {

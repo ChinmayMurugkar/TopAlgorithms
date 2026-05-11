@@ -4,7 +4,10 @@
     "leetcode_id": 98,
     "category": "Tree, Heap & Trie",
     "description": "Given the root of a binary tree, determine if it is a valid binary search tree (BST).\n                \nDefinition: A valid BST is defined as follows:\n                \nThe left subtree of a node contains only nodes with keys less than the node's key\nThe right subtree of a node contains only nodes with keys greater than the node's key\nBoth the left and right subtrees must also be binary search trees",
-    "assumptions": [],
+    "assumptions": [
+      "Each node's value must be strictly between its ancestor bounds.",
+      "Duplicate values make it invalid."
+    ],
     "example": {
       "input": "root = [2,1,3]",
       "output": "true"

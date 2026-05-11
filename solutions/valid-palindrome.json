@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Consider only alphanumeric characters.",
+      "Case-insensitive comparison."
+    ],
+    "example": {
+      "input": "s = \"A man, a plan, a canal: Panama\"",
+      "output": "true",
+      "explanation": "Ignore non-alphanumeric, case-insensitive: 'amanaplanacanalpanama'. Two pointers from both ends."
+    }
   },
   "solutions": [
     {

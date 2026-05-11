@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given a sequence of matrices, find the most efficient way to multiply these matrices together. The problem is not actually to perform the multiplications, but merely to decide in which order to perform the multiplications.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Find parenthesisation that minimizes scalar multiplications.",
+      "Classic interval DP."
+    ],
+    "example": {
+      "input": "dims = [40, 20, 30, 10, 30]",
+      "output": "26000",
+      "explanation": "4 matrices: A(40×20), B(20×30), C(30×10), D(10×30). Optimal: ((AB)C)D = 26000 multiplications."
+    }
   },
   "solutions": [
     {

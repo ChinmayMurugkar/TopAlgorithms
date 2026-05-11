@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Design a data structure that supports adding new words and finding if a string matches any previously added string.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "'.' in search pattern matches any single letter.",
+      "Only lowercase letters a-z used."
+    ],
+    "example": {
+      "input": "addWord(\"bad\"), addWord(\"dad\"), addWord(\"mad\"), search(\"pad\"), search(\"bad\"), search(\".ad\"), search(\"b..\")",
+      "output": "false, true, true, true",
+      "explanation": "'.ad' matches any char in position 0, so it matches 'bad','dad','mad'. 'b..' matches 'bad'."
+    }
   },
   "solutions": [
     {

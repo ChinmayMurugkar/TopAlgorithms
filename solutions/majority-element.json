@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given an array nums of size n, return the majority element.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Majority element appears more than n/2 times.",
+      "Guaranteed to always exist."
+    ],
+    "example": {
+      "input": "nums = [2,2,1,1,1,2,2]",
+      "output": "2",
+      "explanation": "2 appears 4 times (> 7/2). Boyer-Moore voting: cancel out different elements."
+    }
   },
   "solutions": [
     {

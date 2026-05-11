@@ -5,7 +5,11 @@
     "category": "String/Array/Matrix",
     "description": "This is the fourth of the final problems to reach our target of 251 problems.",
     "assumptions": [],
-    "example": {}
+    "example": {
+      "input": "See problem description",
+      "output": "See problem description",
+      "explanation": "Practice problem."
+    }
   },
   "solutions": [
     {

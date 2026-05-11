@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "There are n gas stations along a circular route, where the amount of gas at the ith station is gas[i].",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "If solution exists, it is guaranteed unique.",
+      "Return -1 if no solution."
+    ],
+    "example": {
+      "input": "gas = [1,2,3,4,5], cost = [3,4,5,1,2]",
+      "output": "3",
+      "explanation": "Start at station 3 (0-indexed): 4-1=3→3+5-2=6→6+1-3=4→4+2-4=2→2+3-5=0. Completes circuit."
+    }
   },
   "solutions": [
     {

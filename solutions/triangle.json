@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given a triangle array, return the minimum path sum from top to bottom.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Move to adjacent numbers on the row below.",
+      "O(n) space bottom-up DP."
+    ],
+    "example": {
+      "input": "triangle = [[2],[3,4],[6,5,7],[4,1,8,3]]",
+      "output": "11",
+      "explanation": "Path: 2→3→5→1 = 11. Bottom-up DP: for each row, update in-place adding minimum of two children below."
+    }
   },
   "solutions": [
     {

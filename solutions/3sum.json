@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "The solution set must not contain duplicate triplets.",
+      "Output order does not matter."
+    ],
+    "example": {
+      "input": "nums = [-1, 0, 1, 2, -1, -4]",
+      "output": "[[-1,-1,2],[-1,0,1]]",
+      "explanation": "The two triplets that sum to zero are [-1,-1,2] and [-1,0,1]."
+    }
   },
   "solutions": [
     {

@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given two strings s and t, return true if t is an anagram of s, and false otherwise.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Only lowercase letters.",
+      "Same length strings can still fail if frequencies differ."
+    ],
+    "example": {
+      "input": "s = \"anagram\", t = \"nagaram\"",
+      "output": "true",
+      "explanation": "Both have same character frequencies. Sort both strings or use frequency map."
+    }
   },
   "solutions": [
     {

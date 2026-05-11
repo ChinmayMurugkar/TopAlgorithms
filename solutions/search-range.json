@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given an array of integers nums sorted in non-decreasing order, find the starting and ending position of a given target value. If target is not found, return [-1, -1].",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "O(log n) time.",
+      "Return [-1,-1] if target not found."
+    ],
+    "example": {
+      "input": "nums = [5,7,7,8,8,10], target = 8",
+      "output": "[3,4]",
+      "explanation": "8 appears at indices 3 and 4. Two binary searches: find leftmost and rightmost occurrence."
+    }
   },
   "solutions": [
     {

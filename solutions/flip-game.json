@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "You are playing the following Flip Game with your friend: Given a string that contains only these two characters: + and -, you and your friend take turns to flip two consecutive '++' into '--'.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Only one move per call.",
+      "A move flips exactly one '++' into '--'."
+    ],
+    "example": {
+      "input": "s = \"++++\"",
+      "output": "[\"--++\",\"+--+\",\"++--\"]",
+      "explanation": "Replace each '++' pair with '--'. Return all states after one move."
+    }
   },
   "solutions": [
     {

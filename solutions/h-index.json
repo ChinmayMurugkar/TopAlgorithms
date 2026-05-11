@@ -4,8 +4,14 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given an array of integers citations where citations[i] is the number of citations a researcher received for their ith paper, return the researcher's h-index.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "h-index: largest h such that h papers have ≥h citations each."
+    ],
+    "example": {
+      "input": "citations = [3,0,6,1,5]",
+      "output": "3",
+      "explanation": "h=3: researcher has 3 papers with ≥3 citations. Papers: 6,5,3 ≥ 3; but 4 papers don't all have ≥4 cites."
+    }
   },
   "solutions": [
     {

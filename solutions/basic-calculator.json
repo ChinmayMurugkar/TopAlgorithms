@@ -4,8 +4,16 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given a string s representing a valid expression, implement a basic calculator to evaluate it, and return the result of the evaluation.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "The expression is always valid.",
+      "No division or multiplication — only +, -, (, ).",
+      "Input may contain spaces."
+    ],
+    "example": {
+      "input": "s = \"1 + 1\"",
+      "output": "2",
+      "explanation": "Also handles: \"(1+(4+5+2)-3)+(6+8)\" → 23."
+    }
   },
   "solutions": [
     {

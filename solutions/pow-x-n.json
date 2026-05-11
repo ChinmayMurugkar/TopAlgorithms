@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Implement pow(x, n), which calculates x raised to the power n (i.e., xn).",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "n can be negative.",
+      "-100 ≤ n ≤ 100."
+    ],
+    "example": {
+      "input": "x = 2.00000, n = 10",
+      "output": "1024.00000",
+      "explanation": "Fast power: x^n = (x^(n/2))^2. Handles negative n: x^(-n) = 1/x^n. O(log n)."
+    }
   },
   "solutions": [
     {

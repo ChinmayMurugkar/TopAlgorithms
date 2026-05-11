@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given the root of a binary search tree and a target value, return the value in the BST that is closest to the target.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Tree is a valid BST.",
+      "If two values are equally close, return the smaller one."
+    ],
+    "example": {
+      "input": "root = [4,2,5,1,3], target = 3.714286",
+      "output": "4",
+      "explanation": "|4-3.714|=0.286 vs |3-3.714|=0.714. Node 4 is closest."
+    }
   },
   "solutions": [
     {

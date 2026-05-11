@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Write a function that takes an unsigned integer and returns the number of '1' bits it has (also known as the Hamming weight).",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Input is a 32-bit unsigned integer.",
+      "Return number of '1' bits (Hamming weight)."
+    ],
+    "example": {
+      "input": "n = 00000000000000000000000000001011",
+      "output": "3",
+      "explanation": "1011 has three '1' bits. Use n & (n-1) to clear the lowest set bit repeatedly."
+    }
   },
   "solutions": [
     {

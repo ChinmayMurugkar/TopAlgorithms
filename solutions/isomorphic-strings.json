@@ -4,7 +4,10 @@
     "leetcode_id": 205,
     "category": "String/Array/Matrix",
     "description": "Given two strings s and t, determine if they are isomorphic.\n                \nDefinition: Two strings s and t are isomorphic if the characters in s can be replaced to get t.\n                \nRules:\n\nAll occurrences of a character must be replaced with another character\nNo two characters may map to the same character\nA character may map to itself",
-    "assumptions": [],
+    "assumptions": [
+      "All characters in s map consistently to characters in t and vice versa.",
+      "A character may map to itself."
+    ],
     "example": {
       "input": "s = \"egg\", t = \"add\"",
       "output": "true",

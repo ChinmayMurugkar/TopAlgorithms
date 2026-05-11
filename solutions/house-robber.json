@@ -4,8 +4,15 @@
     "leetcode_id": 198,
     "category": "Dynamic Programming",
     "description": "You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same night.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Adjacent houses cannot both be robbed.",
+      "Return maximum amount you can rob."
+    ],
+    "example": {
+      "input": "nums = [2,7,9,3,1]",
+      "output": "12",
+      "explanation": "Rob houses 1,3,5 (0-indexed: 0,2,4): 2+9+1=12. Cannot rob adjacent houses."
+    }
   },
   "solutions": [
     {

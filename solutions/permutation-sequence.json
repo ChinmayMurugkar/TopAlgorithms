@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "The set [1, 2, 3, ..., n] contains a total of n! unique permutations.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "1 ≤ k ≤ n!",
+      "Use factorial number system to find kth permutation directly without generating all."
+    ],
+    "example": {
+      "input": "n = 3, k = 3",
+      "output": "\"213\"",
+      "explanation": "Permutations of [1,2,3] in order: 123,132,213,231,312,321. 3rd is 213."
+    }
   },
   "solutions": [
     {

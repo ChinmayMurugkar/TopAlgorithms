@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Return empty string if no valid window.",
+      "All characters in t must appear in window (with correct frequency)."
+    ],
+    "example": {
+      "input": "s = \"ADOBECODEBANC\", t = \"ABC\"",
+      "output": "\"BANC\"",
+      "explanation": "Smallest window containing A, B, C is 'BANC'. Sliding window with character frequency map."
+    }
   },
   "solutions": [
     {

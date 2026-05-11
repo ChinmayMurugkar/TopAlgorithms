@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given the root of a binary search tree, and an integer k, return the kth smallest value (1-indexed) of all the values of the nodes in the tree.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "1 ≤ k ≤ number of nodes.",
+      "All node values are unique."
+    ],
+    "example": {
+      "input": "root = [3,1,4,null,2], k = 1",
+      "output": "1",
+      "explanation": "In-order traversal of BST gives sorted order: 1,2,3,4. 1st smallest is 1."
+    }
   },
   "solutions": [
     {

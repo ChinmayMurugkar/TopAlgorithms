@@ -5,7 +5,11 @@
     "category": "Tree, Heap & Trie",
     "description": "Given the root of a binary tree, return the bottom-up level order traversal of its nodes' values. (i.e., from left to right, level by level from leaf to root).",
     "assumptions": [],
-    "example": {}
+    "example": {
+      "input": "root = [3,9,20,null,null,15,7]",
+      "output": "[[15,7],[9,20],[3]]",
+      "explanation": "Bottom-up level order: deepest level first. Reverse of standard level order."
+    }
   },
   "solutions": [
     {

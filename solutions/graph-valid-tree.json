@@ -4,8 +4,16 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given n nodes labeled from 0 to n-1 and a list of undirected edges (each edge is a pair of nodes), write a function to check whether these edges make up a valid tree.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "n nodes labeled 0..n-1.",
+      "No duplicate edges.",
+      "Undirected graph."
+    ],
+    "example": {
+      "input": "n = 5, edges = [[0,1],[0,2],[0,3],[1,4]]",
+      "output": "true",
+      "explanation": "A graph is a valid tree if it has n-1 edges and is fully connected with no cycles."
+    }
   },
   "solutions": [
     {

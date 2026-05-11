@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given the root of a binary tree, return the length of the longest consecutive sequence path.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Consecutive means each parent-child pair differs by exactly 1 (increasing).",
+      "The path goes parent to child only (top-down)."
+    ],
+    "example": {
+      "input": "root = [1,null,3,2,4,null,null,null,5]",
+      "output": "3",
+      "explanation": "Longest consecutive path is 3→4→5, length = 3."
+    }
   },
   "solutions": [
     {

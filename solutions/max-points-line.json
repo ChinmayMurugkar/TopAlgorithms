@@ -4,8 +4,16 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given an array of points where points[i] = [xi, yi] represents a point on the X-Y plane, return the maximum number of points that lie on the same straight line.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "At least 1 point.",
+      "Use fractions (gcd) to represent slope exactly.",
+      "Handle vertical lines (undefined slope) separately."
+    ],
+    "example": {
+      "input": "points = [[1,1],[2,2],[3,3]]",
+      "output": "3",
+      "explanation": "All 3 points are on the line y=x. For each point, count others with same slope."
+    }
   },
   "solutions": [
     {

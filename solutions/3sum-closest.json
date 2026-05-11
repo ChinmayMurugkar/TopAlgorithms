@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given an integer array nums of length n and an integer target, find three integers in nums such that the sum is closest to target.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Exactly one answer exists.",
+      "Array has at least 3 elements."
+    ],
+    "example": {
+      "input": "nums = [-1,2,1,-4], target = 1",
+      "output": "2",
+      "explanation": "The sum that is closest to the target is -1+2+1 = 2."
+    }
   },
   "solutions": [
     {

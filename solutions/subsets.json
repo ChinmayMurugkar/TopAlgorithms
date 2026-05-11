@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given an integer array nums of unique elements, return all possible subsets (the power set).",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "All nums are distinct.",
+      "Return power set (all subsets including empty and full set)."
+    ],
+    "example": {
+      "input": "nums = [1,2,3]",
+      "output": "[[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]",
+      "explanation": "All 2ⁿ subsets. Backtracking: include or exclude each element. Or bit manipulation."
+    }
   },
   "solutions": [
     {

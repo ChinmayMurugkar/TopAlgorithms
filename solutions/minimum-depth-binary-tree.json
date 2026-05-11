@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given a binary tree, find its minimum depth. The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Minimum depth = shortest path from root to any leaf.",
+      "A leaf has no children."
+    ],
+    "example": {
+      "input": "root = [2,null,3,null,4,null,5,null,6]",
+      "output": "5",
+      "explanation": "The only leaf is node 6 at depth 5. BFS finds the shallowest leaf."
+    }
   },
   "solutions": [
     {

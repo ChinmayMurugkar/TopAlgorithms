@@ -4,8 +4,14 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given a string columnTitle that represents the column title as appears in an Excel sheet, return its corresponding column number.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Input is a valid Excel column title (A-Z, AA-AZ, ...)."
+    ],
+    "example": {
+      "input": "columnTitle = \"AB\"",
+      "output": "28",
+      "explanation": "A=1, B=2, ..., Z=26. AB = 1*26 + 2 = 28."
+    }
   },
   "solutions": [
     {

@@ -4,7 +4,9 @@
     "leetcode_id": 234,
     "category": "Linked List",
     "description": "Given the head of a singly linked list, return true if it is a palindrome or false otherwise.",
-    "assumptions": [],
+    "assumptions": [
+      "Return true if linked list reads the same forward and backward."
+    ],
     "example": {
       "input": "head = [1,2,2,1]",
       "output": "true",

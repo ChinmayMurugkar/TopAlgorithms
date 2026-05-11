@@ -4,8 +4,15 @@
     "leetcode_id": 297,
     "category": "Tree, Heap & Trie",
     "description": "Design an algorithm to serialize and deserialize a binary tree. There is no restriction on how your serialization/deserialization algorithm should work. You just need to ensure that a binary tree can be serialized to a string and this string can be deserialized to the original tree structure.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Your serialization format can be anything, as long as it deserializes correctly.",
+      "No constraints on algorithm used."
+    ],
+    "example": {
+      "input": "root = [1,2,3,null,null,4,5]",
+      "output": "Serialize to string, deserialize back to same tree",
+      "explanation": "BFS or pre-order serialization with null markers. '1,2,3,null,null,4,5'."
+    }
   },
   "solutions": [
     {

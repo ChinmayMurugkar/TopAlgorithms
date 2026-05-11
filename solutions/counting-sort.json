@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Implement counting sort algorithm for sorting integers with a known range.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Works best when values are in a known, bounded range.",
+      "O(n+k) time, O(k) space."
+    ],
+    "example": {
+      "input": "arr = [4,2,2,8,3,3,1]",
+      "output": "[1,2,2,3,3,4,8]",
+      "explanation": "Count occurrences of each value, then reconstruct sorted array. O(n+k) time."
+    }
   },
   "solutions": [
     {

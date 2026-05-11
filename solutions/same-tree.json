@@ -5,7 +5,11 @@
     "category": "String/Array/Matrix",
     "description": "Given the roots of two binary trees p and q, write a function to check if they are the same or not.",
     "assumptions": [],
-    "example": {}
+    "example": {
+      "input": "p = [1,2,3], q = [1,2,3]",
+      "output": "true",
+      "explanation": "Same structure and node values. Recursive: check root values equal and both subtrees are same."
+    }
   },
   "solutions": [
     {

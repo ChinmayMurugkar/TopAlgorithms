@@ -5,7 +5,11 @@
     "category": "String/Array/Matrix",
     "description": "Given the root of a binary tree, flatten the tree into a 'linked list'.",
     "assumptions": [],
-    "example": {}
+    "example": {
+      "input": "root = [1,2,5,3,4,null,6]",
+      "output": "[1,null,2,null,3,null,4,null,5,null,6]",
+      "explanation": "Pre-order traversal: 1,2,3,4,5,6. Chain via right pointers, set all left to null."
+    }
   },
   "solutions": [
     {

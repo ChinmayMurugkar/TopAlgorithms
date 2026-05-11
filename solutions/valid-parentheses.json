@@ -4,8 +4,15 @@
     "leetcode_id": 20,
     "category": "String/Array/Matrix",
     "description": "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid. An input string is valid if: Open brackets must be closed by the same type of brackets. Open brackets must be closed in the correct order.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Brackets: (), [], {}.",
+      "Empty string is valid."
+    ],
+    "example": {
+      "input": "s = \"()[]{}\"",
+      "output": "true",
+      "explanation": "Each open bracket must be closed by the same type in the correct order. Use stack."
+    }
   },
   "solutions": [
     {

@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "n×n matrix.",
+      "Rotate in-place."
+    ],
+    "example": {
+      "input": "matrix = [[1,2,3],[4,5,6],[7,8,9]]",
+      "output": "[[7,4,1],[8,5,2],[9,6,3]]",
+      "explanation": "Rotate 90° clockwise in-place: transpose then reverse each row."
+    }
   },
   "solutions": [
     {

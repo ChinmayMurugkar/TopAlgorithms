@@ -4,8 +4,15 @@
     "leetcode_id": 215,
     "category": "String/Array/Matrix",
     "description": "Find the kth largest element in an unsorted array. Note that it is the kth largest element in the sorted order, not the kth distinct element.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Find kth largest in the array (not distinct kth largest).",
+      "1 ≤ k ≤ nums.length."
+    ],
+    "example": {
+      "input": "nums = [3,2,1,5,6,4], k = 2",
+      "output": "5",
+      "explanation": "2nd largest is 5. Use min-heap of size k or QuickSelect for O(n) average."
+    }
   },
   "solutions": [
     {

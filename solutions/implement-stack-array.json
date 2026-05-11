@@ -5,7 +5,11 @@
     "category": "String/Array/Matrix",
     "description": "Implement a stack data structure using an array with push, pop, and peek operations.",
     "assumptions": [],
-    "example": {}
+    "example": {
+      "input": "push(1), push(2), top() → 2, pop() → 2, empty() → false",
+      "output": "2, 2, false",
+      "explanation": "LIFO: Last In First Out. All operations O(1) with array."
+    }
   },
   "solutions": [
     {

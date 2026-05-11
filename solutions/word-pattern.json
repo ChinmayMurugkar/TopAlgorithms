@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given a pattern and a string s, find if s follows the same pattern.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Bijective mapping: one pattern char = one word, and one word = one pattern char.",
+      "No two pattern chars can map to same word."
+    ],
+    "example": {
+      "input": "pattern = \"abba\", s = \"dog cat cat dog\"",
+      "output": "true",
+      "explanation": "a→dog, b→cat. Bijection: pattern char ↔ word. Both maps (char→word and word→char) must be consistent."
+    }
   },
   "solutions": [
     {

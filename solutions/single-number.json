@@ -4,7 +4,10 @@
     "leetcode_id": 136,
     "category": "Bit Manipulation",
     "description": "Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.\n                \nConstraints:\n\n1 ≤ nums.length ≤ 3 * 10⁴\n-3 * 10⁴ ≤ nums[i] ≤ 3 * 10⁴\nEach element in the array appears twice except for one element which appears only once.",
-    "assumptions": [],
+    "assumptions": [
+      "Every element appears exactly twice except for one.",
+      "O(n) time, O(1) space."
+    ],
     "example": {
       "input": "nums = [2,2,1]",
       "output": "1"

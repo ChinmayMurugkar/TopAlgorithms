@@ -4,8 +4,16 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "A tree is an undirected graph in which any two vertices are connected by exactly one path. Given n nodes and edges, find all roots that produce trees of minimum height.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Tree is undirected.",
+      "At most 2 nodes can be MHT roots.",
+      "Topological sort from leaves inward."
+    ],
+    "example": {
+      "input": "n = 4, edges = [[1,0],[1,2],[1,3]]",
+      "output": "[1]",
+      "explanation": "Node 1 is the center. Repeatedly remove leaf nodes; remaining node(s) are roots of minimum height trees."
+    }
   },
   "solutions": [
     {

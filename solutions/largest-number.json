@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given a list of non-negative integers nums, arrange them such that they form the largest number and return it.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Return result as a string.",
+      "Handle edge case where all are 0s."
+    ],
+    "example": {
+      "input": "nums = [10,2]",
+      "output": "\"210\"",
+      "explanation": "Sort by comparing a+b vs b+a as strings: '210' > '102', so 2 before 10."
+    }
   },
   "solutions": [
     {

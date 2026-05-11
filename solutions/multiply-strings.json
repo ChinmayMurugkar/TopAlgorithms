@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2, also represented as a string. You must not use any built-in BigInteger library or convert the inputs to integer directly.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "No leading zeros (except '0' itself).",
+      "Inputs are non-negative integers as strings."
+    ],
+    "example": {
+      "input": "num1 = \"123\", num2 = \"456\"",
+      "output": "\"56088\"",
+      "explanation": "Simulate grade-school multiplication digit by digit. result[i+j] and result[i+j+1] store partial products."
+    }
   },
   "solutions": [
     {

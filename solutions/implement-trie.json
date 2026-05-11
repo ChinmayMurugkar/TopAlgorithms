@@ -4,8 +4,15 @@
     "leetcode_id": 208,
     "category": "Tree, Heap & Trie",
     "description": "A trie (pronounced as 'try') or prefix tree is a tree data structure used to efficiently store and retrieve keys in a dataset of strings. There are various applications of this data structure, such as autocomplete and spellchecker.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Only lowercase English letters.",
+      "Implement insert, search, and startsWith."
+    ],
+    "example": {
+      "input": "insert(\"apple\"), search(\"apple\") → true, search(\"app\") → false, startsWith(\"app\") → true, insert(\"app\"), search(\"app\") → true",
+      "output": "true, false, true, true",
+      "explanation": "Trie stores strings by prefix. search checks complete word; startsWith checks any prefix."
+    }
   },
   "solutions": [
     {

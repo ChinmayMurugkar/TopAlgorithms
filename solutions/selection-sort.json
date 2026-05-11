@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Implement selection sort algorithm to sort an array in ascending order.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Sort in ascending order.",
+      "O(n²) time regardless of input."
+    ],
+    "example": {
+      "input": "arr = [64,25,12,22,11]",
+      "output": "[11,12,22,25,64]",
+      "explanation": "Find minimum in unsorted portion, swap to front. O(n²) always, O(1) space."
+    }
   },
   "solutions": [
     {

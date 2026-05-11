@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given an integer array nums, return the length of the longest strictly increasing subsequence.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Subsequence must be strictly increasing.",
+      "Return length (not the subsequence itself)."
+    ],
+    "example": {
+      "input": "nums = [10,9,2,5,3,7,101,18]",
+      "output": "4",
+      "explanation": "LIS: [2,3,7,101] or [2,5,7,101], length 4. O(n log n) with patience sorting."
+    }
   },
   "solutions": [
     {

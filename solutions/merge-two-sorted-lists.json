@@ -4,7 +4,10 @@
     "leetcode_id": 21,
     "category": "Linked List",
     "description": "Merge two sorted linked lists and return it as a sorted list. The list should be made by splicing together the nodes of the first two lists.",
-    "assumptions": [],
+    "assumptions": [
+      "Both lists are already sorted.",
+      "Return the head of the merged list."
+    ],
     "example": {
       "input": "l1 = [1,2,4], l2 = [1,3,4]",
       "output": "[1,1,2,3,4,4]"

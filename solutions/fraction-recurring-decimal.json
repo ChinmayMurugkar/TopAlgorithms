@@ -4,8 +4,16 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given two integers representing the numerator and denominator of a fraction, return the fraction in string format.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Non-repeating part has no parentheses.",
+      "Integer result has no decimal point.",
+      "Handle negative fractions."
+    ],
+    "example": {
+      "input": "numerator = 1, denominator = 3",
+      "output": "\"0.(3)\"",
+      "explanation": "1/3 = 0.333... Repeating part goes in parentheses. Detect cycle via remainder tracking."
+    }
   },
   "solutions": [
     {

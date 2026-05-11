@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given the root of a binary tree, return all root-to-leaf paths in any order.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "A leaf is a node with no children.",
+      "Return all root-to-leaf paths in any order."
+    ],
+    "example": {
+      "input": "root = [1,2,3,null,5]",
+      "output": "[\"1->2->5\",\"1->3\"]",
+      "explanation": "Two root-to-leaf paths: 1→2→5 and 1→3."
+    }
   },
   "solutions": [
     {

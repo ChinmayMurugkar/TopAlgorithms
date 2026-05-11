@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "An ugly number is a positive integer whose prime factors are limited to 2, 3, and 5. Given an integer n, return true if n is an ugly number.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Ugly numbers have only prime factors 2, 3, 5.",
+      "1 is ugly by convention."
+    ],
+    "example": {
+      "input": "n = 10",
+      "output": "12",
+      "explanation": "Ugly numbers: 1,2,3,4,5,6,8,9,10,12. 10th is 12. Use three pointers for multiples of 2,3,5."
+    }
   },
   "solutions": [
     {

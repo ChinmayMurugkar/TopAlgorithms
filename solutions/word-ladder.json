@@ -4,7 +4,10 @@
     "leetcode_id": 127,
     "category": "String/Array/Matrix",
     "description": "Given two words (beginWord and endWord), and a dictionary wordList, find the length of shortest transformation sequence from beginWord to endWord.\n                \nRules:\n\nOnly one letter can be changed at a time\nEach transformed word must exist in the wordList\nReturn 0 if there is no such transformation sequence",
-    "assumptions": [],
+    "assumptions": [
+      "Each intermediate word must be in wordList.",
+      "Return length of shortest transformation sequence, or 0."
+    ],
     "example": {
       "input": "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"]",
       "output": "5",

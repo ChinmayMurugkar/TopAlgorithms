@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given the head of a linked list, reverse the nodes of the list k at a time, and return the modified list.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "If nodes remaining < k, leave them as-is.",
+      "In-place reversal."
+    ],
+    "example": {
+      "input": "head = [1,2,3,4,5], k = 2",
+      "output": "[2,1,4,3,5]",
+      "explanation": "Reverse every k nodes. [1,2]→[2,1], [3,4]→[4,3], [5] stays (fewer than k nodes)."
+    }
   },
   "solutions": [
     {

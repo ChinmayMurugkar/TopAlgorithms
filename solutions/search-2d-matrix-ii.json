@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Write an efficient algorithm that searches for a value target in an m x n integer matrix where integers in each row are sorted left to right and integers in each column are sorted top to bottom.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Rows sorted ascending, columns sorted ascending.",
+      "First element NOT necessarily > last of previous row."
+    ],
+    "example": {
+      "input": "matrix = [[1,4,7,11],[2,5,8,12],[3,6,9,16],[10,13,14,17]], target = 5",
+      "output": "true",
+      "explanation": "Start top-right: if > target go left, if < target go down. O(m+n)."
+    }
   },
   "solutions": [
     {

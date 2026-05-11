@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given a string s consisting of words and spaces, return the length of the last word in the string.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "A word is a maximal substring with no spaces.",
+      "At least one word in the string."
+    ],
+    "example": {
+      "input": "s = \"Hello World\"",
+      "output": "5",
+      "explanation": "Last word is 'World' with length 5. Trim trailing spaces first."
+    }
   },
   "solutions": [
     {

@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "getMin() must return the minimum element in O(1).",
+      "pop, push, top also O(1)."
+    ],
+    "example": {
+      "input": "push(-2), push(0), push(-3), getMin()→-3, pop(), top()→0, getMin()→-2",
+      "output": "-3, 0, -2",
+      "explanation": "Maintain a second stack that tracks the minimum at each level. O(1) for all operations."
+    }
   },
   "solutions": [
     {

@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "Sorting",
     "description": "Implement heap sort algorithm to sort an array of integers in ascending order. Heap sort is a comparison-based sorting algorithm that uses a binary heap data structure.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Sort in ascending order.",
+      "In-place, O(n log n) time."
+    ],
+    "example": {
+      "input": "arr = [12,11,13,5,6,7]",
+      "output": "[5,6,7,11,12,13]",
+      "explanation": "Build max-heap, then repeatedly extract maximum to end of array. O(n log n), in-place."
+    }
   },
   "solutions": [
     {

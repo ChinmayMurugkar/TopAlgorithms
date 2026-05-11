@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given an integer array nums and an integer val, remove all occurrences of val in nums in-place.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "In-place, O(1) space.",
+      "Order of remaining elements doesn't matter."
+    ],
+    "example": {
+      "input": "nums = [3,2,2,3], val = 3",
+      "output": "2, nums = [2,2,...]",
+      "explanation": "Remove all occurrences of val in-place. Return count of remaining elements."
+    }
   },
   "solutions": [
     {

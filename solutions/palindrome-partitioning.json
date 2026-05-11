@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given a string s, partition s such that every substring of the partition is a palindrome.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Every substring in the partition must be a palindrome.",
+      "Return all possible partitions."
+    ],
+    "example": {
+      "input": "s = \"aab\"",
+      "output": "[[\"a\",\"a\",\"b\"],[\"aa\",\"b\"]]",
+      "explanation": "All ways to partition 'aab' such that every substring is a palindrome. Backtracking + DP palindrome check."
+    }
   },
   "solutions": [
     {

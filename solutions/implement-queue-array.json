@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Implement a queue data structure using an array with proper enqueue, dequeue, and peek operations.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Implement using array.",
+      "enqueue: O(1) amortized, dequeue: O(1)."
+    ],
+    "example": {
+      "input": "enqueue(1), enqueue(2), dequeue() → 1, peek() → 2",
+      "output": "1, 2",
+      "explanation": "FIFO: First In First Out. Enqueue adds to back, dequeue removes from front."
+    }
   },
   "solutions": [
     {

@@ -4,8 +4,14 @@
     "leetcode_id": 202,
     "category": "Math",
     "description": "Write an algorithm to determine if a number n is happy. A happy number is a number defined by the following process: Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Repeatedly sum squares of digits. If reaches 1 → happy. If enters cycle not including 1 → not happy."
+    ],
+    "example": {
+      "input": "n = 19",
+      "output": "true",
+      "explanation": "1²+9²=82 → 8²+2²=68 → 6²+8²=100 → 1²+0+0=1. Reaches 1, so happy!"
+    }
   },
   "solutions": [
     {

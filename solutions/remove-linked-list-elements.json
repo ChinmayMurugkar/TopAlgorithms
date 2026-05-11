@@ -5,7 +5,11 @@
     "category": "String/Array/Matrix",
     "description": "Given the head of a linked list and an integer val, remove all the nodes of the linked list that has Node.val == val, and return the new head.",
     "assumptions": [],
-    "example": {}
+    "example": {
+      "input": "head = [1,2,6,3,4,5,6], val = 6",
+      "output": "[1,2,3,4,5]",
+      "explanation": "Remove all nodes with value = val. Use dummy head to handle edge case of removing head."
+    }
   },
   "solutions": [
     {

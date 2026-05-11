@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Reverse bits of a given 32 bits unsigned integer.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Input is a 32-bit unsigned integer.",
+      "Reverse all 32 bits (including leading zeros)."
+    ],
+    "example": {
+      "input": "n = 00000010100101000001111010011100",
+      "output": "964176192 (00111001011110000010100101000000)",
+      "explanation": "Reverse all 32 bits. Shift result left and n right, OR the last bit of n each iteration."
+    }
   },
   "solutions": [
     {

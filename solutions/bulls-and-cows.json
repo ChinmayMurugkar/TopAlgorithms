@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "You are playing the Bulls and Cows game with your friend.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "A bull = right digit, right position.",
+      "A cow = right digit, wrong position (not already counted as bull)."
+    ],
+    "example": {
+      "input": "secret = \"1807\", guess = \"7810\"",
+      "output": "\"1A3B\"",
+      "explanation": "1 bull (8 in position 1 both). 3 cows (1,7,0 are correct digits in wrong position)."
+    }
   },
   "solutions": [
     {

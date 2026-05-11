@@ -5,7 +5,11 @@
     "category": "String/Array/Matrix",
     "description": "Given a string s, find the length of the longest substring without repeating characters.",
     "assumptions": [],
-    "example": {}
+    "example": {
+      "input": "s = \"pwwkew\"",
+      "output": "3",
+      "explanation": "\"wke\" is the longest without repeating characters, length 3."
+    }
   },
   "solutions": [
     {

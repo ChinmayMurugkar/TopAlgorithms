@@ -4,8 +4,16 @@
     "leetcode_id": 10,
     "category": "String/Array/Matrix",
     "description": "Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*'.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "'.' matches any single character.",
+      "'*' matches zero or more of the preceding element.",
+      "Full string must match (not partial)."
+    ],
+    "example": {
+      "input": "s = \"aab\", p = \"c*a*b\"",
+      "output": "true",
+      "explanation": "c* matches empty, a* matches 'aa', b matches 'b'. DP: dp[i][j] = does s[:i] match p[:j]."
+    }
   },
   "solutions": [
     {

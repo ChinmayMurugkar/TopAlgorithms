@@ -4,8 +4,14 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given an integer num, repeatedly add all its digits until the result has only one digit, and return it.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "0 ≤ num ≤ 2³¹ − 1"
+    ],
+    "example": {
+      "input": "num = 38",
+      "output": "2",
+      "explanation": "3+8=11 → 1+1=2. The process repeats until a single digit remains."
+    }
   },
   "solutions": [
     {

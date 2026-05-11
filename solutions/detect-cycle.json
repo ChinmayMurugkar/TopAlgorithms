@@ -4,7 +4,10 @@
     "leetcode_id": 141,
     "category": "Linked List",
     "description": "Given head, the head of a linked list, determine if the linked list has a cycle in it.\n                \nDefinition: A cycle exists if there is some node in the list that can be reached again by continuously following the next pointer.",
-    "assumptions": [],
+    "assumptions": [
+      "pos = -1 means no cycle.",
+      "Return the node where the cycle begins, or null."
+    ],
     "example": {
       "input": "head = [3,2,0,-4], pos = 1",
       "output": "true",

@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given an integer n, break it into the sum of k positive integers, where k >= 2, and maximize the product of those integers.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "n ≥ 2",
+      "Split n into at least 2 positive integers that sum to n, maximizing product."
+    ],
+    "example": {
+      "input": "n = 10",
+      "output": "36",
+      "explanation": "10 = 3+3+4, product = 3×3×4 = 36. Optimal to break into 3s (and possibly a 2 or 4)."
+    }
   },
   "solutions": [
     {

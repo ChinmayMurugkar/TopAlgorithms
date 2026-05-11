@@ -4,8 +4,15 @@
     "leetcode_id": 54,
     "category": "Matrix",
     "description": "Given an m x n matrix, return all elements of the matrix in spiral order.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Traverse in clockwise spiral order.",
+      "Return elements in that order."
+    ],
+    "example": {
+      "input": "matrix = [[1,2,3],[4,5,6],[7,8,9]]",
+      "output": "[1,2,3,6,9,8,7,4,5]",
+      "explanation": "Traverse: right across top, down right, left across bottom, up left, repeat inward."
+    }
   },
   "solutions": [
     {

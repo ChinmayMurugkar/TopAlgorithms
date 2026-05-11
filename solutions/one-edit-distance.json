@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given two strings s and t, return true if they are both one edit distance apart, otherwise return false. An edit is an insertion, deletion, or substitution of a single character.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Return true if s and t are exactly 1 edit distance apart.",
+      "Not 0 edits (identical strings return false)."
+    ],
+    "example": {
+      "input": "s = \"ab\", t = \"acb\"",
+      "output": "true",
+      "explanation": "Insert 'c' into 'ab' → 'acb'. Exactly one edit (insert/delete/replace)."
+    }
   },
   "solutions": [
     {

@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given an array of positive integers nums and a positive integer target, return the minimal length of a contiguous subarray [numsl, numsl+1, ..., numsr-1, numsr] of which the sum is greater than or equal to target.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Return 0 if no valid subarray.",
+      "Subarray must be contiguous."
+    ],
+    "example": {
+      "input": "target = 7, nums = [2,3,1,2,4,3]",
+      "output": "2",
+      "explanation": "Subarray [4,3] sums to 7 with length 2. Sliding window: expand right, shrink left when sum ≥ target."
+    }
   },
   "solutions": [
     {

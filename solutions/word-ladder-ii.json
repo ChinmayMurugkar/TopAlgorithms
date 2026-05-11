@@ -4,8 +4,15 @@
     "leetcode_id": 126,
     "category": "String/Array/Matrix",
     "description": "Given two words (beginWord and endWord), and a dictionary's word list, find all shortest transformation sequence(s) from beginWord to endWord.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Return all shortest paths.",
+      "Much harder than Word Ladder I."
+    ],
+    "example": {
+      "input": "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"]",
+      "output": "[[\"hit\",\"hot\",\"dot\",\"dog\",\"cog\"],[\"hit\",\"hot\",\"lot\",\"log\",\"cog\"]]",
+      "explanation": "Find ALL shortest transformation sequences. BFS for levels + DFS/backtrack to reconstruct paths."
+    }
   },
   "solutions": [
     {

@@ -4,8 +4,16 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given a 1-indexed array of integers numbers that is already sorted in non-decreasing order, find two numbers such that they add up to a specific target number.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Array is sorted in non-decreasing order.",
+      "Return 1-indexed positions.",
+      "Exactly one solution."
+    ],
+    "example": {
+      "input": "numbers = [2,7,11,15], target = 9",
+      "output": "[1,2]",
+      "explanation": "numbers[1] + numbers[2] = 2 + 7 = 9. 1-indexed output. Two pointers: l=0, r=end."
+    }
   },
   "solutions": [
     {

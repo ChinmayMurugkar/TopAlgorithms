@@ -5,7 +5,11 @@
     "category": "String/Array/Matrix",
     "description": "Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.",
     "assumptions": [],
-    "example": {}
+    "example": {
+      "input": "nums = [9,6,4,2,3,5,7,0,1]",
+      "output": "8",
+      "explanation": "XOR all indices 0..n with all values. Paired numbers cancel; missing number remains."
+    }
   },
   "solutions": [
     {

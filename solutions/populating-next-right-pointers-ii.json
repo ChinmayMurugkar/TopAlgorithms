@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given a binary tree, populate each next pointer to point to its next right node.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Works for any binary tree.",
+      "O(1) extra space solution exists."
+    ],
+    "example": {
+      "input": "root = [1,2,3,4,5,null,7]",
+      "output": "Same next-pointer population but for arbitrary binary tree",
+      "explanation": "Not a perfect binary tree. Use level-order or dummy-head trick to traverse current level and wire up next level."
+    }
   },
   "solutions": [
     {

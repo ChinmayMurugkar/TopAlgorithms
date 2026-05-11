@@ -4,8 +4,15 @@
     "leetcode_id": 56,
     "category": "String/Array/Matrix",
     "description": "Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Intervals may be given in any order.",
+      "Return merged list of non-overlapping intervals."
+    ],
+    "example": {
+      "input": "intervals = [[1,3],[2,6],[8,10],[15,18]]",
+      "output": "[[1,6],[8,10],[15,18]]",
+      "explanation": "[1,3] and [2,6] overlap → merge to [1,6]. Sort by start time, then merge overlapping."
+    }
   },
   "solutions": [
     {

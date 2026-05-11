@@ -4,8 +4,14 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given a string s, reverse only all the vowels in the string and return it.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Vowels: a,e,i,o,u (both cases)."
+    ],
+    "example": {
+      "input": "s = \"hello\"",
+      "output": "\"holle\"",
+      "explanation": "Vowels in 'hello' are e(1) and o(4). Swap them: 'holle'. Two pointers from each end."
+    }
   },
   "solutions": [
     {

@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Implement strStr(). Return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Return the index of the first occurrence of needle in haystack.",
+      "Return -1 if not found."
+    ],
+    "example": {
+      "input": "haystack = \"hello\", needle = \"ll\"",
+      "output": "2",
+      "explanation": "'ll' first occurs at index 2 in 'hello'. Return -1 if not found. Return 0 if needle is empty."
+    }
   },
   "solutions": [
     {

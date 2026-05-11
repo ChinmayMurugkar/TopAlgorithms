@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given head, the head of a linked list, determine if the linked list has a cycle in it.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "pos = -1 means no cycle.",
+      "Return true/false (or the cycle node for follow-up)."
+    ],
+    "example": {
+      "input": "head = [3,2,0,-4], pos = 1",
+      "output": "true",
+      "explanation": "Tail connects back to node at index 1. Floyd's algorithm: fast and slow pointers meet iff cycle exists."
+    }
   },
   "solutions": [
     {

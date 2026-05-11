@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Words in dict can be reused.",
+      "Return true if entire string can be segmented."
+    ],
+    "example": {
+      "input": "s = \"leetcode\", wordDict = [\"leet\",\"code\"]",
+      "output": "true",
+      "explanation": "'leet' + 'code' = 'leetcode'. DP: dp[i] = true if s[:i] can be segmented using wordDict."
+    }
   },
   "solutions": [
     {

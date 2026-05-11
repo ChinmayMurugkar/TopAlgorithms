@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Assume you have an array of length n initialized with all 0's and are given k update operations.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Apply all range updates efficiently.",
+      "Return final array after all updates."
+    ],
+    "example": {
+      "input": "length = 5, updates = [[1,3,2],[2,4,3],[0,2,-2]]",
+      "output": "[-2,0,3,5,3]",
+      "explanation": "Use difference array: add val at start, subtract at end+1. O(n+k) with prefix sum."
+    }
   },
   "solutions": [
     {

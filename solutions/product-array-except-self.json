@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "O(n) time, O(1) extra space (output array doesn't count).",
+      "No division allowed."
+    ],
+    "example": {
+      "input": "nums = [1,2,3,4]",
+      "output": "[24,12,8,6]",
+      "explanation": "output[i] = product of all elements except nums[i]. Two passes: left products then right products. O(n), no division."
+    }
   },
   "solutions": [
     {

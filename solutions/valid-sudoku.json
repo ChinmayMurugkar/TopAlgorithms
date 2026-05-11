@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Only validate current state, not whether it's solvable.",
+      "Use three sets: rows, cols, boxes."
+    ],
+    "example": {
+      "input": "9×9 board (partially filled)",
+      "output": "true/false",
+      "explanation": "Validate: each row, each column, each 3×3 box contains digits 1-9 with no repetition. '.' is empty."
+    }
   },
   "solutions": [
     {

@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given a collection of numbers, nums, that might contain duplicates, return all possible unique permutations in any order.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Input may contain duplicates.",
+      "Return only unique permutations."
+    ],
+    "example": {
+      "input": "nums = [1,1,2]",
+      "output": "[[1,1,2],[1,2,1],[2,1,1]]",
+      "explanation": "3 unique permutations (not 3!=6 because of duplicate 1s). Skip duplicate branches in backtracking."
+    }
   },
   "solutions": [
     {

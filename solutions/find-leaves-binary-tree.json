@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given the root of a binary tree, collect a tree's nodes as if you were doing this: Collect all the leaf nodes.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "A leaf is a node with no children.",
+      "Return groups of nodes removed at each step."
+    ],
+    "example": {
+      "input": "root = [1,2,3,4,5]",
+      "output": "[[4,5,3],[2],[1]]",
+      "explanation": "Remove leaves [4,5,3], then [2], then [1]. Group nodes by their height from leaves."
+    }
   },
   "solutions": [
     {

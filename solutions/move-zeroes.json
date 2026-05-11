@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "In-place, no extra array.",
+      "Maintain relative order of non-zero elements."
+    ],
+    "example": {
+      "input": "nums = [0,1,0,3,12]",
+      "output": "[1,3,12,0,0]",
+      "explanation": "Move all zeros to end while preserving order of non-zeros. Two-pointer in-place."
+    }
   },
   "solutions": [
     {

@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given a string s, find the length of the longest substring that contains at most two distinct characters.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "At most 2 distinct characters.",
+      "Return length of the longest such substring."
+    ],
+    "example": {
+      "input": "s = \"eceba\"",
+      "output": "3",
+      "explanation": "\"ece\" contains 2 unique chars and has length 3. Sliding window with char count map."
+    }
   },
   "solutions": [
     {

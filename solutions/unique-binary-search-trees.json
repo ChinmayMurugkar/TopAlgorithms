@@ -4,8 +4,14 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given an integer n, return the number of structurally unique BST's (binary search trees) which has exactly n nodes of unique values from 1 to n.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Count structurally unique BSTs (not the actual trees)."
+    ],
+    "example": {
+      "input": "n = 3",
+      "output": "5",
+      "explanation": "5 structurally unique BSTs with values 1..3. Catalan number: dp[n] = sum of dp[i-1]*dp[n-i] for i=1..n."
+    }
   },
   "solutions": [
     {

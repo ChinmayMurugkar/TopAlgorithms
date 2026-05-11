@@ -4,8 +4,14 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given a positive integer n, generate an n x n matrix filled with elements from 1 to n2 in spiral order.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Generate n×n matrix filled with elements 1 to n² in spiral order."
+    ],
+    "example": {
+      "input": "n = 3",
+      "output": "[[1,2,3],[8,9,4],[7,6,5]]",
+      "explanation": "Fill 1..n² in spiral order. Same traversal as Spiral Matrix I but fill instead of read."
+    }
   },
   "solutions": [
     {

@@ -5,7 +5,11 @@
     "category": "Math",
     "description": "Given an integer n, return the number of trailing zeroes in n!. Note that n! = n * (n - 1) * (n - 2) * ... * 3 * 2 * 1.",
     "assumptions": [],
-    "example": {}
+    "example": {
+      "input": "n = 25",
+      "output": "6",
+      "explanation": "25! has ⌊25/5⌋+⌊25/25⌋ = 5+1 = 6 factors of 5, hence 6 trailing zeros."
+    }
   },
   "solutions": [
     {

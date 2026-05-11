@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "You are given an array of integers nums, there is a sliding window of size k which is moving from the very left of the array to the very right.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "O(n) using deque.",
+      "1 ≤ k ≤ nums.length."
+    ],
+    "example": {
+      "input": "nums = [1,3,-1,-3,5,3,6,7], k = 3",
+      "output": "[3,3,5,5,6,7]",
+      "explanation": "Max of each sliding window of size k. Use monotonic deque: maintain decreasing order, front is always max."
+    }
   },
   "solutions": [
     {

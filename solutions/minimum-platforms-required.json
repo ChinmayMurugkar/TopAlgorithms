@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given arrival and departure times of all trains, find the minimum number of platforms required at a railway station so no train waits.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Count maximum number of trains present at the station simultaneously.",
+      "Sort both arrays; use two pointers."
+    ],
+    "example": {
+      "input": "arrivals = [900,940,950,1100,1500,1800], departures = [910,1200,1120,1130,1900,2000]",
+      "output": "3",
+      "explanation": "At 950: trains at 940-1200, 950-1120, and 900-910 (departed) → 2 trains. Max overlap = 3 at some point."
+    }
   },
   "solutions": [
     {

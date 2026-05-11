@@ -4,8 +4,16 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "You are given a list of airline tickets where tickets[i] = [fromi, toi] represent the departure and arrival airports of one flight.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Always start from JFK.",
+      "All tickets must be used.",
+      "If multiple valid itineraries, return lexicographically smallest."
+    ],
+    "example": {
+      "input": "tickets = [[\"MUC\",\"LHR\"],[\"JFK\",\"MUC\"],[\"SFO\",\"SJC\"],[\"LHR\",\"SFO\"]]",
+      "output": "[\"JFK\",\"MUC\",\"LHR\",\"SFO\",\"SJC\"]",
+      "explanation": "Find Eulerian path starting from JFK. Use Hierholzer's algorithm with DFS."
+    }
   },
   "solutions": [
     {

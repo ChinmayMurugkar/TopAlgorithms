@@ -4,8 +4,14 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given the head of a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Remove ALL occurrences of duplicated values (unlike version I which keeps one)."
+    ],
+    "example": {
+      "input": "head = [1,2,3,3,4,4,5]",
+      "output": "[1,2,5]",
+      "explanation": "Remove all nodes that had duplicates (3 and 4 are gone entirely). Use dummy head."
+    }
   },
   "solutions": [
     {

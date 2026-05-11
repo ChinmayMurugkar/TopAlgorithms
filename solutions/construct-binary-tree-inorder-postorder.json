@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given two integer arrays inorder and postorder where inorder is the inorder traversal of a binary tree and postorder is the postorder traversal of the same tree, construct and return the binary tree.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "No duplicate values.",
+      "Both arrays represent the same tree."
+    ],
+    "example": {
+      "input": "inorder = [9,3,15,20,7], postorder = [9,15,7,20,3]",
+      "output": "[3,9,20,null,null,15,7]",
+      "explanation": "Postorder's last element (3) is the root. Inorder splits left [9] and right [15,20,7] subtrees."
+    }
   },
   "solutions": [
     {

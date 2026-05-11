@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Rotate an array of n elements to the right by k steps.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "k can be larger than array length (use k % n).",
+      "In-place, O(1) space."
+    ],
+    "example": {
+      "input": "nums = [1,2,3,4,5,6,7], k = 3",
+      "output": "[5,6,7,1,2,3,4]",
+      "explanation": "Rotate right by k: last k elements move to front. Trick: reverse all, reverse first k, reverse rest."
+    }
   },
   "solutions": [
     {

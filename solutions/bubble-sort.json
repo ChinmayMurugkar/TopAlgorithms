@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "Sorting",
     "description": "Implement bubble sort algorithm to sort an array of integers in ascending order. Bubble sort is a simple sorting algorithm that repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Sort in ascending order.",
+      "In-place sort, O(n²) time."
+    ],
+    "example": {
+      "input": "arr = [64, 34, 25, 12, 22, 11, 90]",
+      "output": "[11, 12, 22, 25, 34, 64, 90]",
+      "explanation": "Repeatedly swap adjacent elements that are in the wrong order until the array is sorted."
+    }
   },
   "solutions": [
     {

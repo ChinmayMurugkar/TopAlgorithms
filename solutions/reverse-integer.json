@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given a signed 32-bit integer x, return x with its digits reversed.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Return 0 if reversed integer overflows 32-bit signed integer.",
+      "Handle negatives: -123 → -321."
+    ],
+    "example": {
+      "input": "x = 123",
+      "output": "321",
+      "explanation": "Reverse digits of integer. Handle overflow: return 0 if result outside 32-bit signed range [-2³¹, 2³¹-1]."
+    }
   },
   "solutions": [
     {

@@ -4,8 +4,16 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "A path must contain at least one node.",
+      "The path does not need to pass through the root.",
+      "A node can appear at most once in the path."
+    ],
+    "example": {
+      "input": "root = [-10,9,20,null,null,15,7]",
+      "output": "42",
+      "explanation": "The optimal path is 15 → 20 → 7, giving sum 15+20+7 = 42."
+    }
   },
   "solutions": [
     {

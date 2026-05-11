@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given two integers a and b, return the sum of the two integers without using the operators + and -.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Cannot use + or - operators.",
+      "Use bitwise XOR and AND with shift."
+    ],
+    "example": {
+      "input": "a = 1, b = 2",
+      "output": "3",
+      "explanation": "a+b without + or -. XOR gives sum without carry; AND<<1 gives carry. Repeat until no carry."
+    }
   },
   "solutions": [
     {

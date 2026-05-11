@@ -4,8 +4,16 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "All candidate numbers are distinct.",
+      "Same number may be chosen multiple times.",
+      "Return all unique combinations (no duplicate sets)."
+    ],
+    "example": {
+      "input": "candidates = [2,3,6,7], target = 7",
+      "output": "[[2,2,3],[7]]",
+      "explanation": "2+2+3=7 and 7=7. Each candidate can be reused any number of times."
+    }
   },
   "solutions": [
     {

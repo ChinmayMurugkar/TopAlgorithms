@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "You are given two integer arrays nums1 and nums2 sorted in ascending order and an integer k.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Both arrays sorted in non-decreasing order.",
+      "Return k pairs (u,v) with smallest u+v."
+    ],
+    "example": {
+      "input": "nums1 = [1,7,11], nums2 = [2,4,6], k = 3",
+      "output": "[[1,2],[1,4],[1,6]]",
+      "explanation": "Smallest 3 sums: 1+2=3, 1+4=5, 1+6=7. Use a min-heap."
+    }
   },
   "solutions": [
     {

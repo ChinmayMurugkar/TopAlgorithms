@@ -4,8 +4,14 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given an array of meeting time intervals intervals where intervals[i] = [starti, endi], return the minimum number of conference rooms required.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Return true if a person can attend all meetings (no overlaps)."
+    ],
+    "example": {
+      "input": "intervals = [[0,30],[5,10],[15,20]]",
+      "output": "false",
+      "explanation": "[0,30] overlaps with [5,10]. Sort by start, check consecutive overlaps."
+    }
   },
   "solutions": [
     {

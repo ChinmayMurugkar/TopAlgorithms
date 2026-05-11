@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given a string array words, return the maximum value of length(word[i]) * length(word[j]) where the two words do not share common letters.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Return max product len(a)*len(b) where a and b share no common letters.",
+      "0 if no such pair exists."
+    ],
+    "example": {
+      "input": "words = [\"abcw\",\"baz\",\"foo\",\"bar\",\"xtfn\",\"abcdef\"]",
+      "output": "16",
+      "explanation": "\"abcw\" (length 4) and \"xtfn\" (length 4) share no letters: 4×4=16. Use bitmask to check disjointness."
+    }
   },
   "solutions": [
     {

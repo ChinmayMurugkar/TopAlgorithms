@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "The median is the middle value in an ordered integer list.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "findMedian returns exact median (average of two middle values if even count).",
+      "O(log n) add, O(1) findMedian."
+    ],
+    "example": {
+      "input": "addNum(1), addNum(2), findMedian() → 1.5, addNum(3), findMedian() → 2.0",
+      "output": "1.5, 2.0",
+      "explanation": "Use two heaps: max-heap for left half, min-heap for right half. Median is the top(s)."
+    }
   },
   "solutions": [
     {

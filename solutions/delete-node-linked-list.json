@@ -4,8 +4,16 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Write a function to delete a node in a singly-linked list.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "You are given direct access to the node to delete (not the head).",
+      "The node is not the tail.",
+      "All values are unique."
+    ],
+    "example": {
+      "input": "head = [4,5,1,9], node = 5",
+      "output": "[4,1,9]",
+      "explanation": "Copy next node's value into current node and skip next node: 5→copy 1→node.next = node.next.next."
+    }
   },
   "solutions": [
     {

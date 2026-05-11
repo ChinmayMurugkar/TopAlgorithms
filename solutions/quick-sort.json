@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "Sorting",
     "description": "Implement Quick Sort algorithm to sort an array of integers.\n                \nAlgorithm: Quick Sort is a divide-and-conquer algorithm that picks a pivot element and partitions the array around it.\n                \nKey Steps:\n\nChoose a pivot element\nPartition the array around the pivot\nRecursively sort the left and right subarrays",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Average O(n log n), worst O(n²) with bad pivot choice.",
+      "In-place, O(log n) stack space."
+    ],
+    "example": {
+      "input": "arr = [10,7,8,9,1,5]",
+      "output": "[1,5,7,8,9,10]",
+      "explanation": "Choose pivot, partition array (smaller left, larger right), recurse. O(n log n) avg, O(n²) worst."
+    }
   },
   "solutions": [
     {

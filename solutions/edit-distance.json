@@ -4,8 +4,15 @@
     "leetcode_id": 72,
     "category": "Dynamic Programming",
     "description": "Given two strings word1 and word2, return the minimum number of operations required to convert word1 to word2. You have the following three operations permitted on a word: Insert a character, Delete a character, Replace a character.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Operations: insert a character, delete a character, replace a character.",
+      "Return minimum number of operations to convert word1 to word2."
+    ],
+    "example": {
+      "input": "word1 = \"horse\", word2 = \"ros\"",
+      "output": "3",
+      "explanation": "horse→rorse(replace h→r)→rose(remove r)→ros(remove e). 3 operations."
+    }
   },
   "solutions": [
     {

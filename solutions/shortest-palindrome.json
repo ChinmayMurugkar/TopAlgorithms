@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "You are given a string s. You can convert s to a palindrome by adding characters in front of it.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Add characters only to the front.",
+      "Minimize additions."
+    ],
+    "example": {
+      "input": "s = \"aacecaaa\"",
+      "output": "\"aaacecaaa\"",
+      "explanation": "Find longest palindromic prefix, prepend reverse of remaining suffix. Use KMP to find overlap."
+    }
   },
   "solutions": [
     {

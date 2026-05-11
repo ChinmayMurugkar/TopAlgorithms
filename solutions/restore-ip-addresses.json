@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "A valid IP address consists of exactly four integers separated by single dots. Each integer is between 0 and 255 (inclusive) and cannot have leading zeros.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Exactly 4 parts.",
+      "Each part is a number 0-255 with no leading zeros (except '0' itself)."
+    ],
+    "example": {
+      "input": "s = \"25525511135\"",
+      "output": "[\"255.255.11.135\",\"255.255.111.35\"]",
+      "explanation": "Each segment must be 0-255 with no leading zeros. Backtracking with 4 segments."
+    }
   },
   "solutions": [
     {

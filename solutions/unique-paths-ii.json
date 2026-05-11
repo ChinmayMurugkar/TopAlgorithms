@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "You are given an m x n integer array obstacleGrid. There is a robot initially located at the top-left corner (i.e., obstacleGrid[0][0]).",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "0 = empty, 1 = obstacle.",
+      "Set dp to 0 at obstacles."
+    ],
+    "example": {
+      "input": "obstacleGrid = [[0,0,0],[0,1,0],[0,0,0]]",
+      "output": "2",
+      "explanation": "Center cell is an obstacle. Two paths remain: top-right corner and bottom-left corner routes."
+    }
   },
   "solutions": [
     {

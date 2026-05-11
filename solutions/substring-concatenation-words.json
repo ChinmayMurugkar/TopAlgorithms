@@ -4,8 +4,16 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "You are given a string s and an array of strings words. All the strings of words are of the same length.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "All words same length.",
+      "Each word must appear exactly once.",
+      "Return starting indices of all valid concatenations."
+    ],
+    "example": {
+      "input": "s = \"barfoothefoobarman\", words = [\"foo\",\"bar\"]",
+      "output": "[0,9]",
+      "explanation": "At index 0: 'barfoo'='bar'+'foo'. At index 9: 'foobar'='foo'+'bar'. Sliding window of size totalLen."
+    }
   },
   "solutions": [
     {

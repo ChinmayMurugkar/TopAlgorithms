@@ -4,8 +4,16 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given the heads of two singly linked-lists headA and headB, return the node at which the two lists intersect.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Return the node where the two lists intersect, or null.",
+      "No cycles.",
+      "The linked lists retain their original structure after the function."
+    ],
+    "example": {
+      "input": "listA = [4,1,8,4,5], listB = [5,6,1,8,4,5], intersection starts at node with value 8",
+      "output": "Reference to node with value 8",
+      "explanation": "Both lists share a common suffix starting at node 8. Use two-pointer trick: advance each pointer; when one reaches end, redirect to other list's head."
+    }
   },
   "solutions": [
     {

@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given a string s that contains parentheses and letters, remove the minimum number of invalid parentheses to make the input string valid.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Return all unique valid strings with minimum removals.",
+      "May contain letters which stay unchanged."
+    ],
+    "example": {
+      "input": "s = \"()())()\"",
+      "output": "[\"()()()\", \"(())()\"]",
+      "explanation": "Remove minimum parentheses to make valid. BFS level by level, stop at first level with valid strings."
+    }
   },
   "solutions": [
     {

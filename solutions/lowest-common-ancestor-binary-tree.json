@@ -5,7 +5,11 @@
     "category": "String/Array/Matrix",
     "description": "Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.",
     "assumptions": [],
-    "example": {}
+    "example": {
+      "input": "root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4",
+      "output": "5",
+      "explanation": "5 is an ancestor of 4, so LCA(5,4) = 5."
+    }
   },
   "solutions": [
     {

@@ -4,7 +4,10 @@
     "leetcode_id": 19,
     "category": "Linked List",
     "description": "Given the head of a linked list, remove the nth node from the end of the list and return its head.",
-    "assumptions": [],
+    "assumptions": [
+      "n is valid (1 ≤ n ≤ length).",
+      "One-pass solution with two pointers."
+    ],
     "example": {
       "input": "head = [1,2,3,4,5], n = 2",
       "output": "[1,2,3,5]",

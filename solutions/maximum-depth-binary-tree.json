@@ -4,7 +4,10 @@
     "leetcode_id": 104,
     "category": "Tree, Heap & Trie",
     "description": "Given the root of a binary tree, return its maximum depth.\n                \nDefinition: A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.",
-    "assumptions": [],
+    "assumptions": [
+      "Depth = number of nodes along the longest root-to-leaf path.",
+      "Empty tree has depth 0."
+    ],
     "example": {
       "input": "root = [3,9,20,null,null,15,7]",
       "output": "3",

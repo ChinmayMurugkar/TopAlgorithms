@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given an m x n matrix board containing 'X' and 'O', capture all regions that are 4-directionally surrounded by 'X'.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "In-place modification.",
+      "O's on border or connected to border O's are not flipped."
+    ],
+    "example": {
+      "input": "board = [[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"O\",\"O\",\"X\"],[\"X\",\"X\",\"O\",\"X\"],[\"X\",\"O\",\"X\",\"X\"]]",
+      "output": "[[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"O\",\"X\",\"X\"]]",
+      "explanation": "Flip surrounded 'O's to 'X'. 'O' at border and connected to border is NOT flipped. DFS from border O's first."
+    }
   },
   "solutions": [
     {

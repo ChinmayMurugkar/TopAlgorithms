@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given an integer array nums where the elements are sorted in ascending order, convert it to a height-balanced binary search tree.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "The array is sorted in ascending order.",
+      "Resulting BST must be height-balanced."
+    ],
+    "example": {
+      "input": "nums = [-10,-3,0,5,9]",
+      "output": "[0,-3,9,-10,null,5]",
+      "explanation": "Middle element (0) is root. Recursively build left from [-10,-3] and right from [5,9]."
+    }
   },
   "solutions": [
     {

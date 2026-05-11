@@ -4,8 +4,16 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given two integers dividend and divisor, divide two integers without using multiplication, division, and mod operator.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Cannot use multiplication, division, or mod operators.",
+      "Truncate toward zero.",
+      "Clamp result to 32-bit signed integer range."
+    ],
+    "example": {
+      "input": "dividend = 10, divisor = 3",
+      "output": "3",
+      "explanation": "10 / 3 = 3.33, truncated toward zero = 3."
+    }
   },
   "solutions": [
     {

@@ -5,7 +5,11 @@
     "category": "Bit Manipulation",
     "description": "Given an integer n, return true if it is a power of two. Otherwise, return false. An integer n is a power of two, if there exists an integer x such that n == 2^x.",
     "assumptions": [],
-    "example": {}
+    "example": {
+      "input": "n = 16",
+      "output": "true",
+      "explanation": "16 = 2⁴. Powers of 2 in binary have exactly one '1' bit. Check: n > 0 && (n & (n-1)) == 0."
+    }
   },
   "solutions": [
     {

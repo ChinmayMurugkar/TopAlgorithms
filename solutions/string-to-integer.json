@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Handle leading spaces, optional +/-, non-digit stops parsing.",
+      "Clamp result to [-2³¹, 2³¹-1]."
+    ],
+    "example": {
+      "input": "s = \"   -42\"",
+      "output": "-42",
+      "explanation": "Skip leading whitespace, read optional sign, read digits until non-digit. Clamp to 32-bit integer range."
+    }
   },
   "solutions": [
     {

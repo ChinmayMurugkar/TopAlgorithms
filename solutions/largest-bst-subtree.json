@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given the root of a binary tree, find the largest subtree, which is also a Binary Search Tree (BST), where the largest means subtree has the largest number of nodes.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Return the size (number of nodes) of the largest subtree that is a BST.",
+      "A single node is always a BST."
+    ],
+    "example": {
+      "input": "root = [10,5,15,1,8,null,7]",
+      "output": "3",
+      "explanation": "The subtree rooted at 5 (nodes 1,5,8) is a valid BST of size 3. Subtree at 15 is invalid (7 < 15 but in right subtree)."
+    }
   },
   "solutions": [
     {

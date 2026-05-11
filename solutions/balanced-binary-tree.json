@@ -4,8 +4,14 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given a binary tree, determine if it is height-balanced.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "A height-balanced binary tree is one where every node's left and right subtree heights differ by at most 1."
+    ],
+    "example": {
+      "input": "root = [3,9,20,null,null,15,7]",
+      "output": "true",
+      "explanation": "Every node's left and right subtrees differ in height by at most 1."
+    }
   },
   "solutions": [
     {

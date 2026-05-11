@@ -4,7 +4,10 @@
     "leetcode_id": 151,
     "category": "String/Array/Matrix",
     "description": "Given an input string s, reverse the order of the words.\n                \nNote: A word is defined as a sequence of non-space characters. The words in s will be separated by at least one space.",
-    "assumptions": [],
+    "assumptions": [
+      "Return single spaces between words.",
+      "No leading or trailing spaces in output."
+    ],
     "example": {
       "input": "s = \"the sky is blue\"",
       "output": "\"blue is sky the\""

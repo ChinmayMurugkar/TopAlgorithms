@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Suppose an array of length n sorted in ascending order is rotated between 1 and n times.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Array has no duplicates.",
+      "Originally sorted in ascending order, then rotated."
+    ],
+    "example": {
+      "input": "nums = [3,4,5,1,2]",
+      "output": "1",
+      "explanation": "Array was rotated 3 times. Minimum is 1 at index 3. Use binary search: O(log n)."
+    }
   },
   "solutions": [
     {

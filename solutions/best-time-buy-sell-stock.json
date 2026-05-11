@@ -4,8 +4,16 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "You are given an array prices where prices[i] is the price of a given stock on the ith day.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "You may only hold at most one share at a time.",
+      "You must buy before you sell.",
+      "Return 0 if no profit is possible."
+    ],
+    "example": {
+      "input": "prices = [7,1,5,3,6,4]",
+      "output": "5",
+      "explanation": "Buy on day 2 (price=1), sell on day 5 (price=6). Profit = 6-1 = 5."
+    }
   },
   "solutions": [
     {

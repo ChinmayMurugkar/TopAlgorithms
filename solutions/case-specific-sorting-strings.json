@@ -4,8 +4,14 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Sort a string such that uppercase letters come before lowercase letters.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Uppercase letters maintain relative uppercase positions; lowercase letters maintain relative lowercase positions."
+    ],
+    "example": {
+      "input": "s = \"dcBA\"",
+      "output": "\"dcBA\" sorted as \"ABcd\" but preserving case positions → \"ABcd\"",
+      "explanation": "Sort uppercase letters among themselves and lowercase among themselves, keeping case positions fixed."
+    }
   },
   "solutions": [
     {

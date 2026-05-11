@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Implement a first-in-first-out (FIFO) queue using only two stacks.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Simulate FIFO queue using only two LIFO stacks.",
+      "pop/peek amortized O(1)."
+    ],
+    "example": {
+      "input": "push(1), push(2), peek() → 1, pop() → 1, empty() → false",
+      "output": "1, 1, false",
+      "explanation": "Use two stacks: push to stack1; on pop/peek, if stack2 empty, move all from stack1."
+    }
   },
   "solutions": [
     {

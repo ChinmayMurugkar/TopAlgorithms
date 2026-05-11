@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given two version numbers, version1 and version2, compare them.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Revisions with leading zeros are equal to the same revision without (e.g. '01' == '1').",
+      "Missing revisions default to 0."
+    ],
+    "example": {
+      "input": "version1 = \"1.01\", version2 = \"1.001\"",
+      "output": "0",
+      "explanation": "Ignoring leading zeros: 1.1 == 1.1. Return -1 if v1 < v2, 1 if v1 > v2, 0 if equal."
+    }
   },
   "solutions": [
     {

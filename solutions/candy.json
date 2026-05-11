@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "There are n children standing in a line. Each child is assigned a rating value given in the integer array ratings.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Each child must have at least 1 candy.",
+      "Children with a higher rating than an adjacent neighbor get more candies than that neighbor."
+    ],
+    "example": {
+      "input": "ratings = [1,0,2]",
+      "output": "5",
+      "explanation": "Minimum candies: [2,1,2]. Each child must have ≥1 and children with higher ratings than neighbors get more."
+    }
   },
   "solutions": [
     {

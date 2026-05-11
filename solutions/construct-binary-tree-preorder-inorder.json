@@ -4,8 +4,14 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree, construct and return the binary tree.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "No duplicate values."
+    ],
+    "example": {
+      "input": "preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]",
+      "output": "[3,9,20,null,null,15,7]",
+      "explanation": "Preorder's first element is root. Find it in inorder to split left/right subtrees."
+    }
   },
   "solutions": [
     {

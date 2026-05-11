@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given an integer n, return the number of prime numbers that are strictly less than n.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Count primes strictly less than n.",
+      "Use Sieve of Eratosthenes for efficiency."
+    ],
+    "example": {
+      "input": "n = 10",
+      "output": "4",
+      "explanation": "Primes less than 10: 2, 3, 5, 7. Count = 4."
+    }
   },
   "solutions": [
     {

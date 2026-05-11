@@ -4,7 +4,10 @@
     "leetcode_id": 1143,
     "category": "Dynamic Programming",
     "description": "Given two strings text1 and text2, return the length of their longest common subsequence.\n                \nDefinition: A subsequence of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters.",
-    "assumptions": [],
+    "assumptions": [
+      "Subsequence: characters in order but not necessarily contiguous.",
+      "Return length of LCS."
+    ],
     "example": {
       "input": "text1 = \"abcde\", text2 = \"ace\"",
       "output": "3",

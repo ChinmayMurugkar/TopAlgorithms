@@ -4,7 +4,10 @@
     "leetcode_id": 101,
     "category": "Tree, Heap & Trie",
     "description": "Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).",
-    "assumptions": [],
+    "assumptions": [
+      "A tree is symmetric if left and right subtrees are mirror images.",
+      "Can also solve iteratively with queue."
+    ],
     "example": {
       "input": "root = [1,2,2,3,4,4,3]",
       "output": "true",

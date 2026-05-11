@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given a positive integer n, find and return the longest distance between any two adjacent 1's in the binary representation of n.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Binary gap = distance between two consecutive 1s.",
+      "Return 0 if fewer than two 1s."
+    ],
+    "example": {
+      "input": "n = 22",
+      "output": "2",
+      "explanation": "22 = 10110 in binary. Gaps between consecutive 1s: positions 1,2,4 → gaps 1,2. Maximum = 2."
+    }
   },
   "solutions": [
     {

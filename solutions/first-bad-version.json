@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "You are a product manager and currently leading a team to develop a new product. Unfortunately, the latest version of your product fails the quality check.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "All versions after the first bad one are also bad.",
+      "Minimize calls to the API."
+    ],
+    "example": {
+      "input": "n = 5, bad = 4",
+      "output": "4",
+      "explanation": "isBadVersion(3)=false, isBadVersion(4)=true. Binary search to find first bad version."
+    }
   },
   "solutions": [
     {

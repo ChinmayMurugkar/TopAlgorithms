@@ -4,8 +4,15 @@
     "leetcode_id": 73,
     "category": "Matrix",
     "description": "Given an m x n integer matrix matrix, if an element is 0, set its entire row and column to 0's.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "In-place.",
+      "O(1) space solution exists using first row/column as markers."
+    ],
+    "example": {
+      "input": "matrix = [[1,1,1],[1,0,1],[1,1,1]]",
+      "output": "[[1,0,1],[0,0,0],[1,0,1]]",
+      "explanation": "If cell is 0, set entire row and column to 0. Use first row/col as markers for O(1) space."
+    }
   },
   "solutions": [
     {

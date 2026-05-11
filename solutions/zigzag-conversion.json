@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "The string 'PAYPALISHIRING' is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "numRows ≥ 1.",
+      "If numRows=1 or numRows≥len(s), return s unchanged."
+    ],
+    "example": {
+      "input": "s = \"PAYPALISHIRING\", numRows = 3",
+      "output": "\"PAHNAPLSIIGYIR\"",
+      "explanation": "Write in zigzag across numRows rows, read row by row. P-A-H-N / A-P-L-S-I-I-G / Y-I-R."
+    }
   },
   "solutions": [
     {

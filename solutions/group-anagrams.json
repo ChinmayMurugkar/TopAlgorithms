@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given an array of strings strs, group the anagrams together. You can return the answer in any order.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Input strings contain only lowercase letters.",
+      "Output order doesn't matter."
+    ],
+    "example": {
+      "input": "strs = [\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"]",
+      "output": "[[\"bat\"],[\"nat\",\"tan\"],[\"ate\",\"eat\",\"tea\"]]",
+      "explanation": "Group strings that are anagrams of each other. Sort each word as key."
+    }
   },
   "solutions": [
     {

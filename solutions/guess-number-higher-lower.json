@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "We are playing the Guess Game. The game is as follows:",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "guess(num) returns -1 if too high, 1 if too low, 0 if correct.",
+      "1 ≤ pick ≤ n."
+    ],
+    "example": {
+      "input": "n = 10, pick = 6",
+      "output": "6",
+      "explanation": "Binary search: guess(5)→1(higher), guess(8)→-1(lower), guess(6)→0(correct)."
+    }
   },
   "solutions": [
     {

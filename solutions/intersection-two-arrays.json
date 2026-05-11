@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "Given two integer arrays nums1 and nums2, return an array of their intersection.",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "Return unique intersection elements.",
+      "Order does not matter."
+    ],
+    "example": {
+      "input": "nums1 = [1,2,2,1], nums2 = [2,2]",
+      "output": "[2]",
+      "explanation": "Intersection contains each unique element that appears in both arrays. 2 appears in both, but result has no duplicates."
+    }
   },
   "solutions": [
     {

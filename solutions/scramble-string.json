@@ -4,8 +4,15 @@
     "leetcode_id": null,
     "category": "String/Array/Matrix",
     "description": "We can scramble a string s to get a string t using the following algorithm:",
-    "assumptions": [],
-    "example": {}
+    "assumptions": [
+      "A scramble swaps any two non-overlapping substrings recursively.",
+      "Use memoization on (s1,s2) pairs."
+    ],
+    "example": {
+      "input": "s1 = \"great\", s2 = \"rgeat\"",
+      "output": "true",
+      "explanation": "'great' can be split to 'gr|eat', swap to 'eat|gr', then 'rg|eat' = 'rgeat'. Recursive DP with memoization."
+    }
   },
   "solutions": [
     {
