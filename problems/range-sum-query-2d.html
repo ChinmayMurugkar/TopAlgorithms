@@ -696,61 +696,84 @@
 
         /* ── Split dividers ───────────────────────────────────────────────── */
         function initSplitDividers() {
-            makeDivider('split-divider-1', 'left-pane', null, 'mid-pane', true);
-            makeDivider('split-divider-2', 'mid-pane',  null, 'chat-pane', false);
+            var layout    = document.querySelector('.split-layout');
+            var leftPane  = document.getElementById('left-pane');
+            var div1      = document.getElementById('split-divider-1');
+            var midPane   = document.getElementById('mid-pane');
+            var div2      = document.getElementById('split-divider-2');
+            var chatPane  = document.getElementById('chat-pane');
 
             // Restore saved widths
             var savedMid  = localStorage.getItem('split-mid-width');
             var savedChat = localStorage.getItem('split-chat-width');
-            if (savedMid)  document.getElementById('mid-pane').style.width  = savedMid  + 'px';
-            if (savedChat) document.getElementById('chat-pane').style.width = savedChat + 'px';
-        }
+            if (savedMid)  midPane.style.width  = savedMid  + 'px';
+            if (savedChat) chatPane.style.width = savedChat + 'px';
 
-        function makeDivider(dividerId, leftId, rightId, rightPaneId, saveLeft) {
-            var divider   = document.getElementById(dividerId);
-            var layout    = divider.parentElement;
-            var leftEl    = document.getElementById(leftId);
-            var rightEl   = document.getElementById(rightPaneId);
+            function refreshCM() {
+                document.querySelectorAll('.mid-pane .CodeMirror').forEach(function(el) {
+                    if (el.CodeMirror) el.CodeMirror.refresh();
+                });
+            }
 
-            var dragging = false, startX = 0, startLeftW = 0, startRightW = 0;
+            // ── Divider 1: only moves the boundary between left-pane and mid-pane ──
+            // Left-pane is flex:1 and absorbs the slack. Chat-pane is untouched.
+            var d1 = { dragging: false, startX: 0, startMidW: 0 };
 
-            divider.addEventListener('mousedown', function(e) {
-                dragging = true;
-                startX = e.clientX;
-                startLeftW  = leftEl.offsetWidth;
-                startRightW = rightEl.offsetWidth;
-                divider.classList.add('dragging');
+            div1.addEventListener('mousedown', function(e) {
+                d1.dragging  = true;
+                d1.startX    = e.clientX;
+                d1.startMidW = midPane.offsetWidth;
+                div1.classList.add('dragging');
+                document.body.style.cursor = 'col-resize';
+                document.body.style.userSelect = 'none';
+                e.preventDefault();
+            });
+
+            // ── Divider 2: only moves the boundary between mid-pane and chat-pane ──
+            // Both mid-pane and chat-pane change; left-pane is untouched.
+            var d2 = { dragging: false, startX: 0, startMidW: 0, startChatW: 0 };
+
+            div2.addEventListener('mousedown', function(e) {
+                d2.dragging   = true;
+                d2.startX     = e.clientX;
+                d2.startMidW  = midPane.offsetWidth;
+                d2.startChatW = chatPane.offsetWidth;
+                div2.classList.add('dragging');
                 document.body.style.cursor = 'col-resize';
                 document.body.style.userSelect = 'none';
                 e.preventDefault();
             });
 
             document.addEventListener('mousemove', function(e) {
-                if (!dragging) return;
-                var delta = e.clientX - startX;
                 var layoutW = layout.offsetWidth;
 
-                if (dividerId === 'split-divider-1') {
-                    // Moving divider 1: grow/shrink mid-pane
-                    var newMid = Math.max(220, Math.min(startRightW - delta, layoutW - 300));
-                    rightEl.style.width = newMid + 'px';
+                if (d1.dragging) {
+                    // Drag right → mid-pane shrinks, left-pane grows (and vice-versa)
+                    var delta  = e.clientX - d1.startX;
+                    var newMid = Math.max(220, Math.min(d1.startMidW - delta, layoutW - 320));
+                    midPane.style.width = newMid + 'px';
                     localStorage.setItem('split-mid-width', newMid);
-                } else {
-                    // Moving divider 2: grow/shrink chat-pane
-                    var newChat = Math.max(220, Math.min(startRightW - delta, layoutW - 400));
-                    rightEl.style.width = newChat + 'px';
-                    localStorage.setItem('split-chat-width', newChat);
+                    refreshCM();
                 }
 
-                document.querySelectorAll('.mid-pane .CodeMirror').forEach(function(el) {
-                    if (el.CodeMirror) el.CodeMirror.refresh();
-                });
+                if (d2.dragging) {
+                    // Drag right → chat-pane shrinks, mid-pane grows (and vice-versa)
+                    // Left-pane width is NOT touched so divider 1 stays put.
+                    var delta    = e.clientX - d2.startX;
+                    var newChat  = Math.max(220, Math.min(d2.startChatW - delta, layoutW - 440));
+                    var chatDiff = d2.startChatW - newChat;          // how much chat changed
+                    var newMid   = Math.max(220, d2.startMidW + chatDiff); // mid grows by same amount
+                    midPane.style.width  = newMid  + 'px';
+                    chatPane.style.width = newChat + 'px';
+                    localStorage.setItem('split-mid-width',  newMid);
+                    localStorage.setItem('split-chat-width', newChat);
+                    refreshCM();
+                }
             });
 
             document.addEventListener('mouseup', function() {
-                if (!dragging) return;
-                dragging = false;
-                divider.classList.remove('dragging');
+                if (d1.dragging) { d1.dragging = false; div1.classList.remove('dragging'); }
+                if (d2.dragging) { d2.dragging = false; div2.classList.remove('dragging'); }
                 document.body.style.cursor = '';
                 document.body.style.userSelect = '';
             });
