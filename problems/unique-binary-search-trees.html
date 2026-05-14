@@ -142,30 +142,35 @@
         }
         .mid-pane .playground-panel.open { display: flex; }
 
-        /* The editor pane scrolls — CodeMirror grows to fit content (viewportMargin:Infinity) */
+        /* Pane is position:relative so CodeMirror can fill it absolutely */
         .mid-pane .pg-editor-pane {
             flex: 1; min-height: 0;
-            overflow-y: auto; overflow-x: auto;
+            position: relative;
             display: none;
         }
         .mid-pane .pg-editor-pane.active { display: block; }
 
-        /* CodeMirror grows with content; the parent div above scrolls */
+        /* CodeMirror fills the pane via absolute position — gets a real pixel height */
         .mid-pane .CodeMirror {
-            height: auto !important;
-            min-height: 120px;
+            position: absolute !important;
+            top: 0; left: 0; right: 0; bottom: 0;
+            height: 100% !important;
             max-height: none !important;
             font-family: 'Menlo', 'Monaco', 'Consolas', 'Courier New', monospace;
             font-size: 14px !important;
             line-height: 1.7 !important;
             letter-spacing: 0.01em;
         }
-        .mid-pane .CodeMirror-scroll { overflow: visible !important; }
+        /* CodeMirror-scroll fills the wrapper and scrolls normally */
+        .mid-pane .CodeMirror-scroll {
+            height: 100% !important;
+            max-height: none !important;
+            overflow-y: auto !important;
+            overflow-x: auto !important;
+        }
         .mid-pane .CodeMirror-lines { padding: 10px 0; }
         .mid-pane .CodeMirror-line { padding: 0 10px !important; }
         .mid-pane .CodeMirror-linenumber { font-size: 12px; color: #4a5568; min-width: 36px; }
-        .mid-pane .CodeMirror-vscrollbar,
-        .mid-pane .CodeMirror-hscrollbar { display: none !important; }
         .mid-pane .pg-output { max-height: 160px; flex-shrink: 0; }
 
         /* ── Right pane (AI Chat) ── */
@@ -859,14 +864,11 @@
             var editors = {};
             var currentTheme = isDark() ? 'dracula' : 'eclipse';
 
-            var isMidPane = !!panel.closest('.mid-pane');
             function makeEditor(host, code, mode) {
                 return CodeMirror(host, {
                     value: code, mode: mode, theme: currentTheme,
                     lineNumbers: true, indentWithTabs: false, tabSize: 4,
-                    indentUnit: 4, lineWrapping: false, autofocus: false,
-                    // Mid-pane: render all lines so the parent div scrolls naturally
-                    viewportMargin: isMidPane ? Infinity : 10
+                    indentUnit: 4, lineWrapping: false, autofocus: false
                 });
             }
 
