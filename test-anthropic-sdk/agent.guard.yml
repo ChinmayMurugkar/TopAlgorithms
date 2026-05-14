@@ -1,0 +1,53 @@
+version: "1.0"
+identity:
+  name: test-anthropic-sdk
+  description: AI agent created with AgentVoy
+  version: 0.1.0
+model:
+  provider: anthropic
+  model: claude-sonnet-4-20250514
+  api_key_env: ANTHROPIC_API_KEY
+permissions:
+  network:
+    mode: restricted
+    allow:
+      - "*"
+  filesystem:
+    read:
+      - ./**
+    write:
+      - ./output/**
+  tools:
+    require_approval:
+      - delete_*
+      - send_*
+      - deploy_*
+    max_cost_per_run: $1.00
+  execution:
+    allow_shell: false
+    allow_subprocess: false
+guardrails:
+  input:
+    block_prompt_injection: true
+    max_tokens: 4096
+    pii_detection: warn
+    content_filter: moderate
+  output:
+    block_harmful_content: true
+    max_output_tokens: 8192
+    pii_redaction: false
+    hallucination_check: false
+  behavior:
+    max_iterations: 20
+    timeout: 5m
+    max_tool_calls: 50
+    human_approval_after: 10
+    retry_limit: 3
+    cost_limit: $1.00
+auth:
+  type: api_key
+  token_storage: env
+observability:
+  tracing: true
+  log_level: info
+  cost_tracking: true
