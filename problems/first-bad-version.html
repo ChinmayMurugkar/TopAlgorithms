@@ -730,17 +730,22 @@
             });
 
             // ── Divider 2: only moves the boundary between mid-pane and chat-pane ──
-            // Both mid-pane and chat-pane change; left-pane is untouched.
-            var d2 = { dragging: false, startX: 0, startMidW: 0, startChatW: 0, startLeftW: 0 };
+            // Strategy: pin left-pane to a fixed px width for the duration of the drag,
+            // make mid-pane flex:1 so it absorbs slack, only change chat-pane width.
+            // On mouseup restore left-pane to flex:1 and pin mid-pane at its current size.
+            var d2 = { dragging: false, startX: 0, startChatW: 0 };
 
             div2.addEventListener('mousedown', function(e) {
                 d2.dragging   = true;
                 d2.startX     = e.clientX;
-                d2.startMidW  = midPane.offsetWidth;
                 d2.startChatW = chatPane.offsetWidth;
-                d2.startLeftW = leftPane.offsetWidth;
+                // Freeze left-pane, let mid-pane be the flex absorber
+                leftPane.style.flex  = 'none';
+                leftPane.style.width = leftPane.offsetWidth + 'px';
+                midPane.style.flex   = '1';
+                midPane.style.width  = '';
                 div2.classList.add('dragging');
-                document.body.style.cursor = 'col-resize';
+                document.body.style.cursor    = 'col-resize';
                 document.body.style.userSelect = 'none';
                 e.preventDefault();
             });
@@ -758,16 +763,11 @@
                 }
 
                 if (d2.dragging) {
-                    // Drag right → chat-pane shrinks, mid-pane grows (and vice-versa)
-                    // Derive available space from snapshotted left-pane width so it never shifts.
-                    var delta     = e.clientX - d2.startX;
-                    var divW      = div1.offsetWidth + div2.offsetWidth;
-                    var available = layoutW - d2.startLeftW - divW;
-                    var newChat   = Math.max(220, Math.min(d2.startChatW - delta, available - 220));
-                    var newMid    = Math.max(220, available - newChat);
-                    midPane.style.width  = newMid  + 'px';
+                    // Only chat-pane width changes; mid-pane (flex:1) absorbs the slack.
+                    // Left-pane is pinned so divider 1 is physically immovable.
+                    var delta   = e.clientX - d2.startX;
+                    var newChat = Math.max(220, Math.min(d2.startChatW - delta, layoutW - 440));
                     chatPane.style.width = newChat + 'px';
-                    localStorage.setItem('split-mid-width',  newMid);
                     localStorage.setItem('split-chat-width', newChat);
                     refreshCM();
                 }
@@ -775,8 +775,18 @@
 
             document.addEventListener('mouseup', function() {
                 if (d1.dragging) { d1.dragging = false; div1.classList.remove('dragging'); }
-                if (d2.dragging) { d2.dragging = false; div2.classList.remove('dragging'); }
-                document.body.style.cursor = '';
+                if (d2.dragging) {
+                    d2.dragging = false;
+                    div2.classList.remove('dragging');
+                    // Pin mid-pane at its settled size, restore left-pane to flex:1
+                    var settledMid = midPane.offsetWidth;
+                    midPane.style.flex  = 'none';
+                    midPane.style.width = settledMid + 'px';
+                    leftPane.style.flex  = '1';
+                    leftPane.style.width = '';
+                    localStorage.setItem('split-mid-width', settledMid);
+                }
+                document.body.style.cursor    = '';
                 document.body.style.userSelect = '';
             });
         }
