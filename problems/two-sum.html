@@ -731,13 +731,14 @@
 
             // ── Divider 2: only moves the boundary between mid-pane and chat-pane ──
             // Both mid-pane and chat-pane change; left-pane is untouched.
-            var d2 = { dragging: false, startX: 0, startMidW: 0, startChatW: 0 };
+            var d2 = { dragging: false, startX: 0, startMidW: 0, startChatW: 0, startLeftW: 0 };
 
             div2.addEventListener('mousedown', function(e) {
                 d2.dragging   = true;
                 d2.startX     = e.clientX;
                 d2.startMidW  = midPane.offsetWidth;
                 d2.startChatW = chatPane.offsetWidth;
+                d2.startLeftW = leftPane.offsetWidth;
                 div2.classList.add('dragging');
                 document.body.style.cursor = 'col-resize';
                 document.body.style.userSelect = 'none';
@@ -758,11 +759,12 @@
 
                 if (d2.dragging) {
                     // Drag right → chat-pane shrinks, mid-pane grows (and vice-versa)
-                    // Left-pane width is NOT touched so divider 1 stays put.
-                    var delta    = e.clientX - d2.startX;
-                    var newChat  = Math.max(220, Math.min(d2.startChatW - delta, layoutW - 440));
-                    var chatDiff = d2.startChatW - newChat;          // how much chat changed
-                    var newMid   = Math.max(220, d2.startMidW + chatDiff); // mid grows by same amount
+                    // Derive available space from snapshotted left-pane width so it never shifts.
+                    var delta     = e.clientX - d2.startX;
+                    var divW      = div1.offsetWidth + div2.offsetWidth;
+                    var available = layoutW - d2.startLeftW - divW;
+                    var newChat   = Math.max(220, Math.min(d2.startChatW - delta, available - 220));
+                    var newMid    = Math.max(220, available - newChat);
                     midPane.style.width  = newMid  + 'px';
                     chatPane.style.width = newChat + 'px';
                     localStorage.setItem('split-mid-width',  newMid);
