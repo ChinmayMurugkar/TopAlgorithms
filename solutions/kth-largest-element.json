@@ -25,6 +25,17 @@
         "time": "O(n) average, O(n\u00b2) worst case",
         "space": "O(1)"
       }
+    },
+    {
+      "title": "Solution 2 \u2013 Min-Heap of Size K [\u2713 Interviewer Accepted]",
+      "description": "Maintain a min-heap of size k. Push each element; if the heap exceeds k, pop the smallest. After processing all elements, the heap's minimum is the kth largest. O(n log k) time \u2014 preferred over QuickSelect when k is small or the stream is online.",
+      "code": "public int findKthLargest(int[] nums, int k) {\n    PriorityQueue<Integer> minHeap = new PriorityQueue<>();\n    for (int num : nums) {\n        minHeap.offer(num);\n        if (minHeap.size() > k) minHeap.poll();\n    }\n    return minHeap.peek();\n}",
+      "code_python": "import heapq\nfrom typing import List\n\ndef find_kth_largest(nums: List[int], k: int) -> int:\n    heap = []\n    for num in nums:\n        heapq.heappush(heap, num)\n        if len(heap) > k:\n            heapq.heappop(heap)\n    return heap[0]",
+      "language": "java",
+      "complexity": {
+        "time": "O(n log k)",
+        "space": "O(k)"
+      }
     }
   ],
   "variations": [],

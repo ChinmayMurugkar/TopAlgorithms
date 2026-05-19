@@ -25,6 +25,17 @@
         "time": "O(m * n)",
         "space": "O(m * n) in worst case"
       }
+    },
+    {
+      "title": "Solution 2 \u2013 BFS [\u2713 Interviewer Accepted]",
+      "description": "Same island-counting idea as DFS, but use a queue instead of recursion. When we find an unvisited '1', increment the count and BFS all connected land cells, marking each visited. BFS is often preferred in interviews to avoid recursion stack overflow on very large grids.",
+      "code": "public int numIslands(char[][] grid) {\n    int count = 0;\n    int m = grid.length, n = grid[0].length;\n    int[][] dirs = {{0,1},{0,-1},{1,0},{-1,0}};\n    for (int i = 0; i < m; i++) {\n        for (int j = 0; j < n; j++) {\n            if (grid[i][j] == '1') {\n                count++;\n                Queue<int[]> q = new LinkedList<>();\n                q.offer(new int[]{i, j});\n                grid[i][j] = '0';\n                while (!q.isEmpty()) {\n                    int[] cell = q.poll();\n                    for (int[] d : dirs) {\n                        int r = cell[0]+d[0], c = cell[1]+d[1];\n                        if (r>=0&&r<m&&c>=0&&c<n&&grid[r][c]=='1') {\n                            grid[r][c] = '0';\n                            q.offer(new int[]{r,c});\n                        }\n                    }\n                }\n            }\n        }\n    }\n    return count;\n}",
+      "code_python": "from typing import List\nfrom collections import deque\n\ndef num_islands(grid: List[List[str]]) -> int:\n    count = 0\n    m, n = len(grid), len(grid[0])\n    for i in range(m):\n        for j in range(n):\n            if grid[i][j] == '1':\n                count += 1\n                q = deque([(i, j)])\n                grid[i][j] = '0'\n                while q:\n                    r, c = q.popleft()\n                    for dr, dc in [(0,1),(0,-1),(1,0),(-1,0)]:\n                        nr, nc = r+dr, c+dc\n                        if 0<=nr<m and 0<=nc<n and grid[nr][nc]=='1':\n                            grid[nr][nc] = '0'\n                            q.append((nr, nc))\n    return count",
+      "language": "java",
+      "complexity": {
+        "time": "O(m * n)",
+        "space": "O(min(m,n))"
+      }
     }
   ],
   "variations": [],

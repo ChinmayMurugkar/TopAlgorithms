@@ -25,6 +25,17 @@
         "time": "O(amount * number of coins)",
         "space": "O(amount)"
       }
+    },
+    {
+      "title": "Solution 2 \u2013 Top-Down Memoization [\u2713 Interviewer Accepted]",
+      "description": "Recursively compute the minimum coins needed for amount, memoizing results. For each amount, try every coin and take 1 + minCoins(amount - coin). This top-down approach is often easier to derive in an interview and produces the same O(amount * coins) complexity.",
+      "code": "public int coinChange(int[] coins, int amount) {\n    int[] memo = new int[amount + 1];\n    Arrays.fill(memo, -1);\n    int result = dfs(coins, amount, memo);\n    return result;\n}\n\nprivate int dfs(int[] coins, int rem, int[] memo) {\n    if (rem < 0) return -1;\n    if (rem == 0) return 0;\n    if (memo[rem] != -1) return memo[rem];\n    int min = Integer.MAX_VALUE;\n    for (int coin : coins) {\n        int sub = dfs(coins, rem - coin, memo);\n        if (sub >= 0) min = Math.min(min, sub + 1);\n    }\n    memo[rem] = (min == Integer.MAX_VALUE) ? -1 : min;\n    return memo[rem];\n}",
+      "code_python": "from typing import List\nfrom functools import lru_cache\n\ndef coin_change(coins: List[int], amount: int) -> int:\n    @lru_cache(maxsize=None)\n    def dp(rem):\n        if rem < 0: return float('inf')\n        if rem == 0: return 0\n        return min(dp(rem - c) + 1 for c in coins)\n    result = dp(amount)\n    return result if result != float('inf') else -1",
+      "language": "java",
+      "complexity": {
+        "time": "O(amount * coins)",
+        "space": "O(amount)"
+      }
     }
   ],
   "variations": [],

@@ -25,6 +25,17 @@
         "time": "O(n)",
         "space": "O(1)"
       }
+    },
+    {
+      "title": "Solution 2 \u2013 Dynamic Programming [\u2713 Interviewer Accepted]",
+      "description": "Define dp[i] = true if index i is reachable from index 0. For each reachable index i, mark all indices i+1 through i+nums[i] as reachable. Return dp[n-1]. O(n\u00b2) worst case but illustrates the DP framing interviewers often ask for before accepting the greedy.",
+      "code": "public boolean canJump(int[] nums) {\n    boolean[] dp = new boolean[nums.length];\n    dp[0] = true;\n    for (int i = 0; i < nums.length; i++) {\n        if (!dp[i]) continue;\n        for (int j = i + 1; j <= Math.min(i + nums[i], nums.length - 1); j++) {\n            dp[j] = true;\n        }\n    }\n    return dp[nums.length - 1];\n}",
+      "code_python": "from typing import List\n\ndef can_jump(nums: List[int]) -> bool:\n    n = len(nums)\n    dp = [False] * n\n    dp[0] = True\n    for i in range(n):\n        if not dp[i]:\n            continue\n        for j in range(i + 1, min(i + nums[i] + 1, n)):\n            dp[j] = True\n    return dp[n - 1]",
+      "language": "java",
+      "complexity": {
+        "time": "O(n\u00b2)",
+        "space": "O(n)"
+      }
     }
   ],
   "variations": [],

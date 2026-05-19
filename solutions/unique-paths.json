@@ -25,6 +25,17 @@
         "time": "O(m * n)",
         "space": "O(m * n)"
       }
+    },
+    {
+      "title": "Solution 2 \u2013 Math (Combinatorics) [\u2713 Interviewer Accepted]",
+      "description": "Any path from top-left to bottom-right requires exactly (m-1) down moves and (n-1) right moves \u2014 (m+n-2) total moves. The number of unique paths is choosing which (m-1) of those moves are 'down': C(m+n-2, m-1). This is O(min(m,n)) time and O(1) space.",
+      "code": "public int uniquePaths(int m, int n) {\n    long result = 1;\n    int r = Math.min(m - 1, n - 1);\n    int total = m + n - 2;\n    for (int i = 0; i < r; i++) {\n        result = result * (total - i) / (i + 1);\n    }\n    return (int) result;\n}",
+      "code_python": "import math\n\ndef unique_paths(m: int, n: int) -> int:\n    return math.comb(m + n - 2, m - 1)",
+      "language": "java",
+      "complexity": {
+        "time": "O(min(m,n))",
+        "space": "O(1)"
+      }
     }
   ],
   "variations": [],

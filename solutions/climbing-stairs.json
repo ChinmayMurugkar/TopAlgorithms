@@ -25,6 +25,17 @@
         "time": "O(n)",
         "space": "O(n)"
       }
+    },
+    {
+      "title": "Solution 2 \u2013 Space-Optimized DP (2 Variables) [\u2713 Interviewer Accepted]",
+      "description": "Since each step only depends on the two preceding values (exactly the Fibonacci recurrence), we only need two variables instead of an array. This reduces space from O(n) to O(1) while keeping O(n) time.",
+      "code": "public int climbStairs(int n) {\n    if (n <= 2) return n;\n    int prev2 = 1, prev1 = 2;\n    for (int i = 3; i <= n; i++) {\n        int curr = prev1 + prev2;\n        prev2 = prev1;\n        prev1 = curr;\n    }\n    return prev1;\n}",
+      "code_python": "def climb_stairs(n: int) -> int:\n    if n <= 2:\n        return n\n    prev2, prev1 = 1, 2\n    for _ in range(3, n + 1):\n        prev2, prev1 = prev1, prev1 + prev2\n    return prev1",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
     }
   ],
   "variations": [],

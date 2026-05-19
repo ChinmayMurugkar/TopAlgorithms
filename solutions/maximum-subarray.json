@@ -25,6 +25,17 @@
         "time": "O(n)",
         "space": "O(1)"
       }
+    },
+    {
+      "title": "Solution 2 \u2013 Divide and Conquer [\u2713 Interviewer Accepted]",
+      "description": "Split the array at the midpoint. The max subarray either lies entirely in the left half, entirely in the right half, or crosses the midpoint. For the crossing case, expand outward from the midpoint taking the best prefix on the right and best suffix on the left. Combine the three candidates. O(n log n) \u2014 slower than Kadane but demonstrates divide & conquer thinking valued in interviews.",
+      "code": "public int maxSubArray(int[] nums) {\n    return divConq(nums, 0, nums.length - 1);\n}\nprivate int divConq(int[] nums, int lo, int hi) {\n    if (lo == hi) return nums[lo];\n    int mid = (lo + hi) / 2;\n    int left = divConq(nums, lo, mid);\n    int right = divConq(nums, mid + 1, hi);\n    int cross = crossSum(nums, lo, hi, mid);\n    return Math.max(left, Math.max(right, cross));\n}\nprivate int crossSum(int[] nums, int lo, int hi, int mid) {\n    int leftSum = Integer.MIN_VALUE, sum = 0;\n    for (int i = mid; i >= lo; i--) { sum += nums[i]; leftSum = Math.max(leftSum, sum); }\n    int rightSum = Integer.MIN_VALUE; sum = 0;\n    for (int i = mid+1; i <= hi; i++) { sum += nums[i]; rightSum = Math.max(rightSum, sum); }\n    return leftSum + rightSum;\n}",
+      "code_python": "from typing import List\n\ndef max_sub_array(nums: List[int]) -> int:\n    def div_conq(lo, hi):\n        if lo == hi: return nums[lo]\n        mid = (lo + hi) // 2\n        left = div_conq(lo, mid)\n        right = div_conq(mid + 1, hi)\n        # cross sum\n        left_sum = s = 0\n        for i in range(mid, lo - 1, -1):\n            s += nums[i]; left_sum = max(left_sum, s)\n        right_sum = s = 0\n        for i in range(mid + 1, hi + 1):\n            s += nums[i]; right_sum = max(right_sum, s)\n        return max(left, right, left_sum + right_sum)\n    return div_conq(0, len(nums) - 1)",
+      "language": "java",
+      "complexity": {
+        "time": "O(n log n)",
+        "space": "O(log n)"
+      }
     }
   ],
   "variations": [],

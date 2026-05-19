@@ -22,6 +22,17 @@
         "time": "O(n)",
         "space": "O(h) where h is the height of the tree"
       }
+    },
+    {
+      "title": "Solution 2 \u2013 Iterative BFS [\u2713 Interviewer Accepted]",
+      "description": "Use a queue (level-order traversal). For each node dequeued, swap its left and right children, then enqueue both children. This avoids recursion entirely \u2014 important when the tree is very deep and recursion stack overflow is a concern.",
+      "code": "public TreeNode invertTree(TreeNode root) {\n    if (root == null) return null;\n    Queue<TreeNode> queue = new LinkedList<>();\n    queue.offer(root);\n    while (!queue.isEmpty()) {\n        TreeNode node = queue.poll();\n        TreeNode temp = node.left;\n        node.left = node.right;\n        node.right = temp;\n        if (node.left != null) queue.offer(node.left);\n        if (node.right != null) queue.offer(node.right);\n    }\n    return root;\n}",
+      "code_python": "from collections import deque\n\ndef invert_tree(root):\n    if not root:\n        return None\n    q = deque([root])\n    while q:\n        node = q.popleft()\n        node.left, node.right = node.right, node.left\n        if node.left: q.append(node.left)\n        if node.right: q.append(node.right)\n    return root",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
     }
   ],
   "variations": [],

@@ -25,6 +25,17 @@
         "time": "O(n)",
         "space": "O(n)"
       }
+    },
+    {
+      "title": "Solution 2 \u2013 Space-Optimized DP [\u2713 Interviewer Accepted]",
+      "description": "The recurrence rob(i) = max(nums[i] + rob(i-2), rob(i-1)) only needs the previous two values. Replace the O(n) array with two variables (prev2, prev1), updating them in-place. O(n) time, O(1) space.",
+      "code": "public int rob(int[] nums) {\n    int prev2 = 0, prev1 = 0;\n    for (int num : nums) {\n        int curr = Math.max(num + prev2, prev1);\n        prev2 = prev1;\n        prev1 = curr;\n    }\n    return prev1;\n}",
+      "code_python": "from typing import List\n\ndef rob(nums: List[int]) -> int:\n    prev2 = prev1 = 0\n    for num in nums:\n        prev2, prev1 = prev1, max(num + prev2, prev1)\n    return prev1",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
     }
   ],
   "variations": [],

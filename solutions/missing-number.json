@@ -25,6 +25,17 @@
         "time": "O(n)",
         "space": "O(1)"
       }
+    },
+    {
+      "title": "Solution 2 \u2013 Gauss Sum Formula [\u2713 Interviewer Accepted]",
+      "description": "Use the arithmetic series formula: the sum of 0..n is n*(n+1)/2. Subtract the actual sum of nums from this expected sum \u2014 the difference is the missing number. This is the most intuitive approach and often what interviewers expect to hear first.",
+      "code": "public int missingNumber(int[] nums) {\n    int n = nums.length;\n    int expected = n * (n + 1) / 2;\n    int actual = 0;\n    for (int num : nums) actual += num;\n    return expected - actual;\n}",
+      "code_python": "from typing import List\n\ndef missing_number(nums: List[int]) -> int:\n    n = len(nums)\n    return n * (n + 1) // 2 - sum(nums)",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
     }
   ],
   "variations": [],
