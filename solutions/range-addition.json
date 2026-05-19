@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Prefix Sum",
+      "title": "Solution 1 \u2013 Prefix Sum [\u2713 Interviewer Accepted]",
       "description": "Apply each range update as a difference-array operation: add the increment at the start index and subtract it one position past the end index. A single prefix-sum pass at the end propagates these boundary markers into the correct cumulative values across every position.",
       "code": "public int[] getModifiedArray(int length, int[][] updates) {\n    int[] result = new int[length];\n    \n    for (int[] update : updates) {\n        int start = update[0];\n        int end = update[1];\n        int inc = update[2];\n        \n        result[start] += inc;\n        if (end + 1 < length) {\n            result[end + 1] -= inc;\n        }\n    }\n    \n    for (int i = 1; i < length; i++) {\n        result[i] += result[i - 1];\n    }\n    \n    return result;\n}",
       "code_python": "from typing import List\n\ndef getModifiedArray(length: int, updates: List[List[int]]) -> List[int]:\n    result = [0] * length\n\n    for start, end, inc in updates:\n        result[start] += inc\n        if end + 1 < length:\n            result[end + 1] -= inc\n\n    # Prefix sum to propagate range increments\n    for i in range(1, length):\n        result[i] += result[i - 1]\n\n    return result",

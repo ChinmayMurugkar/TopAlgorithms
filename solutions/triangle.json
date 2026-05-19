@@ -11,18 +11,18 @@
     "example": {
       "input": "triangle = [[2],[3,4],[6,5,7],[4,1,8,3]]",
       "output": "11",
-      "explanation": "Path: 2→3→5→1 = 11. Bottom-up DP: for each row, update in-place adding minimum of two children below."
+      "explanation": "Path: 2\u21923\u21925\u21921 = 11. Bottom-up DP: for each row, update in-place adding minimum of two children below."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – Dynamic Programming",
+      "title": "Solution 1 \u2013 Dynamic Programming [\u2713 Interviewer Accepted]",
       "description": "Starting from the bottom row, repeatedly update a 1-D DP array so that dp[j] holds the minimum path sum from position j in the current row to any leaf below. After processing all rows upward, dp[0] contains the global answer. The key insight is that bottom-up DP eliminates the need for memoization of intermediate results and allows in-place modification of a single array equal in size to the last row.",
       "code": "public int minimumTotal(List> triangle) {\n    if (triangle == null || triangle.isEmpty()) return 0;\n    \n    int n = triangle.size();\n    int[] dp = new int[n];\n    \n    // Initialize with last row\n    for (int i = 0; i < n; i++) {\n        dp[i] = triangle.get(n - 1).get(i);\n    }\n    \n    // Bottom-up approach\n    for (int i = n - 2; i >= 0; i--) {\n        for (int j = 0; j <= i; j++) {\n            dp[j] = Math.min(dp[j], dp[j + 1]) + triangle.get(i).get(j);\n        }\n    }\n    \n    return dp[0];\n}",
       "code_python": "from typing import List\n\ndef minimum_total(triangle: List[List[int]]) -> int:\n    # Copy the last row as the starting DP state\n    dp = list(triangle[-1])\n\n    # Process rows from second-to-last up to the apex\n    for i in range(len(triangle) - 2, -1, -1):\n        for j in range(i + 1):  # row i has i+1 elements\n            dp[j] = min(dp[j], dp[j + 1]) + triangle[i][j]\n\n    return dp[0]",
       "language": "java",
       "complexity": {
-        "time": "O(n²)",
+        "time": "O(n\u00b2)",
         "space": "O(n)"
       }
     }

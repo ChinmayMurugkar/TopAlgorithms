@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Bit Manipulation",
+      "title": "Solution 1 \u2013 Bit Manipulation [\u2713 Interviewer Accepted]",
       "description": "Iterate 32 times: in each iteration, shift the result left by 1 to make room, then OR in the lowest bit of n, and shift n right by 1 to expose the next bit. After 32 steps all bits have been transferred in reverse order.",
       "code": "public int reverseBits(int n) {\n    int result = 0;\n    \n    for (int i = 0; i < 32; i++) {\n        result = (result << 1) | (n & 1);\n        n = n >> 1;\n    }\n    \n    return result;\n}",
       "code_python": "def reverseBits(n: int) -> int:\n    result = 0\n    for _ in range(32):\n        result = (result << 1) | (n & 1)\n        n >>= 1\n    return result",

@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Bit Manipulation",
+      "title": "Solution 1 \u2013 Bit Manipulation [\u2713 Interviewer Accepted]",
       "description": "Repeatedly check the least significant bit with n & 1, increment the count if it is 1, then logical-right-shift n by 1 to process the next bit. Using unsigned right shift ensures the sign bit is treated as data rather than sign extension. The loop terminates in at most 32 iterations regardless of value, making this effectively O(1).",
       "code": "public int hammingWeight(int n) {\n    int count = 0;\n    while (n != 0) {\n        count += n & 1;\n        n = n >>> 1;\n    }\n    return count;\n}",
       "code_python": "def hamming_weight(n: int) -> int:\n    count = 0\n    while n:\n        count += n & 1\n        n >>= 1\n    return count",

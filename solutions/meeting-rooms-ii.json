@@ -12,13 +12,13 @@
     "example": {
       "input": "intervals = [[0,30],[5,10],[15,20]]",
       "output": "2",
-      "explanation": "At time 5: meetings [0,30] and [5,10] overlap — need 2 rooms. Use a min-heap of end times: for each new meeting (sorted by start), if the earliest-ending room is free (heap.peek() <= start), reuse it. Otherwise add a room."
+      "explanation": "At time 5: meetings [0,30] and [5,10] overlap \u2014 need 2 rooms. Use a min-heap of end times: for each new meeting (sorted by start), if the earliest-ending room is free (heap.peek() <= start), reuse it. Otherwise add a room."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – Min-Heap of End Times",
-      "description": "Sort meetings by start time. Use a min-heap to track the end times of active meetings. For each meeting, if the heap's minimum end time is <= the current meeting's start, the earliest-ending room is free — pop it and push the new end time (reuse the room). Otherwise, push the new end time (add a room). The heap size at the end is the answer.",
+      "title": "Solution 1 \u2013 Min-Heap of End Times [\u2713 Interviewer Accepted]",
+      "description": "Sort meetings by start time. Use a min-heap to track the end times of active meetings. For each meeting, if the heap's minimum end time is <= the current meeting's start, the earliest-ending room is free \u2014 pop it and push the new end time (reuse the room). Otherwise, push the new end time (add a room). The heap size at the end is the answer.",
       "code": "public int minMeetingRooms(int[][] intervals) {\n    Arrays.sort(intervals, (a, b) -> a[0] - b[0]);\n    PriorityQueue<Integer> heap = new PriorityQueue<>();\n    \n    for (int[] interval : intervals) {\n        if (!heap.isEmpty() && heap.peek() <= interval[0]) {\n            heap.poll();\n        }\n        heap.offer(interval[1]);\n    }\n    \n    return heap.size();\n}",
       "code_python": "from typing import List\nimport heapq\n\ndef min_meeting_rooms(intervals: List[List[int]]) -> int:\n    intervals.sort(key=lambda x: x[0])\n    heap = []\n    for start, end in intervals:\n        if heap and heap[0] <= start:\n            heapq.heapreplace(heap, end)\n        else:\n            heapq.heappush(heap, end)\n    return len(heap)",
       "language": "java",

@@ -11,12 +11,12 @@
     "example": {
       "input": "columnNumber = 28",
       "output": "\"AB\"",
-      "explanation": "28 = 1*26 + 2 → 'A'+'B' = 'AB'. It's base-26 but with no zero (A=1, ..., Z=26)."
+      "explanation": "28 = 1*26 + 2 \u2192 'A'+'B' = 'AB'. It's base-26 but with no zero (A=1, ..., Z=26)."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – Base 26 Conversion",
+      "title": "Solution 1 \u2013 Base 26 Conversion [\u2713 Interviewer Accepted]",
       "description": "This is the reverse of column number to title: convert an integer to a bijective base-26 string using letters A-Z. The key trick is to decrement columnNumber by 1 before taking the modulus so that 'Z' (26) maps correctly to index 25 rather than 0. Characters are prepended by repeatedly extracting the least significant 'digit'.",
       "code": "public String convertToTitle(int columnNumber) {\n    StringBuilder result = new StringBuilder();\n    \n    while (columnNumber > 0) {\n        columnNumber--;\n        result.insert(0, (char) ('A' + columnNumber % 26));\n        columnNumber /= 26;\n    }\n    \n    return result.toString();\n}",
       "code_python": "def convertToTitle(columnNumber: int) -> str:\n    result = []\n    while columnNumber > 0:\n        columnNumber -= 1\n        result.append(chr(ord('A') + columnNumber % 26))\n        columnNumber //= 26\n    return ''.join(reversed(result))",

@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Dynamic Programming",
+      "title": "Solution 1 \u2013 Dynamic Programming [\u2713 Interviewer Accepted]",
       "description": "Build a bottom-up DP table where dp[i] holds the minimum number of coins to make amount i. For each amount, try every coin denomination and take the minimum of using that coin plus the optimal solution for the remaining amount. Initializing dp[0]=0 and the rest to a sentinel value larger than any valid answer drives the recurrence correctly.",
       "code": "public int coinChange(int[] coins, int amount) {\n    int[] dp = new int[amount + 1];\n    Arrays.fill(dp, amount + 1);\n    dp[0] = 0;\n    \n    for (int i = 1; i <= amount; i++) {\n        for (int coin : coins) {\n            if (coin <= i) {\n                dp[i] = Math.min(dp[i], dp[i - coin] + 1);\n            }\n        }\n    }\n    \n    return dp[amount] > amount ? -1 : dp[amount];\n}",
       "code_python": "from typing import List\n\ndef coinChange(coins: List[int], amount: int) -> int:\n    dp = [amount + 1] * (amount + 1)\n    dp[0] = 0\n    for i in range(1, amount + 1):\n        for coin in coins:\n            if coin <= i:\n                dp[i] = min(dp[i], dp[i - coin] + 1)\n    return dp[amount] if dp[amount] <= amount else -1",

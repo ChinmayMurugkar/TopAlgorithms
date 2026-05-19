@@ -11,12 +11,12 @@
     "example": {
       "input": "root = [1,null,3,2,4,null,null,null,5]",
       "output": "3",
-      "explanation": "Longest consecutive path is 3→4→5, length = 3."
+      "explanation": "Longest consecutive path is 3\u21924\u21925, length = 3."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – DFS",
+      "title": "Solution 1 \u2013 DFS [\u2713 Interviewer Accepted]",
       "description": "Perform a DFS passing the current consecutive length down to each child: extend the length by 1 when the child's value is exactly one more than the parent's, otherwise reset to 1. The global maximum is updated at every node visit rather than only at leaves. The key insight is that the consecutive run is a path property that can be tracked purely top-down without needing a separate global helper.",
       "code": "public int longestConsecutive(TreeNode root) {\n    if (root == null) return 0;\n    return dfs(root, 1, root.val);\n}\n\nprivate int dfs(TreeNode node, int length, int prev) {\n    if (node == null) return length - 1;\n    \n    int currLength = (node.val == prev + 1) ? length : 1;\n    \n    int left = dfs(node.left, currLength + 1, node.val);\n    int right = dfs(node.right, currLength + 1, node.val);\n    \n    return Math.max(currLength, Math.max(left, right));\n}",
       "code_python": "from typing import Optional\n\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\ndef longestConsecutive(root: Optional['TreeNode']) -> int:\n    if root is None:\n        return 0\n\n    def dfs(node: Optional['TreeNode'], length: int, prev: int) -> int:\n        if node is None:\n            return length - 1\n        curr_length = length if node.val == prev + 1 else 1\n        left = dfs(node.left, curr_length + 1, node.val)\n        right = dfs(node.right, curr_length + 1, node.val)\n        return max(curr_length, left, right)\n\n    return dfs(root, 1, root.val)",

@@ -9,14 +9,14 @@
       "enqueue: O(1) amortized, dequeue: O(1)."
     ],
     "example": {
-      "input": "enqueue(1), enqueue(2), dequeue() → 1, peek() → 2",
+      "input": "enqueue(1), enqueue(2), dequeue() \u2192 1, peek() \u2192 2",
       "output": "1, 2",
       "explanation": "FIFO: First In First Out. Enqueue adds to back, dequeue removes from front."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – Circular Array Implementation",
+      "title": "Solution 1 \u2013 Circular Array Implementation [\u2713 Interviewer Accepted]",
       "description": "Use a fixed-capacity array with front and rear pointers that wrap around using modulo arithmetic, turning the linear array into a logical circle. This avoids the wasted space that results from a naive front-pointer shift, keeping all operations O(1). The key insight is that tracking a separate size counter makes it easy to distinguish an empty queue from a full one without sacrificing any capacity.",
       "code": "class Queue {\n    private int[] arr;\n    private int front;\n    private int rear;\n    private int size;\n    private int capacity;\n    \n    public Queue(int size) {\n        arr = new int[size];\n        capacity = size;\n        front = 0;\n        rear = -1;\n        this.size = 0;\n    }\n    \n    public void enqueue(int x) {\n        if (isFull()) {\n            throw new IllegalStateException(\"Queue is full\");\n        }\n        rear = (rear + 1) % capacity;\n        arr[rear] = x;\n        size++;\n    }\n    \n    public int dequeue() {\n        if (isEmpty()) {\n            throw new IllegalStateException(\"Queue is empty\");\n        }\n        int x = arr[front];\n        front = (front + 1) % capacity;\n        size--;\n        return x;\n    }\n    \n    public int peek() {\n        if (isEmpty()) {\n            throw new IllegalStateException(\"Queue is empty\");\n        }\n        return arr[front];\n    }\n    \n    public boolean isEmpty() {\n        return size == 0;\n    }\n    \n    public boolean isFull() {\n        return size == capacity;\n    }\n    \n    public int size() {\n        return size;\n    }\n}",
       "code_python": "class Queue:\n    def __init__(self, capacity: int) -> None:\n        self._arr = [0] * capacity\n        self._capacity = capacity\n        self._front = 0\n        self._rear = -1\n        self._size = 0\n\n    def enqueue(self, x: int) -> None:\n        if self.is_full():\n            raise IndexError('Queue is full')\n        self._rear = (self._rear + 1) % self._capacity\n        self._arr[self._rear] = x\n        self._size += 1\n\n    def dequeue(self) -> int:\n        if self.is_empty():\n            raise IndexError('Queue is empty')\n        x = self._arr[self._front]\n        self._front = (self._front + 1) % self._capacity\n        self._size -= 1\n        return x\n\n    def peek(self) -> int:\n        if self.is_empty():\n            raise IndexError('Queue is empty')\n        return self._arr[self._front]\n\n    def is_empty(self) -> bool:\n        return self._size == 0\n\n    def is_full(self) -> bool:\n        return self._size == self._capacity\n\n    def size(self) -> int:\n        return self._size",

@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Custom Sorting",
+      "title": "Solution 1 \u2013 Custom Sorting [\u2713 Interviewer Accepted]",
       "description": "Convert each integer to a string and sort using a custom comparator that compares two concatenation orders (b+a vs a+b) to determine which number should come first. This works because the relative ordering of any two numbers that maximises the concatenated result is transitive, making the custom sort globally correct. The edge case of all zeros is handled by checking if the first element after sorting is '0'.",
       "code": "public String largestNumber(int[] nums) {\n    String[] strings = new String[nums.length];\n    for (int i = 0; i < nums.length; i++) {\n        strings[i] = String.valueOf(nums[i]);\n    }\n    \n    Arrays.sort(strings, (a, b) -> (b + a).compareTo(a + b));\n    \n    if (strings[0].equals(\"0\")) return \"0\";\n    \n    StringBuilder result = new StringBuilder();\n    for (String s : strings) {\n        result.append(s);\n    }\n    \n    return result.toString();\n}",
       "code_python": "from typing import List\nfrom functools import cmp_to_key\n\ndef largest_number(nums: List[int]) -> str:\n    strs = [str(n) for n in nums]\n\n    def compare(a: str, b: str) -> int:\n        if a + b > b + a:\n            return -1\n        elif a + b < b + a:\n            return 1\n        return 0\n\n    strs.sort(key=cmp_to_key(compare))\n    if strs[0] == '0':\n        return '0'\n    return ''.join(strs)",

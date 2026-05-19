@@ -5,17 +5,17 @@
     "category": "String/Array/Matrix",
     "description": "Given an array of integers citations where citations[i] is the number of citations a researcher received for their ith paper, return the researcher's h-index.",
     "assumptions": [
-      "h-index: largest h such that h papers have ≥h citations each."
+      "h-index: largest h such that h papers have \u2265h citations each."
     ],
     "example": {
       "input": "citations = [3,0,6,1,5]",
       "output": "3",
-      "explanation": "h=3: researcher has 3 papers with ≥3 citations. Papers: 6,5,3 ≥ 3; but 4 papers don't all have ≥4 cites."
+      "explanation": "h=3: researcher has 3 papers with \u22653 citations. Papers: 6,5,3 \u2265 3; but 4 papers don't all have \u22654 cites."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – Sorting",
+      "title": "Solution 1 \u2013 Sorting [\u2713 Interviewer Accepted]",
       "description": "Sort the citations array in ascending order, then scan from the front: for each paper at index i the remaining papers (n - i) have at least citations[i] citations. The first position where citations[i] >= n - i gives the h-index directly as n - i. The key insight is that after sorting, n - i is always the count of papers with citations at least as large as the current one.",
       "code": "public int hIndex(int[] citations) {\n    Arrays.sort(citations);\n    int n = citations.length;\n    \n    for (int i = 0; i < n; i++) {\n        if (citations[i] >= n - i) {\n            return n - i;\n        }\n    }\n    \n    return 0;\n}",
       "code_python": "from typing import List\n\ndef h_index(citations: List[int]) -> int:\n    citations.sort()\n    n = len(citations)\n    for i, c in enumerate(citations):\n        if c >= n - i:\n            return n - i\n    return 0",

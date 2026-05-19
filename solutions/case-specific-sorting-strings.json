@@ -9,13 +9,13 @@
     ],
     "example": {
       "input": "s = \"dcBA\"",
-      "output": "\"dcBA\" sorted as \"ABcd\" but preserving case positions → \"ABcd\"",
+      "output": "\"dcBA\" sorted as \"ABcd\" but preserving case positions \u2192 \"ABcd\"",
       "explanation": "Sort uppercase letters among themselves and lowercase among themselves, keeping case positions fixed."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – Two Pointers",
+      "title": "Solution 1 \u2013 Two Pointers [\u2713 Interviewer Accepted]",
       "description": "Separate characters into uppercase and lowercase lists, sort each list independently, then reassemble by placing sorted uppercase characters into the positions that were originally uppercase and sorted lowercase into the original lowercase positions. This preserves the case structure of the input while sorting each case group.",
       "code": "public String caseSort(String str) {\n    char[] arr = str.toCharArray();\n    int n = arr.length;\n    \n    // Separate uppercase and lowercase letters\n    List upper = new ArrayList<>();\n    List lower = new ArrayList<>();\n    \n    for (char c : arr) {\n        if (Character.isUpperCase(c)) {\n            upper.add(c);\n        } else {\n            lower.add(c);\n        }\n    }\n    \n    // Sort both lists\n    Collections.sort(upper);\n    Collections.sort(lower);\n    \n    // Reconstruct the string\n    int upperIndex = 0, lowerIndex = 0;\n    for (int i = 0; i < n; i++) {\n        if (Character.isUpperCase(arr[i])) {\n            arr[i] = upper.get(upperIndex++);\n        } else {\n            arr[i] = lower.get(lowerIndex++);\n        }\n    }\n    \n    return new String(arr);\n}",
       "code_python": "def case_sort(s: str) -> str:\n    upper = sorted(c for c in s if c.isupper())\n    lower = sorted(c for c in s if c.islower())\n\n    result = list(s)\n    u_idx = l_idx = 0\n    for i, c in enumerate(s):\n        if c.isupper():\n            result[i] = upper[u_idx]\n            u_idx += 1\n        else:\n            result[i] = lower[l_idx]\n            l_idx += 1\n\n    return \"\".join(result)",

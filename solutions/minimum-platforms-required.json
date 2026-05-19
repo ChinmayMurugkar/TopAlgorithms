@@ -11,12 +11,12 @@
     "example": {
       "input": "arrivals = [900,940,950,1100,1500,1800], departures = [910,1200,1120,1130,1900,2000]",
       "output": "3",
-      "explanation": "At 950: trains at 940-1200, 950-1120, and 900-910 (departed) → 2 trains. Max overlap = 3 at some point."
+      "explanation": "At 950: trains at 940-1200, 950-1120, and 900-910 (departed) \u2192 2 trains. Max overlap = 3 at some point."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – Sorting and Two Pointers",
+      "title": "Solution 1 \u2013 Sorting and Two Pointers [\u2713 Interviewer Accepted]",
       "description": "Sort arrival and departure arrays independently, then use two pointers to simulate a timeline: if the next arrival comes before or at the next departure, a new platform is needed; otherwise a platform is freed. The maximum platform count seen during this simulation is the answer. The key insight is that sorting decouples the two events into two sorted streams that can be merged in O(n), similar to an interval scheduling problem.",
       "code": "public int findPlatform(int arr[], int dep[], int n) {\n    Arrays.sort(arr);\n    Arrays.sort(dep);\n    \n    int platforms = 1, result = 1;\n    int i = 1, j = 0;\n    \n    while (i < n && j < n) {\n        if (arr[i] <= dep[j]) {\n            platforms++;\n            i++;\n        } else {\n            platforms--;\n            j++;\n        }\n        result = Math.max(result, platforms);\n    }\n    \n    return result;\n}",
       "code_python": "from typing import List\n\ndef find_platform(arr: List[int], dep: List[int]) -> int:\n    arr = sorted(arr)\n    dep = sorted(dep)\n    n = len(arr)\n    platforms = result = 1\n    i = 1\n    j = 0\n    while i < n and j < n:\n        if arr[i] <= dep[j]:\n            platforms += 1\n            i += 1\n        else:\n            platforms -= 1\n            j += 1\n        result = max(result, platforms)\n    return result",

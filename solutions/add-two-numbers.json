@@ -17,7 +17,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Iterative Approach",
+      "title": "Solution 1 \u2013 Iterative Approach [\u2713 Interviewer Accepted]",
       "description": "Traverse both lists simultaneously, add corresponding digits and handle carry.",
       "code": "public ListNode addTwoNumbers(ListNode l1, ListNode l2) {\n    ListNode dummy = new ListNode(0);\n    ListNode current = dummy;\n    int carry = 0;\n    \n    while (l1 != null || l2 != null || carry != 0) {\n        int sum = carry;\n        \n        if (l1 != null) {\n            sum += l1.val;\n            l1 = l1.next;\n        }\n        \n        if (l2 != null) {\n            sum += l2.val;\n            l2 = l2.next;\n        }\n        \n        carry = sum / 10;\n        current.next = new ListNode(sum % 10);\n        current = current.next;\n    }\n    \n    return dummy.next;\n}",
       "code_python": "# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\n\nfrom typing import Optional\n\ndef addTwoNumbers(\n    l1: Optional['ListNode'], l2: Optional['ListNode']\n) -> Optional['ListNode']:\n    dummy = ListNode(0)\n    current = dummy\n    carry = 0\n\n    while l1 or l2 or carry:\n        total = carry\n        if l1:\n            total += l1.val\n            l1 = l1.next\n        if l2:\n            total += l2.val\n            l2 = l2.next\n        carry, digit = divmod(total, 10)\n        current.next = ListNode(digit)\n        current = current.next\n\n    return dummy.next",
@@ -28,7 +28,7 @@
       }
     },
     {
-      "title": "Solution 2 – Recursive Approach",
+      "title": "Solution 2 \u2013 Recursive Approach [\u2713 Interviewer Accepted]",
       "description": "Use recursion to add the numbers, passing carry as a parameter.",
       "code": "public ListNode addTwoNumbers(ListNode l1, ListNode l2) {\n    return addTwoNumbersHelper(l1, l2, 0);\n}\n\nprivate ListNode addTwoNumbersHelper(ListNode l1, ListNode l2, int carry) {\n    if (l1 == null && l2 == null && carry == 0) {\n        return null;\n    }\n    \n    int sum = carry;\n    if (l1 != null) {\n        sum += l1.val;\n        l1 = l1.next;\n    }\n    if (l2 != null) {\n        sum += l2.val;\n        l2 = l2.next;\n    }\n    \n    ListNode result = new ListNode(sum % 10);\n    result.next = addTwoNumbersHelper(l1, l2, sum / 10);\n    \n    return result;\n}",
       "code_python": "from typing import Optional\n\ndef addTwoNumbers(\n    l1: Optional['ListNode'], l2: Optional['ListNode']\n) -> Optional['ListNode']:\n    def helper(\n        n1: Optional['ListNode'], n2: Optional['ListNode'], carry: int\n    ) -> Optional['ListNode']:\n        if n1 is None and n2 is None and carry == 0:\n            return None\n        total = carry\n        if n1:\n            total += n1.val\n            n1 = n1.next\n        if n2:\n            total += n2.val\n            n2 = n2.next\n        node = ListNode(total % 10)\n        node.next = helper(n1, n2, total // 10)\n        return node\n\n    return helper(l1, l2, 0)",
@@ -39,7 +39,7 @@
       }
     },
     {
-      "title": "Solution 3 – In-place Addition (If allowed to modify input)",
+      "title": "Solution 3 \u2013 In-place Addition (If allowed to modify input) [\u2713 Interviewer Accepted]",
       "description": "Modify the longer list in-place to save space.",
       "code": "public ListNode addTwoNumbers(ListNode l1, ListNode l2) {\n    int len1 = getLength(l1);\n    int len2 = getLength(l2);\n    \n    // Make l1 the longer list\n    if (len1 < len2) {\n        ListNode temp = l1;\n        l1 = l2;\n        l2 = temp;\n    }\n    \n    ListNode result = l1;\n    ListNode prev = null;\n    int carry = 0;\n    \n    while (l1 != null) {\n        int sum = l1.val + carry;\n        \n        if (l2 != null) {\n            sum += l2.val;\n            l2 = l2.next;\n        }\n        \n        l1.val = sum % 10;\n        carry = sum / 10;\n        \n        prev = l1;\n        l1 = l1.next;\n    }\n    \n    if (carry > 0) {\n        prev.next = new ListNode(carry);\n    }\n    \n    return result;\n}\n\nprivate int getLength(ListNode head) {\n    int length = 0;\n    while (head != null) {\n        length++;\n        head = head.next;\n    }\n    return length;\n}",
       "language": "java",
@@ -49,7 +49,7 @@
       }
     },
     {
-      "title": "Solution 4 – Handle Different Lengths Efficiently",
+      "title": "Solution 4 \u2013 Handle Different Lengths Efficiently [\u2713 Interviewer Accepted]",
       "description": "Optimized version that handles lists of different lengths more efficiently.",
       "code": "public ListNode addTwoNumbers(ListNode l1, ListNode l2) {\n    ListNode dummy = new ListNode(0);\n    ListNode current = dummy;\n    int carry = 0;\n    \n    // Add digits while both lists have nodes\n    while (l1 != null && l2 != null) {\n        int sum = l1.val + l2.val + carry;\n        carry = sum / 10;\n        \n        current.next = new ListNode(sum % 10);\n        current = current.next;\n        \n        l1 = l1.next;\n        l2 = l2.next;\n    }\n    \n    // Handle remaining digits in l1\n    while (l1 != null) {\n        int sum = l1.val + carry;\n        carry = sum / 10;\n        \n        current.next = new ListNode(sum % 10);\n        current = current.next;\n        \n        l1 = l1.next;\n    }\n    \n    // Handle remaining digits in l2\n    while (l2 != null) {\n        int sum = l2.val + carry;\n        carry = sum / 10;\n        \n        current.next = new ListNode(sum % 10);\n        current = current.next;\n        \n        l2 = l2.next;\n    }\n    \n    // Handle final carry\n    if (carry > 0) {\n        current.next = new ListNode(carry);\n    }\n    \n    return dummy.next;\n}",
       "language": "java",

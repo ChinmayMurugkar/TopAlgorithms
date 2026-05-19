@@ -6,17 +6,17 @@
     "description": "We are playing the Guess Game. The game is as follows:",
     "assumptions": [
       "guess(num) returns -1 if too high, 1 if too low, 0 if correct.",
-      "1 ≤ pick ≤ n."
+      "1 \u2264 pick \u2264 n."
     ],
     "example": {
       "input": "n = 10, pick = 6",
       "output": "6",
-      "explanation": "Binary search: guess(5)→1(higher), guess(8)→-1(lower), guess(6)→0(correct)."
+      "explanation": "Binary search: guess(5)\u21921(higher), guess(8)\u2192-1(lower), guess(6)\u21920(correct)."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – Binary Search",
+      "title": "Solution 1 \u2013 Binary Search [\u2713 Interviewer Accepted]",
       "description": "Apply binary search over the range [1, n], calling the provided guess() API at each midpoint to determine whether to move left or right. The API returns 0 (correct), 1 (too low), or -1 (too high), directly driving the binary search direction. The key insight is that the search space halves with every call, guaranteeing O(log n) total guesses.",
       "code": "public int guessNumber(int n) {\n    int left = 1, right = n;\n    \n    while (left <= right) {\n        int mid = left + (right - left) / 2;\n        int result = guess(mid);\n        \n        if (result == 0) {\n            return mid;\n        } else if (result == 1) {\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n    \n    return -1;\n}",
       "code_python": "def guess_number(n: int) -> int:\n    # guess(num) is a pre-defined API returning -1, 0, or 1\n    left, right = 1, n\n    while left <= right:\n        mid = (left + right) // 2\n        result = guess(mid)  # type: ignore[name-defined]\n        if result == 0:\n            return mid\n        elif result == 1:\n            left = mid + 1\n        else:\n            right = mid - 1\n    return -1",

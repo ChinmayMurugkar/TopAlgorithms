@@ -13,7 +13,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Morris Traversal",
+      "title": "Solution 1 \u2013 Morris Traversal [\u2713 Interviewer Accepted]",
       "description": "This approach flattens the tree in-place using a Morris-traversal-like technique without extra space. For each node with a left child, it finds the rightmost node of the left subtree and redirects it to point to the current node's right child, then moves the left subtree to the right. The key insight is that the rightmost node of the left subtree is always the predecessor of the current node's right subtree in preorder.",
       "code": "public void flatten(TreeNode root) {\n    TreeNode curr = root;\n    while (curr != null) {\n        if (curr.left != null) {\n            TreeNode prev = curr.left;\n            while (prev.right != null) {\n                prev = prev.right;\n            }\n            prev.right = curr.right;\n            curr.right = curr.left;\n            curr.left = null;\n        }\n        curr = curr.right;\n    }\n}",
       "code_python": "# class TreeNode: def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom typing import Optional\n\ndef flatten(root: Optional['TreeNode']) -> None:\n    curr = root\n    while curr:\n        if curr.left:\n            prev = curr.left\n            while prev.right:\n                prev = prev.right\n            prev.right = curr.right\n            curr.right = curr.left\n            curr.left = None\n        curr = curr.right",

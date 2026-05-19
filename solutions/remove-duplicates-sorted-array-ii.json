@@ -17,8 +17,8 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Two Pointers",
-      "description": "Use a write pointer k starting at 0. For each element in nums, write it to position k only if k < 2 or nums[i] != nums[k-2]. The condition nums[i] != nums[k-2] checks that we haven't already placed two copies of the current value — since the array is sorted, the value two positions back in the result array tells us whether we've hit the limit.",
+      "title": "Solution 1 \u2013 Two Pointers [\u2713 Interviewer Accepted]",
+      "description": "Use a write pointer k starting at 0. For each element in nums, write it to position k only if k < 2 or nums[i] != nums[k-2]. The condition nums[i] != nums[k-2] checks that we haven't already placed two copies of the current value \u2014 since the array is sorted, the value two positions back in the result array tells us whether we've hit the limit.",
       "code": "public int removeDuplicates(int[] nums) {\n    int k = 0;\n    \n    for (int n : nums) {\n        if (k < 2 || n != nums[k - 2]) {\n            nums[k++] = n;\n        }\n    }\n    \n    return k;\n}",
       "code_python": "from typing import List\n\ndef remove_duplicates(nums: List[int]) -> int:\n    k = 0\n    for n in nums:\n        if k < 2 or n != nums[k - 2]:\n            nums[k] = n\n            k += 1\n    return k",
       "language": "java",

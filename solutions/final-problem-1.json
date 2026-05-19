@@ -8,12 +8,12 @@
     "example": {
       "input": "See problem description",
       "output": "See problem description",
-      "explanation": "Practice problem — read the description carefully."
+      "explanation": "Practice problem \u2014 read the description carefully."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – Basic Algorithm",
+      "title": "Solution 1 \u2013 Basic Algorithm [\u2713 Interviewer Accepted]",
       "description": "This solution uses Kadane's algorithm to find the maximum subarray sum in O(n) time. It maintains a running currentSum and resets it to the current element whenever adding it would decrease the sum. The key insight is that a subarray with a negative sum is never worth extending, so we start fresh from the current element.",
       "code": "public class Solution {\n    public int solve(int[] nums) {\n        if (nums == null || nums.length == 0) return 0;\n        \n        int maxSum = nums[0];\n        int currentSum = nums[0];\n        \n        for (int i = 1; i < nums.length; i++) {\n            currentSum = Math.max(nums[i], currentSum + nums[i]);\n            maxSum = Math.max(maxSum, currentSum);\n        }\n        \n        return maxSum;\n    }\n}",
       "code_python": "from typing import List\n\ndef solve(nums: List[int]) -> int:\n    if not nums:\n        return 0\n    max_sum = current_sum = nums[0]\n    for num in nums[1:]:\n        current_sum = max(num, current_sum + num)\n        max_sum = max(max_sum, current_sum)\n    return max_sum",

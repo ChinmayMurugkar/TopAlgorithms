@@ -11,13 +11,13 @@
     "example": {
       "input": "s = \"egg\", t = \"add\"",
       "output": "true",
-      "explanation": "e → a, g → d"
+      "explanation": "e \u2192 a, g \u2192 d"
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – Two Hash Maps",
-      "description": "Maintain two hash maps — one mapping characters from s to t and one in the reverse direction — and verify at each position that both mappings are consistent with what has been seen before. If either map already contains a character mapped to a different target, the strings cannot be isomorphic. The key insight is that isomorphism requires a bijection, so both the forward and backward mappings must be checked simultaneously.",
+      "title": "Solution 1 \u2013 Two Hash Maps [\u2713 Interviewer Accepted]",
+      "description": "Maintain two hash maps \u2014 one mapping characters from s to t and one in the reverse direction \u2014 and verify at each position that both mappings are consistent with what has been seen before. If either map already contains a character mapped to a different target, the strings cannot be isomorphic. The key insight is that isomorphism requires a bijection, so both the forward and backward mappings must be checked simultaneously.",
       "code": "public boolean isIsomorphic(String s, String t) {\n    if (s.length() != t.length()) {\n        return false;\n    }\n    \n    Map sToT = new HashMap<>();\n    Map tToS = new HashMap<>();\n    \n    for (int i = 0; i < s.length(); i++) {\n        char sChar = s.charAt(i);\n        char tChar = t.charAt(i);\n        \n        // Check if sChar already maps to a different character\n        if (sToT.containsKey(sChar) && sToT.get(sChar) != tChar) {\n            return false;\n        }\n        \n        // Check if tChar already maps to a different character\n        if (tToS.containsKey(tChar) && tToS.get(tChar) != sChar) {\n            return false;\n        }\n        \n        sToT.put(sChar, tChar);\n        tToS.put(tChar, sChar);\n    }\n    \n    return true;\n}",
       "code_python": "def is_isomorphic(s: str, t: str) -> bool:\n    s_to_t: dict[str, str] = {}\n    t_to_s: dict[str, str] = {}\n    for sc, tc in zip(s, t):\n        if s_to_t.get(sc, tc) != tc or t_to_s.get(tc, sc) != sc:\n            return False\n        s_to_t[sc] = tc\n        t_to_s[tc] = sc\n    return True",
       "language": "java",
@@ -27,7 +27,7 @@
       }
     },
     {
-      "title": "Solution 2 – Array-based Mapping",
+      "title": "Solution 2 \u2013 Array-based Mapping [\u2713 Interviewer Accepted]",
       "description": "Replace the hash maps with two fixed-size integer arrays of length 256 (one per ASCII character), initialized to -1 to indicate no mapping yet. At each position, check that both arrays agree on the current character pair; if they conflict, return false. The key insight is that arrays provide O(1) access with lower constant overhead than hash maps, making this approach faster in practice while still O(n) in theory.",
       "code": "public boolean isIsomorphic(String s, String t) {\n    if (s.length() != t.length()) {\n        return false;\n    }\n    \n    int[] sToT = new int[256];\n    int[] tToS = new int[256];\n    Arrays.fill(sToT, -1);\n    Arrays.fill(tToS, -1);\n    \n    for (int i = 0; i < s.length(); i++) {\n        char sChar = s.charAt(i);\n        char tChar = t.charAt(i);\n        \n        // Check if mapping is consistent\n        if (sToT[sChar] == -1 && tToS[tChar] == -1) {\n            sToT[sChar] = tChar;\n            tToS[tChar] = sChar;\n        } else if (sToT[sChar] != tChar || tToS[tChar] != sChar) {\n            return false;\n        }\n    }\n    \n    return true;\n}",
       "code_python": "def is_isomorphic(s: str, t: str) -> bool:\n    s_to_t = [-1] * 256\n    t_to_s = [-1] * 256\n    for sc, tc in zip(s, t):\n        si, ti = ord(sc), ord(tc)\n        if s_to_t[si] == -1 and t_to_s[ti] == -1:\n            s_to_t[si] = ti\n            t_to_s[ti] = si\n        elif s_to_t[si] != ti or t_to_s[ti] != si:\n            return False\n    return True",
@@ -38,7 +38,7 @@
       }
     },
     {
-      "title": "Solution 3 – Single Pass with Last Occurrence",
+      "title": "Solution 3 \u2013 Single Pass with Last Occurrence [\u2713 Interviewer Accepted]",
       "description": "Track the last index at which each character appeared in s and t respectively, then compare these indices at every position. Two characters are in the same equivalence class only if they always appear at the same positions, so mismatched last-seen indices reveal a mapping conflict without maintaining explicit character-to-character maps. The key insight is that equal last-occurrence patterns are equivalent to a consistent bijection between the two character sets.",
       "code": "public boolean isIsomorphic(String s, String t) {\n    if (s.length() != t.length()) {\n        return false;\n    }\n    \n    int[] sLastIndex = new int[256];\n    int[] tLastIndex = new int[256];\n    Arrays.fill(sLastIndex, -1);\n    Arrays.fill(tLastIndex, -1);\n    \n    for (int i = 0; i < s.length(); i++) {\n        char sChar = s.charAt(i);\n        char tChar = t.charAt(i);\n        \n        // Check if characters have the same last occurrence pattern\n        if (sLastIndex[sChar] != tLastIndex[tChar]) {\n            return false;\n        }\n        \n        sLastIndex[sChar] = i;\n        tLastIndex[tChar] = i;\n    }\n    \n    return true;\n}",
       "code_python": "def is_isomorphic(s: str, t: str) -> bool:\n    s_last = [-1] * 256\n    t_last = [-1] * 256\n    for i, (sc, tc) in enumerate(zip(s, t)):\n        if s_last[ord(sc)] != t_last[ord(tc)]:\n            return False\n        s_last[ord(sc)] = i\n        t_last[ord(tc)] = i\n    return True",
@@ -49,7 +49,7 @@
       }
     },
     {
-      "title": "Solution 4 – Character Transformation",
+      "title": "Solution 4 \u2013 Character Transformation [\u2713 Interviewer Accepted]",
       "description": "Normalize both strings independently by replacing each character with the index of its first occurrence, then compare the two normalized forms for equality. Two strings are isomorphic if and only if their normalized forms are identical, because the normalization captures the structural pattern of character repetitions. The key insight is that reducing each string to its pattern of first-occurrence indices creates a canonical form that is independent of the actual characters used.",
       "code": "public boolean isIsomorphic(String s, String t) {\n    return transformString(s).equals(transformString(t));\n}\n\nprivate String transformString(String str) {\n    Map charToIndex = new HashMap<>();\n    StringBuilder result = new StringBuilder();\n    \n    for (int i = 0; i < str.length(); i++) {\n        char c = str.charAt(i);\n        if (!charToIndex.containsKey(c)) {\n            charToIndex.put(c, charToIndex.size());\n        }\n        result.append(charToIndex.get(c));\n    }\n    \n    return result.toString();\n}",
       "code_python": "def is_isomorphic(s: str, t: str) -> bool:\n    def transform(string: str) -> list[int]:\n        mapping: dict[str, int] = {}\n        return [mapping.setdefault(c, len(mapping)) for c in string]\n\n    return transform(s) == transform(t)",

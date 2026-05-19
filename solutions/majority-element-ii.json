@@ -17,7 +17,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Boyer-Moore Voting (Extended)",
+      "title": "Solution 1 \u2013 Boyer-Moore Voting (Extended) [\u2713 Interviewer Accepted]",
       "description": "Maintain two candidate/count pairs. For each number: if it matches a candidate, increment that count; else if a count is zero, adopt the number as a new candidate; else decrement both counts. After the pass, count actual occurrences of both candidates and include those that exceed n/3. At most two elements can pass the n/3 threshold.",
       "code": "public List<Integer> majorityElement(int[] nums) {\n    int cand1 = 0, cnt1 = 0, cand2 = 1, cnt2 = 0;\n    \n    for (int n : nums) {\n        if (n == cand1) cnt1++;\n        else if (n == cand2) cnt2++;\n        else if (cnt1 == 0) { cand1 = n; cnt1 = 1; }\n        else if (cnt2 == 0) { cand2 = n; cnt2 = 1; }\n        else { cnt1--; cnt2--; }\n    }\n    \n    cnt1 = cnt2 = 0;\n    for (int n : nums) {\n        if (n == cand1) cnt1++;\n        else if (n == cand2) cnt2++;\n    }\n    \n    List<Integer> result = new ArrayList<>();\n    if (cnt1 > nums.length / 3) result.add(cand1);\n    if (cnt2 > nums.length / 3) result.add(cand2);\n    return result;\n}",
       "code_python": "from typing import List\n\ndef majority_element(nums: List[int]) -> List[int]:\n    cand1, cnt1, cand2, cnt2 = 0, 0, 1, 0\n    for n in nums:\n        if n == cand1: cnt1 += 1\n        elif n == cand2: cnt2 += 1\n        elif cnt1 == 0: cand1, cnt1 = n, 1\n        elif cnt2 == 0: cand2, cnt2 = n, 1\n        else: cnt1 -= 1; cnt2 -= 1\n    \n    return [c for c in (cand1, cand2) if nums.count(c) > len(nums) // 3]",

@@ -5,7 +5,7 @@
     "category": "String/Array/Matrix",
     "description": "Given the root of a binary search tree, and an integer k, return the kth smallest value (1-indexed) of all the values of the nodes in the tree.",
     "assumptions": [
-      "1 ≤ k ≤ number of nodes.",
+      "1 \u2264 k \u2264 number of nodes.",
       "All node values are unique."
     ],
     "example": {
@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Inorder Traversal",
+      "title": "Solution 1 \u2013 Inorder Traversal [\u2713 Interviewer Accepted]",
       "description": "Perform an inorder traversal of the BST, which visits nodes in ascending sorted order by the BST property. A counter incremented on each visit identifies when the kth node is reached, at which point its value is recorded and further recursion is unnecessary. The key insight is that inorder traversal of a BST is equivalent to iterating over its elements in sorted order, so the kth visit is exactly the kth smallest element.",
       "code": "private int count = 0;\nprivate int result = 0;\n\npublic int kthSmallest(TreeNode root, int k) {\n    count = 0;\n    inorder(root, k);\n    return result;\n}\n\nprivate void inorder(TreeNode root, int k) {\n    if (root == null) return;\n    \n    inorder(root.left, k);\n    \n    count++;\n    if (count == k) {\n        result = root.val;\n        return;\n    }\n    \n    inorder(root.right, k);\n}",
       "code_python": "# class TreeNode: def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom typing import Optional\n\ndef kth_smallest(root: Optional['TreeNode'], k: int) -> int:\n    count = 0\n    result = 0\n\n    def inorder(node: Optional['TreeNode']) -> None:\n        nonlocal count, result\n        if node is None:\n            return\n        inorder(node.left)\n        count += 1\n        if count == k:\n            result = node.val\n            return\n        inorder(node.right)\n\n    inorder(root)\n    return result",

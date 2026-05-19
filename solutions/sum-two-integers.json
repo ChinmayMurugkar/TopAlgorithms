@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Bit Manipulation",
+      "title": "Solution 1 \u2013 Bit Manipulation [\u2713 Interviewer Accepted]",
       "description": "XOR computes the digit-wise sum without carries, while AND followed by a left-shift computes the carry bits; iterating until there are no more carries yields the full sum. This works because binary addition is just repeated XOR with carry propagation. The key insight is that AND captures every position where both bits are 1 (a carry must be generated) and left-shifting moves those carries to the next more-significant bit.",
       "code": "public int getSum(int a, int b) {\n    while (b != 0) {\n        int carry = a & b;\n        a = a ^ b;\n        b = carry << 1;\n    }\n    return a;\n}",
       "code_python": "def get_sum(a: int, b: int) -> int:\n    # In Python integers are arbitrary-precision; mask to 32-bit two's complement\n    MASK = 0xFFFFFFFF\n    MAX = 0x7FFFFFFF\n\n    while b & MASK:\n        carry = (a & b) << 1\n        a = a ^ b\n        b = carry\n\n    # If the result fits in a signed 32-bit integer, return it directly;\n    # otherwise convert from two's complement representation\n    return a if a <= MAX else ~(a ^ MASK)",

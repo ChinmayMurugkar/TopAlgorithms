@@ -15,7 +15,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Two Pointers",
+      "title": "Solution 1 \u2013 Two Pointers [\u2713 Interviewer Accepted]",
       "description": "Use a dummy head and a prev pointer that always points to the last confirmed unique node. When consecutive equal values are detected, fast-forward past all of them and reconnect prev directly to the node after the duplicated group, skipping every occurrence of that value.",
       "code": "public ListNode deleteDuplicates(ListNode head) {\n    ListNode dummy = new ListNode(0);\n    dummy.next = head;\n    ListNode prev = dummy;\n    \n    while (head != null && head.next != null) {\n        if (head.val == head.next.val) {\n            while (head.next != null && head.val == head.next.val) {\n                head = head.next;\n            }\n            prev.next = head.next;\n        } else {\n            prev = head;\n        }\n        head = head.next;\n    }\n    \n    return dummy.next;\n}",
       "code_python": "from typing import Optional\n\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\n\ndef deleteDuplicates(head: Optional[object]) -> Optional[object]:\n    dummy = type('ListNode', (), {'val': 0, 'next': head})()\n    prev = dummy\n    current = head\n\n    while current and current.next:\n        if current.val == current.next.val:\n            # Skip all nodes with this duplicate value\n            dup_val = current.val\n            while current and current.val == dup_val:\n                current = current.next\n            prev.next = current\n        else:\n            prev = current\n            current = current.next\n\n    return dummy.next",

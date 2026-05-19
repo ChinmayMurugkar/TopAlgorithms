@@ -5,17 +5,17 @@
     "category": "Math",
     "description": "Write an algorithm to determine if a number n is happy. A happy number is a number defined by the following process: Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.",
     "assumptions": [
-      "Repeatedly sum squares of digits. If reaches 1 → happy. If enters cycle not including 1 → not happy."
+      "Repeatedly sum squares of digits. If reaches 1 \u2192 happy. If enters cycle not including 1 \u2192 not happy."
     ],
     "example": {
       "input": "n = 19",
       "output": "true",
-      "explanation": "1²+9²=82 → 8²+2²=68 → 6²+8²=100 → 1²+0+0=1. Reaches 1, so happy!"
+      "explanation": "1\u00b2+9\u00b2=82 \u2192 8\u00b2+2\u00b2=68 \u2192 6\u00b2+8\u00b2=100 \u2192 1\u00b2+0+0=1. Reaches 1, so happy!"
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – Floyd's Cycle Detection",
+      "title": "Solution 1 \u2013 Floyd's Cycle Detection [\u2713 Interviewer Accepted]",
       "description": "Model the digit-square-sum transformation as a sequence and apply Floyd's cycle detection (slow/fast pointers) to determine whether it terminates at 1 or enters a loop. The slow pointer advances one step at a time while the fast pointer advances two, so they must meet if a cycle exists. The key insight is that any non-happy number eventually enters a fixed cycle, and Floyd's algorithm detects this in O(1) space.",
       "code": "public boolean isHappy(int n) {\n    int slow = n;\n    int fast = getNext(n);\n    \n    while (fast != 1 && slow != fast) {\n        slow = getNext(slow);\n        fast = getNext(getNext(fast));\n    }\n    \n    return fast == 1;\n}\n\nprivate int getNext(int n) {\n    int sum = 0;\n    while (n > 0) {\n        int digit = n % 10;\n        sum += digit * digit;\n        n /= 10;\n    }\n    return sum;\n}",
       "code_python": "def is_happy(n: int) -> bool:\n    def get_next(num: int) -> int:\n        total = 0\n        while num > 0:\n            num, digit = divmod(num, 10)\n            total += digit * digit\n        return total\n\n    slow, fast = n, get_next(n)\n    while fast != 1 and slow != fast:\n        slow = get_next(slow)\n        fast = get_next(get_next(fast))\n    return fast == 1",

@@ -11,12 +11,12 @@
     "example": {
       "input": "root = [1,2,3,null,5,null,4]",
       "output": "[1,3,4]",
-      "explanation": "Looking from the right side: level 0 → 1, level 1 → 3, level 2 → 4."
+      "explanation": "Looking from the right side: level 0 \u2192 1, level 1 \u2192 3, level 2 \u2192 4."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – BFS",
+      "title": "Solution 1 \u2013 BFS [\u2713 Interviewer Accepted]",
       "description": "Use BFS level-order traversal and collect the last node in each level, since that is the node visible from the right side. Processing nodes left-to-right per level ensures the rightmost node is always the final element polled in each level iteration.",
       "code": "public List rightSideView(TreeNode root) {\n    List result = new ArrayList<>();\n    if (root == null) return result;\n    \n    Queue queue = new LinkedList<>();\n    queue.offer(root);\n    \n    while (!queue.isEmpty()) {\n        int size = queue.size();\n        \n        for (int i = 0; i < size; i++) {\n            TreeNode current = queue.poll();\n            \n            if (i == size - 1) {\n                result.add(current.val);\n            }\n            \n            if (current.left != null) {\n                queue.offer(current.left);\n            }\n            if (current.right != null) {\n                queue.offer(current.right);\n            }\n        }\n    }\n    \n    return result;\n}",
       "code_python": "# class TreeNode: def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom typing import Optional, List\nfrom collections import deque\n\ndef rightSideView(root: Optional[object]) -> List[int]:\n    result: List[int] = []\n    if root is None:\n        return result\n\n    queue: deque = deque([root])\n    while queue:\n        level_size = len(queue)\n        for i in range(level_size):\n            node = queue.popleft()\n            if i == level_size - 1:\n                result.append(node.val)\n            if node.left:\n                queue.append(node.left)\n            if node.right:\n                queue.append(node.right)\n\n    return result",
@@ -27,7 +27,7 @@
       }
     },
     {
-      "title": "Solution 1 – BFS",
+      "title": "Solution 1 \u2013 BFS [\u2713 Interviewer Accepted]",
       "description": "Use BFS level-order traversal and collect the last node in each level, since that is the node visible from the right side. Processing nodes left-to-right per level ensures the rightmost node is always the final element polled in each level iteration.",
       "code": "public List rightSideView(TreeNode root) {\n    List result = new ArrayList<>();\n    if (root == null) return result;\n    \n    Queue queue = new LinkedList<>();\n    queue.offer(root);\n    \n    while (!queue.isEmpty()) {\n        int size = queue.size();\n        \n        for (int i = 0; i < size; i++) {\n            TreeNode current = queue.poll();\n            \n            if (i == size - 1) {\n                result.add(current.val);\n            }\n            \n            if (current.left != null) {\n                queue.offer(current.left);\n            }\n            if (current.right != null) {\n                queue.offer(current.right);\n            }\n        }\n    }\n    \n    return result;\n}",
       "code_python": "# class TreeNode: def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom typing import Optional, List\nfrom collections import deque\n\ndef rightSideView(root: Optional[object]) -> List[int]:\n    result: List[int] = []\n    if root is None:\n        return result\n\n    queue: deque = deque([root])\n    while queue:\n        level_size = len(queue)\n        for i in range(level_size):\n            node = queue.popleft()\n            if i == level_size - 1:\n                result.append(node.val)\n            if node.left:\n                queue.append(node.left)\n            if node.right:\n                queue.append(node.right)\n\n    return result",

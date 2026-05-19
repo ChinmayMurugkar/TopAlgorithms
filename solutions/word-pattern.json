@@ -11,12 +11,12 @@
     "example": {
       "input": "pattern = \"abba\", s = \"dog cat cat dog\"",
       "output": "true",
-      "explanation": "a→dog, b→cat. Bijection: pattern char ↔ word. Both maps (char→word and word→char) must be consistent."
+      "explanation": "a\u2192dog, b\u2192cat. Bijection: pattern char \u2194 word. Both maps (char\u2192word and word\u2192char) must be consistent."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – HashMap",
+      "title": "Solution 1 \u2013 HashMap [\u2713 Interviewer Accepted]",
       "description": "Use HashMap to check pattern matching.",
       "code": "public boolean wordPattern(String pattern, String s) {\n    String[] words = s.split(\" \");\n    if (pattern.length() != words.length) return false;\n    \n    Map charToWord = new HashMap<>();\n    Map wordToChar = new HashMap<>();\n    \n    for (int i = 0; i < pattern.length(); i++) {\n        char c = pattern.charAt(i);\n        String word = words[i];\n        \n        if (charToWord.containsKey(c)) {\n            if (!charToWord.get(c).equals(word)) return false;\n        } else {\n            if (wordToChar.containsKey(word)) return false;\n            charToWord.put(c, word);\n            wordToChar.put(word, c);\n        }\n    }\n    \n    return true;\n}",
       "language": "java",

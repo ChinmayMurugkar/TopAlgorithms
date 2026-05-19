@@ -5,7 +5,7 @@
     "category": "Math",
     "description": "Given an integer n, return the number of trailing zeroes in n!. Note that n! = n * (n - 1) * (n - 2) * ... * 3 * 2 * 1.",
     "assumptions": [
-      "Each trailing zero comes from a factor of 10 = 2×5. Since 2s are plentiful, count multiples of 5."
+      "Each trailing zero comes from a factor of 10 = 2\u00d75. Since 2s are plentiful, count multiples of 5."
     ],
     "example": {
       "input": "n = 5",
@@ -15,7 +15,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Count Factors of 5",
+      "title": "Solution 1 \u2013 Count Factors of 5 [\u2713 Interviewer Accepted]",
       "description": "Trailing zeros in n! come from pairs of factors 2 and 5; since factors of 2 are always more plentiful, we only need to count how many times 5 divides into n!. We sum floor(n/5) + floor(n/25) + floor(n/125) + ... because multiples of 25 contribute an extra factor of 5, and so on. This repeated division by 5 runs in O(log n) time.",
       "code": "public int trailingZeroes(int n) {\n    int count = 0;\n    \n    while (n > 0) {\n        n /= 5;\n        count += n;\n    }\n    \n    return count;\n}",
       "code_python": "def trailingZeroes(n: int) -> int:\n    count = 0\n    while n > 0:\n        n //= 5\n        count += n\n    return count",

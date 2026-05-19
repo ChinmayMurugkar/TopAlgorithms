@@ -17,7 +17,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – DFS with HashMap",
+      "title": "Solution 1 \u2013 DFS with HashMap [\u2713 Interviewer Accepted]",
       "description": "Use DFS with a HashMap mapping each original node to its clone to handle cycles and shared references. When revisiting a node already in the map, return its clone directly instead of recursing further, which breaks infinite loops and correctly wires up all neighbor references.",
       "code": "public Node cloneGraph(Node node) {\n    if (node == null) {\n        return null;\n    }\n    \n    Map visited = new HashMap<>();\n    return cloneGraphHelper(node, visited);\n}\n\nprivate Node cloneGraphHelper(Node node, Map visited) {\n    if (visited.containsKey(node)) {\n        return visited.get(node);\n    }\n    \n    Node clone = new Node(node.val);\n    visited.put(node, clone);\n    \n    for (Node neighbor : node.neighbors) {\n        clone.neighbors.add(cloneGraphHelper(neighbor, visited));\n    }\n    \n    return clone;\n}",
       "code_python": "from typing import Optional\n\ndef cloneGraph(node: Optional[object]) -> Optional[object]:\n    if node is None:\n        return None\n\n    visited: dict = {}\n\n    def dfs(n: object) -> object:\n        if n in visited:\n            return visited[n]\n        # Assume Node has .val and .neighbors attributes\n        clone = type(n)(n.val)  # Node(n.val)\n        visited[n] = clone\n        for neighbor in n.neighbors:\n            clone.neighbors.append(dfs(neighbor))\n        return clone\n\n    return dfs(node)",

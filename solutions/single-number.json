@@ -3,7 +3,7 @@
     "title": "Single Number",
     "leetcode_id": 136,
     "category": "Bit Manipulation",
-    "description": "Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.\n                \nConstraints:\n\n1 ≤ nums.length ≤ 3 * 10⁴\n-3 * 10⁴ ≤ nums[i] ≤ 3 * 10⁴\nEach element in the array appears twice except for one element which appears only once.",
+    "description": "Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.\n                \nConstraints:\n\n1 \u2264 nums.length \u2264 3 * 10\u2074\n-3 * 10\u2074 \u2264 nums[i] \u2264 3 * 10\u2074\nEach element in the array appears twice except for one element which appears only once.",
     "assumptions": [
       "Every element appears exactly twice except for one.",
       "O(n) time, O(1) space."
@@ -15,7 +15,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Hash Set",
+      "title": "Solution 1 \u2013 Hash Set [\u2713 Interviewer Accepted]",
       "description": "Use a hash set to track seen numbers. If a number is seen twice, remove it from the set.",
       "code": "public int singleNumber(int[] nums) {\n    Set set = new HashSet<>();\n    \n    for (int num : nums) {\n        if (set.contains(num)) {\n            set.remove(num);\n        } else {\n            set.add(num);\n        }\n    }\n    \n    return set.iterator().next();\n}",
       "code_python": "from typing import List\n\ndef singleNumber(nums: List[int]) -> int:\n    seen: set[int] = set()\n    for num in nums:\n        if num in seen:\n            seen.remove(num)\n        else:\n            seen.add(num)\n    return next(iter(seen))",
@@ -26,7 +26,7 @@
       }
     },
     {
-      "title": "Solution 2 – XOR (Optimal)",
+      "title": "Solution 2 \u2013 XOR (Optimal) [\u2713 Interviewer Accepted]",
       "description": "Use XOR operation. XOR of a number with itself is 0, and XOR with 0 is the number itself.",
       "code": "public int singleNumber(int[] nums) {\n    int result = 0;\n    \n    for (int num : nums) {\n        result ^= num;\n    }\n    \n    return result;\n}",
       "code_python": "from typing import List\nfrom functools import reduce\nimport operator\n\ndef singleNumber(nums: List[int]) -> int:\n    return reduce(operator.xor, nums)",
@@ -37,7 +37,7 @@
       }
     },
     {
-      "title": "Solution 3 – Math Approach",
+      "title": "Solution 3 \u2013 Math Approach [\u2713 Interviewer Accepted]",
       "description": "Use mathematical formula: 2 * (sum of unique elements) - sum of all elements = single number.",
       "code": "public int singleNumber(int[] nums) {\n    Set uniqueNums = new HashSet<>();\n    int sum = 0;\n    \n    for (int num : nums) {\n        uniqueNums.add(num);\n        sum += num;\n    }\n    \n    int uniqueSum = 0;\n    for (int num : uniqueNums) {\n        uniqueSum += num;\n    }\n    \n    return 2 * uniqueSum - sum;\n}",
       "code_python": "from typing import List\n\ndef singleNumber(nums: List[int]) -> int:\n    return 2 * sum(set(nums)) - sum(nums)",

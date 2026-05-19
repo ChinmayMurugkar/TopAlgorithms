@@ -6,7 +6,7 @@
     "description": "There are a row of n houses, each house can be painted with one of k colors. The cost of painting each house with a certain color is represented by an n x k cost matrix. Paint all houses such that no two adjacent houses have the same color. Return the minimum cost. Solve in O(nk) time.",
     "assumptions": [
       "No two adjacent houses may have the same color.",
-      "k can be large — O(nk^2) naive DP is too slow.",
+      "k can be large \u2014 O(nk^2) naive DP is too slow.",
       "Target O(nk) using tracked min1 and min2."
     ],
     "example": {
@@ -17,7 +17,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – DP with Two-Minimum Tracking",
+      "title": "Solution 1 \u2013 DP with Two-Minimum Tracking [\u2713 Interviewer Accepted]",
       "description": "For each row, track the minimum cost (min1) and second minimum cost (min2) from the previous row along with the color that achieved min1. For each house and each color, the best previous cost is min1 unless the previous color matches the current color (then use min2). Update min1/min2 as we go. O(nk) time, O(1) extra space.",
       "code": "public int minCostII(int[][] costs) {\n    if (costs.length == 0) return 0;\n    int n = costs.length, k = costs[0].length;\n    int min1 = 0, min2 = 0, minColor = -1;\n    \n    for (int i = 0; i < n; i++) {\n        int newMin1 = Integer.MAX_VALUE, newMin2 = Integer.MAX_VALUE, newColor = -1;\n        for (int j = 0; j < k; j++) {\n            int cost = costs[i][j] + (j == minColor ? min2 : min1);\n            if (cost < newMin1) { newMin2 = newMin1; newMin1 = cost; newColor = j; }\n            else if (cost < newMin2) newMin2 = cost;\n        }\n        min1 = newMin1; min2 = newMin2; minColor = newColor;\n    }\n    \n    return min1;\n}",
       "code_python": "from typing import List\n\ndef min_cost_ii(costs: List[List[int]]) -> int:\n    if not costs: return 0\n    min1, min2, min_color = 0, 0, -1\n    \n    for row in costs:\n        new_min1, new_min2, new_color = float('inf'), float('inf'), -1\n        for j, cost in enumerate(row):\n            total = cost + (min2 if j == min_color else min1)\n            if total < new_min1:\n                new_min2, new_min1, new_color = new_min1, total, j\n            elif total < new_min2:\n                new_min2 = total\n        min1, min2, min_color = new_min1, new_min2, new_color\n    \n    return min1",

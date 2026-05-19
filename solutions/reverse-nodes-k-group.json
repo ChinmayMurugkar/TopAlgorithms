@@ -11,12 +11,12 @@
     "example": {
       "input": "head = [1,2,3,4,5], k = 2",
       "output": "[2,1,4,3,5]",
-      "explanation": "Reverse every k nodes. [1,2]→[2,1], [3,4]→[4,3], [5] stays (fewer than k nodes)."
+      "explanation": "Reverse every k nodes. [1,2]\u2192[2,1], [3,4]\u2192[4,3], [5] stays (fewer than k nodes)."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – Iterative",
+      "title": "Solution 1 \u2013 Iterative [\u2713 Interviewer Accepted]",
       "description": "Count k nodes ahead before committing to a reversal; if fewer than k nodes remain, leave the tail as-is. After reversing each group, reconnect the preceding segment's tail to the new group head and advance past the now-reversed group, repeating until the list is exhausted.",
       "code": "public ListNode reverseKGroup(ListNode head, int k) {\n    ListNode dummy = new ListNode(0);\n    dummy.next = head;\n    ListNode prev = dummy;\n    \n    while (head != null) {\n        ListNode tail = head;\n        int count = 0;\n        \n        while (tail != null && count < k) {\n            tail = tail.next;\n            count++;\n        }\n        \n        if (count == k) {\n            ListNode[] reversed = reverse(head, tail);\n            prev.next = reversed[0];\n            prev = reversed[1];\n            head = tail;\n        } else {\n            break;\n        }\n    }\n    \n    return dummy.next;\n}\n\nprivate ListNode[] reverse(ListNode head, ListNode tail) {\n    ListNode prev = null;\n    ListNode curr = head;\n    \n    while (curr != tail) {\n        ListNode next = curr.next;\n        curr.next = prev;\n        prev = curr;\n        curr = next;\n    }\n    \n    return new ListNode[]{prev, head};\n}",
       "code_python": "from typing import Optional\n\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\n\ndef reverseKGroup(head: Optional[object], k: int) -> Optional[object]:\n    dummy = type('ListNode', (), {'val': 0, 'next': head})()\n    prev = dummy\n\n    current = head\n    while current:\n        # Check if k nodes remain\n        tail = current\n        count = 0\n        while tail and count < k:\n            tail = tail.next\n            count += 1\n\n        if count < k:\n            break  # Fewer than k nodes left; leave as-is\n\n        # Reverse the k-node group [current, tail)\n        prev_node, node = None, current\n        while node is not tail:\n            nxt = node.next\n            node.next = prev_node\n            prev_node = node\n            node = nxt\n\n        # Reconnect\n        prev.next = prev_node   # new group head\n        current.next = tail     # old group head is now the tail\n        prev = current\n        current = tail\n\n    return dummy.next",

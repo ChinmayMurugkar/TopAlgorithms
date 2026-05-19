@@ -10,18 +10,18 @@
     "example": {
       "input": "root = [1,2,3,4,5,6]",
       "output": "6",
-      "explanation": "Count all nodes. Use binary search on last level for O(log²n) solution."
+      "explanation": "Count all nodes. Use binary search on last level for O(log\u00b2n) solution."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – Binary Search",
+      "title": "Solution 1 \u2013 Binary Search [\u2713 Interviewer Accepted]",
       "description": "Exploit the complete-tree property by comparing the left-spine height and right-spine height at each node. If they are equal, the left subtree is a perfect binary tree with 2^h nodes, so recurse only into the right subtree. Otherwise, the right subtree is a perfect tree of height h-1, and we recurse into the left subtree. This reduces the problem size by half each step, yielding O(log^2 n) time.",
       "code": "public int countNodes(TreeNode root) {\n    if (root == null) return 0;\n    \n    int leftHeight = getHeight(root.left);\n    int rightHeight = getHeight(root.right);\n    \n    if (leftHeight == rightHeight) {\n        return (1 << leftHeight) + countNodes(root.right);\n    } else {\n        return (1 << rightHeight) + countNodes(root.left);\n    }\n}\n\nprivate int getHeight(TreeNode node) {\n    int height = 0;\n    while (node != null) {\n        height++;\n        node = node.left;\n    }\n    return height;\n}",
       "code_python": "# class TreeNode: def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom typing import Optional\n\ndef countNodes(root: Optional[object]) -> int:\n    if root is None:\n        return 0\n\n    def get_height(node: Optional[object]) -> int:\n        height = 0\n        while node:\n            height += 1\n            node = node.left\n        return height\n\n    left_h = get_height(root.left)\n    right_h = get_height(root.right)\n\n    if left_h == right_h:\n        return (1 << left_h) + countNodes(root.right)\n    else:\n        return (1 << right_h) + countNodes(root.left)",
       "language": "java",
       "complexity": {
-        "time": "O(log² n)",
+        "time": "O(log\u00b2 n)",
         "space": "O(log n)"
       }
     }

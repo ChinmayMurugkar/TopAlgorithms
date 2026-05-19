@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Two Variables",
+      "title": "Solution 1 \u2013 Two Variables [\u2713 Interviewer Accepted]",
       "description": "Maintain two variables, first and second, representing the smallest and second-smallest values seen so far in potential increasing pairs. For each number: update first if it is the new minimum, update second if it is larger than first but smaller than the current second, and return true immediately if a number larger than second is found. The key insight is that even if first is later updated to a smaller value, second still implicitly guarantees a valid increasing pair exists before it in the array.",
       "code": "public boolean increasingTriplet(int[] nums) {\n    int first = Integer.MAX_VALUE;\n    int second = Integer.MAX_VALUE;\n    \n    for (int num : nums) {\n        if (num <= first) {\n            first = num;\n        } else if (num <= second) {\n            second = num;\n        } else {\n            return true;\n        }\n    }\n    \n    return false;\n}",
       "code_python": "from typing import List\n\ndef increasing_triplet(nums: List[int]) -> bool:\n    first = second = float('inf')\n    for num in nums:\n        if num <= first:\n            first = num\n        elif num <= second:\n            second = num\n        else:\n            return True\n    return False",

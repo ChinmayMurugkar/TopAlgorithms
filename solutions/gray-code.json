@@ -6,17 +6,17 @@
     "description": "An n-bit gray code sequence is a sequence of 2n integers where: Every integer is in the inclusive range [0, 2n - 1], The first integer is 0, An integer appears no more than once in the sequence.",
     "assumptions": [
       "Return any valid n-bit Gray code sequence starting at 0.",
-      "Sequence must have 2ⁿ elements."
+      "Sequence must have 2\u207f elements."
     ],
     "example": {
       "input": "n = 2",
       "output": "[0,1,3,2]",
-      "explanation": "00→01→11→10. Each consecutive pair differs by exactly 1 bit. This is the standard Gray code."
+      "explanation": "00\u219201\u219211\u219210. Each consecutive pair differs by exactly 1 bit. This is the standard Gray code."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – Recursive",
+      "title": "Solution 1 \u2013 Recursive [\u2713 Interviewer Accepted]",
       "description": "Build the Gray code sequence iteratively by reflecting the current list and prepending a new high bit to the reflected portion. Start with [0] and for each bit position i, mirror the existing list and OR each mirrored value with (1 << i), then append those to the end. The key insight is that this reflection ensures adjacent entries differ by exactly one bit, satisfying the Gray code property.",
       "code": "public List grayCode(int n) {\n    List result = new ArrayList<>();\n    result.add(0);\n    \n    for (int i = 0; i < n; i++) {\n        int size = result.size();\n        for (int j = size - 1; j >= 0; j--) {\n            result.add(result.get(j) | (1 << i));\n        }\n    }\n    \n    return result;\n}",
       "code_python": "from typing import List\n\ndef gray_code(n: int) -> List[int]:\n    result = [0]\n    for i in range(n):\n        result += [x | (1 << i) for x in reversed(result)]\n    return result",

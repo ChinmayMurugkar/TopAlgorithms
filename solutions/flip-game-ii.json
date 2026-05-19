@@ -17,7 +17,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Recursive Backtracking",
+      "title": "Solution 1 \u2013 Recursive Backtracking [\u2713 Interviewer Accepted]",
       "description": "Try every valid move from the current position and recursively check whether the opponent loses (canWin returns false for the opponent). If any move leads to the opponent losing, the current player wins. The key insight is that a position is a win if and only if there exists at least one move that puts the opponent in a losing position.",
       "code": "public boolean canWin(String s) {\n    char[] arr = s.toCharArray();\n    \n    for (int i = 0; i < arr.length - 1; i++) {\n        if (arr[i] == '+' && arr[i + 1] == '+') {\n            arr[i] = '-';\n            arr[i + 1] = '-';\n            boolean opponentWins = canWin(new String(arr));\n            arr[i] = '+';\n            arr[i + 1] = '+';\n            if (!opponentWins) return true;\n        }\n    }\n    \n    return false;\n}",
       "code_python": "def can_win(s: str) -> bool:\n    arr = list(s)\n    for i in range(len(arr) - 1):\n        if arr[i] == '+' and arr[i + 1] == '+':\n            arr[i] = arr[i + 1] = '-'\n            opponent_wins = can_win(''.join(arr))\n            arr[i] = arr[i + 1] = '+'\n            if not opponent_wins:\n                return True\n    return False",
@@ -28,7 +28,7 @@
       }
     },
     {
-      "title": "Solution 2 – Memoization",
+      "title": "Solution 2 \u2013 Memoization [\u2713 Interviewer Accepted]",
       "description": "Cache each string state in a HashMap so repeated positions are not recomputed. This dramatically reduces redundant calls when the same board state can be reached via different move orderings.",
       "code": "private Map<String, Boolean> memo = new HashMap<>();\n\npublic boolean canWin(String s) {\n    if (memo.containsKey(s)) return memo.get(s);\n    \n    char[] arr = s.toCharArray();\n    for (int i = 0; i < arr.length - 1; i++) {\n        if (arr[i] == '+' && arr[i + 1] == '+') {\n            arr[i] = '-'; arr[i + 1] = '-';\n            boolean opponentWins = canWin(new String(arr));\n            arr[i] = '+'; arr[i + 1] = '+';\n            if (!opponentWins) {\n                memo.put(s, true);\n                return true;\n            }\n        }\n    }\n    \n    memo.put(s, false);\n    return false;\n}",
       "code_python": "from functools import lru_cache\n\ndef can_win(s: str) -> bool:\n    @lru_cache(maxsize=None)\n    def helper(state: str) -> bool:\n        arr = list(state)\n        for i in range(len(arr) - 1):\n            if arr[i] == '+' and arr[i + 1] == '+':\n                arr[i] = arr[i + 1] = '-'\n                opponent_wins = helper(''.join(arr))\n                arr[i] = arr[i + 1] = '+'\n                if not opponent_wins:\n                    return True\n        return False\n    return helper(s)",

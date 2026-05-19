@@ -3,7 +3,7 @@
     "title": "Reorder List",
     "leetcode_id": 143,
     "category": "Linked List",
-    "description": "You are given the head of a singly linked-list. The list can be represented as: L0 → L1 → … → Ln - 1 → Ln. Reorder the list to be on the following form: L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …",
+    "description": "You are given the head of a singly linked-list. The list can be represented as: L0 \u2192 L1 \u2192 \u2026 \u2192 Ln - 1 \u2192 Ln. Reorder the list to be on the following form: L0 \u2192 Ln \u2192 L1 \u2192 Ln - 1 \u2192 L2 \u2192 Ln - 2 \u2192 \u2026",
     "assumptions": [
       "In-place modification.",
       "Do not return anything; modify head in-place."
@@ -11,12 +11,12 @@
     "example": {
       "input": "head = [1,2,3,4,5]",
       "output": "[1,5,2,4,3]",
-      "explanation": "Interleave: L0→Ln→L1→Ln-1→... Find mid, reverse second half, merge."
+      "explanation": "Interleave: L0\u2192Ln\u2192L1\u2192Ln-1\u2192... Find mid, reverse second half, merge."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – Find Middle, Reverse, Merge",
+      "title": "Solution 1 \u2013 Find Middle, Reverse, Merge [\u2713 Interviewer Accepted]",
       "description": "Split the list at its midpoint using slow/fast pointers, reverse the second half, then interleave the two halves by alternating nodes from each. This in-place approach avoids any auxiliary data structures and runs in O(n) time.",
       "code": "public void reorderList(ListNode head) {\n    if (head == null || head.next == null) return;\n    \n    // Find the middle\n    ListNode slow = head, fast = head;\n    while (fast.next != null && fast.next.next != null) {\n        slow = slow.next;\n        fast = fast.next.next;\n    }\n    \n    // Reverse the second half\n    ListNode second = reverseList(slow.next);\n    slow.next = null;\n    \n    // Merge the two halves\n    ListNode first = head;\n    while (second != null) {\n        ListNode temp1 = first.next;\n        ListNode temp2 = second.next;\n        \n        first.next = second;\n        second.next = temp1;\n        \n        first = temp1;\n        second = temp2;\n    }\n}\n\nprivate ListNode reverseList(ListNode head) {\n    ListNode prev = null;\n    ListNode current = head;\n    \n    while (current != null) {\n        ListNode next = current.next;\n        current.next = prev;\n        prev = current;\n        current = next;\n    }\n    \n    return prev;\n}",
       "code_python": "from typing import Optional\n\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\n\ndef reorderList(head: Optional[object]) -> None:\n    if not head or not head.next:\n        return\n\n    # Step 1: find the middle\n    slow, fast = head, head\n    while fast.next and fast.next.next:\n        slow = slow.next\n        fast = fast.next.next\n\n    # Step 2: reverse the second half\n    second = slow.next\n    slow.next = None\n    prev = None\n    while second:\n        nxt = second.next\n        second.next = prev\n        prev = second\n        second = nxt\n    second = prev  # head of reversed second half\n\n    # Step 3: interleave the two halves\n    first = head\n    while second:\n        tmp1, tmp2 = first.next, second.next\n        first.next = second\n        second.next = tmp1\n        first = tmp1\n        second = tmp2",

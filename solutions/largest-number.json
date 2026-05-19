@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Custom Comparator",
+      "title": "Solution 1 \u2013 Custom Comparator [\u2713 Interviewer Accepted]",
       "description": "Convert each integer to a string and sort using a custom comparator that compares the two possible concatenation orders (b+a vs a+b). Placing the concatenation that yields the larger string first ensures the overall number is maximized. The edge case where all numbers are zero is handled by checking if the first sorted element is \"0\".",
       "code": "public String largestNumber(int[] nums) {\n    String[] strs = new String[nums.length];\n    for (int i = 0; i < nums.length; i++) {\n        strs[i] = String.valueOf(nums[i]);\n    }\n    \n    Arrays.sort(strs, (a, b) -> (b + a).compareTo(a + b));\n    \n    if (strs[0].equals(\"0\")) return \"0\";\n    \n    StringBuilder result = new StringBuilder();\n    for (String str : strs) {\n        result.append(str);\n    }\n    \n    return result.toString();\n}",
       "code_python": "from functools import cmp_to_key\nfrom typing import List\n\nclass Solution:\n    def largestNumber(self, nums: List[int]) -> str:\n        strs = [str(n) for n in nums]\n\n        def comparator(a: str, b: str) -> int:\n            if a + b > b + a:\n                return -1\n            elif a + b < b + a:\n                return 1\n            return 0\n\n        strs.sort(key=cmp_to_key(comparator))\n\n        if strs[0] == \"0\":\n            return \"0\"\n\n        return \"\".join(strs)",
@@ -27,7 +27,7 @@
       }
     },
     {
-      "title": "Solution 1 – Custom Comparator",
+      "title": "Solution 1 \u2013 Custom Comparator [\u2713 Interviewer Accepted]",
       "description": "Convert each integer to a string and sort using a custom comparator that compares the two possible concatenation orders (b+a vs a+b). Placing the concatenation that yields the larger string first ensures the overall number is maximized. The edge case where all numbers are zero is handled by checking if the first sorted element is \"0\".",
       "code": "public String largestNumber(int[] nums) {\n    String[] strs = new String[nums.length];\n    for (int i = 0; i < nums.length; i++) {\n        strs[i] = String.valueOf(nums[i]);\n    }\n    \n    Arrays.sort(strs, (a, b) -> (b + a).compareTo(a + b));\n    \n    if (strs[0].equals(\"0\")) return \"0\";\n    \n    StringBuilder result = new StringBuilder();\n    for (String str : strs) {\n        result.append(str);\n    }\n    \n    return result.toString();\n}",
       "language": "java",

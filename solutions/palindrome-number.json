@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Reverse Half",
+      "title": "Solution 1 \u2013 Reverse Half [\u2713 Interviewer Accepted]",
       "description": "Reverse only the second half of the number's digits and compare with the first half, avoiding string conversion entirely. Negative numbers and numbers ending in zero (except zero itself) are immediately false because no such integer can be a palindrome.",
       "code": "public boolean isPalindrome(int x) {\n    if (x < 0 || (x != 0 && x % 10 == 0)) return false;\n    \n    int reversed = 0;\n    while (x > reversed) {\n        reversed = reversed * 10 + x % 10;\n        x /= 10;\n    }\n    \n    return x == reversed || x == reversed / 10;\n}",
       "code_python": "def isPalindrome(x: int) -> bool:\n    if x < 0 or (x != 0 and x % 10 == 0):\n        return False\n\n    reversed_half = 0\n    while x > reversed_half:\n        reversed_half = reversed_half * 10 + x % 10\n        x //= 10\n\n    # x == reversed_half handles even-length; x == reversed_half // 10 handles odd-length\n    return x == reversed_half or x == reversed_half // 10",

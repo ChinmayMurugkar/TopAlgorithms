@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Bucket Sort Implementation",
+      "title": "Solution 1 \u2013 Bucket Sort Implementation [\u2713 Interviewer Accepted]",
       "description": "Distribute elements into n equally-spaced buckets based on their value, sort each bucket individually, then concatenate them. The algorithm achieves near-linear average time when input is uniformly distributed, because each bucket contains only a constant number of elements on average.",
       "code": "public void bucketSort(double[] arr) {\n    int n = arr.length;\n    if (n <= 1) return;\n    \n    // Create buckets\n    List[] buckets = new List[n];\n    for (int i = 0; i < n; i++) {\n        buckets[i] = new ArrayList<>();\n    }\n    \n    // Distribute elements into buckets\n    for (int i = 0; i < n; i++) {\n        int bucketIndex = (int) (n * arr[i]);\n        buckets[bucketIndex].add(arr[i]);\n    }\n    \n    // Sort individual buckets\n    for (int i = 0; i < n; i++) {\n        Collections.sort(buckets[i]);\n    }\n    \n    // Concatenate buckets\n    int index = 0;\n    for (int i = 0; i < n; i++) {\n        for (double value : buckets[i]) {\n            arr[index++] = value;\n        }\n    }\n}",
       "code_python": "from typing import List\n\ndef bucket_sort(arr: List[float]) -> None:\n    n = len(arr)\n    if n <= 1:\n        return\n\n    buckets: List[List[float]] = [[] for _ in range(n)]\n\n    for val in arr:\n        bucket_index = int(n * val)\n        buckets[bucket_index].append(val)\n\n    for bucket in buckets:\n        bucket.sort()\n\n    index = 0\n    for bucket in buckets:\n        for val in bucket:\n            arr[index] = val\n            index += 1",
@@ -27,7 +27,7 @@
       }
     },
     {
-      "title": "Solution 1 – Bucket Sort Implementation",
+      "title": "Solution 1 \u2013 Bucket Sort Implementation [\u2713 Interviewer Accepted]",
       "description": "Distribute elements into n equally-spaced buckets based on their value, sort each bucket individually, then concatenate them. The algorithm achieves near-linear average time when input is uniformly distributed, because each bucket contains only a constant number of elements on average.",
       "code": "public void bucketSort(double[] arr) {\n    int n = arr.length;\n    if (n <= 1) return;\n    \n    // Create buckets\n    List[] buckets = new List[n];\n    for (int i = 0; i < n; i++) {\n        buckets[i] = new ArrayList<>();\n    }\n    \n    // Distribute elements into buckets\n    for (int i = 0; i < n; i++) {\n        int bucketIndex = (int) (n * arr[i]);\n        buckets[bucketIndex].add(arr[i]);\n    }\n    \n    // Sort individual buckets\n    for (int i = 0; i < n; i++) {\n        Collections.sort(buckets[i]);\n    }\n    \n    // Concatenate buckets\n    int index = 0;\n    for (int i = 0; i < n; i++) {\n        for (double value : buckets[i]) {\n            arr[index++] = value;\n        }\n    }\n}",
       "code_python": "from typing import List\n\ndef bucket_sort(arr: List[float]) -> None:\n    n = len(arr)\n    if n <= 1:\n        return\n\n    buckets: List[List[float]] = [[] for _ in range(n)]\n\n    for val in arr:\n        bucket_index = int(n * val)\n        buckets[bucket_index].append(val)\n\n    for bucket in buckets:\n        bucket.sort()\n\n    index = 0\n    for bucket in buckets:\n        for val in bucket:\n            arr[index] = val\n            index += 1",

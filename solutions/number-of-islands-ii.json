@@ -6,7 +6,7 @@
     "description": "You are given an empty 2D binary grid of size m x n. The grid represents a map where 0's represent water and 1's represent land. Land cells are added one at a time via positions; after each addition return the number of islands.",
     "assumptions": [
       "Dynamic island addition.",
-      "Use Union-Find for O(α) per operation."
+      "Use Union-Find for O(\u03b1) per operation."
     ],
     "example": {
       "input": "m=3, n=3, positions=[[0,0],[0,1],[1,2],[2,1]]",
@@ -16,14 +16,14 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Union Find",
-      "description": "Maintain a Union-Find structure over m×n cells. When a new land cell is added, increment the island count and then try to union it with each adjacent land neighbor — each successful union (different components) decrements the count. Path compression and union by rank keep each operation near O(1) amortized (O(α(m×n))). The key insight is that Union-Find naturally handles dynamic connectivity as land is added incrementally.",
+      "title": "Solution 1 \u2013 Union Find [\u2713 Interviewer Accepted]",
+      "description": "Maintain a Union-Find structure over m\u00d7n cells. When a new land cell is added, increment the island count and then try to union it with each adjacent land neighbor \u2014 each successful union (different components) decrements the count. Path compression and union by rank keep each operation near O(1) amortized (O(\u03b1(m\u00d7n))). The key insight is that Union-Find naturally handles dynamic connectivity as land is added incrementally.",
       "code": "public List numIslands2(int m, int n, int[][] positions) {\n    List result = new ArrayList<>();\n    UnionFind uf = new UnionFind(m * n);\n    int[][] grid = new int[m][n];\n    int count = 0;\n    \n    int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};\n    \n    for (int[] pos : positions) {\n        int i = pos[0], j = pos[1];\n        if (grid[i][j] == 1) {\n            result.add(count);\n            continue;\n        }\n        \n        grid[i][j] = 1;\n        count++;\n        \n        for (int[] dir : directions) {\n            int newI = i + dir[0], newJ = j + dir[1];\n            if (newI >= 0 && newI < m && newJ >= 0 && newJ < n && grid[newI][newJ] == 1) {\n                if (uf.union(i * n + j, newI * n + newJ)) {\n                    count--;\n                }\n            }\n        }\n        \n        result.add(count);\n    }\n    \n    return result;\n}\n\nclass UnionFind {\n    private int[] parent, rank;\n    \n    public UnionFind(int n) {\n        parent = new int[n];\n        rank = new int[n];\n        for (int i = 0; i < n; i++) {\n            parent[i] = i;\n        }\n    }\n    \n    public int find(int x) {\n        if (parent[x] != x) {\n            parent[x] = find(parent[x]);\n        }\n        return parent[x];\n    }\n    \n    public boolean union(int x, int y) {\n        int px = find(x), py = find(y);\n        if (px == py) return false;\n        \n        if (rank[px] < rank[py]) {\n            parent[px] = py;\n        } else if (rank[px] > rank[py]) {\n            parent[py] = px;\n        } else {\n            parent[py] = px;\n            rank[px]++;\n        }\n        return true;\n    }\n}",
       "code_python": "from typing import List\n\ndef num_islands2(m: int, n: int, positions: List[List[int]]) -> List[int]:\n    parent = list(range(m * n))\n    rank = [0] * (m * n)\n\n    def find(x: int) -> int:\n        if parent[x] != x:\n            parent[x] = find(parent[x])\n        return parent[x]\n\n    def union(x: int, y: int) -> bool:\n        px, py = find(x), find(y)\n        if px == py:\n            return False\n        if rank[px] < rank[py]:\n            parent[px] = py\n        elif rank[px] > rank[py]:\n            parent[py] = px\n        else:\n            parent[py] = px\n            rank[px] += 1\n        return True\n\n    grid = [[0] * n for _ in range(m)]\n    count = 0\n    result: List[int] = []\n    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]\n\n    for i, j in positions:\n        if grid[i][j] == 1:\n            result.append(count)\n            continue\n        grid[i][j] = 1\n        count += 1\n        for di, dj in directions:\n            ni, nj = i + di, j + dj\n            if 0 <= ni < m and 0 <= nj < n and grid[ni][nj] == 1:\n                if union(i * n + j, ni * n + nj):\n                    count -= 1\n        result.append(count)\n    return result",
       "language": "java",
       "complexity": {
-        "time": "O(k × α(m×n))",
-        "space": "O(m × n)"
+        "time": "O(k \u00d7 \u03b1(m\u00d7n))",
+        "space": "O(m \u00d7 n)"
       }
     }
   ],

@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – TreeSet Sliding Window",
+      "title": "Solution 1 \u2013 TreeSet Sliding Window [\u2713 Interviewer Accepted]",
       "description": "Maintain a sorted TreeSet of the last indexDiff elements. For each new element x, query the set for any value in [x - valueDiff, x + valueDiff] using floor/ceiling operations. If found, return true. Then add x to the set and evict the element that has moved out of the index window. TreeSet gives O(log k) lookup per element.",
       "code": "public boolean containsNearbyAlmostDuplicate(int[] nums, int indexDiff, int valueDiff) {\n    TreeSet<Long> set = new TreeSet<>();\n    \n    for (int i = 0; i < nums.length; i++) {\n        long x = nums[i];\n        Long floor = set.floor(x + valueDiff);\n        if (floor != null && floor >= x - valueDiff) return true;\n        set.add(x);\n        if (i >= indexDiff) set.remove((long) nums[i - indexDiff]);\n    }\n    \n    return false;\n}",
       "code_python": "from typing import List\nfrom sortedcontainers import SortedList\n\ndef contains_nearby_almost_duplicate(nums: List[int], index_diff: int, value_diff: int) -> bool:\n    window = SortedList()\n    for i, x in enumerate(nums):\n        # Find leftmost value >= x - value_diff\n        pos = window.bisect_left(x - value_diff)\n        if pos < len(window) and window[pos] <= x + value_diff:\n            return True\n        window.add(x)\n        if i >= index_diff:\n            window.remove(nums[i - index_diff])\n    return False",

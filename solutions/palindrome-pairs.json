@@ -6,23 +6,23 @@
     "description": "Given a list of unique words, return all the pairs of the distinct indices (i, j) in the given list, so that the concatenation of the two words words[i] + words[j] is a palindrome.",
     "assumptions": [
       "Return all unique index pairs [i,j] where words[i]+words[j] is a palindrome.",
-      "i ≠ j."
+      "i \u2260 j."
     ],
     "example": {
       "input": "words = [\"abcd\",\"dcba\",\"lls\",\"s\",\"sssll\"]",
       "output": "[[0,1],[1,0],[3,2],[2,4]]",
-      "explanation": "words[0]+words[1]=\"abcddcba\" (palindrome). Use hash map for O(n*k²)."
+      "explanation": "words[0]+words[1]=\"abcddcba\" (palindrome). Use hash map for O(n*k\u00b2)."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – HashMap",
-      "description": "Store each word's reverse in a hash map, then for every word check three cases: its full reverse exists, a palindromic prefix allows the reversed suffix to pair on the left, or a palindromic suffix allows the reversed prefix to pair on the right. This covers all valid concatenations in O(n·k²) time where k is the average word length.",
+      "title": "Solution 1 \u2013 HashMap [\u2713 Interviewer Accepted]",
+      "description": "Store each word's reverse in a hash map, then for every word check three cases: its full reverse exists, a palindromic prefix allows the reversed suffix to pair on the left, or a palindromic suffix allows the reversed prefix to pair on the right. This covers all valid concatenations in O(n\u00b7k\u00b2) time where k is the average word length.",
       "code": "public List> palindromePairs(String[] words) {\n    List> result = new ArrayList<>();\n    Map map = new HashMap<>();\n    \n    for (int i = 0; i < words.length; i++) {\n        map.put(words[i], i);\n    }\n    \n    for (int i = 0; i < words.length; i++) {\n        String word = words[i];\n        \n        // Check if reverse exists\n        String reverse = new StringBuilder(word).reverse().toString();\n        if (map.containsKey(reverse) && map.get(reverse) != i) {\n            result.add(Arrays.asList(i, map.get(reverse)));\n        }\n        \n        // Check for palindromes\n        for (int j = 0; j < word.length(); j++) {\n            if (isPalindrome(word, 0, j)) {\n                String suffix = new StringBuilder(word.substring(j + 1)).reverse().toString();\n                if (map.containsKey(suffix) && map.get(suffix) != i) {\n                    result.add(Arrays.asList(map.get(suffix), i));\n                }\n            }\n            \n            if (isPalindrome(word, j, word.length() - 1)) {\n                String prefix = new StringBuilder(word.substring(0, j)).reverse().toString();\n                if (map.containsKey(prefix) && map.get(prefix) != i) {\n                    result.add(Arrays.asList(i, map.get(prefix)));\n                }\n            }\n        }\n    }\n    \n    return result;\n}\n\nprivate boolean isPalindrome(String s, int start, int end) {\n    while (start < end) {\n        if (s.charAt(start++) != s.charAt(end--)) {\n            return false;\n        }\n    }\n    return true;\n}",
       "code_python": "from typing import List\n\ndef palindromePairs(words: List[str]) -> List[List[int]]:\n    def is_palindrome(s: str) -> bool:\n        return s == s[::-1]\n\n    word_map = {word: i for i, word in enumerate(words)}\n    result: List[List[int]] = []\n\n    for i, word in enumerate(words):\n        # Case 1: full reverse of word exists as another word\n        rev = word[::-1]\n        if rev in word_map and word_map[rev] != i:\n            result.append([i, word_map[rev]])\n\n        # Cases 2 & 3: split word at each position\n        for j in range(len(word)):\n            # Palindromic prefix -> reversed suffix pairs on the left\n            if is_palindrome(word[:j + 1]):\n                rev_suffix = word[j + 1:][::-1]\n                if rev_suffix in word_map and word_map[rev_suffix] != i:\n                    result.append([word_map[rev_suffix], i])\n\n            # Palindromic suffix -> reversed prefix pairs on the right\n            if is_palindrome(word[j:]):\n                rev_prefix = word[:j][::-1]\n                if rev_prefix in word_map and word_map[rev_prefix] != i:\n                    result.append([i, word_map[rev_prefix]])\n\n    return result",
       "language": "java",
       "complexity": {
-        "time": "O(n × k²)",
+        "time": "O(n \u00d7 k\u00b2)",
         "space": "O(n)"
       }
     }

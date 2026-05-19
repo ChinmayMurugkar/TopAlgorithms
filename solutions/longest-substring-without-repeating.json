@@ -15,7 +15,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Sliding Window with HashSet",
+      "title": "Solution 1 \u2013 Sliding Window with HashSet [\u2713 Interviewer Accepted]",
       "description": "Use a sliding window bounded by two pointers and a HashSet that tracks characters currently in the window. When the right pointer encounters a duplicate character, the left pointer advances and removes characters from the set until the duplicate is gone. At every step the window is guaranteed to be duplicate-free, so the maximum window length is the answer.",
       "code": "public int lengthOfLongestSubstring(String s) {\n    Set set = new HashSet<>();\n    int maxLength = 0;\n    int left = 0;\n    \n    for (int right = 0; right < s.length(); right++) {\n        char c = s.charAt(right);\n        \n        while (set.contains(c)) {\n            set.remove(s.charAt(left));\n            left++;\n        }\n        \n        set.add(c);\n        maxLength = Math.max(maxLength, right - left + 1);\n    }\n    \n    return maxLength;\n}",
       "code_python": "class Solution:\n    def lengthOfLongestSubstring(self, s: str) -> int:\n        seen: set[str] = set()\n        left = 0\n        max_length = 0\n\n        for right, c in enumerate(s):\n            while c in seen:\n                seen.remove(s[left])\n                left += 1\n            seen.add(c)\n            max_length = max(max_length, right - left + 1)\n\n        return max_length",

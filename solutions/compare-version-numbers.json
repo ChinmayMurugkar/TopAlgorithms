@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – String Parsing",
+      "title": "Solution 1 \u2013 String Parsing [\u2713 Interviewer Accepted]",
       "description": "Split both version strings on '.' and compare corresponding numeric segments pairwise. When one version has fewer segments than the other, treat the missing segments as 0. Return -1, 0, or 1 based on the first differing segment found.",
       "code": "public int compareVersion(String version1, String version2) {\n    String[] v1 = version1.split(\"\\.\");\n    String[] v2 = version2.split(\"\\.\");\n    \n    int maxLength = Math.max(v1.length, v2.length);\n    \n    for (int i = 0; i < maxLength; i++) {\n        int num1 = i < v1.length ? Integer.parseInt(v1[i]) : 0;\n        int num2 = i < v2.length ? Integer.parseInt(v2[i]) : 0;\n        \n        if (num1 < num2) return -1;\n        if (num1 > num2) return 1;\n    }\n    \n    return 0;\n}",
       "code_python": "def compareVersion(version1: str, version2: str) -> int:\n    v1 = version1.split(\".\")\n    v2 = version2.split(\".\")\n    max_len = max(len(v1), len(v2))\n\n    for i in range(max_len):\n        num1 = int(v1[i]) if i < len(v1) else 0\n        num2 = int(v2[i]) if i < len(v2) else 0\n        if num1 < num2:\n            return -1\n        if num1 > num2:\n            return 1\n\n    return 0",

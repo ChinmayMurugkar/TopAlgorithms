@@ -8,12 +8,12 @@
     "example": {
       "input": "n = 16",
       "output": "true",
-      "explanation": "16 = 2⁴. Powers of 2 in binary have exactly one '1' bit. Check: n > 0 && (n & (n-1)) == 0."
+      "explanation": "16 = 2\u2074. Powers of 2 in binary have exactly one '1' bit. Check: n > 0 && (n & (n-1)) == 0."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – Bit Manipulation",
+      "title": "Solution 1 \u2013 Bit Manipulation [\u2713 Interviewer Accepted]",
       "description": "A power of two has exactly one bit set in its binary representation. The expression n & (n-1) clears the lowest set bit; if the result is 0 (and n is positive), only one bit was set, confirming n is a power of two.",
       "code": "public boolean isPowerOfTwo(int n) {\n    if (n <= 0) {\n        return false;\n    }\n    \n    return (n & (n - 1)) == 0;\n}",
       "code_python": "def isPowerOfTwo(n: int) -> bool:\n    if n <= 0:\n        return False\n    return (n & (n - 1)) == 0",

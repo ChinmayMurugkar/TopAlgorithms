@@ -15,7 +15,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Geometry",
+      "title": "Solution 1 \u2013 Geometry [\u2713 Interviewer Accepted]",
       "description": "Compute each rectangle's area independently, then subtract any overlap. The overlap width is max(0, min(right edges) - max(left edges)) and similarly for height; if either dimension is non-positive the rectangles do not intersect and the overlap area is zero.",
       "code": "public int computeArea(int ax1, int ay1, int ax2, int ay2, \n                        int bx1, int by1, int bx2, int by2) {\n    int area1 = (ax2 - ax1) * (ay2 - ay1);\n    int area2 = (bx2 - bx1) * (by2 - by1);\n    \n    int overlapWidth = Math.min(ax2, bx2) - Math.max(ax1, bx1);\n    int overlapHeight = Math.min(ay2, by2) - Math.max(ay1, by1);\n    \n    int overlapArea = 0;\n    if (overlapWidth > 0 && overlapHeight > 0) {\n        overlapArea = overlapWidth * overlapHeight;\n    }\n    \n    return area1 + area2 - overlapArea;\n}",
       "code_python": "def computeArea(\n    ax1: int, ay1: int, ax2: int, ay2: int,\n    bx1: int, by1: int, bx2: int, by2: int\n) -> int:\n    area1 = (ax2 - ax1) * (ay2 - ay1)\n    area2 = (bx2 - bx1) * (by2 - by1)\n\n    overlap_width = min(ax2, bx2) - max(ax1, bx1)\n    overlap_height = min(ay2, by2) - max(ay1, by1)\n\n    overlap_area = max(0, overlap_width) * max(0, overlap_height)\n    return area1 + area2 - overlap_area",

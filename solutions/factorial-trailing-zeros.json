@@ -8,12 +8,12 @@
     "example": {
       "input": "n = 25",
       "output": "6",
-      "explanation": "25! has ⌊25/5⌋+⌊25/25⌋ = 5+1 = 6 factors of 5, hence 6 trailing zeros."
+      "explanation": "25! has \u230a25/5\u230b+\u230a25/25\u230b = 5+1 = 6 factors of 5, hence 6 trailing zeros."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – Count Factors of 5",
+      "title": "Solution 1 \u2013 Count Factors of 5 [\u2713 Interviewer Accepted]",
       "description": "Trailing zeros in n! come from pairs of factors 2 and 5; since factors of 2 are always more plentiful, we only need to count how many times 5 divides into n!. We sum floor(n/5) + floor(n/25) + floor(n/125) + ... because multiples of 25 contribute an extra factor of 5, and so on. This repeated division by 5 runs in O(log n) time.",
       "code": "public int trailingZeroes(int n) {\n    int count = 0;\n    \n    while (n > 0) {\n        n /= 5;\n        count += n;\n    }\n    \n    return count;\n}",
       "code_python": "def trailingZeroes(n: int) -> int:\n    count = 0\n    while n > 0:\n        n //= 5\n        count += n\n    return count",

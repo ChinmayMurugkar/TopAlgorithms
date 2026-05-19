@@ -13,7 +13,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Recursive",
+      "title": "Solution 1 \u2013 Recursive [\u2713 Interviewer Accepted]",
       "description": "Recurse to the end of the list before printing: each call first processes the rest of the list, then prints the current node's value on the way back up. This naturally prints nodes in reverse without any explicit reversal or extra data structure.",
       "code": "public void printLinkedListInReverse(ListNode head) {\n    if (head == null) return;\n    \n    printLinkedListInReverse(head.next);\n    System.out.println(head.val);\n}",
       "code_python": "from typing import Optional\n\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\n\ndef printLinkedListInReverse(head: Optional[object]) -> None:\n    if not head:\n        return\n    printLinkedListInReverse(head.next)\n    print(head.val)",

@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – HashMap",
+      "title": "Solution 1 \u2013 HashMap [\u2713 Interviewer Accepted]",
       "description": "Sort the characters of each string to produce a canonical key shared by all its anagrams, then group strings by that key in a hash map. Anagrams always produce the same sorted character sequence, so this key uniquely identifies each equivalence class. Returning the map's values directly gives all groups in O(n * k log k) time where k is the maximum string length.",
       "code": "public List> groupAnagrams(String[] strs) {\n    Map> map = new HashMap<>();\n    \n    for (String str : strs) {\n        char[] chars = str.toCharArray();\n        Arrays.sort(chars);\n        String key = new String(chars);\n        \n        map.computeIfAbsent(key, k -> new ArrayList<>()).add(str);\n    }\n    \n    return new ArrayList<>(map.values());\n}",
       "code_python": "from typing import List\nfrom collections import defaultdict\n\ndef group_anagrams(strs: List[str]) -> List[List[str]]:\n    groups: dict[str, List[str]] = defaultdict(list)\n    for s in strs:\n        key = ''.join(sorted(s))\n        groups[key].append(s)\n    return list(groups.values())",

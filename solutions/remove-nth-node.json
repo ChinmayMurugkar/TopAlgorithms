@@ -5,7 +5,7 @@
     "category": "Linked List",
     "description": "Given the head of a linked list, remove the nth node from the end of the list and return its head.",
     "assumptions": [
-      "n is valid (1 ≤ n ≤ length).",
+      "n is valid (1 \u2264 n \u2264 length).",
       "One-pass solution with two pointers."
     ],
     "example": {
@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Two Pointers (Optimal)",
+      "title": "Solution 1 \u2013 Two Pointers (Optimal) [\u2713 Interviewer Accepted]",
       "description": "Advance the first pointer n+1 steps ahead of the second pointer, then move both together until the first reaches the end. At that point the second pointer sits just before the node to remove, allowing a single-pass O(n) deletion without knowing the list length in advance.",
       "code": "public ListNode removeNthFromEnd(ListNode head, int n) {\n    ListNode dummy = new ListNode(0);\n    dummy.next = head;\n    \n    ListNode first = dummy;\n    ListNode second = dummy;\n    \n    // Move first pointer n+1 steps ahead\n    for (int i = 0; i <= n; i++) {\n        first = first.next;\n    }\n    \n    // Move both pointers until first reaches end\n    while (first != null) {\n        first = first.next;\n        second = second.next;\n    }\n    \n    // Remove the nth node from end\n    second.next = second.next.next;\n    \n    return dummy.next;\n}",
       "code_python": "from typing import Optional\n\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\n\ndef removeNthFromEnd(head: Optional[object], n: int) -> Optional[object]:\n    dummy = type('ListNode', (), {'val': 0, 'next': head})()\n    first = second = dummy\n\n    # Advance first by n + 1 steps\n    for _ in range(n + 1):\n        first = first.next\n\n    # Move both until first reaches the end\n    while first:\n        first = first.next\n        second = second.next\n\n    # Remove the target node\n    second.next = second.next.next\n    return dummy.next",
@@ -27,7 +27,7 @@
       }
     },
     {
-      "title": "Solution 2 – Two Pass Approach",
+      "title": "Solution 2 \u2013 Two Pass Approach [\u2713 Interviewer Accepted]",
       "description": "First pass to count nodes, second pass to remove the target node.",
       "code": "public ListNode removeNthFromEnd(ListNode head, int n) {\n    // Count total nodes\n    int count = 0;\n    ListNode current = head;\n    while (current != null) {\n        count++;\n        current = current.next;\n    }\n    \n    // Calculate position from start\n    int position = count - n;\n    \n    // Handle case where we need to remove head\n    if (position == 0) {\n        return head.next;\n    }\n    \n    // Find the node before the one to remove\n    current = head;\n    for (int i = 0; i < position - 1; i++) {\n        current = current.next;\n    }\n    \n    // Remove the node\n    current.next = current.next.next;\n    \n    return head;\n}",
       "code_python": "from typing import Optional\n\ndef removeNthFromEnd_two_pass(head: Optional[object], n: int) -> Optional[object]:\n    # Count total nodes\n    count = 0\n    current = head\n    while current:\n        count += 1\n        current = current.next\n\n    position = count - n  # 0-indexed position from start\n\n    if position == 0:\n        return head.next\n\n    current = head\n    for _ in range(position - 1):\n        current = current.next\n\n    current.next = current.next.next\n    return head",

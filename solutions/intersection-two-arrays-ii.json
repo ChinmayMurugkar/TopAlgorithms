@@ -17,7 +17,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – HashMap Frequency Count",
+      "title": "Solution 1 \u2013 HashMap Frequency Count [\u2713 Interviewer Accepted]",
       "description": "Count the frequency of each element in nums1 using a HashMap. Then iterate nums2: whenever an element has a remaining count > 0 in the map, add it to the result and decrement the count. This handles duplicates correctly because we consume one occurrence per match.",
       "code": "public int[] intersect(int[] nums1, int[] nums2) {\n    Map<Integer, Integer> count = new HashMap<>();\n    for (int n : nums1) count.merge(n, 1, Integer::sum);\n    \n    List<Integer> result = new ArrayList<>();\n    for (int n : nums2) {\n        if (count.getOrDefault(n, 0) > 0) {\n            result.add(n);\n            count.merge(n, -1, Integer::sum);\n        }\n    }\n    \n    return result.stream().mapToInt(Integer::intValue).toArray();\n}",
       "code_python": "from typing import List\nfrom collections import Counter\n\ndef intersect(nums1: List[int], nums2: List[int]) -> List[int]:\n    count = Counter(nums1)\n    result = []\n    for n in nums2:\n        if count[n] > 0:\n            result.append(n)\n            count[n] -= 1\n    return result",
@@ -28,7 +28,7 @@
       }
     },
     {
-      "title": "Solution 2 – Two Pointers (Sorted)",
+      "title": "Solution 2 \u2013 Two Pointers (Sorted) [\u2713 Interviewer Accepted]",
       "description": "If both arrays are sorted, use two pointers. Advance the pointer with the smaller value; when they match, add to result and advance both. This is optimal when arrays are already sorted and avoids extra space.",
       "code": "public int[] intersect(int[] nums1, int[] nums2) {\n    Arrays.sort(nums1);\n    Arrays.sort(nums2);\n    \n    List<Integer> result = new ArrayList<>();\n    int i = 0, j = 0;\n    \n    while (i < nums1.length && j < nums2.length) {\n        if (nums1[i] < nums2[j]) i++;\n        else if (nums1[i] > nums2[j]) j++;\n        else { result.add(nums1[i]); i++; j++; }\n    }\n    \n    return result.stream().mapToInt(Integer::intValue).toArray();\n}",
       "code_python": "from typing import List\n\ndef intersect(nums1: List[int], nums2: List[int]) -> List[int]:\n    nums1.sort()\n    nums2.sort()\n    i = j = 0\n    result = []\n    while i < len(nums1) and j < len(nums2):\n        if nums1[i] < nums2[j]:\n            i += 1\n        elif nums1[i] > nums2[j]:\n            j += 1\n        else:\n            result.append(nums1[i])\n            i += 1\n            j += 1\n    return result",

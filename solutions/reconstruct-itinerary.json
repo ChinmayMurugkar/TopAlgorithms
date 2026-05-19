@@ -17,7 +17,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Hierholzer's Algorithm",
+      "title": "Solution 1 \u2013 Hierholzer's Algorithm [\u2713 Interviewer Accepted]",
       "description": "Model the tickets as a directed graph where each airport is a node and each ticket is an edge. Using a min-heap per node ensures destinations are explored in lexicographical order. Hierholzer's algorithm finds the Eulerian path by adding each airport to the result only after all its outgoing edges are exhausted, then reversing the result.",
       "code": "public List findItinerary(List> tickets) {\n    Map> graph = new HashMap<>();\n    \n    for (List ticket : tickets) {\n        graph.computeIfAbsent(ticket.get(0), k -> new PriorityQueue<>()).add(ticket.get(1));\n    }\n    \n    List result = new ArrayList<>();\n    dfs(\"JFK\", graph, result);\n    Collections.reverse(result);\n    return result;\n}\n\nprivate void dfs(String airport, Map> graph, List result) {\n    PriorityQueue destinations = graph.get(airport);\n    \n    while (destinations != null && !destinations.isEmpty()) {\n        String next = destinations.poll();\n        dfs(next, graph, result);\n    }\n    \n    result.add(airport);\n}",
       "code_python": "from collections import defaultdict\nimport heapq\nfrom typing import List\n\ndef findItinerary(tickets: List[List[str]]) -> List[str]:\n    graph: dict = defaultdict(list)\n    for src, dst in tickets:\n        heapq.heappush(graph[src], dst)\n\n    result: List[str] = []\n\n    def dfs(airport: str) -> None:\n        while graph[airport]:\n            next_dest = heapq.heappop(graph[airport])\n            dfs(next_dest)\n        result.append(airport)\n\n    dfs('JFK')\n    return result[::-1]",

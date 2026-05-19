@@ -16,13 +16,13 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Backtracking",
+      "title": "Solution 1 \u2013 Backtracking [\u2713 Interviewer Accepted]",
       "description": "Use backtracking to explore all possible cuts: at each position, try every substring starting there; if it is a palindrome, add it to the current path and recurse on the remainder. When the entire string is consumed, the current path is a valid partition.",
       "code": "public List> partition(String s) {\n    List> result = new ArrayList<>();\n    backtrack(s, 0, new ArrayList<>(), result);\n    return result;\n}\n\nprivate void backtrack(String s, int start, List current, List> result) {\n    if (start == s.length()) {\n        result.add(new ArrayList<>(current));\n        return;\n    }\n    \n    for (int i = start; i < s.length(); i++) {\n        if (isPalindrome(s, start, i)) {\n            current.add(s.substring(start, i + 1));\n            backtrack(s, i + 1, current, result);\n            current.remove(current.size() - 1);\n        }\n    }\n}\n\nprivate boolean isPalindrome(String s, int start, int end) {\n    while (start < end) {\n        if (s.charAt(start++) != s.charAt(end--)) {\n            return false;\n        }\n    }\n    return true;\n}",
       "code_python": "from typing import List\n\ndef partition(s: str) -> List[List[str]]:\n    result: List[List[str]] = []\n\n    def is_palindrome(sub: str) -> bool:\n        return sub == sub[::-1]\n\n    def backtrack(start: int, current: List[str]) -> None:\n        if start == len(s):\n            result.append(list(current))\n            return\n        for end in range(start + 1, len(s) + 1):\n            substr = s[start:end]\n            if is_palindrome(substr):\n                current.append(substr)\n                backtrack(end, current)\n                current.pop()\n\n    backtrack(0, [])\n    return result",
       "language": "java",
       "complexity": {
-        "time": "O(n × 2^n)",
+        "time": "O(n \u00d7 2^n)",
         "space": "O(n)"
       }
     }

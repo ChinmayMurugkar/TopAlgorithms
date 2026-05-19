@@ -17,7 +17,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Binary Search",
+      "title": "Solution 1 \u2013 Binary Search [\u2713 Interviewer Accepted]",
       "description": "Binary search on the index space. For a midpoint i in a sorted ascending array, there are n-i papers with at least citations[i] citations. If citations[i] >= n-i, the h-index is at least n-i, but we might do better by searching the left half. Otherwise search the right half. The key insight is that the answer n-i is monotonic, enabling binary search.",
       "code": "public int hIndex(int[] citations) {\n    int n = citations.length;\n    int lo = 0, hi = n - 1;\n    \n    while (lo <= hi) {\n        int mid = (lo + hi) / 2;\n        if (citations[mid] >= n - mid) {\n            hi = mid - 1;\n        } else {\n            lo = mid + 1;\n        }\n    }\n    \n    return n - lo;\n}",
       "code_python": "from typing import List\n\ndef h_index(citations: List[int]) -> int:\n    n = len(citations)\n    lo, hi = 0, n - 1\n    \n    while lo <= hi:\n        mid = (lo + hi) // 2\n        if citations[mid] >= n - mid:\n            hi = mid - 1\n        else:\n            lo = mid + 1\n    \n    return n - lo",

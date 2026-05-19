@@ -15,7 +15,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Iterative Approach",
+      "title": "Solution 1 \u2013 Iterative Approach [\u2713 Interviewer Accepted]",
       "description": "Use a dummy head node and a current pointer to build the merged list by always attaching the smaller of the two front nodes. When one list is exhausted, attach the remainder of the other list directly. The dummy node eliminates edge-case handling for an empty result list.",
       "code": "public ListNode mergeTwoLists(ListNode l1, ListNode l2) {\n    ListNode dummy = new ListNode(0);\n    ListNode current = dummy;\n    \n    while (l1 != null && l2 != null) {\n        if (l1.val <= l2.val) {\n            current.next = l1;\n            l1 = l1.next;\n        } else {\n            current.next = l2;\n            l2 = l2.next;\n        }\n        current = current.next;\n    }\n    \n    // Attach remaining nodes\n    if (l1 != null) {\n        current.next = l1;\n    }\n    if (l2 != null) {\n        current.next = l2;\n    }\n    \n    return dummy.next;\n}",
       "code_python": "# class ListNode:\n#     def __init__(self, val=0): self.val=val; self.next=None\nfrom typing import Optional\n\ndef merge_two_lists(l1: Optional['ListNode'], l2: Optional['ListNode']) -> Optional['ListNode']:\n    dummy = type('ListNode', (), {'val': 0, 'next': None})()\n    current = dummy\n    while l1 and l2:\n        if l1.val <= l2.val:\n            current.next = l1\n            l1 = l1.next\n        else:\n            current.next = l2\n            l2 = l2.next\n        current = current.next\n    current.next = l1 if l1 else l2\n    return dummy.next",
@@ -26,7 +26,7 @@
       }
     },
     {
-      "title": "Solution 2 – Recursive Approach",
+      "title": "Solution 2 \u2013 Recursive Approach [\u2713 Interviewer Accepted]",
       "description": "Use recursion to merge the lists by comparing heads and recursively merging the rest.",
       "code": "public ListNode mergeTwoLists(ListNode l1, ListNode l2) {\n    if (l1 == null) return l2;\n    if (l2 == null) return l1;\n    \n    if (l1.val <= l2.val) {\n        l1.next = mergeTwoLists(l1.next, l2);\n        return l1;\n    } else {\n        l2.next = mergeTwoLists(l1, l2.next);\n        return l2;\n    }\n}",
       "code_python": "# class ListNode:\n#     def __init__(self, val=0): self.val=val; self.next=None\nfrom typing import Optional\n\ndef merge_two_lists(l1: Optional['ListNode'], l2: Optional['ListNode']) -> Optional['ListNode']:\n    if not l1:\n        return l2\n    if not l2:\n        return l1\n    if l1.val <= l2.val:\n        l1.next = merge_two_lists(l1.next, l2)\n        return l1\n    else:\n        l2.next = merge_two_lists(l1, l2.next)\n        return l2",

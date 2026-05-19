@@ -17,7 +17,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Stack with Operator Precedence",
+      "title": "Solution 1 \u2013 Stack with Operator Precedence [\u2713 Interviewer Accepted]",
       "description": "Scan the string tracking the current number and the last seen operator (initially '+'). When a non-digit is encountered (or end of string), apply the last operator to the stack: '+' pushes the number, '-' pushes its negation, '*' and '/' pop, compute, and push back. Sum the stack for the final result.",
       "code": "public int calculate(String s) {\n    Deque<Integer> stack = new ArrayDeque<>();\n    int num = 0;\n    char op = '+';\n    \n    for (int i = 0; i < s.length(); i++) {\n        char c = s.charAt(i);\n        if (Character.isDigit(c)) num = num * 10 + (c - '0');\n        if ((!Character.isDigit(c) && c != ' ') || i == s.length() - 1) {\n            if (op == '+') stack.push(num);\n            else if (op == '-') stack.push(-num);\n            else if (op == '*') stack.push(stack.pop() * num);\n            else stack.push(stack.pop() / num);\n            op = c;\n            num = 0;\n        }\n    }\n    \n    return stack.stream().mapToInt(Integer::intValue).sum();\n}",
       "code_python": "def calculate(s: str) -> int:\n    stack = []\n    num, op = 0, '+'\n    s = s.strip()\n    \n    for i, c in enumerate(s):\n        if c.isdigit():\n            num = num * 10 + int(c)\n        if (not c.isdigit() and c != ' ') or i == len(s) - 1:\n            if op == '+': stack.append(num)\n            elif op == '-': stack.append(-num)\n            elif op == '*': stack.append(stack.pop() * num)\n            elif op == '/': stack.append(int(stack.pop() / num))\n            op, num = c, 0\n    \n    return sum(stack)",

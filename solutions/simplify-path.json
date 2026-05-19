@@ -17,7 +17,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Stack",
+      "title": "Solution 1 \u2013 Stack [\u2713 Interviewer Accepted]",
       "description": "Split the path on '/' and use a stack to simulate directory navigation: skip empty parts and '.', pop the stack on '..', and push valid directory names. Joining the stack elements with '/' at the end produces the canonical path. The stack naturally handles the back-navigation semantics of '..' without needing to re-scan the string.",
       "code": "public String simplifyPath(String path) {\n    String[] parts = path.split(\"/\");\n    Stack stack = new Stack<>();\n    \n    for (String part : parts) {\n        if (part.equals(\"\") || part.equals(\".\")) {\n            continue;\n        } else if (part.equals(\"..\")) {\n            if (!stack.isEmpty()) {\n                stack.pop();\n            }\n        } else {\n            stack.push(part);\n        }\n    }\n    \n    if (stack.isEmpty()) return \"/\";\n    \n    StringBuilder result = new StringBuilder();\n    for (String dir : stack) {\n        result.append(\"/\").append(dir);\n    }\n    \n    return result.toString();\n}",
       "code_python": "def simplifyPath(path: str) -> str:\n    stack: list[str] = []\n\n    for part in path.split('/'):\n        if part in ('', '.'):\n            continue\n        elif part == '..':\n            if stack:\n                stack.pop()\n        else:\n            stack.append(part)\n\n    return '/' + '/'.join(stack)",

@@ -5,7 +5,7 @@
     "category": "String/Array/Matrix",
     "description": "Given two integers left and right that represent the range [left, right], return the bitwise AND of all numbers in this range, inclusive.",
     "assumptions": [
-      "0 ≤ left ≤ right ≤ 2³¹ − 1"
+      "0 \u2264 left \u2264 right \u2264 2\u00b3\u00b9 \u2212 1"
     ],
     "example": {
       "input": "left = 5, right = 7",
@@ -15,7 +15,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Bit Manipulation",
+      "title": "Solution 1 \u2013 Bit Manipulation [\u2713 Interviewer Accepted]",
       "description": "The bitwise AND of all numbers in [left, right] equals the common bit prefix of left and right. Any bit that differs between left and right will eventually be zeroed out by some number in the range, so we repeatedly right-shift both values until they are equal, then shift back to restore the prefix.",
       "code": "public int rangeBitwiseAnd(int left, int right) {\n    int shift = 0;\n    \n    while (left < right) {\n        left >>= 1;\n        right >>= 1;\n        shift++;\n    }\n    \n    return left << shift;\n}",
       "code_python": "def rangeBitwiseAnd(left: int, right: int) -> int:\n    shift = 0\n    while left < right:\n        left >>= 1\n        right >>= 1\n        shift += 1\n    return left << shift",

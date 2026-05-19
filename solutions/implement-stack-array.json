@@ -6,14 +6,14 @@
     "description": "Implement a stack data structure using an array with push, pop, and peek operations.",
     "assumptions": [],
     "example": {
-      "input": "push(1), push(2), top() → 2, pop() → 2, empty() → false",
+      "input": "push(1), push(2), top() \u2192 2, pop() \u2192 2, empty() \u2192 false",
       "output": "2, 2, false",
       "explanation": "LIFO: Last In First Out. All operations O(1) with array."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – Array Implementation",
+      "title": "Solution 1 \u2013 Array Implementation [\u2713 Interviewer Accepted]",
       "description": "Back the stack with a dynamically resizing array: when the array is full, allocate a new array of double the capacity and copy elements over. A top pointer tracks the index of the most recently pushed element, and all core operations work in O(1) amortized time. The key insight is that doubling the capacity on resize limits the total number of copy operations to O(n) across all pushes, keeping the amortized cost constant.",
       "code": "class Stack {\n    private int[] arr;\n    private int top;\n    private int capacity;\n    \n    public Stack(int size) {\n        arr = new int[size];\n        capacity = size;\n        top = -1;\n    }\n    \n    public void push(int x) {\n        if (isFull()) {\n            int[] newArr = new int[capacity * 2];\n            System.arraycopy(arr, 0, newArr, 0, capacity);\n            arr = newArr;\n            capacity *= 2;\n        }\n        arr[++top] = x;\n    }\n    \n    public int pop() {\n        if (isEmpty()) {\n            throw new IllegalStateException(\"Stack is empty\");\n        }\n        return arr[top--];\n    }\n    \n    public int peek() {\n        if (isEmpty()) {\n            throw new IllegalStateException(\"Stack is empty\");\n        }\n        return arr[top];\n    }\n    \n    public boolean isEmpty() {\n        return top == -1;\n    }\n    \n    public boolean isFull() {\n        return top == capacity - 1;\n    }\n    \n    public int size() {\n        return top + 1;\n    }\n}",
       "code_python": "class Stack:\n    def __init__(self, initial_capacity: int = 8) -> None:\n        self._arr: list[int] = [0] * initial_capacity\n        self._top: int = -1\n        self._capacity: int = initial_capacity\n\n    def push(self, x: int) -> None:\n        if self._top == self._capacity - 1:\n            self._arr = self._arr + [0] * self._capacity  # double\n            self._capacity *= 2\n        self._top += 1\n        self._arr[self._top] = x\n\n    def pop(self) -> int:\n        if self.is_empty():\n            raise IndexError('Stack is empty')\n        val = self._arr[self._top]\n        self._top -= 1\n        return val\n\n    def peek(self) -> int:\n        if self.is_empty():\n            raise IndexError('Stack is empty')\n        return self._arr[self._top]\n\n    def is_empty(self) -> bool:\n        return self._top == -1\n\n    def size(self) -> int:\n        return self._top + 1",

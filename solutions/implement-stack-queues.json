@@ -6,17 +6,17 @@
     "description": "Implement a last-in-first-out (LIFO) stack using only two queues.",
     "assumptions": [
       "Simulate LIFO stack using only queues.",
-      "push O(n), pop/top O(1) — or vice versa."
+      "push O(n), pop/top O(1) \u2014 or vice versa."
     ],
     "example": {
-      "input": "push(1), push(2), top() → 2, pop() → 2",
+      "input": "push(1), push(2), top() \u2192 2, pop() \u2192 2",
       "output": "2, 2",
       "explanation": "Use two queues. On push, enqueue to q2 then move all q1 elements to q2, swap q1 and q2."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – Two Queues",
+      "title": "Solution 1 \u2013 Two Queues [\u2713 Interviewer Accepted]",
       "description": "On every push, enqueue the new element to the empty secondary queue and then drain the primary queue into it, making the newly added element the front of the queue (i.e., the top of the stack). Then swap the two queue references so the primary queue always holds the correctly ordered elements. The key insight is that reversing into a fresh queue on each push keeps pop and peek at O(1) at the cost of O(n) push.",
       "code": "class MyStack {\n    private Queue q1;\n    private Queue q2;\n    \n    public MyStack() {\n        q1 = new LinkedList<>();\n        q2 = new LinkedList<>();\n    }\n    \n    public void push(int x) {\n        q2.offer(x);\n        while (!q1.isEmpty()) {\n            q2.offer(q1.poll());\n        }\n        Queue temp = q1;\n        q1 = q2;\n        q2 = temp;\n    }\n    \n    public int pop() {\n        return q1.poll();\n    }\n    \n    public int top() {\n        return q1.peek();\n    }\n    \n    public boolean empty() {\n        return q1.isEmpty();\n    }\n}",
       "code_python": "from collections import deque\n\nclass MyStack:\n    def __init__(self) -> None:\n        self._q1: deque[int] = deque()\n        self._q2: deque[int] = deque()\n\n    def push(self, x: int) -> None:\n        self._q2.append(x)\n        while self._q1:\n            self._q2.append(self._q1.popleft())\n        self._q1, self._q2 = self._q2, self._q1\n\n    def pop(self) -> int:\n        return self._q1.popleft()\n\n    def top(self) -> int:\n        return self._q1[0]\n\n    def empty(self) -> bool:\n        return not self._q1",

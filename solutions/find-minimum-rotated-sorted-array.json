@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Binary Search",
+      "title": "Solution 1 \u2013 Binary Search [\u2713 Interviewer Accepted]",
       "description": "Use binary search by comparing the midpoint to the rightmost element: if nums[mid] > nums[right], the minimum lies in the right half (the rotation point is there); otherwise it lies in the left half including mid. This narrows the search range by half each step, achieving O(log n) without ever scanning the whole array.",
       "code": "public int findMin(int[] nums) {\n    int left = 0;\n    int right = nums.length - 1;\n    \n    while (left < right) {\n        int mid = left + (right - left) / 2;\n        \n        if (nums[mid] > nums[right]) {\n            left = mid + 1;\n        } else {\n            right = mid;\n        }\n    }\n    \n    return nums[left];\n}",
       "code_python": "from typing import List\n\ndef findMin(nums: List[int]) -> int:\n    left, right = 0, len(nums) - 1\n    while left < right:\n        mid = left + (right - left) // 2\n        if nums[mid] > nums[right]:\n            left = mid + 1\n        else:\n            right = mid\n    return nums[left]",
@@ -27,7 +27,7 @@
       }
     },
     {
-      "title": "Solution 1 – Binary Search",
+      "title": "Solution 1 \u2013 Binary Search [\u2713 Interviewer Accepted]",
       "description": "Use binary search by comparing the midpoint to the rightmost element: if nums[mid] > nums[right], the minimum lies in the right half (the rotation point is there); otherwise it lies in the left half including mid. This narrows the search range by half each step, achieving O(log n) without ever scanning the whole array.",
       "code": "public int findMin(int[] nums) {\n    int left = 0;\n    int right = nums.length - 1;\n    \n    while (left < right) {\n        int mid = left + (right - left) / 2;\n        \n        if (nums[mid] > nums[right]) {\n            left = mid + 1;\n        } else {\n            right = mid;\n        }\n    }\n    \n    return nums[left];\n}",
       "code_python": "from typing import List\n\ndef findMin(nums: List[int]) -> int:\n    left, right = 0, len(nums) - 1\n    while left < right:\n        mid = left + (right - left) // 2\n        if nums[mid] > nums[right]:\n            left = mid + 1\n        else:\n            right = mid\n    return nums[left]",

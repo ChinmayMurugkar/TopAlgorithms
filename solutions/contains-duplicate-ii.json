@@ -16,8 +16,8 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Sliding Window HashSet",
-      "description": "Maintain a HashSet containing at most k elements (a sliding window of the last k indices). For each new element, check if it is already in the set — if so, two equal elements are within distance k. Then add the element and evict the element from k positions back. This gives O(n) time with O(k) space.",
+      "title": "Solution 1 \u2013 Sliding Window HashSet [\u2713 Interviewer Accepted]",
+      "description": "Maintain a HashSet containing at most k elements (a sliding window of the last k indices). For each new element, check if it is already in the set \u2014 if so, two equal elements are within distance k. Then add the element and evict the element from k positions back. This gives O(n) time with O(k) space.",
       "code": "public boolean containsNearbyDuplicate(int[] nums, int k) {\n    Set<Integer> set = new HashSet<>();\n    \n    for (int i = 0; i < nums.length; i++) {\n        if (set.contains(nums[i])) return true;\n        set.add(nums[i]);\n        if (set.size() > k) set.remove(nums[i - k]);\n    }\n    \n    return false;\n}",
       "code_python": "from typing import List\n\ndef contains_nearby_duplicate(nums: List[int], k: int) -> bool:\n    window = set()\n    for i, n in enumerate(nums):\n        if n in window:\n            return True\n        window.add(n)\n        if len(window) > k:\n            window.remove(nums[i - k])\n    return False",
       "language": "java",

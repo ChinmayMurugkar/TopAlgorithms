@@ -17,7 +17,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – One Pass",
+      "title": "Solution 1 \u2013 One Pass [\u2713 Interviewer Accepted]",
       "description": "Scan prices left to right, maintaining the lowest price seen so far as the best buying opportunity. At each day, compute the potential profit if sold today and update the maximum profit. This greedy single-pass approach works because the optimal buy day always precedes the optimal sell day, so tracking the running minimum guarantees we never miss the best pair.",
       "code": "public int maxProfit(int[] prices) {\n    int minPrice = Integer.MAX_VALUE;\n    int maxProfit = 0;\n    \n    for (int price : prices) {\n        minPrice = Math.min(minPrice, price);\n        maxProfit = Math.max(maxProfit, price - minPrice);\n    }\n    \n    return maxProfit;\n}",
       "code_python": "def maxProfit(prices: list[int]) -> int:\n    min_price = float('inf')\n    max_profit = 0\n\n    for price in prices:\n        min_price = min(min_price, price)\n        max_profit = max(max_profit, price - min_price)\n\n    return max_profit",

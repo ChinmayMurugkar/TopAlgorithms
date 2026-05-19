@@ -11,12 +11,12 @@
     "example": {
       "input": "nums = [1,1,2,2,2,3]",
       "output": "[2,2,2,1,1,3]",
-      "explanation": "Sort by frequency descending (2 appears 3×, 1 appears 2×, 3 appears 1×)."
+      "explanation": "Sort by frequency descending (2 appears 3\u00d7, 1 appears 2\u00d7, 3 appears 1\u00d7)."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – HashMap and PriorityQueue",
+      "title": "Solution 1 \u2013 HashMap and PriorityQueue [\u2713 Interviewer Accepted]",
       "description": "Count character frequencies with a HashMap, then use a max-heap (priority queue) ordered by frequency to greedily output the most frequent characters first. Each character is repeated exactly as many times as it appears, building the sorted result string. This approach generalises easily to any comparable elements, not just characters.",
       "code": "public String frequencySort(String s) {\n    Map map = new HashMap<>();\n    for (char c : s.toCharArray()) {\n        map.put(c, map.getOrDefault(c, 0) + 1);\n    }\n    \n    PriorityQueue pq = new PriorityQueue<>((a, b) -> \n        map.get(b) - map.get(a));\n    \n    for (char c : map.keySet()) {\n        pq.offer(c);\n    }\n    \n    StringBuilder result = new StringBuilder();\n    while (!pq.isEmpty()) {\n        char c = pq.poll();\n        for (int i = 0; i < map.get(c); i++) {\n            result.append(c);\n        }\n    }\n    \n    return result.toString();\n}",
       "code_python": "from collections import Counter\n\ndef frequencySort(s: str) -> str:\n    freq = Counter(s)\n    # Sort characters by frequency descending\n    return ''.join(char * count for char, count in freq.most_common())",

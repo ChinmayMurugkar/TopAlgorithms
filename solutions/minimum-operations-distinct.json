@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Sorting and Two Pointers",
+      "title": "Solution 1 \u2013 Sorting and Two Pointers [\u2713 Interviewer Accepted]",
       "description": "Sort the array so duplicates are adjacent, then scan left to right: whenever the current element is not strictly greater than its predecessor, increment it just enough to be one more than the predecessor and record those operations. Sorting reduces the problem to a single pass where each element only needs to be compared with its immediate neighbor. The key insight is that greedily applying the minimum increment at each step never causes a later element to need more increments than necessary.",
       "code": "public int minOperations(int[] nums) {\n    Arrays.sort(nums);\n    int operations = 0;\n    \n    for (int i = 1; i < nums.length; i++) {\n        if (nums[i] <= nums[i - 1]) {\n            operations += nums[i - 1] - nums[i] + 1;\n            nums[i] = nums[i - 1] + 1;\n        }\n    }\n    \n    return operations;\n}",
       "code_python": "from typing import List\n\ndef min_operations(nums: List[int]) -> int:\n    nums = sorted(nums)\n    operations = 0\n    for i in range(1, len(nums)):\n        if nums[i] <= nums[i - 1]:\n            operations += nums[i - 1] - nums[i] + 1\n            nums[i] = nums[i - 1] + 1\n    return operations",

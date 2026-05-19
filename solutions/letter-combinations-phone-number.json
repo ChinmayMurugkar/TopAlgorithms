@@ -11,12 +11,12 @@
     "example": {
       "input": "digits = \"23\"",
       "output": "[\"ad\",\"ae\",\"af\",\"bd\",\"be\",\"bf\",\"cd\",\"ce\",\"cf\"]",
-      "explanation": "2→abc, 3→def. All combinations of one letter from each digit group."
+      "explanation": "2\u2192abc, 3\u2192def. All combinations of one letter from each digit group."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – Backtracking",
+      "title": "Solution 1 \u2013 Backtracking [\u2713 Interviewer Accepted]",
       "description": "Use backtracking to explore every possible letter choice for each digit in sequence. At each recursive step, one digit is consumed and every letter mapped to it is tried, growing the current combination string. When all digits have been consumed the complete combination is added to the result, giving O(4^n) total combinations in the worst case.",
       "code": "public List letterCombinations(String digits) {\n    List result = new ArrayList<>();\n    if (digits == null || digits.length() == 0) return result;\n    \n    String[] mapping = {\"\", \"\", \"abc\", \"def\", \"ghi\", \"jkl\", \"mno\", \"pqrs\", \"tuv\", \"wxyz\"};\n    backtrack(digits, 0, \"\", mapping, result);\n    return result;\n}\n\nprivate void backtrack(String digits, int index, String current, String[] mapping, List result) {\n    if (index == digits.length()) {\n        result.add(current);\n        return;\n    }\n    \n    String letters = mapping[digits.charAt(index) - '0'];\n    for (char letter : letters.toCharArray()) {\n        backtrack(digits, index + 1, current + letter, mapping, result);\n    }\n}",
       "code_python": "from typing import List\n\nclass Solution:\n    MAPPING = [\"\", \"\", \"abc\", \"def\", \"ghi\", \"jkl\", \"mno\", \"pqrs\", \"tuv\", \"wxyz\"]\n\n    def letterCombinations(self, digits: str) -> List[str]:\n        if not digits:\n            return []\n\n        result: List[str] = []\n\n        def backtrack(index: int, current: str) -> None:\n            if index == len(digits):\n                result.append(current)\n                return\n            for letter in self.MAPPING[int(digits[index])]:\n                backtrack(index + 1, current + letter)\n\n        backtrack(0, \"\")\n        return result",

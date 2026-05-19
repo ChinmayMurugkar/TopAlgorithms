@@ -15,7 +15,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Base 26 Conversion",
+      "title": "Solution 1 \u2013 Base 26 Conversion [\u2713 Interviewer Accepted]",
       "description": "This problem is a base-26 number conversion where 'A'=1, 'B'=2, ..., 'Z'=26. The algorithm processes each character left-to-right, multiplying the running result by 26 and adding the current character's value. The key insight is that Excel columns form a bijective base-26 numeral system with no zero digit.",
       "code": "public int titleToNumber(String columnTitle) {\n    int result = 0;\n    \n    for (char c : columnTitle.toCharArray()) {\n        result = result * 26 + (c - 'A' + 1);\n    }\n    \n    return result;\n}",
       "code_python": "def titleToNumber(columnTitle: str) -> int:\n    result = 0\n    for c in columnTitle:\n        result = result * 26 + (ord(c) - ord('A') + 1)\n    return result",

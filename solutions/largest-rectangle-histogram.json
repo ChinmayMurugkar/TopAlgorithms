@@ -11,12 +11,12 @@
     "example": {
       "input": "heights = [2,1,5,6,2,3]",
       "output": "10",
-      "explanation": "Largest rectangle spans heights 5,6 with height 5: area = 5×2 = 10. Use monotonic stack."
+      "explanation": "Largest rectangle spans heights 5,6 with height 5: area = 5\u00d72 = 10. Use monotonic stack."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – Monotonic Stack",
+      "title": "Solution 1 \u2013 Monotonic Stack [\u2713 Interviewer Accepted]",
       "description": "Maintain a monotonically increasing stack of bar indices. When a shorter bar is encountered, bars taller than it are popped and their maximum rectangle area is computed using the current index and the new stack top as left/right boundaries. This works because each popped bar is the shortest in the span between the new stack top and the current index.",
       "code": "public int largestRectangleArea(int[] heights) {\n    Stack stack = new Stack<>();\n    int maxArea = 0;\n    int i = 0;\n    \n    while (i < heights.length) {\n        if (stack.isEmpty() || heights[stack.peek()] <= heights[i]) {\n            stack.push(i++);\n        } else {\n            int height = heights[stack.pop()];\n            int width = stack.isEmpty() ? i : i - stack.peek() - 1;\n            maxArea = Math.max(maxArea, height * width);\n        }\n    }\n    \n    while (!stack.isEmpty()) {\n        int height = heights[stack.pop()];\n        int width = stack.isEmpty() ? i : i - stack.peek() - 1;\n        maxArea = Math.max(maxArea, height * width);\n    }\n    \n    return maxArea;\n}",
       "code_python": "from typing import List\n\nclass Solution:\n    def largestRectangleArea(self, heights: List[int]) -> int:\n        stack: list[int] = []\n        max_area = 0\n        i = 0\n\n        while i < len(heights):\n            if not stack or heights[stack[-1]] <= heights[i]:\n                stack.append(i)\n                i += 1\n            else:\n                height = heights[stack.pop()]\n                width = i if not stack else i - stack[-1] - 1\n                max_area = max(max_area, height * width)\n\n        while stack:\n            height = heights[stack.pop()]\n            width = i if not stack else i - stack[-1] - 1\n            max_area = max(max_area, height * width)\n\n        return max_area",

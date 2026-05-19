@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – HashSet",
+      "title": "Solution 1 \u2013 HashSet [\u2713 Interviewer Accepted]",
       "description": "Insert all numbers into a hash set for O(1) lookups, then iterate over unique values. A sequence is only started from a number that has no left neighbor (num-1 not in set), which avoids redundant work. Expanding each sequence rightward gives O(n) total time despite the nested loop.",
       "code": "public int longestConsecutive(int[] nums) {\n    Set set = new HashSet<>();\n    for (int num : nums) {\n        set.add(num);\n    }\n    \n    int maxLength = 0;\n    \n    for (int num : set) {\n        if (!set.contains(num - 1)) {\n            int currentNum = num;\n            int currentLength = 1;\n            \n            while (set.contains(currentNum + 1)) {\n                currentNum++;\n                currentLength++;\n            }\n            \n            maxLength = Math.max(maxLength, currentLength);\n        }\n    }\n    \n    return maxLength;\n}",
       "code_python": "from typing import List\n\nclass Solution:\n    def longestConsecutive(self, nums: List[int]) -> int:\n        num_set = set(nums)\n        max_length = 0\n\n        for num in num_set:\n            if num - 1 not in num_set:  # start of a sequence\n                current_num = num\n                current_length = 1\n\n                while current_num + 1 in num_set:\n                    current_num += 1\n                    current_length += 1\n\n                max_length = max(max_length, current_length)\n\n        return max_length",
@@ -27,7 +27,7 @@
       }
     },
     {
-      "title": "Solution 1 – HashSet",
+      "title": "Solution 1 \u2013 HashSet [\u2713 Interviewer Accepted]",
       "description": "Insert all numbers into a hash set for O(1) lookups, then iterate over unique values. A sequence is only started from a number that has no left neighbor (num-1 not in set), which avoids redundant work. Expanding each sequence rightward gives O(n) total time despite the nested loop.",
       "code": "public int longestConsecutive(int[] nums) {\n    Set set = new HashSet<>();\n    for (int num : nums) {\n        set.add(num);\n    }\n    \n    int maxLength = 0;\n    \n    for (int num : set) {\n        if (!set.contains(num - 1)) {\n            int currentNum = num;\n            int currentLength = 1;\n            \n            while (set.contains(currentNum + 1)) {\n                currentNum++;\n                currentLength++;\n            }\n            \n            maxLength = Math.max(maxLength, currentLength);\n        }\n    }\n    \n    return maxLength;\n}",
       "language": "java",

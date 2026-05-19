@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Sorting",
+      "title": "Solution 1 \u2013 Sorting [\u2713 Interviewer Accepted]",
       "description": "Sort intervals by start time and check whether any two consecutive meetings overlap. If a meeting starts before the previous one ends, a person cannot attend both, so the function returns false. The key insight is that sorting brings potentially conflicting meetings adjacent to each other, so a single linear scan suffices to detect any overlap.",
       "code": "public boolean canAttendMeetings(int[][] intervals) {\n    Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));\n    \n    for (int i = 1; i < intervals.length; i++) {\n        if (intervals[i][0] < intervals[i - 1][1]) {\n            return false;\n        }\n    }\n    \n    return true;\n}",
       "code_python": "from typing import List\n\ndef can_attend_meetings(intervals: List[List[int]]) -> bool:\n    intervals.sort(key=lambda x: x[0])\n    for i in range(1, len(intervals)):\n        if intervals[i][0] < intervals[i - 1][1]:\n            return False\n    return True",

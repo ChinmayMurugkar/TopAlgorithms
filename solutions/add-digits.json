@@ -5,17 +5,17 @@
     "category": "String/Array/Matrix",
     "description": "Given an integer num, repeatedly add all its digits until the result has only one digit, and return it.",
     "assumptions": [
-      "0 ≤ num ≤ 2³¹ − 1"
+      "0 \u2264 num \u2264 2\u00b3\u00b9 \u2212 1"
     ],
     "example": {
       "input": "num = 38",
       "output": "2",
-      "explanation": "3+8=11 → 1+1=2. The process repeats until a single digit remains."
+      "explanation": "3+8=11 \u2192 1+1=2. The process repeats until a single digit remains."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – Mathematical",
+      "title": "Solution 1 \u2013 Mathematical [\u2713 Interviewer Accepted]",
       "description": "The repeated digit sum is the digital root, which follows a simple modular arithmetic pattern: any non-zero number's digital root equals its value modulo 9, except multiples of 9 whose root is 9 itself. This eliminates the need for any iteration or recursion, giving an O(1) solution. The key insight is that the digital root is preserved by the modulo-9 property of our decimal number system.",
       "code": "public int addDigits(int num) {\n    if (num == 0) return 0;\n    if (num % 9 == 0) return 9;\n    return num % 9;\n}",
       "code_python": "def addDigits(num: int) -> int:\n    if num == 0:\n        return 0\n    if num % 9 == 0:\n        return 9\n    return num % 9",

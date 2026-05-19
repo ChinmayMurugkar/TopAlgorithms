@@ -13,7 +13,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – HashSet",
+      "title": "Solution 1 \u2013 HashSet [\u2713 Interviewer Accepted]",
       "description": "Stream through the array inserting each element into a HashSet; if the element is already present, a duplicate exists and we return true immediately. This gives O(n) time with O(n) space and short-circuits as soon as the first duplicate is found.",
       "code": "public boolean containsDuplicate(int[] nums) {\n    Set set = new HashSet<>();\n    \n    for (int num : nums) {\n        if (set.contains(num)) {\n            return true;\n        }\n        set.add(num);\n    }\n    \n    return false;\n}",
       "code_python": "from typing import List\n\ndef containsDuplicate(nums: List[int]) -> bool:\n    seen: set = set()\n    for num in nums:\n        if num in seen:\n            return True\n        seen.add(num)\n    return False",
@@ -24,7 +24,7 @@
       }
     },
     {
-      "title": "Solution 1 – HashSet",
+      "title": "Solution 1 \u2013 HashSet [\u2713 Interviewer Accepted]",
       "description": "Stream through the array inserting each element into a HashSet; if the element is already present, a duplicate exists and we return true immediately. This gives O(n) time with O(n) space and short-circuits as soon as the first duplicate is found.",
       "code": "public boolean containsDuplicate(int[] nums) {\n    Set set = new HashSet<>();\n    \n    for (int num : nums) {\n        if (set.contains(num)) {\n            return true;\n        }\n        set.add(num);\n    }\n    \n    return false;\n}",
       "code_python": "from typing import List\n\ndef containsDuplicate(nums: List[int]) -> bool:\n    seen: set = set()\n    for num in nums:\n        if num in seen:\n            return True\n        seen.add(num)\n    return False",

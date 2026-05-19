@@ -7,18 +7,18 @@
     "assumptions": [
       "Pattern letters map one-to-one to non-empty substrings (bijection).",
       "Different pattern letters must map to different substrings.",
-      "s is not pre-split — you decide the word boundaries."
+      "s is not pre-split \u2014 you decide the word boundaries."
     ],
     "example": {
       "input": "pattern = \"aab\", s = \"dogdogcat\"",
       "output": "true",
-      "explanation": "'a' → 'dog', 'b' → 'cat'. Try all substring splits via backtracking. Each pattern character must consistently map to one substring with no overlap."
+      "explanation": "'a' \u2192 'dog', 'b' \u2192 'cat'. Try all substring splits via backtracking. Each pattern character must consistently map to one substring with no overlap."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – Backtracking",
-      "description": "Use backtracking to try all possible ways to split s into substrings matching each character of pattern. Maintain two maps: pattern-char → substring and substring → pattern-char (to ensure bijection). At each step, either use the existing mapping for the current pattern character or try all new substrings from the current position.",
+      "title": "Solution 1 \u2013 Backtracking [\u2713 Interviewer Accepted]",
+      "description": "Use backtracking to try all possible ways to split s into substrings matching each character of pattern. Maintain two maps: pattern-char \u2192 substring and substring \u2192 pattern-char (to ensure bijection). At each step, either use the existing mapping for the current pattern character or try all new substrings from the current position.",
       "code": "public boolean wordPatternMatch(String pattern, String s) {\n    return backtrack(pattern, 0, s, 0, new HashMap<>(), new HashSet<>());\n}\n\nprivate boolean backtrack(String pattern, int pi, String s, int si,\n                           Map<Character, String> charToWord, Set<String> used) {\n    if (pi == pattern.length() && si == s.length()) return true;\n    if (pi == pattern.length() || si == s.length()) return false;\n    \n    char c = pattern.charAt(pi);\n    \n    if (charToWord.containsKey(c)) {\n        String word = charToWord.get(c);\n        if (!s.startsWith(word, si)) return false;\n        return backtrack(pattern, pi + 1, s, si + word.length(), charToWord, used);\n    }\n    \n    for (int end = si + 1; end <= s.length(); end++) {\n        String word = s.substring(si, end);\n        if (used.contains(word)) continue;\n        charToWord.put(c, word);\n        used.add(word);\n        if (backtrack(pattern, pi + 1, s, end, charToWord, used)) return true;\n        charToWord.remove(c);\n        used.remove(word);\n    }\n    \n    return false;\n}",
       "code_python": "def word_pattern_match(pattern: str, s: str) -> bool:\n    def backtrack(pi, si, char_to_word, used):\n        if pi == len(pattern) and si == len(s):\n            return True\n        if pi == len(pattern) or si == len(s):\n            return False\n        \n        c = pattern[pi]\n        if c in char_to_word:\n            word = char_to_word[c]\n            if not s.startswith(word, si):\n                return False\n            return backtrack(pi + 1, si + len(word), char_to_word, used)\n        \n        for end in range(si + 1, len(s) + 1):\n            word = s[si:end]\n            if word in used:\n                continue\n            char_to_word[c] = word\n            used.add(word)\n            if backtrack(pi + 1, end, char_to_word, used):\n                return True\n            del char_to_word[c]\n            used.remove(word)\n        \n        return False\n    \n    return backtrack(0, 0, {}, set())",
       "language": "java",

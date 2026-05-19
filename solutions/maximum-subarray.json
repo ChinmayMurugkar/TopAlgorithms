@@ -16,8 +16,8 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Kadane's Algorithm",
-      "description": "Kadane's algorithm maintains two values: the maximum sum ending at the current position and the global maximum seen so far. At each element we decide whether to extend the current subarray or start fresh from the current element — whichever is larger. The key insight is that a subarray should only be extended if it increases the running sum, otherwise starting fresh is optimal.",
+      "title": "Solution 1 \u2013 Kadane's Algorithm [\u2713 Interviewer Accepted]",
+      "description": "Kadane's algorithm maintains two values: the maximum sum ending at the current position and the global maximum seen so far. At each element we decide whether to extend the current subarray or start fresh from the current element \u2014 whichever is larger. The key insight is that a subarray should only be extended if it increases the running sum, otherwise starting fresh is optimal.",
       "code": "public int maxSubArray(int[] nums) {\n    int maxSoFar = nums[0];\n    int maxEndingHere = nums[0];\n    \n    for (int i = 1; i < nums.length; i++) {\n        maxEndingHere = Math.max(nums[i], maxEndingHere + nums[i]);\n        maxSoFar = Math.max(maxSoFar, maxEndingHere);\n    }\n    \n    return maxSoFar;\n}",
       "code_python": "from typing import List\n\ndef max_sub_array(nums: List[int]) -> int:\n    max_ending_here = max_so_far = nums[0]\n    for num in nums[1:]:\n        max_ending_here = max(num, max_ending_here + num)\n        max_so_far = max(max_so_far, max_ending_here)\n    return max_so_far",
       "language": "java",

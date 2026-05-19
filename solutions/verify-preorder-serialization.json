@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Stack",
+      "title": "Solution 1 \u2013 Stack [\u2713 Interviewer Accepted]",
       "description": "Use stack to verify preorder serialization.",
       "code": "public boolean isValidSerialization(String preorder) {\n    String[] nodes = preorder.split(\",\");\n    int slots = 1;\n    \n    for (String node : nodes) {\n        slots--;\n        if (slots < 0) return false;\n        \n        if (!node.equals(\"#\")) {\n            slots += 2;\n        }\n    }\n    \n    return slots == 0;\n}",
       "language": "java",
@@ -24,7 +24,7 @@
         "time": "O(n)",
         "space": "O(n)"
       },
-      "code_python": "def isValidSerialization(preorder: str) -> bool:\n    # Every node consumes 1 slot and non-null nodes produce 2 slots.\n    # Start with 1 slot (for root). If slots < 0 at any point → invalid.\n    slots = 1\n    for node in preorder.split(','):\n        slots -= 1\n        if slots < 0:\n            return False\n        if node != '#':\n            slots += 2\n    return slots == 0"
+      "code_python": "def isValidSerialization(preorder: str) -> bool:\n    # Every node consumes 1 slot and non-null nodes produce 2 slots.\n    # Start with 1 slot (for root). If slots < 0 at any point \u2192 invalid.\n    slots = 1\n    for node in preorder.split(','):\n        slots -= 1\n        if slots < 0:\n            return False\n        if node != '#':\n            slots += 2\n    return slots == 0"
     }
   ],
   "variations": [],

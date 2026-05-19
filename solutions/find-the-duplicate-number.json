@@ -17,8 +17,8 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Floyd's Cycle Detection",
-      "description": "Treat the array as a linked list where index i points to nums[i]. Because there are n+1 elements all in [1,n], the pigeonhole principle guarantees a cycle. Use slow/fast pointers to detect the cycle, then find its entrance — that entrance is the duplicate. The key insight is that the duplicate value means two indices point to the same next node, creating the cycle entry point.",
+      "title": "Solution 1 \u2013 Floyd's Cycle Detection [\u2713 Interviewer Accepted]",
+      "description": "Treat the array as a linked list where index i points to nums[i]. Because there are n+1 elements all in [1,n], the pigeonhole principle guarantees a cycle. Use slow/fast pointers to detect the cycle, then find its entrance \u2014 that entrance is the duplicate. The key insight is that the duplicate value means two indices point to the same next node, creating the cycle entry point.",
       "code": "public int findDuplicate(int[] nums) {\n    int slow = nums[0], fast = nums[0];\n    \n    // Phase 1: detect cycle\n    do {\n        slow = nums[slow];\n        fast = nums[nums[fast]];\n    } while (slow != fast);\n    \n    // Phase 2: find entrance\n    slow = nums[0];\n    while (slow != fast) {\n        slow = nums[slow];\n        fast = nums[fast];\n    }\n    \n    return slow;\n}",
       "code_python": "from typing import List\n\ndef find_duplicate(nums: List[int]) -> int:\n    slow = fast = nums[0]\n    \n    # Phase 1: detect cycle\n    while True:\n        slow = nums[slow]\n        fast = nums[nums[fast]]\n        if slow == fast:\n            break\n    \n    # Phase 2: find entrance\n    slow = nums[0]\n    while slow != fast:\n        slow = nums[slow]\n        fast = nums[fast]\n    \n    return slow",
       "language": "java",
@@ -28,7 +28,7 @@
       }
     },
     {
-      "title": "Solution 2 – Binary Search on Value",
+      "title": "Solution 2 \u2013 Binary Search on Value",
       "description": "Binary search on the answer value range [1, n]. For a midpoint m, count how many numbers in nums are <= m. If count > m, the duplicate must be in [1, m] (by pigeonhole). Otherwise it is in [m+1, n]. Narrow the range until left == right.",
       "code": "public int findDuplicate(int[] nums) {\n    int lo = 1, hi = nums.length - 1;\n    \n    while (lo < hi) {\n        int mid = (lo + hi) / 2;\n        int count = 0;\n        for (int n : nums) if (n <= mid) count++;\n        if (count > mid) hi = mid;\n        else lo = mid + 1;\n    }\n    \n    return lo;\n}",
       "code_python": "from typing import List\n\ndef find_duplicate(nums: List[int]) -> int:\n    lo, hi = 1, len(nums) - 1\n    while lo < hi:\n        mid = (lo + hi) // 2\n        count = sum(1 for n in nums if n <= mid)\n        if count > mid:\n            hi = mid\n        else:\n            lo = mid + 1\n    return lo",

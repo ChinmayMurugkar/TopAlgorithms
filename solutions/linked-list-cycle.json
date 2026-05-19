@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Floyd's Cycle Finding",
+      "title": "Solution 1 \u2013 Floyd's Cycle Finding [\u2713 Interviewer Accepted]",
       "description": "Use Floyd's tortoise-and-hare algorithm with two pointers: a slow pointer advancing one step and a fast pointer advancing two steps per iteration. If a cycle exists the fast pointer will eventually lap the slow pointer and they will meet; if there is no cycle the fast pointer will reach the end of the list. This detects cycles in O(n) time with O(1) extra space.",
       "code": "public boolean hasCycle(ListNode head) {\n    if (head == null || head.next == null) return false;\n    \n    ListNode slow = head;\n    ListNode fast = head;\n    \n    while (fast != null && fast.next != null) {\n        slow = slow.next;\n        fast = fast.next.next;\n        \n        if (slow == fast) {\n            return true;\n        }\n    }\n    \n    return false;\n}",
       "code_python": "from typing import Optional\n\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val; self.next = next\n\nclass Solution:\n    def hasCycle(self, head: Optional['ListNode']) -> bool:\n        slow = head\n        fast = head\n\n        while fast is not None and fast.next is not None:\n            slow = slow.next\n            fast = fast.next.next\n            if slow is fast:\n                return True\n\n        return False",
@@ -27,7 +27,7 @@
       }
     },
     {
-      "title": "Solution 1 – Floyd's Cycle Finding",
+      "title": "Solution 1 \u2013 Floyd's Cycle Finding [\u2713 Interviewer Accepted]",
       "description": "Use Floyd's tortoise-and-hare algorithm with two pointers: a slow pointer advancing one step and a fast pointer advancing two steps per iteration. If a cycle exists the fast pointer will eventually lap the slow pointer and they will meet; if there is no cycle the fast pointer will reach the end of the list. This detects cycles in O(n) time with O(1) extra space.",
       "code": "public boolean hasCycle(ListNode head) {\n    if (head == null || head.next == null) return false;\n    \n    ListNode slow = head;\n    ListNode fast = head;\n    \n    while (fast != null && fast.next != null) {\n        slow = slow.next;\n        fast = fast.next.next;\n        \n        if (slow == fast) {\n            return true;\n        }\n    }\n    \n    return false;\n}",
       "language": "java",

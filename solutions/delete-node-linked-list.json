@@ -12,12 +12,12 @@
     "example": {
       "input": "head = [4,5,1,9], node = 5",
       "output": "[4,1,9]",
-      "explanation": "Copy next node's value into current node and skip next node: 5→copy 1→node.next = node.next.next."
+      "explanation": "Copy next node's value into current node and skip next node: 5\u2192copy 1\u2192node.next = node.next.next."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – Value Copy",
+      "title": "Solution 1 \u2013 Value Copy [\u2713 Interviewer Accepted]",
       "description": "Since we only have a reference to the node to delete (not its predecessor), copy the next node's value into the current node and then skip the next node. This effectively removes the target node's data from the list in O(1) time without needing to traverse from the head.",
       "code": "public void deleteNode(ListNode node) {\n    node.val = node.next.val;\n    node.next = node.next.next;\n}",
       "code_python": "# class ListNode: def __init__(self, val=0): self.val=val; self.next=None\ndef deleteNode(node: object) -> None:\n    node.val = node.next.val\n    node.next = node.next.next",

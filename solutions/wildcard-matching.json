@@ -17,24 +17,24 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Dynamic Programming",
+      "title": "Solution 1 \u2013 Dynamic Programming [\u2713 Interviewer Accepted]",
       "description": "Use DP to match pattern with string, handling * and ? wildcards.",
       "code": "public boolean isMatch(String s, String p) {\n    int m = s.length();\n    int n = p.length();\n    \n    boolean[][] dp = new boolean[m + 1][n + 1];\n    dp[0][0] = true;\n    \n    // Handle patterns like *, **, etc.\n    for (int j = 1; j <= n; j++) {\n        if (p.charAt(j - 1) == '*') {\n            dp[0][j] = dp[0][j - 1];\n        }\n    }\n    \n    for (int i = 1; i <= m; i++) {\n        for (int j = 1; j <= n; j++) {\n            if (p.charAt(j - 1) == '?' || p.charAt(j - 1) == s.charAt(i - 1)) {\n                dp[i][j] = dp[i - 1][j - 1];\n            } else if (p.charAt(j - 1) == '*') {\n                dp[i][j] = dp[i][j - 1] || dp[i - 1][j];\n            }\n        }\n    }\n    \n    return dp[m][n];\n}",
       "language": "java",
       "complexity": {
-        "time": "O(m×n)",
-        "space": "O(m×n)"
+        "time": "O(m\u00d7n)",
+        "space": "O(m\u00d7n)"
       },
       "code_python": "def isMatch(s: str, p: str) -> bool:\n    m, n = len(s), len(p)\n    dp = [[False] * (n + 1) for _ in range(m + 1)]\n    dp[0][0] = True\n    # Patterns of '*' can match empty string\n    for j in range(1, n + 1):\n        if p[j-1] == '*':\n            dp[0][j] = dp[0][j-1]\n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            if p[j-1] == '?' or p[j-1] == s[i-1]:\n                dp[i][j] = dp[i-1][j-1]\n            elif p[j-1] == '*':\n                # '*' matches empty (dp[i][j-1]) or one+ chars (dp[i-1][j])\n                dp[i][j] = dp[i][j-1] or dp[i-1][j]\n    return dp[m][n]"
     },
     {
-      "title": "Solution 1 – Dynamic Programming",
+      "title": "Solution 1 \u2013 Dynamic Programming [\u2713 Interviewer Accepted]",
       "description": "Use DP to match pattern with string, handling * and ? wildcards.",
       "code": "public boolean isMatch(String s, String p) {\n    int m = s.length();\n    int n = p.length();\n    \n    boolean[][] dp = new boolean[m + 1][n + 1];\n    dp[0][0] = true;\n    \n    // Handle patterns like *, **, etc.\n    for (int j = 1; j <= n; j++) {\n        if (p.charAt(j - 1) == '*') {\n            dp[0][j] = dp[0][j - 1];\n        }\n    }\n    \n    for (int i = 1; i <= m; i++) {\n        for (int j = 1; j <= n; j++) {\n            if (p.charAt(j - 1) == '?' || p.charAt(j - 1) == s.charAt(i - 1)) {\n                dp[i][j] = dp[i - 1][j - 1];\n            } else if (p.charAt(j - 1) == '*') {\n                dp[i][j] = dp[i][j - 1] || dp[i - 1][j];\n            }\n        }\n    }\n    \n    return dp[m][n];\n}",
       "language": "java",
       "complexity": {
-        "time": "O(m×n)",
-        "space": "O(m×n)"
+        "time": "O(m\u00d7n)",
+        "space": "O(m\u00d7n)"
       },
       "code_python": "def isMatch(s: str, p: str) -> bool:\n    m, n = len(s), len(p)\n    dp = [[False] * (n + 1) for _ in range(m + 1)]\n    dp[0][0] = True\n    for j in range(1, n + 1):\n        if p[j-1] == '*':\n            dp[0][j] = dp[0][j-1]\n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            if p[j-1] == '?' or p[j-1] == s[i-1]:\n                dp[i][j] = dp[i-1][j-1]\n            elif p[j-1] == '*':\n                dp[i][j] = dp[i][j-1] or dp[i-1][j]\n    return dp[m][n]"
     }

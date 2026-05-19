@@ -5,7 +5,7 @@
     "category": "String/Array/Matrix",
     "description": "Given two integers n and k, return all possible combinations of k numbers chosen from the range [1, n]. You may return the answer in any order.",
     "assumptions": [
-      "1 ≤ k ≤ n ≤ 20",
+      "1 \u2264 k \u2264 n \u2264 20",
       "Combinations are unique (order doesn't matter)."
     ],
     "example": {
@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Backtracking",
+      "title": "Solution 1 \u2013 Backtracking [\u2713 Interviewer Accepted]",
       "description": "Use backtracking starting from `start=1`, appending each candidate number to the current combination and recursing with an incremented start to enforce strictly increasing selection. When the combination reaches size k, it is recorded. Backtracking by removing the last element explores all C(n,k) combinations without duplicates.",
       "code": "public List> combine(int n, int k) {\n    List> result = new ArrayList<>();\n    backtrack(1, n, k, new ArrayList<>(), result);\n    return result;\n}\n\nprivate void backtrack(int start, int n, int k, List current, List> result) {\n    if (current.size() == k) {\n        result.add(new ArrayList<>(current));\n        return;\n    }\n    \n    for (int i = start; i <= n; i++) {\n        current.add(i);\n        backtrack(i + 1, n, k, current, result);\n        current.remove(current.size() - 1);\n    }\n}",
       "code_python": "from typing import List\n\ndef combine(n: int, k: int) -> List[List[int]]:\n    result: List[List[int]] = []\n\n    def backtrack(start: int, current: List[int]) -> None:\n        if len(current) == k:\n            result.append(list(current))\n            return\n        for i in range(start, n + 1):\n            current.append(i)\n            backtrack(i + 1, current)\n            current.pop()\n\n    backtrack(1, [])\n    return result",

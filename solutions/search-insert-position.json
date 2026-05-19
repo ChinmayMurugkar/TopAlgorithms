@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Binary Search",
+      "title": "Solution 1 \u2013 Binary Search [\u2713 Interviewer Accepted]",
       "description": "Run a standard binary search; if the target is found, return its index. If the loop ends without finding it, the left pointer sits exactly where the target would be inserted to maintain sorted order. The key insight is that the binary search invariant guarantees left always points to the first index whose value is greater than or equal to the target, which is precisely the insertion position.",
       "code": "public int searchInsert(int[] nums, int target) {\n    int left = 0;\n    int right = nums.length - 1;\n    \n    while (left <= right) {\n        int mid = left + (right - left) / 2;\n        \n        if (nums[mid] == target) {\n            return mid;\n        } else if (nums[mid] < target) {\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n    \n    return left;\n}",
       "code_python": "from typing import List\n\ndef search_insert(nums: List[int], target: int) -> int:\n    left, right = 0, len(nums) - 1\n    while left <= right:\n        mid = (left + right) // 2\n        if nums[mid] == target:\n            return mid\n        elif nums[mid] < target:\n            left = mid + 1\n        else:\n            right = mid - 1\n    return left",

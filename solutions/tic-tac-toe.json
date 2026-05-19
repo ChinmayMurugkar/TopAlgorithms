@@ -3,22 +3,22 @@
     "title": "Design Tic-Tac-Toe",
     "leetcode_id": 348,
     "category": "String/Array/Matrix",
-    "description": "Design a Tic-Tac-Toe board of size n×n. Player 1 plays 'X' and player 2 plays 'O'. Implement a TicTacToe class that supports move(row, col, player) which places a piece and returns the winner (1 or 2) if the current player wins, or 0 if no one has won yet. You may assume each move is valid.",
+    "description": "Design a Tic-Tac-Toe board of size n\u00d7n. Player 1 plays 'X' and player 2 plays 'O'. Implement a TicTacToe class that supports move(row, col, player) which places a piece and returns the winner (1 or 2) if the current player wins, or 0 if no one has won yet. You may assume each move is valid.",
     "assumptions": [
       "n >= 1.",
       "Each move is guaranteed to be valid (within bounds and on an empty cell).",
       "Once a winner is declared no further moves occur.",
-      "The board is n×n."
+      "The board is n\u00d7n."
     ],
     "example": {
       "input": "n=3, moves: (0,0,1),(0,2,2),(1,1,1),(2,0,2),(2,2,1)",
-      "output": "Player 1 wins after move (2,2,1) → returns 1",
+      "output": "Player 1 wins after move (2,2,1) \u2192 returns 1",
       "explanation": "Player 1 has pieces on the main diagonal: (0,0),(1,1),(2,2). All three match, so player 1 wins."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 – Row/Column/Diagonal Counters",
+      "title": "Solution 1 \u2013 Row/Column/Diagonal Counters [\u2713 Interviewer Accepted]",
       "description": "Instead of scanning the full board after each move (O(n) per move), maintain an integer count per row, per column, and for the two diagonals for each player. When player p places at (row, col), increment their row counter, column counter, and diagonal counters if applicable. If any counter reaches n, player p wins. Use +1 for player 1 and -1 for player 2 in shared arrays to halve the storage, or keep separate arrays for clarity. Each move is O(1) and total space is O(n).",
       "code": "class TicTacToe {\n    private int[] rows, cols;\n    private int diag, antiDiag, n;\n\n    public TicTacToe(int n) {\n        this.n = n;\n        rows = new int[n];\n        cols = new int[n];\n    }\n\n    public int move(int row, int col, int player) {\n        int delta = (player == 1) ? 1 : -1;\n        rows[row] += delta;\n        cols[col] += delta;\n        if (row == col) diag += delta;\n        if (row + col == n - 1) antiDiag += delta;\n        if (Math.abs(rows[row]) == n || Math.abs(cols[col]) == n\n                || Math.abs(diag) == n || Math.abs(antiDiag) == n)\n            return player;\n        return 0;\n    }\n}",
       "code_python": "class TicTacToe:\n    def __init__(self, n: int) -> None:\n        self.n = n\n        self.rows = [0] * n\n        self.cols = [0] * n\n        self.diag = 0\n        self.anti_diag = 0\n\n    def move(self, row: int, col: int, player: int) -> int:\n        delta = 1 if player == 1 else -1\n        self.rows[row] += delta\n        self.cols[col] += delta\n        if row == col:\n            self.diag += delta\n        if row + col == self.n - 1:\n            self.anti_diag += delta\n        n = self.n\n        if (abs(self.rows[row]) == n or abs(self.cols[col]) == n\n                or abs(self.diag) == n or abs(self.anti_diag) == n):\n            return player\n        return 0",
@@ -28,7 +28,7 @@
         "space": "O(n) for row and column arrays"
       },
       "example_walkthrough": {
-        "text": "n=3. Player 1 uses +1, player 2 uses -1. move(0,0,1): rows[0]=1, cols[0]=1, diag=1. move(0,2,2): rows[0]=0, cols[2]=-1, anti_diag=-1. move(1,1,1): rows[1]=1, cols[1]=1, diag=2, anti_diag=0. move(2,0,2): rows[2]=-1, cols[0]=0, anti_diag=-1. move(2,2,1): rows[2]=0, cols[2]=0, diag=3 → |diag|==3==n, return player 1."
+        "text": "n=3. Player 1 uses +1, player 2 uses -1. move(0,0,1): rows[0]=1, cols[0]=1, diag=1. move(0,2,2): rows[0]=0, cols[2]=-1, anti_diag=-1. move(1,1,1): rows[1]=1, cols[1]=1, diag=2, anti_diag=0. move(2,0,2): rows[2]=-1, cols[0]=0, anti_diag=-1. move(2,2,1): rows[2]=0, cols[2]=0, diag=3 \u2192 |diag|==3==n, return player 1."
       }
     }
   ],

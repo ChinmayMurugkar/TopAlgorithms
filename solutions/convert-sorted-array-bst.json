@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 – Recursive",
+      "title": "Solution 1 \u2013 Recursive [\u2713 Interviewer Accepted]",
       "description": "Always pick the middle element of the current subarray as the root, which guarantees the resulting BST is height-balanced because the left and right subtrees differ in size by at most one. Recursively apply the same logic to the left and right halves to build both subtrees.",
       "code": "public TreeNode sortedArrayToBST(int[] nums) {\n    return buildBST(nums, 0, nums.length - 1);\n}\n\nprivate TreeNode buildBST(int[] nums, int left, int right) {\n    if (left > right) return null;\n    \n    int mid = left + (right - left) / 2;\n    TreeNode root = new TreeNode(nums[mid]);\n    \n    root.left = buildBST(nums, left, mid - 1);\n    root.right = buildBST(nums, mid + 1, right);\n    \n    return root;\n}",
       "code_python": "# class TreeNode: def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom typing import List, Optional\n\ndef sortedArrayToBST(nums: List[int]) -> Optional[object]:\n    def build(left: int, right: int) -> Optional[object]:\n        if left > right:\n            return None\n        mid = left + (right - left) // 2\n        root = type('TreeNode', (), {'val': nums[mid], 'left': None, 'right': None})()\n        root.left = build(left, mid - 1)\n        root.right = build(mid + 1, right)\n        return root\n\n    return build(0, len(nums) - 1)",
@@ -27,7 +27,7 @@
       }
     },
     {
-      "title": "Solution 1 – Recursive",
+      "title": "Solution 1 \u2013 Recursive [\u2713 Interviewer Accepted]",
       "description": "Always pick the middle element of the current subarray as the root, which guarantees the resulting BST is height-balanced because the left and right subtrees differ in size by at most one. Recursively apply the same logic to the left and right halves to build both subtrees.",
       "code": "public TreeNode sortedArrayToBST(int[] nums) {\n    return buildBST(nums, 0, nums.length - 1);\n}\n\nprivate TreeNode buildBST(int[] nums, int left, int right) {\n    if (left > right) return null;\n    \n    int mid = left + (right - left) / 2;\n    TreeNode root = new TreeNode(nums[mid]);\n    \n    root.left = buildBST(nums, left, mid - 1);\n    root.right = buildBST(nums, mid + 1, right);\n    \n    return root;\n}",
       "code_python": "# class TreeNode: def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom typing import List, Optional\n\ndef sortedArrayToBST(nums: List[int]) -> Optional[object]:\n    def build(left: int, right: int) -> Optional[object]:\n        if left > right:\n            return None\n        mid = left + (right - left) // 2\n        root = type('TreeNode', (), {'val': nums[mid], 'left': None, 'right': None})()\n        root.left = build(left, mid - 1)\n        root.right = build(mid + 1, right)\n        return root\n\n    return build(0, len(nums) - 1)",
