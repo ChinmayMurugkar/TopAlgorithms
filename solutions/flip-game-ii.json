@@ -1,0 +1,44 @@
+{
+  "problem": {
+    "title": "Flip Game II",
+    "leetcode_id": null,
+    "category": "String/Array/Matrix",
+    "description": "You are playing Flip Game with your friend. Given a string s containing only '+' and '-', a player can flip two consecutive '++' into '--'. The player who cannot make a move loses. Return true if the starting player can guarantee a win with optimal play.",
+    "assumptions": [
+      "Both players play optimally.",
+      "A player loses when they cannot make any move.",
+      "String contains only '+' and '-'."
+    ],
+    "example": {
+      "input": "s = \"++++\"",
+      "output": "true",
+      "explanation": "Starting player flips positions 1-2: '--++'. Opponent must flip 3-4: '----'. Starting player wins (opponent has no moves)."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Recursive Backtracking",
+      "description": "Try every valid move from the current position and recursively check whether the opponent loses (canWin returns false for the opponent). If any move leads to the opponent losing, the current player wins. The key insight is that a position is a win if and only if there exists at least one move that puts the opponent in a losing position.",
+      "code": "public boolean canWin(String s) {\n    char[] arr = s.toCharArray();\n    \n    for (int i = 0; i < arr.length - 1; i++) {\n        if (arr[i] == '+' && arr[i + 1] == '+') {\n            arr[i] = '-';\n            arr[i + 1] = '-';\n            boolean opponentWins = canWin(new String(arr));\n            arr[i] = '+';\n            arr[i + 1] = '+';\n            if (!opponentWins) return true;\n        }\n    }\n    \n    return false;\n}",
+      "code_python": "def can_win(s: str) -> bool:\n    arr = list(s)\n    for i in range(len(arr) - 1):\n        if arr[i] == '+' and arr[i + 1] == '+':\n            arr[i] = arr[i + 1] = '-'\n            opponent_wins = can_win(''.join(arr))\n            arr[i] = arr[i + 1] = '+'\n            if not opponent_wins:\n                return True\n    return False",
+      "language": "java",
+      "complexity": {
+        "time": "O(n!!)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "title": "Solution 2 – Memoization",
+      "description": "Cache each string state in a HashMap so repeated positions are not recomputed. This dramatically reduces redundant calls when the same board state can be reached via different move orderings.",
+      "code": "private Map<String, Boolean> memo = new HashMap<>();\n\npublic boolean canWin(String s) {\n    if (memo.containsKey(s)) return memo.get(s);\n    \n    char[] arr = s.toCharArray();\n    for (int i = 0; i < arr.length - 1; i++) {\n        if (arr[i] == '+' && arr[i + 1] == '+') {\n            arr[i] = '-'; arr[i + 1] = '-';\n            boolean opponentWins = canWin(new String(arr));\n            arr[i] = '+'; arr[i + 1] = '+';\n            if (!opponentWins) {\n                memo.put(s, true);\n                return true;\n            }\n        }\n    }\n    \n    memo.put(s, false);\n    return false;\n}",
+      "code_python": "from functools import lru_cache\n\ndef can_win(s: str) -> bool:\n    @lru_cache(maxsize=None)\n    def helper(state: str) -> bool:\n        arr = list(state)\n        for i in range(len(arr) - 1):\n            if arr[i] == '+' and arr[i + 1] == '+':\n                arr[i] = arr[i + 1] = '-'\n                opponent_wins = helper(''.join(arr))\n                arr[i] = arr[i + 1] = '+'\n                if not opponent_wins:\n                    return True\n        return False\n    return helper(s)",
+      "language": "java",
+      "complexity": {
+        "time": "O(n^2 * 2^n) worst",
+        "space": "O(2^n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

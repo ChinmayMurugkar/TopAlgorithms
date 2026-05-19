@@ -1,0 +1,33 @@
+{
+  "problem": {
+    "title": "Find Minimum in Rotated Sorted Array II",
+    "leetcode_id": 154,
+    "category": "String/Array/Matrix",
+    "description": "Suppose an array of length n sorted in ascending order is rotated between 1 and n times. The array may contain duplicates. Find the minimum element. You must decrease the overall operation steps as much as possible.",
+    "assumptions": [
+      "Array may contain duplicates (harder than version I).",
+      "Array was originally sorted and then rotated.",
+      "Must be better than O(n) on average."
+    ],
+    "example": {
+      "input": "nums = [2,2,2,0,1]",
+      "output": "0",
+      "explanation": "Duplicates make it impossible to always decide which half to discard. When nums[mid] == nums[hi], we can only safely shrink hi by 1. Best case O(log n), worst case O(n) with all duplicates."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Binary Search with Duplicate Handling",
+      "description": "Use binary search similar to version I, but add a third case: when nums[mid] == nums[hi], we cannot determine which half contains the minimum, so we simply decrement hi by 1. This degrades to O(n) in the worst case (all duplicates) but remains O(log n) on average. When nums[mid] < nums[hi] the minimum is in the left half; when nums[mid] > nums[hi] it is in the right half.",
+      "code": "public int findMin(int[] nums) {\n    int lo = 0, hi = nums.length - 1;\n    \n    while (lo < hi) {\n        int mid = (lo + hi) / 2;\n        if (nums[mid] > nums[hi]) {\n            lo = mid + 1;\n        } else if (nums[mid] < nums[hi]) {\n            hi = mid;\n        } else {\n            hi--; // can't tell which half, shrink safely\n        }\n    }\n    \n    return nums[lo];\n}",
+      "code_python": "from typing import List\n\ndef find_min(nums: List[int]) -> int:\n    lo, hi = 0, len(nums) - 1\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if nums[mid] > nums[hi]:\n            lo = mid + 1\n        elif nums[mid] < nums[hi]:\n            hi = mid\n        else:\n            hi -= 1\n    return nums[lo]",
+      "language": "java",
+      "complexity": {
+        "time": "O(log n) average, O(n) worst",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

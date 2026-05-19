@@ -1,0 +1,33 @@
+{
+  "problem": {
+    "title": "Remove Duplicates from Sorted Array II",
+    "leetcode_id": 80,
+    "category": "String/Array/Matrix",
+    "description": "Given an integer array nums sorted in non-decreasing order, remove some duplicates in-place such that each unique element appears at most twice. The relative order of elements should be kept the same. Return k, the number of elements in the modified array.",
+    "assumptions": [
+      "Array is sorted in non-decreasing order.",
+      "Each element may appear at most twice in the result.",
+      "Must be done in-place with O(1) extra space."
+    ],
+    "example": {
+      "input": "nums = [1,1,1,2,2,3]",
+      "output": "5, nums = [1,1,2,2,3,_]",
+      "explanation": "Allow at most 2 of each. Use a write pointer k: copy nums[i] to nums[k] only if k < 2 or nums[i] != nums[k-2] (meaning we haven't placed two of this value yet)."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Two Pointers",
+      "description": "Use a write pointer k starting at 0. For each element in nums, write it to position k only if k < 2 or nums[i] != nums[k-2]. The condition nums[i] != nums[k-2] checks that we haven't already placed two copies of the current value — since the array is sorted, the value two positions back in the result array tells us whether we've hit the limit.",
+      "code": "public int removeDuplicates(int[] nums) {\n    int k = 0;\n    \n    for (int n : nums) {\n        if (k < 2 || n != nums[k - 2]) {\n            nums[k++] = n;\n        }\n    }\n    \n    return k;\n}",
+      "code_python": "from typing import List\n\ndef remove_duplicates(nums: List[int]) -> int:\n    k = 0\n    for n in nums:\n        if k < 2 or n != nums[k - 2]:\n            nums[k] = n\n            k += 1\n    return k",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

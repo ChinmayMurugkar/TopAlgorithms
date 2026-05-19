@@ -1,11 +1,12 @@
 {
   "problem": {
-    "title": "Meeting Rooms II",
-    "leetcode_id": null,
+    "title": "Meeting Rooms",
+    "leetcode_id": 252,
     "category": "String/Array/Matrix",
-    "description": "Given an array of meeting time intervals intervals where intervals[i] = [starti, endi], return the minimum number of conference rooms required.",
+    "description": "Given an array of meeting time intervals where intervals[i] = [starti, endi], determine if a person could attend all meetings (i.e., no two meetings overlap).",
     "assumptions": [
-      "Return true if a person can attend all meetings (no overlaps)."
+      "A person can attend all meetings only if no two intervals overlap.",
+      "End time is exclusive: [s, e) does not overlap [e, f)."
     ],
     "example": {
       "input": "intervals = [[0,30],[5,10],[15,20]]",

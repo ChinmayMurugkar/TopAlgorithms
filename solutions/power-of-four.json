@@ -1,0 +1,43 @@
+{
+  "problem": {
+    "title": "Power of Four",
+    "leetcode_id": 342,
+    "category": "Math & Bit Manipulation",
+    "description": "Given an integer n, return true if it is a power of four. Otherwise, return false. An integer n is a power of four if there exists an integer x such that n == 4^x. Try to solve it without using loops or recursion.",
+    "assumptions": [
+      "n can be negative or zero (return false).",
+      "Try to solve with O(1) bit manipulation."
+    ],
+    "example": {
+      "input": "n = 16",
+      "output": "true",
+      "explanation": "16 = 4^2. Three conditions: (1) n > 0, (2) n is a power of 2 (n & (n-1) == 0), (3) the single set bit is in an odd position (n & 0xAAAAAAAA == 0, masking even-position bits)."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Bit Manipulation",
+      "description": "A power of 4 satisfies three properties: (1) n > 0, (2) only one bit set — n & (n-1) == 0 (power of 2), (3) that bit is at an even position (0, 2, 4, ...) — n & 0xAAAAAAAA == 0 (the mask 0xAAAAAAAA covers all odd bit positions). Combining these three checks gives O(1) solution.",
+      "code": "public boolean isPowerOfFour(int n) {\n    return n > 0 && (n & (n - 1)) == 0 && (n & 0xAAAAAAAA) == 0;\n}",
+      "code_python": "def is_power_of_four(n: int) -> bool:\n    return n > 0 and (n & (n - 1)) == 0 and (n & 0xAAAAAAAA) == 0",
+      "language": "java",
+      "complexity": {
+        "time": "O(1)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 2 – Math with Log",
+      "description": "n is a power of 4 if log base 4 of n is an integer. Use log(n) / log(4) and check if it is close to a whole number.",
+      "code": "public boolean isPowerOfFour(int n) {\n    if (n <= 0) return false;\n    double log = Math.log(n) / Math.log(4);\n    return Math.abs(log - Math.round(log)) < 1e-10;\n}",
+      "code_python": "import math\n\ndef is_power_of_four(n: int) -> bool:\n    if n <= 0:\n        return False\n    log = math.log(n) / math.log(4)\n    return abs(log - round(log)) < 1e-10",
+      "language": "java",
+      "complexity": {
+        "time": "O(1)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

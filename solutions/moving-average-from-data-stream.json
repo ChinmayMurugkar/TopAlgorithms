@@ -1,0 +1,33 @@
+{
+  "problem": {
+    "title": "Moving Average from Data Stream",
+    "leetcode_id": 346,
+    "category": "String/Array/Matrix",
+    "description": "Given a stream of integers and a window size, calculate the moving average of all integers in the sliding window. Implement the MovingAverage class with a constructor that takes the window size and a next(val) method that returns the moving average of the last 'size' values.",
+    "assumptions": [
+      "Window contains at most 'size' most recent values.",
+      "next(val) is called for each new data point.",
+      "Return the average as a double."
+    ],
+    "example": {
+      "input": "MovingAverage(3), next(1)=1.0, next(10)=5.5, next(3)=4.67, next(5)=6.0",
+      "output": "1.0, 5.5, 4.67, 6.0",
+      "explanation": "Window size 3: [1]=1.0, [1,10]=5.5, [1,10,3]=4.67, [10,3,5]=6.0. Use a circular buffer (fixed array + head pointer) to avoid shifting elements — O(1) per insertion."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Circular Buffer",
+      "description": "Use a fixed-size array as a circular buffer. Keep a running sum and a count of elements added. On each next() call, subtract the element being evicted (the oldest in the window), add the new element, and update the running sum. Return sum / min(count, size). The circular index is computed via modulo so no shifting is needed.",
+      "code": "class MovingAverage {\n    private int[] window;\n    private int size, count = 0, head = 0;\n    private long sum = 0;\n    \n    public MovingAverage(int size) {\n        this.size = size;\n        this.window = new int[size];\n    }\n    \n    public double next(int val) {\n        sum -= window[head];   // evict oldest\n        window[head] = val;\n        sum += val;\n        head = (head + 1) % size;\n        count++;\n        return (double) sum / Math.min(count, size);\n    }\n}",
+      "code_python": "from collections import deque\n\nclass MovingAverage:\n    def __init__(self, size: int):\n        self.size = size\n        self.queue = deque()\n        self.window_sum = 0\n    \n    def next(self, val: int) -> float:\n        if len(self.queue) == self.size:\n            self.window_sum -= self.queue.popleft()\n        self.queue.append(val)\n        self.window_sum += val\n        return self.window_sum / len(self.queue)",
+      "language": "java",
+      "complexity": {
+        "time": "O(1) per next() call",
+        "space": "O(size)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

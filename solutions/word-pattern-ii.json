@@ -1,0 +1,33 @@
+{
+  "problem": {
+    "title": "Word Pattern II",
+    "leetcode_id": 291,
+    "category": "String/Array/Matrix",
+    "description": "Given a pattern and a string s, return true if s matches the pattern. A match means there is a bijection between letters in pattern and non-empty substrings in s such that each letter maps to exactly one unique substring and each substring maps to exactly one letter. Unlike Word Pattern I, words in s are not pre-split by spaces.",
+    "assumptions": [
+      "Pattern letters map one-to-one to non-empty substrings (bijection).",
+      "Different pattern letters must map to different substrings.",
+      "s is not pre-split — you decide the word boundaries."
+    ],
+    "example": {
+      "input": "pattern = \"aab\", s = \"dogdogcat\"",
+      "output": "true",
+      "explanation": "'a' → 'dog', 'b' → 'cat'. Try all substring splits via backtracking. Each pattern character must consistently map to one substring with no overlap."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Backtracking",
+      "description": "Use backtracking to try all possible ways to split s into substrings matching each character of pattern. Maintain two maps: pattern-char → substring and substring → pattern-char (to ensure bijection). At each step, either use the existing mapping for the current pattern character or try all new substrings from the current position.",
+      "code": "public boolean wordPatternMatch(String pattern, String s) {\n    return backtrack(pattern, 0, s, 0, new HashMap<>(), new HashSet<>());\n}\n\nprivate boolean backtrack(String pattern, int pi, String s, int si,\n                           Map<Character, String> charToWord, Set<String> used) {\n    if (pi == pattern.length() && si == s.length()) return true;\n    if (pi == pattern.length() || si == s.length()) return false;\n    \n    char c = pattern.charAt(pi);\n    \n    if (charToWord.containsKey(c)) {\n        String word = charToWord.get(c);\n        if (!s.startsWith(word, si)) return false;\n        return backtrack(pattern, pi + 1, s, si + word.length(), charToWord, used);\n    }\n    \n    for (int end = si + 1; end <= s.length(); end++) {\n        String word = s.substring(si, end);\n        if (used.contains(word)) continue;\n        charToWord.put(c, word);\n        used.add(word);\n        if (backtrack(pattern, pi + 1, s, end, charToWord, used)) return true;\n        charToWord.remove(c);\n        used.remove(word);\n    }\n    \n    return false;\n}",
+      "code_python": "def word_pattern_match(pattern: str, s: str) -> bool:\n    def backtrack(pi, si, char_to_word, used):\n        if pi == len(pattern) and si == len(s):\n            return True\n        if pi == len(pattern) or si == len(s):\n            return False\n        \n        c = pattern[pi]\n        if c in char_to_word:\n            word = char_to_word[c]\n            if not s.startswith(word, si):\n                return False\n            return backtrack(pi + 1, si + len(word), char_to_word, used)\n        \n        for end in range(si + 1, len(s) + 1):\n            word = s[si:end]\n            if word in used:\n                continue\n            char_to_word[c] = word\n            used.add(word)\n            if backtrack(pi + 1, end, char_to_word, used):\n                return True\n            del char_to_word[c]\n            used.remove(word)\n        \n        return False\n    \n    return backtrack(0, 0, {}, set())",
+      "language": "java",
+      "complexity": {
+        "time": "O(n^m) where n=len(s), m=len(pattern)",
+        "space": "O(m)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

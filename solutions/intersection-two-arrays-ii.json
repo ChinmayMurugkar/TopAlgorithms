@@ -1,0 +1,44 @@
+{
+  "problem": {
+    "title": "Intersection of Two Arrays II",
+    "leetcode_id": 350,
+    "category": "String/Array/Matrix",
+    "description": "Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must appear as many times as it shows in both arrays (not just once). The result can be in any order.",
+    "assumptions": [
+      "Each element in the result appears min(count in nums1, count in nums2) times.",
+      "Result order does not matter.",
+      "Follow-up: what if arrays are sorted? what if one array is much larger?"
+    ],
+    "example": {
+      "input": "nums1 = [1,2,2,1], nums2 = [2,2]",
+      "output": "[2,2]",
+      "explanation": "2 appears twice in both arrays so the intersection contains [2,2]. Use a frequency map: count each element in nums1, then for each element in nums2 decrement the count and add to result if count > 0."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – HashMap Frequency Count",
+      "description": "Count the frequency of each element in nums1 using a HashMap. Then iterate nums2: whenever an element has a remaining count > 0 in the map, add it to the result and decrement the count. This handles duplicates correctly because we consume one occurrence per match.",
+      "code": "public int[] intersect(int[] nums1, int[] nums2) {\n    Map<Integer, Integer> count = new HashMap<>();\n    for (int n : nums1) count.merge(n, 1, Integer::sum);\n    \n    List<Integer> result = new ArrayList<>();\n    for (int n : nums2) {\n        if (count.getOrDefault(n, 0) > 0) {\n            result.add(n);\n            count.merge(n, -1, Integer::sum);\n        }\n    }\n    \n    return result.stream().mapToInt(Integer::intValue).toArray();\n}",
+      "code_python": "from typing import List\nfrom collections import Counter\n\ndef intersect(nums1: List[int], nums2: List[int]) -> List[int]:\n    count = Counter(nums1)\n    result = []\n    for n in nums2:\n        if count[n] > 0:\n            result.append(n)\n            count[n] -= 1\n    return result",
+      "language": "java",
+      "complexity": {
+        "time": "O(m + n)",
+        "space": "O(min(m, n))"
+      }
+    },
+    {
+      "title": "Solution 2 – Two Pointers (Sorted)",
+      "description": "If both arrays are sorted, use two pointers. Advance the pointer with the smaller value; when they match, add to result and advance both. This is optimal when arrays are already sorted and avoids extra space.",
+      "code": "public int[] intersect(int[] nums1, int[] nums2) {\n    Arrays.sort(nums1);\n    Arrays.sort(nums2);\n    \n    List<Integer> result = new ArrayList<>();\n    int i = 0, j = 0;\n    \n    while (i < nums1.length && j < nums2.length) {\n        if (nums1[i] < nums2[j]) i++;\n        else if (nums1[i] > nums2[j]) j++;\n        else { result.add(nums1[i]); i++; j++; }\n    }\n    \n    return result.stream().mapToInt(Integer::intValue).toArray();\n}",
+      "code_python": "from typing import List\n\ndef intersect(nums1: List[int], nums2: List[int]) -> List[int]:\n    nums1.sort()\n    nums2.sort()\n    i = j = 0\n    result = []\n    while i < len(nums1) and j < len(nums2):\n        if nums1[i] < nums2[j]:\n            i += 1\n        elif nums1[i] > nums2[j]:\n            j += 1\n        else:\n            result.append(nums1[i])\n            i += 1\n            j += 1\n    return result",
+      "language": "java",
+      "complexity": {
+        "time": "O(m log m + n log n)",
+        "space": "O(1)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

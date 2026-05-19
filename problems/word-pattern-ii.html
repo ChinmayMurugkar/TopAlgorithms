@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Problem - Coding Interview Problems</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="shortcut icon" href="../favicon.svg">
+    <link rel="apple-touch-icon" href="../favicon.svg">
+
+    <!-- Vercel Analytics -->
+    <script defer src="/_vercel/insights/script.js"></script>
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MGQNX8KHDE"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-MGQNX8KHDE');
+    </script>
+
+    <!-- CodeMirror 5 CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/eclipse.min.css">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ── Header ── */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; padding: 14px 0; flex-shrink: 0;
+        }
+        .header-content { padding: 0 20px; }
+        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+        .breadcrumb { font-size: 0.85rem; opacity: 0.8; }
+        .breadcrumb a { color: white; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        h1 { font-size: 1.6rem; margin-bottom: 2px; }
+        .meta { font-size: 0.82rem; opacity: 0.8; }
+
+        .header-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
+        #global-theme-btn {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.35);
+            color: white; padding: 5px 14px; border-radius: 20px;
+            cursor: pointer; font-size: 0.82rem; font-weight: 600;
+            transition: background .2s; white-space: nowrap;
+        }
+        #global-theme-btn:hover { background: rgba(255,255,255,0.28); }
+
+        #ai-toggle-btn {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.35);
+            color: white; padding: 5px 14px; border-radius: 20px;
+            cursor: pointer; font-size: 0.82rem; font-weight: 600;
+            transition: background .2s; white-space: nowrap;
+            display: flex; align-items: center; gap: 6px;
+        }
+        #ai-toggle-btn:hover { background: rgba(255,255,255,0.28); }
+        #ai-toggle-btn.active { background: rgba(255,255,255,0.3); border-color: rgba(255,255,255,0.6); }
+
+        /* ── Split layout ── */
+        .split-layout {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* ── Left pane (problem + solutions) ── */
+        .left-pane {
+            flex: 1;
+            min-width: 280px;
+            overflow-y: auto;
+            padding: 18px 20px;
+        }
+
+        .content {
+            background: white; border-radius: 10px;
+            padding: 24px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 24px;
+        }
+
+        /* ── Divider ── */
+        .split-divider {
+            width: 6px;
+            cursor: col-resize;
+            background: #cbd5e0;
+            flex-shrink: 0;
+            transition: background .15s;
+            position: relative;
+        }
+        .split-divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 3px;
+            height: 40px;
+            border-left: 1px solid #a0aec0;
+            border-right: 1px solid #a0aec0;
+        }
+        .split-divider:hover, .split-divider.dragging { background: #667eea; }
+        .split-divider:hover::after, .split-divider.dragging::after { border-color: rgba(255,255,255,0.5); }
+
+        /* ── Middle pane (editor) ── */
+        .mid-pane {
+            width: 38%;
+            min-width: 260px;
+            display: flex;
+            flex-direction: column;
+            background: #1e2330;
+            overflow: hidden;
+            border-left: 1px solid #2d3748;
+        }
+
+        .rp-title-bar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 9px 14px; color: white;
+            font-size: 0.86rem; font-weight: 600;
+            flex-shrink: 0;
+            display: flex; align-items: center; justify-content: space-between; gap: 8px;
+        }
+        .rp-title-bar .rp-hint { font-size: 0.72rem; opacity: 0.75; font-weight: 400; }
+
+        .mid-pane .playground-panel {
+            flex: 1; display: flex; flex-direction: column;
+            overflow: hidden; border: none; border-radius: 0; margin: 0;
+            min-height: 0;
+        }
+        .mid-pane .playground-panel.open { display: flex; }
+
+        /* Pane is position:relative so CodeMirror can fill it absolutely */
+        .mid-pane .pg-editor-pane {
+            flex: 1; min-height: 0;
+            position: relative;
+            display: none;
+        }
+        .mid-pane .pg-editor-pane.active { display: block; }
+
+        /* CodeMirror fills the pane via absolute position — gets a real pixel height */
+        .mid-pane .CodeMirror {
+            position: absolute !important;
+            top: 0; left: 0; right: 0; bottom: 0;
+            height: 100% !important;
+            max-height: none !important;
+            font-family: 'Menlo', 'Monaco', 'Consolas', 'Courier New', monospace;
+            font-size: 14px !important;
+            line-height: 1.7 !important;
+            letter-spacing: 0.01em;
+        }
+        /* CodeMirror-scroll fills the wrapper and scrolls normally */
+        .mid-pane .CodeMirror-scroll {
+            height: 100% !important;
+            max-height: none !important;
+            overflow-y: auto !important;
+            overflow-x: auto !important;
+        }
+        .mid-pane .CodeMirror-lines { padding: 10px 0; }
+        .mid-pane .CodeMirror-line { padding: 0 10px !important; }
+        .mid-pane .CodeMirror-linenumber { font-size: 12px; color: #4a5568; min-width: 36px; }
+        .mid-pane .pg-output { max-height: 160px; flex-shrink: 0; }
+
+        /* ── Right pane (AI Chat) ── */
+        .chat-pane {
+            width: 320px;
+            min-width: 240px;
+            display: flex;
+            flex-direction: column;
+            background: white;
+            border-left: 1px solid #e2e8f0;
+            overflow: hidden;
+            transition: width 0.25s ease;
+        }
+        .chat-pane.closed {
+            width: 0 !important;
+            min-width: 0;
+            border-left: none;
+            overflow: hidden;
+        }
+        .chat-pane.closed + .split-divider-chat { display: none; }
+
+        /* Chat pane header */
+        .chat-pane-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white; padding: 12px 14px;
+            display: flex; align-items: center; justify-content: space-between;
+            flex-shrink: 0;
+        }
+        .chat-pane-header-left { display: flex; align-items: center; gap: 10px; }
+        .chat-pane-avatar {
+            width: 28px; height: 28px; border-radius: 50%;
+            background: rgba(255,255,255,0.25);
+            display: flex; align-items: center; justify-content: center; font-size: 0.9rem;
+        }
+        .chat-pane-header h4 { margin: 0; font-size: 0.9rem; }
+        .chat-pane-header p  { margin: 0; font-size: 0.72rem; opacity: 0.8; }
+        .chat-pane-close {
+            background: rgba(255,255,255,0.15); border: none; color: white;
+            border-radius: 50%; width: 24px; height: 24px; cursor: pointer;
+            font-size: 0.8rem; display: flex; align-items: center; justify-content: center;
+            transition: background .15s; flex-shrink: 0;
+        }
+        .chat-pane-close:hover { background: rgba(255,255,255,0.3); }
+
+        /* Chat messages */
+        #chat-messages {
+            flex: 1; overflow-y: auto; padding: 12px 12px 6px;
+            display: flex; flex-direction: column; gap: 8px;
+        }
+
+        /* Welcome state */
+        .chat-welcome {
+            flex: 1; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            padding: 20px; text-align: center; gap: 10px;
+            color: #718096;
+        }
+        .chat-welcome .welcome-emoji { font-size: 2.4rem; }
+        .chat-welcome p { font-size: 0.84rem; line-height: 1.5; }
+
+        .chat-msg {
+            max-width: 90%; padding: 8px 12px; border-radius: 14px;
+            font-size: 0.84rem; line-height: 1.5; white-space: pre-wrap; word-break: break-word;
+        }
+        .chat-msg.user {
+            align-self: flex-end; background: #667eea; color: white;
+            border-bottom-right-radius: 4px;
+        }
+        .chat-msg.assistant {
+            align-self: flex-start; background: #f1f3f5; color: #2c3e50;
+            border-bottom-left-radius: 4px;
+        }
+        .chat-msg.error { background: #ffe3e3; color: #c0392b; align-self: flex-start; }
+        .chat-typing {
+            align-self: flex-start; background: #f1f3f5;
+            padding: 8px 12px; border-radius: 14px; border-bottom-left-radius: 4px;
+            font-size: 0.84rem; color: #718096;
+        }
+
+        /* Quick chips */
+        .chat-chips {
+            padding: 8px 12px 4px; display: flex; flex-wrap: wrap; gap: 6px; flex-shrink: 0;
+        }
+        .chat-chip {
+            padding: 4px 10px; background: transparent; border: 1px solid #667eea;
+            border-radius: 14px; color: #667eea; font-size: 0.75rem; font-weight: 600;
+            cursor: pointer; transition: background .15s, color .15s; white-space: nowrap;
+        }
+        .chat-chip:hover { background: #667eea; color: white; }
+
+        /* Chat input */
+        .chat-input-row {
+            display: flex; gap: 7px; padding: 8px 10px 10px; flex-shrink: 0;
+            border-top: 1px solid #e2e8f0;
+        }
+        #chat-input {
+            flex: 1; border: 1px solid #d0d7de; border-radius: 18px;
+            padding: 7px 12px; font-size: 0.84rem; font-family: inherit;
+            resize: none; outline: none; line-height: 1.4; max-height: 80px;
+            transition: border-color .15s;
+        }
+        #chat-input:focus { border-color: #667eea; }
+        #chat-send {
+            background: #667eea; border: none; color: white;
+            border-radius: 50%; width: 32px; height: 32px; flex-shrink: 0;
+            cursor: pointer; font-size: 0.95rem; display: flex;
+            align-items: center; justify-content: center;
+            transition: background .15s; align-self: flex-end;
+        }
+        #chat-send:hover { background: #5a6fd6; }
+        #chat-send:disabled { background: #a0aec0; cursor: not-allowed; }
+
+        /* ── Load in Editor button ── */
+        .load-in-editor-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            margin-top: 10px; padding: 5px 12px;
+            background: transparent; border: 1.5px solid #667eea;
+            border-radius: 6px; color: #667eea;
+            font-size: 0.8rem; font-weight: 600; cursor: pointer;
+            transition: background .15s, color .15s;
+        }
+        .load-in-editor-btn:hover { background: #667eea; color: white; }
+
+        /* ── Problem content ── */
+        .problem-description {
+            background: #e3f2fd; border-left: 4px solid #2196f3;
+            padding: 16px; margin-bottom: 20px; border-radius: 0 6px 6px 0;
+        }
+        .solution { margin-bottom: 32px; }
+        .solution h3 {
+            color: #2c3e50; font-size: 1.2rem; margin: 0;
+            padding-bottom: 6px; border-bottom: 2px solid #3498db; flex: 1;
+        }
+
+        /* ── Collapsible solution header ── */
+        .sol-header {
+            display: flex; align-items: center; gap: 14px;
+            cursor: pointer; padding: 6px 0; border-radius: 6px; margin-bottom: 4px;
+        }
+        .sol-header:hover h3 { color: #2980b9; }
+        .sol-toggle-btn {
+            flex-shrink: 0; padding: 4px 12px;
+            background: transparent; border: 1.5px solid #3498db;
+            border-radius: 20px; color: #3498db;
+            font-size: 0.76rem; font-weight: 600; cursor: pointer;
+            transition: background .15s, color .15s; white-space: nowrap;
+        }
+        .sol-toggle-btn:hover { background: #3498db; color: white; }
+        .sol-body { margin-top: 10px; }
+
+        /* ── Display language tabs ── */
+        .code-tabs-wrapper { margin: 10px 0; }
+        .code-tab-bar {
+            display: flex; background: #1a202c;
+            border-radius: 8px 8px 0 0; border: 1px solid #4a5568;
+            border-bottom: none; padding: 5px 7px 0;
+        }
+        .code-tab-btn {
+            padding: 6px 18px; background: transparent; color: #718096;
+            border: none; border-radius: 6px 6px 0 0; cursor: pointer;
+            font-family: 'Segoe UI', sans-serif; font-size: 0.8rem; font-weight: 600;
+            letter-spacing: 0.4px; transition: color .15s, background .15s;
+            display: flex; align-items: center; gap: 5px; position: relative;
+        }
+        .code-tab-btn.active { background: #2d3748; color: #e2e8f0; }
+        .code-tab-btn.active::after {
+            content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
+            height: 2px; background: #667eea; border-radius: 2px 2px 0 0;
+        }
+        .code-tab-btn:hover:not(.active) { color: #a0aec0; background: #252f3e; }
+
+        .lang-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .java-tab .lang-dot, .java-label .lang-dot     { background: #f89820; }
+        .python-tab .lang-dot, .python-label .lang-dot { background: #3572A5; }
+
+        .code-panel { display: none; }
+        .code-panel.active { display: block; }
+        .code-panel .code-block { border-radius: 0 0 8px 8px; margin-top: 0; border-top: none; }
+
+        .code-label-bar {
+            display: flex; background: #1a202c; border-radius: 8px 8px 0 0;
+            border: 1px solid #4a5568; border-bottom: none; padding: 5px 7px 0;
+        }
+        .code-label {
+            padding: 6px 18px; background: #2d3748; color: #e2e8f0;
+            border-radius: 6px 6px 0 0; font-size: 0.8rem; font-weight: 600;
+            letter-spacing: 0.4px; display: flex; align-items: center; gap: 5px; position: relative;
+        }
+        .code-label::after {
+            content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
+            height: 2px; background: #667eea; border-radius: 2px 2px 0 0;
+        }
+
+        .code-block {
+            background: #2d3748; border: 1px solid #4a5568; border-radius: 8px;
+            padding: 16px; margin: 10px 0; overflow-x: auto;
+            font-family: 'Courier New', 'Monaco', monospace;
+            font-size: 0.88rem; line-height: 1.5; white-space: pre;
+            color: #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* ── Playground ── */
+        .playground-toggle {
+            margin-top: 8px; padding: 6px 14px;
+            background: transparent; border: 1.5px solid #667eea;
+            border-radius: 6px; color: #667eea;
+            font-size: 0.82rem; font-weight: 600; cursor: pointer;
+            transition: background .15s, color .15s;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .playground-toggle:hover { background: #667eea; color: white; }
+        .playground-toggle:disabled { opacity: .5; cursor: wait; }
+
+        .playground-panel {
+            display: none; margin-top: 8px;
+            border: 1px solid #4a5568; border-radius: 8px; overflow: hidden;
+        }
+        .playground-panel.open { display: block; }
+
+        .pg-header {
+            display: flex; align-items: center; justify-content: space-between;
+            background: #1a202c; padding: 7px 10px; gap: 8px; flex-wrap: wrap; flex-shrink: 0;
+        }
+        .pg-lang-tabs { display: flex; gap: 4px; }
+        .pg-lang-btn {
+            padding: 4px 12px; background: transparent; color: #718096;
+            border: 1px solid transparent; border-radius: 5px; cursor: pointer;
+            font-size: 0.78rem; font-weight: 600;
+            display: inline-flex; align-items: center; gap: 4px; transition: all .15s;
+        }
+        .pg-lang-btn.active { background: #2d3748; color: #e2e8f0; border-color: #4a5568; }
+        .pg-lang-btn:hover:not(.active):not(.disabled) { color: #a0aec0; }
+        .pg-lang-btn.disabled { opacity: .35; cursor: not-allowed; }
+
+        .pg-controls { display: flex; align-items: center; gap: 7px; }
+        .pg-theme-btn {
+            background: transparent; border: 1px solid #4a5568;
+            border-radius: 5px; color: #a0aec0; padding: 4px 9px;
+            font-size: 0.78rem; cursor: pointer; transition: all .15s;
+        }
+        .pg-theme-btn:hover { border-color: #718096; color: #e2e8f0; }
+        .pg-run-btn {
+            padding: 4px 14px; background: #48bb78; color: white;
+            border: none; border-radius: 5px; font-size: 0.8rem; font-weight: 700;
+            cursor: pointer; transition: background .15s;
+            display: inline-flex; align-items: center; gap: 4px;
+        }
+        .pg-run-btn:hover { background: #38a169; }
+        .pg-run-btn:disabled { background: #718096; cursor: not-allowed; }
+
+        .pg-editor-pane { display: none; }
+        .pg-editor-pane.active { display: block; }
+
+        /* CodeMirror overrides (inline per-solution) */
+        .CodeMirror {
+            height: auto; min-height: 160px; max-height: 340px;
+            font-family: 'Menlo', 'Monaco', 'Consolas', 'Courier New', monospace;
+            font-size: 13px; line-height: 1.65;
+        }
+        .CodeMirror-scroll { max-height: 340px; }
+
+        .pg-output {
+            background: #0d1117; border-top: 1px solid #30363d;
+            padding: 10px 14px; font-family: 'Courier New', monospace;
+            font-size: 0.83rem; color: #c9d1d9;
+            min-height: 40px; max-height: 200px; overflow-y: auto; white-space: pre-wrap;
+        }
+        .pg-output.has-error { color: #ff6b6b; }
+        .out-label { color: #4a5568; font-size: 0.7rem; font-family: 'Segoe UI', sans-serif; margin-bottom: 4px; }
+
+        /* Misc */
+        .complexity {
+            background: #fff3cd; border: 1px solid #ffeaa7;
+            border-radius: 6px; padding: 12px; margin: 10px 0;
+        }
+        .complexity strong { color: #856404; }
+        .example {
+            background: #d1ecf1; border: 1px solid #bee5eb;
+            border-radius: 6px; padding: 12px; margin: 10px 0;
+        }
+        .example strong { color: #0c5460; }
+        .navigation { display: flex; justify-content: space-between; margin-top: 20px; }
+        .nav-btn {
+            padding: 9px 18px; background: #3498db; color: white;
+            text-decoration: none; border-radius: 6px; transition: background .2s; font-size: 0.9rem;
+        }
+        .nav-btn:hover { background: #2980b9; }
+        .loading { text-align: center; padding: 40px; color: #666; }
+        .error {
+            background: #f8d7da; border: 1px solid #f5c6cb;
+            border-radius: 6px; padding: 20px; margin: 20px 0; color: #721c24;
+        }
+
+        /* ── Light mode ── */
+        body.light .code-block { background: #f6f8fa; color: #24292e; border-color: #d0d7de; }
+        body.light .code-tab-bar, body.light .code-label-bar { background: #f0f0f0; }
+        body.light .code-tab-btn.active, body.light .code-label { background: #f6f8fa; color: #24292e; }
+        body.light .code-tab-btn { color: #57606a; }
+        body.light .pg-header { background: #f0f0f0; }
+        body.light .pg-lang-btn.active { background: #fff; color: #24292e; border-color: #d0d7de; }
+        body.light .pg-lang-btn { color: #57606a; }
+        body.light .playground-panel { border-color: #d0d7de; }
+        body.light .pg-theme-btn { border-color: #d0d7de; color: #57606a; }
+        body.light .pg-output { background: #f6f8fa; color: #24292e; border-top-color: #d0d7de; }
+        body.light .pg-output.has-error { color: #cf222e; }
+        body.light .out-label { color: #8c959f; }
+        body.light .split-divider { background: #d0d7de; }
+        body.light .mid-pane { background: #f6f8fa; border-left-color: #d0d7de; }
+        body.light .chat-pane { background: #fff; border-left-color: #d0d7de; }
+
+        /* ── Dark mode ── */
+        body.dark { background-color: #0d1117; color: #c9d1d9; }
+        body.dark .content { background: #161b22; box-shadow: 0 4px 6px rgba(0,0,0,0.4); }
+        body.dark .problem-description { background: #1c2938; border-left-color: #388bfd; color: #adbac7; }
+        body.dark .solution h3 { color: #e6edf3; border-bottom-color: #388bfd; }
+        body.dark .sol-header:hover h3 { color: #79c0ff; }
+        body.dark .sol-toggle-btn { border-color: #388bfd; color: #79c0ff; }
+        body.dark .sol-toggle-btn:hover { background: #388bfd; color: white; }
+        body.dark p, body.dark li { color: #adbac7; }
+        body.dark .complexity { background: #272115; border-color: #4d4117; color: #e3b341; }
+        body.dark .complexity strong { color: #e3b341; }
+        body.dark .example { background: #182125; border-color: #1f4a52; color: #adbac7; }
+        body.dark .example strong { color: #79c0ff; }
+        body.dark .nav-btn { background: #1f6feb; }
+        body.dark .nav-btn:hover { background: #388bfd; }
+        body.dark .code-tab-bar, body.dark .code-label-bar { background: #1a202c; }
+        body.dark .pg-header { background: #1a202c; }
+        body.dark .playground-panel { border-color: #4a5568; }
+        body.dark .split-divider { background: #2d3748; }
+        body.dark .split-divider::after { border-color: rgba(255,255,255,0.2); }
+        body.dark .chat-pane { background: #161b22; border-left-color: #30363d; }
+        body.dark .chat-pane-header { /* already gradient */ }
+        body.dark .chat-msg.assistant { background: #21262d; color: #c9d1d9; }
+        body.dark #chat-input { background: #21262d; border-color: #30363d; color: #c9d1d9; }
+        body.dark #chat-input:focus { border-color: #667eea; }
+        body.dark .chat-input-row { border-top-color: #30363d; }
+        body.dark .chat-typing { background: #21262d; }
+        body.dark .chat-chip { border-color: #667eea; color: #a78bfa; }
+        body.dark .chat-chip:hover { background: #667eea; color: white; }
+        body.dark .chat-welcome { color: #718096; }
+
+        /* ── Mobile ── */
+        @media (max-width: 768px) {
+            body { height: auto; overflow: auto; }
+            .split-layout { flex-direction: column; overflow: visible; }
+            .left-pane { padding: 10px; min-width: 0; overflow-y: visible; }
+            .split-divider { display: none !important; }
+            .mid-pane { width: 100%; min-width: 0; height: 480px; border-left: none; border-top: 2px solid #667eea; }
+            .chat-pane { width: 100% !important; min-width: 0; height: 400px; border-left: none; border-top: 2px solid #764ba2; }
+            .chat-pane.closed { height: 0 !important; }
+            .content { padding: 14px; }
+            h1 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="header-top">
+                <div class="breadcrumb">
+                    <a href="../index.html">Home</a> &gt;
+                    <span id="breadcrumb-category">Category</span> &gt;
+                    <span id="breadcrumb-title">Problem</span>
+                </div>
+                <div class="header-actions">
+                    <button id="global-theme-btn" onclick="togglePageTheme()">🌙 Dark</button>
+                    <button id="ai-toggle-btn" onclick="toggleChatPane()" class="active">🤖 AI Buddy</button>
+                </div>
+            </div>
+            <h1 id="problem-title">Loading...</h1>
+            <div class="meta" id="problem-meta">Loading...</div>
+        </div>
+    </div>
+
+    <div class="split-layout">
+        <!-- ── Left: problem + solutions ── -->
+        <div class="left-pane" id="left-pane">
+            <div class="content">
+                <div id="loading" class="loading">
+                    <h3>Loading problem...</h3>
+                    <p>Please wait while we load the problem details.</p>
+                </div>
+                <div id="error" class="error" style="display:none;">
+                    <h3>Error Loading Problem</h3>
+                    <p id="error-message">Failed to load the problem. Please try refreshing the page.</p>
+                </div>
+                <div id="problem-content" style="display:none;">
+                    <div class="problem-description" id="problem-description"></div>
+                    <div id="solutions-container"></div>
+                    <div id="variations-container"></div>
+                    <div class="navigation" id="navigation"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Divider 1 (left | editor) ── -->
+        <div class="split-divider" id="split-divider-1"></div>
+
+        <!-- ── Middle: editor ── -->
+        <div class="mid-pane" id="mid-pane">
+            <div class="rp-title-bar">
+                <span>✏️ Try It Yourself</span>
+                <span class="rp-hint">Load a solution or write from scratch</span>
+            </div>
+            <!-- playground injected by renderTopPlayground() -->
+        </div>
+
+        <!-- ── Divider 2 (editor | chat) ── -->
+        <div class="split-divider" id="split-divider-2"></div>
+
+        <!-- ── Right: AI Study Buddy ── -->
+        <div class="chat-pane" id="chat-pane">
+            <div class="chat-pane-header">
+                <div class="chat-pane-header-left">
+                    <div class="chat-pane-avatar">🤖</div>
+                    <div>
+                        <h4>AI Study Buddy</h4>
+                        <p>Powered by Llama 3.3</p>
+                    </div>
+                </div>
+                <button class="chat-pane-close" onclick="toggleChatPane()" title="Close">✕</button>
+            </div>
+
+            <div id="chat-messages">
+                <div class="chat-welcome" id="chat-welcome">
+                    <span class="welcome-emoji">🤖</span>
+                    <p>Hi! I'm here to help you work through this problem.</p>
+                    <p style="font-size:0.78rem;opacity:0.75">Ask me about the approach, complexity, hints — anything!</p>
+                </div>
+            </div>
+
+            <div class="chat-chips" id="chat-chips">
+                <button class="chat-chip" onclick="sendChip('Give me a hint without spoiling the solution')">💡 Hint</button>
+                <button class="chat-chip" onclick="sendChip('What is the optimal time complexity for this problem?')">⏱ Complexity</button>
+                <button class="chat-chip" onclick="sendChip('Explain the key algorithm or data structure needed')">📖 Approach</button>
+                <button class="chat-chip" onclick="sendChip('Give me a step-by-step walkthrough of the example')">🔍 Walkthrough</button>
+            </div>
+
+            <div class="chat-input-row">
+                <textarea id="chat-input" placeholder="Ask anything…" rows="1"></textarea>
+                <button id="chat-send" onclick="sendChat()">➤</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ── Theme ─────────────────────────────────────────────────────────── */
+        (function () {
+            var t = localStorage.getItem('pg-theme');
+            if (t === 'light') document.body.classList.add('light');
+            else document.body.classList.add('dark');
+        })();
+
+        function isDark() {
+            return document.body.classList.contains('dark') || !document.body.classList.contains('light');
+        }
+
+        function togglePageTheme() {
+            var goingDark = !document.body.classList.contains('dark');
+            document.body.classList.toggle('dark', goingDark);
+            document.body.classList.toggle('light', !goingDark);
+            localStorage.setItem('pg-theme', goingDark ? 'dark' : 'light');
+            var newCmTheme = goingDark ? 'dracula' : 'eclipse';
+            document.querySelectorAll('.CodeMirror').forEach(function(el) {
+                if (el.CodeMirror) el.CodeMirror.setOption('theme', newCmTheme);
+            });
+            syncThemeButtons();
+        }
+
+        function syncThemeButtons() {
+            var dark = document.body.classList.contains('dark');
+            var globalBtn = document.getElementById('global-theme-btn');
+            if (globalBtn) globalBtn.textContent = dark ? '☀ Light' : '🌙 Dark';
+            document.querySelectorAll('.pg-theme-btn').forEach(function(btn) {
+                btn.textContent = dark ? '☀ Light' : '🌙 Dark';
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            syncThemeButtons();
+            initSplitDividers();
+
+            // Restore chat pane state
+            if (localStorage.getItem('chat-pane-closed') === '1') {
+                var pane = document.getElementById('chat-pane');
+                var div2 = document.getElementById('split-divider-2');
+                var btn  = document.getElementById('ai-toggle-btn');
+                pane.classList.add('closed');
+                if (div2) div2.style.display = 'none';
+                btn.classList.remove('active');
+            }
+
+            // Chat textarea behaviour
+            var input = document.getElementById('chat-input');
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChat(); }
+            });
+            input.addEventListener('input', function() {
+                this.style.height = '';
+                this.style.height = Math.min(this.scrollHeight, 80) + 'px';
+            });
+        });
+
+        /* ── Chat pane toggle ─────────────────────────────────────────────── */
+        function toggleChatPane() {
+            var pane = document.getElementById('chat-pane');
+            var div2 = document.getElementById('split-divider-2');
+            var btn  = document.getElementById('ai-toggle-btn');
+            var closing = !pane.classList.contains('closed');
+
+            pane.classList.toggle('closed', closing);
+            if (div2) div2.style.display = closing ? 'none' : '';
+            btn.classList.toggle('active', !closing);
+            localStorage.setItem('chat-pane-closed', closing ? '1' : '0');
+
+            // Refresh editor after resize
+            setTimeout(function() {
+                document.querySelectorAll('.mid-pane .CodeMirror').forEach(function(el) {
+                    if (el.CodeMirror) el.CodeMirror.refresh();
+                });
+            }, 280);
+        }
+
+        /* ── Split dividers ───────────────────────────────────────────────── */
+        function initSplitDividers() {
+            var layout    = document.querySelector('.split-layout');
+            var leftPane  = document.getElementById('left-pane');
+            var div1      = document.getElementById('split-divider-1');
+            var midPane   = document.getElementById('mid-pane');
+            var div2      = document.getElementById('split-divider-2');
+            var chatPane  = document.getElementById('chat-pane');
+
+            // Restore saved widths
+            var savedMid  = localStorage.getItem('split-mid-width');
+            var savedChat = localStorage.getItem('split-chat-width');
+            if (savedMid)  midPane.style.width  = savedMid  + 'px';
+            if (savedChat) chatPane.style.width = savedChat + 'px';
+
+            function refreshCM() {
+                document.querySelectorAll('.mid-pane .CodeMirror').forEach(function(el) {
+                    if (el.CodeMirror) el.CodeMirror.refresh();
+                });
+            }
+
+            // ── Divider 1: only moves the boundary between left-pane and mid-pane ──
+            // Left-pane is flex:1 and absorbs the slack. Chat-pane is untouched.
+            var d1 = { dragging: false, startX: 0, startMidW: 0 };
+
+            div1.addEventListener('mousedown', function(e) {
+                d1.dragging  = true;
+                d1.startX    = e.clientX;
+                d1.startMidW = midPane.offsetWidth;
+                div1.classList.add('dragging');
+                document.body.style.cursor = 'col-resize';
+                document.body.style.userSelect = 'none';
+                e.preventDefault();
+            });
+
+            // ── Divider 2: only moves the boundary between mid-pane and chat-pane ──
+            // Both mid-pane and chat-pane change; left-pane is untouched.
+            var d2 = { dragging: false, startX: 0, startMidW: 0, startChatW: 0, startLeftW: 0 };
+
+            div2.addEventListener('mousedown', function(e) {
+                d2.dragging   = true;
+                d2.startX     = e.clientX;
+                d2.startMidW  = midPane.offsetWidth;
+                d2.startChatW = chatPane.offsetWidth;
+                d2.startLeftW = leftPane.offsetWidth;
+                div2.classList.add('dragging');
+                document.body.style.cursor = 'col-resize';
+                document.body.style.userSelect = 'none';
+                e.preventDefault();
+            });
+
+            document.addEventListener('mousemove', function(e) {
+                var layoutW = layout.offsetWidth;
+
+                if (d1.dragging) {
+                    // Drag right → mid-pane shrinks, left-pane grows (and vice-versa)
+                    var delta  = e.clientX - d1.startX;
+                    var newMid = Math.max(220, Math.min(d1.startMidW - delta, layoutW - 320));
+                    midPane.style.width = newMid + 'px';
+                    localStorage.setItem('split-mid-width', newMid);
+                    refreshCM();
+                }
+
+                if (d2.dragging) {
+                    // Drag right → chat-pane shrinks, mid-pane grows (and vice-versa)
+                    // Derive available space from snapshotted left-pane width so it never shifts.
+                    var delta     = e.clientX - d2.startX;
+                    var divW      = div1.offsetWidth + div2.offsetWidth;
+                    var available = layoutW - d2.startLeftW - divW;
+                    var newChat   = Math.max(220, Math.min(d2.startChatW - delta, available - 220));
+                    var newMid    = Math.max(220, available - newChat);
+                    midPane.style.width  = newMid  + 'px';
+                    chatPane.style.width = newChat + 'px';
+                    localStorage.setItem('split-mid-width',  newMid);
+                    localStorage.setItem('split-chat-width', newChat);
+                    refreshCM();
+                }
+            });
+
+            document.addEventListener('mouseup', function() {
+                if (d1.dragging) { d1.dragging = false; div1.classList.remove('dragging'); }
+                if (d2.dragging) { d2.dragging = false; div2.classList.remove('dragging'); }
+                document.body.style.cursor = '';
+                document.body.style.userSelect = '';
+            });
+        }
+
+        /* ── CodeMirror 5 lazy loader ─────────────────────────────────────── */
+        var cmLoaded = false, cmLoading = false, cmCallbacks = [];
+
+        function loadCM(cb) {
+            if (cmLoaded) { cb(); return; }
+            cmCallbacks.push(cb);
+            if (cmLoading) return;
+            cmLoading = true;
+
+            function addScript(src, onload) {
+                var s = document.createElement('script');
+                s.src = src; s.onload = onload;
+                document.head.appendChild(s);
+            }
+
+            addScript('https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js', function () {
+                var done = 0;
+                function check() { if (++done === 2) { cmLoaded = true; cmCallbacks.forEach(function(f){f();}); cmCallbacks = []; } }
+                addScript('https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/clike/clike.min.js', check);
+                addScript('https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js', check);
+            });
+        }
+
+        /* ── Java wrapper ─────────────────────────────────────────────────── */
+        function wrapJava(code) {
+            if (/^\s*(public\s+)?class\s+\w+/.test(code)) return code;
+            var indented = code.split('\n').map(function(l){ return '    ' + l; }).join('\n');
+            return 'import java.util.*;\nimport java.util.stream.*;\n\npublic class Main {\n' +
+                indented + '\n\n' +
+                '    public static void main(String[] args) {\n' +
+                '        Main sol = new Main();\n' +
+                '        // TODO: call your method, e.g.:\n' +
+                '        // System.out.println(sol.methodName(arg1, arg2));\n' +
+                '    }\n}';
+        }
+
+        function wrapPython(code) {
+            return code + '\n\n# Test your solution:\n# print(your_function(args))';
+        }
+
+        /* ── Judge0 CE ────────────────────────────────────────────────────── */
+        function prepareJava(code) {
+            return code.replace(/public\s+class\s+\w+/, 'public class Main');
+        }
+
+        function runCode(code, lang, cb) {
+            if (lang === 'java') code = prepareJava(code);
+            var langId = lang === 'java' ? 62 : 71;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'https://ce.judge0.com/submissions?base64_encoded=false&wait=true');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = function () {
+                try {
+                    var d = JSON.parse(xhr.responseText);
+                    var out = d.stdout || '';
+                    var err = d.stderr || d.compile_output || '';
+                    if (d.status && d.status.id > 3 && !err) err = d.status.description;
+                    cb(null, out, err);
+                } catch(e) { cb('Invalid response from server'); }
+            };
+            xhr.onerror = function () { cb('Network error — check your connection'); };
+            xhr.send(JSON.stringify({ source_code: code, language_id: langId }));
+        }
+
+        /* ── Display tab switcher ─────────────────────────────────────────── */
+        function switchTab(tabId, lang, btn) {
+            var wrapper = btn.closest('.code-tabs-wrapper');
+            wrapper.querySelectorAll('.code-tab-btn').forEach(function(b){ b.classList.remove('active'); });
+            btn.classList.add('active');
+            wrapper.querySelectorAll('.code-panel').forEach(function(p){ p.classList.remove('active'); });
+            wrapper.querySelector('#' + tabId + '-' + lang).classList.add('active');
+        }
+
+        /* ── Per-solution playground ──────────────────────────────────────── */
+        function openPlayground(pgId) {
+            var panel  = document.getElementById(pgId);
+            var toggle = panel.previousElementSibling;
+            if (panel.classList.contains('open')) {
+                panel.classList.remove('open');
+                toggle.textContent = '▶  Try it';
+                return;
+            }
+            if (panel.dataset.ready) {
+                panel.classList.add('open');
+                toggle.textContent = '▼  Close editor';
+                return;
+            }
+            toggle.disabled = true;
+            toggle.textContent = 'Loading editor…';
+            loadCM(function () {
+                initPlayground(panel);
+                panel.classList.add('open');
+                toggle.disabled = false;
+                toggle.textContent = '▼  Close editor';
+            });
+        }
+
+        function initPlayground(panel) {
+            panel.dataset.ready = '1';
+            var javaCodeRaw   = panel.dataset.java   || '';
+            var pythonCodeRaw = panel.dataset.python || '';
+            var noWrap        = !!panel.dataset.nowrap;
+            var javaCode   = javaCodeRaw   ? (noWrap ? javaCodeRaw   : wrapJava(javaCodeRaw))   : '';
+            var pythonCode = pythonCodeRaw ? (noWrap ? pythonCodeRaw : wrapPython(pythonCodeRaw)) : '';
+
+            var editors = {};
+            var currentTheme = isDark() ? 'dracula' : 'eclipse';
+
+            function makeEditor(host, code, mode) {
+                return CodeMirror(host, {
+                    value: code, mode: mode, theme: currentTheme,
+                    lineNumbers: true, indentWithTabs: false, tabSize: 4,
+                    indentUnit: 4, lineWrapping: false, autofocus: false
+                });
+            }
+
+            var javaHost   = panel.querySelector('.cm-java-host');
+            var pythonHost = panel.querySelector('.cm-python-host');
+            if (javaCode && javaHost)     editors.java   = makeEditor(javaHost,   javaCode,   'text/x-java');
+            if (pythonCode && pythonHost) editors.python = makeEditor(pythonHost, pythonCode, 'python');
+
+            panel._editors    = editors;
+            panel._activeLang = javaCode ? 'java' : 'python';
+
+            panel.querySelectorAll('.pg-lang-btn').forEach(function(btn) {
+                btn.addEventListener('click', function () {
+                    if (btn.classList.contains('disabled')) return;
+                    panel.querySelectorAll('.pg-lang-btn').forEach(function(b){ b.classList.remove('active'); });
+                    btn.classList.add('active');
+                    panel.querySelectorAll('.pg-editor-pane').forEach(function(p){ p.classList.remove('active'); });
+                    panel.querySelector('.pg-editor-pane[data-lang="' + btn.dataset.lang + '"]').classList.add('active');
+                    panel._activeLang = btn.dataset.lang;
+                    var ed = editors[btn.dataset.lang];
+                    if (ed) setTimeout(function(){ ed.refresh(); }, 10);
+                });
+            });
+
+            panel.querySelector('.pg-theme-btn').addEventListener('click', togglePageTheme);
+
+            var runBtn = panel.querySelector('.pg-run-btn');
+            var outEl  = panel.querySelector('.pg-output');
+            runBtn.addEventListener('click', function () {
+                var lang   = panel._activeLang;
+                var editor = editors[lang];
+                if (!editor) return;
+                runBtn.disabled = true;
+                runBtn.textContent = 'Running…';
+                outEl.className = 'pg-output';
+                outEl.innerHTML = '<div class="out-label">Output</div>Running…';
+                runCode(editor.getValue(), lang, function (err, out, stderr) {
+                    runBtn.disabled = false;
+                    runBtn.textContent = '▶ Run';
+                    if (err) {
+                        outEl.className = 'pg-output has-error';
+                        outEl.innerHTML = '<div class="out-label">Error</div>' + escHtml(err);
+                        return;
+                    }
+                    if (stderr && !out) {
+                        outEl.className = 'pg-output has-error';
+                        outEl.innerHTML = '<div class="out-label">Error</div>' + escHtml(stderr);
+                    } else {
+                        outEl.innerHTML = '<div class="out-label">Output</div>' +
+                            escHtml(out || '(no output)') +
+                            (stderr ? '\n<span style="color:#ffa07a">' + escHtml(stderr) + '</span>' : '');
+                    }
+                });
+            });
+        }
+
+        /* ── Load solution into mid-pane editor ───────────────────────────── */
+        function loadInEditor(btn) {
+            var panel = document.getElementById('pg-top');
+            if (!panel || !panel._editors) return;
+            var lang = panel._activeLang || 'java';
+            var raw = lang === 'java'
+                ? (btn.dataset.java || btn.dataset.python || '')
+                : (btn.dataset.python || btn.dataset.java || '');
+            if (!raw) return;
+            if ((lang === 'java' && !panel._editors.java) || (lang === 'python' && !panel._editors.python)) {
+                lang = lang === 'java' ? 'python' : 'java';
+                raw = btn.dataset[lang] || '';
+            }
+            if (!panel._editors[lang] || !raw) return;
+            panel.querySelectorAll('.pg-lang-btn').forEach(function(b){ b.classList.remove('active'); });
+            var targetBtn = panel.querySelector('.pg-lang-btn[data-lang="' + lang + '"]');
+            if (targetBtn) targetBtn.classList.add('active');
+            panel.querySelectorAll('.pg-editor-pane').forEach(function(p){ p.classList.remove('active'); });
+            var targetPane = panel.querySelector('.pg-editor-pane[data-lang="' + lang + '"]');
+            if (targetPane) targetPane.classList.add('active');
+            panel._activeLang = lang;
+            panel._editors[lang].setValue(raw);
+            setTimeout(function(){ panel._editors[lang].refresh(); panel._editors[lang].focus(); }, 20);
+
+            var bar = document.querySelector('.rp-title-bar');
+            if (bar) { bar.style.background = '#38a169'; setTimeout(function(){ bar.style.background = ''; }, 600); }
+        }
+
+        function escHtml(s) {
+            return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        }
+
+        /* ── Problem loader ───────────────────────────────────────────────── */
+        var tabCounter = 0, pgCounter = 0;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var problemId = window.location.pathname.split('/').pop().replace('.html','');
+            fetch('/solutions/' + problemId + '.json')
+                .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+                .then(renderProblem)
+                .catch(function(e) {
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('error').style.display = 'block';
+                    document.getElementById('error-message').textContent = 'Failed to load problem: ' + e.message;
+                });
+        });
+
+        function renderProblem(data) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('problem-content').style.display = 'block';
+            var title = data.problem.title + ' - Coding Interview Problems';
+            document.title = title;
+            document.getElementById('page-title').textContent = title;
+            document.getElementById('problem-title').textContent = data.problem.title;
+            document.getElementById('breadcrumb-category').textContent = data.problem.category;
+            document.getElementById('breadcrumb-title').textContent = data.problem.title;
+            document.getElementById('problem-meta').textContent =
+                data.problem.leetcode_id ? 'LeetCode Problem ' + data.problem.leetcode_id : 'Coding Interview Problem';
+            renderDescription(data.problem);
+            renderTopPlayground();
+            renderSolutions(data.solutions, 'solutions-container');
+            if (data.variations && data.variations.length) renderVariations(data.variations);
+            renderNavigation(data.navigation);
+        }
+
+        /* ── Mid-pane playground ──────────────────────────────────────────── */
+        function renderTopPlayground() {
+            var midPane = document.getElementById('mid-pane');
+            if (!midPane) return;
+            var pgId = 'pg-top';
+            var themeLabel = isDark() ? '☀ Light' : '🌙 Dark';
+            var javaStarter =
+                'public class Main {\n    // Write your solution here\n' +
+                '    public int solve(/* add params */) {\n        \n        return 0;\n    }\n\n' +
+                '    public static void main(String[] args) {\n        Main sol = new Main();\n' +
+                '        // System.out.println(sol.solve(...));\n    }\n}';
+            var pythonStarter =
+                '# Write your solution here\n\ndef solve():  # add params\n    pass\n\n\n# print(solve(...))';
+
+            var pgHtml =
+                '<div class="playground-panel open" id="' + pgId + '" ' +
+                'data-java="' + escAttr(javaStarter) + '" ' +
+                'data-python="' + escAttr(pythonStarter) + '" data-nowrap="1">' +
+                '<div class="pg-header">' +
+                '<div class="pg-lang-tabs">' +
+                '<button class="pg-lang-btn java-tab active" data-lang="java"><span class="lang-dot"></span>Java</button>' +
+                '<button class="pg-lang-btn python-tab" data-lang="python"><span class="lang-dot"></span>Python</button>' +
+                '</div>' +
+                '<div class="pg-controls">' +
+                '<button class="pg-theme-btn">' + themeLabel + '</button>' +
+                '<button class="pg-run-btn">▶ Run</button>' +
+                '</div></div>' +
+                '<div class="pg-editor-pane active" data-lang="java"><div class="cm-java-host"></div></div>' +
+                '<div class="pg-editor-pane" data-lang="python"><div class="cm-python-host"></div></div>' +
+                '<div class="pg-output"><div class="out-label">Output</div></div>' +
+                '</div>';
+
+            var temp = document.createElement('div');
+            temp.innerHTML = pgHtml;
+            midPane.appendChild(temp.firstChild);
+
+            loadCM(function () {
+                var panel = document.getElementById(pgId);
+                if (panel) {
+                    initPlayground(panel);
+                    setTimeout(function() {
+                        panel.querySelectorAll('.CodeMirror').forEach(function(el) {
+                            if (el.CodeMirror) el.CodeMirror.refresh();
+                        });
+                    }, 50);
+                }
+            });
+        }
+
+        function renderDescription(p) {
+            var el = document.getElementById('problem-description');
+            var html = '<strong>Problem:</strong> ' + p.description;
+            if (p.assumptions && p.assumptions.length) {
+                html += '<br><br><strong>Assumptions:</strong><ul>';
+                p.assumptions.forEach(function(a){ html += '<li>' + a + '</li>'; });
+                html += '</ul>';
+            }
+            if (p.example) {
+                html += '<br><strong>Example:</strong><br>';
+                if (p.example.input)       html += 'Input: '       + p.example.input + '<br>';
+                if (p.example.output)      html += 'Output: '      + p.example.output + '<br>';
+                if (p.example.explanation) html += 'Explanation: ' + p.example.explanation;
+            }
+            el.innerHTML = html;
+        }
+
+        function renderCodeSection(sol) {
+            var isPyOnly  = sol.language === 'python' && !sol.code_python;
+            var hasJava   = sol.code && !isPyOnly;
+            var hasPython = !!sol.code_python || isPyOnly;
+            var jCode     = hasJava   ? sol.code        : null;
+            var pCode     = hasPython ? (sol.code_python || sol.code) : null;
+            if (!jCode && !pCode) return '';
+
+            var displayHtml = '';
+            if (jCode && pCode) {
+                var tid = 'tab-' + (++tabCounter);
+                displayHtml =
+                    '<div class="code-tabs-wrapper">' +
+                    '<div class="code-tab-bar">' +
+                    '<button class="code-tab-btn java-tab active" onclick="switchTab(\'' + tid + '\',\'java\',this)"><span class="lang-dot"></span>Java</button>' +
+                    '<button class="code-tab-btn python-tab" onclick="switchTab(\'' + tid + '\',\'python\',this)"><span class="lang-dot"></span>Python</button>' +
+                    '</div>' +
+                    '<div id="' + tid + '-java" class="code-panel active"><div class="code-block">' + escHtml(jCode) + '</div></div>' +
+                    '<div id="' + tid + '-python" class="code-panel"><div class="code-block">' + escHtml(pCode) + '</div></div>' +
+                    '</div>';
+            } else {
+                var lang  = isPyOnly ? 'python' : 'java';
+                var label = isPyOnly ? 'Python'  : 'Java';
+                var code  = jCode || pCode;
+                displayHtml =
+                    '<div class="code-tabs-wrapper">' +
+                    '<div class="code-label-bar"><span class="code-label ' + lang + '-label"><span class="lang-dot"></span>' + label + '</span></div>' +
+                    '<div class="code-block" style="border-radius:0 0 8px 8px;margin-top:0;border-top:none">' + escHtml(code) + '</div>' +
+                    '</div>';
+            }
+
+            var loadBtn =
+                '<button class="load-in-editor-btn" ' +
+                (jCode ? 'data-java="' + escAttr(jCode) + '" ' : '') +
+                (pCode ? 'data-python="' + escAttr(pCode) + '" ' : '') +
+                'onclick="loadInEditor(this)">▶ Load in Editor</button>';
+
+            var pgId = 'pg-' + (++pgCounter);
+            var themeLabel = isDark() ? '☀ Light' : '🌙 Dark';
+            var jAttr = jCode ? ' data-java="'   + escAttr(jCode) + '"' : '';
+            var pAttr = pCode ? ' data-python="' + escAttr(pCode) + '"' : '';
+            var jBtnCls = !jCode ? ' disabled' : ' active';
+            var pBtnCls = !pCode ? ' disabled' : (jCode ? '' : ' active');
+            var jPaneCls = jCode ? ' active' : '';
+            var pPaneCls = !jCode && pCode ? ' active' : '';
+
+            var playHtml =
+                '<button class="playground-toggle" onclick="openPlayground(\'' + pgId + '\')">▶  Try it</button>' +
+                '<div class="playground-panel" id="' + pgId + '"' + jAttr + pAttr + '>' +
+                  '<div class="pg-header">' +
+                    '<div class="pg-lang-tabs">' +
+                      '<button class="pg-lang-btn java-tab' + jBtnCls + '" data-lang="java"><span class="lang-dot"></span>Java</button>' +
+                      '<button class="pg-lang-btn python-tab' + pBtnCls + '" data-lang="python"><span class="lang-dot"></span>Python</button>' +
+                    '</div>' +
+                    '<div class="pg-controls">' +
+                      '<button class="pg-theme-btn">' + themeLabel + '</button>' +
+                      '<button class="pg-run-btn">▶ Run</button>' +
+                    '</div>' +
+                  '</div>' +
+                  '<div class="pg-editor-pane' + jPaneCls + '" data-lang="java"><div class="cm-java-host"></div></div>' +
+                  '<div class="pg-editor-pane' + pPaneCls + '" data-lang="python"><div class="cm-python-host"></div></div>' +
+                  '<div class="pg-output"><div class="out-label">Output</div></div>' +
+                '</div>';
+
+            return displayHtml + loadBtn + playHtml;
+        }
+
+        function toggleSolution(bodyId, btn) {
+            var body = document.getElementById(bodyId);
+            var open = body.style.display !== 'none';
+            body.style.display = open ? 'none' : 'block';
+            btn.textContent = open ? '👁 Show Solution' : '🙈 Hide';
+        }
+
+        function renderSolutions(solutions, containerId) {
+            var container = document.getElementById(containerId);
+            if (!container) return;
+            container.innerHTML = '';
+            solutions.forEach(function(sol, idx) {
+                var div = document.createElement('div');
+                div.className = 'solution';
+                var bodyHtml = '';
+                if (sol.description) bodyHtml += '<p>' + sol.description + '</p>';
+                if (sol.code || sol.code_python) bodyHtml += renderCodeSection(sol);
+                if (sol.complexity) {
+                    bodyHtml += '<div class="complexity">';
+                    if (sol.complexity.time)  bodyHtml += '<strong>Time Complexity:</strong> ' + sol.complexity.time + '<br>';
+                    if (sol.complexity.space) bodyHtml += '<strong>Space Complexity:</strong> ' + sol.complexity.space;
+                    bodyHtml += '</div>';
+                }
+                if (sol.example_walkthrough) {
+                    bodyHtml += '<div class="example"><strong>Example Walkthrough:</strong><br><br>';
+                    if (sol.example_walkthrough.text)
+                        bodyHtml += sol.example_walkthrough.text;
+                    else if (sol.example_walkthrough.steps)
+                        sol.example_walkthrough.steps.forEach(function(s){ bodyHtml += s + '<br>'; });
+                    bodyHtml += '</div>';
+                }
+                var bodyId = 'sol-body-' + containerId + '-' + idx;
+                div.innerHTML =
+                    '<div class="sol-header">' +
+                    '<h3>' + sol.title + '</h3>' +
+                    '<button class="sol-toggle-btn" onclick="toggleSolution(\'' + bodyId + '\', this)">👁 Show Solution</button>' +
+                    '</div>' +
+                    '<div class="sol-body" id="' + bodyId + '" style="display:none">' + bodyHtml + '</div>';
+                container.appendChild(div);
+            });
+        }
+
+        function renderVariations(variations) {
+            var container = document.getElementById('variations-container');
+            container.innerHTML = '';
+            var div = document.createElement('div');
+            div.className = 'solution';
+            div.innerHTML = '<h3>Variations</h3>';
+            variations.forEach(function(v) {
+                var html = '<h4>' + v.title + '</h4>';
+                if (v.description) html += '<p>' + v.description + '</p>';
+                if (v.code || v.code_python) html += renderCodeSection(v);
+                div.innerHTML += html;
+            });
+            container.appendChild(div);
+        }
+
+        function renderNavigation(nav) {
+            if (!nav) return;
+            var el = document.getElementById('navigation');
+            var prev = nav.previous ? '<a href="' + nav.previous + '" class="nav-btn">← Previous: ' + titleFromFile(nav.previous) + '</a>' : '<span></span>';
+            var next = nav.next     ? '<a href="' + nav.next     + '" class="nav-btn">Next: '     + titleFromFile(nav.next)     + ' →</a>' : '<span></span>';
+            el.innerHTML = prev + next;
+        }
+
+        function titleFromFile(f) {
+            return f.replace('.html','').split('-').map(function(w){ return w[0].toUpperCase()+w.slice(1); }).join(' ');
+        }
+
+        function escAttr(s) {
+            return s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+        }
+
+        /* ── AI Chat ──────────────────────────────────────────────────────── */
+        var chatHistory = [];
+
+        function sendChip(text) {
+            document.getElementById('chat-input').value = text;
+            sendChat();
+        }
+
+        function sendChat() {
+            var input = document.getElementById('chat-input');
+            var text = input.value.trim();
+            if (!text) return;
+
+            // Hide welcome state and chips after first message
+            var welcome = document.getElementById('chat-welcome');
+            if (welcome) welcome.remove();
+            var chips = document.getElementById('chat-chips');
+            if (chips) chips.style.display = 'none';
+
+            appendMsg('user', text);
+            chatHistory.push({ role: 'user', content: text });
+            input.value = '';
+            input.style.height = '';
+
+            var sendBtn = document.getElementById('chat-send');
+            sendBtn.disabled = true;
+
+            var typing = document.createElement('div');
+            typing.className = 'chat-typing';
+            typing.textContent = 'Thinking…';
+            document.getElementById('chat-messages').appendChild(typing);
+            scrollChat();
+
+            var problem = document.getElementById('problem-title').textContent || '';
+
+            fetch('https://topalgorithms.vercel.app/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ messages: chatHistory, problem: problem })
+            })
+            .then(function(r){ return r.json(); })
+            .then(function(d) {
+                typing.remove();
+                sendBtn.disabled = false;
+                if (d.error) {
+                    appendMsg('error', d.error);
+                } else {
+                    appendMsg('assistant', d.reply);
+                    chatHistory.push({ role: 'assistant', content: d.reply });
+                }
+            })
+            .catch(function() {
+                typing.remove();
+                sendBtn.disabled = false;
+                appendMsg('error', 'Network error — check your connection.');
+            });
+        }
+
+        function appendMsg(role, text) {
+            var el = document.createElement('div');
+            el.className = 'chat-msg ' + role;
+            el.textContent = text;
+            document.getElementById('chat-messages').appendChild(el);
+            scrollChat();
+        }
+
+        function scrollChat() {
+            var msgs = document.getElementById('chat-messages');
+            msgs.scrollTop = msgs.scrollHeight;
+        }
+    </script>
+</body>
+</html>

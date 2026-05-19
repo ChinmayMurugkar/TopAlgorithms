@@ -1,0 +1,33 @@
+{
+  "problem": {
+    "title": "Super Ugly Number",
+    "leetcode_id": 313,
+    "category": "Math & Bit Manipulation",
+    "description": "A super ugly number is a positive integer whose prime factors are in the given array primes. Given an integer n and an array of primes, return the nth super ugly number. The 1st super ugly number is 1.",
+    "assumptions": [
+      "primes is sorted in ascending order.",
+      "All primes are distinct.",
+      "Generalization of Ugly Number II to arbitrary prime factors."
+    ],
+    "example": {
+      "input": "n = 12, primes = [2,7,13,19]",
+      "output": "32",
+      "explanation": "Sequence: [1,2,4,7,8,13,14,16,19,26,28,32]. Generalize the three-pointer DP: maintain one pointer per prime. Next = min over all primes of dp[ptr[i]] * primes[i]. Advance all pointers that produced the minimum."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – DP with k Pointers",
+      "description": "Generalize Ugly Number II to k primes. Maintain an array of pointers (one per prime) into the dp array. At each step compute next = min over all i of dp[ptr[i]] * primes[i]. Set dp[j] = next, then advance every pointer whose product equals next (to avoid duplicates).",
+      "code": "public int nthSuperUglyNumber(int n, int[] primes) {\n    int[] dp = new int[n];\n    int[] ptr = new int[primes.length];\n    dp[0] = 1;\n    \n    for (int i = 1; i < n; i++) {\n        int next = Integer.MAX_VALUE;\n        for (int j = 0; j < primes.length; j++) {\n            next = Math.min(next, dp[ptr[j]] * primes[j]);\n        }\n        dp[i] = next;\n        for (int j = 0; j < primes.length; j++) {\n            if (dp[ptr[j]] * primes[j] == next) ptr[j]++;\n        }\n    }\n    \n    return dp[n - 1];\n}",
+      "code_python": "from typing import List\n\ndef nth_super_ugly_number(n: int, primes: List[int]) -> int:\n    dp = [1] * n\n    ptr = [0] * len(primes)\n    \n    for i in range(1, n):\n        candidates = [dp[ptr[j]] * primes[j] for j in range(len(primes))]\n        dp[i] = min(candidates)\n        for j in range(len(primes)):\n            if candidates[j] == dp[i]:\n                ptr[j] += 1\n    \n    return dp[n - 1]",
+      "language": "java",
+      "complexity": {
+        "time": "O(n * k) where k = len(primes)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

@@ -1,0 +1,33 @@
+{
+  "problem": {
+    "title": "Ugly Number II",
+    "leetcode_id": 264,
+    "category": "Math & Bit Manipulation",
+    "description": "An ugly number is a positive integer whose prime factors are limited to 2, 3, and 5. Given an integer n, return the nth ugly number.",
+    "assumptions": [
+      "1 is considered an ugly number.",
+      "Return the nth ugly number in the sequence.",
+      "Sequence: 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, ..."
+    ],
+    "example": {
+      "input": "n = 10",
+      "output": "12",
+      "explanation": "Sequence: [1,2,3,4,5,6,8,9,10,12]. Use DP with three pointers p2, p3, p5: each points to the last ugly number that should be multiplied by 2, 3, 5 respectively. Next ugly = min of the three products."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – DP with Three Pointers",
+      "description": "Build the ugly number sequence iteratively. Maintain three pointers (p2, p3, p5) into the sequence, each representing the index of the next number to multiply by 2, 3, or 5. At each step the next ugly number is the minimum of dp[p2]*2, dp[p3]*3, dp[p5]*5. Advance whichever pointer(s) produced the minimum to avoid duplicates.",
+      "code": "public int nthUglyNumber(int n) {\n    int[] dp = new int[n];\n    dp[0] = 1;\n    int p2 = 0, p3 = 0, p5 = 0;\n    \n    for (int i = 1; i < n; i++) {\n        int next2 = dp[p2] * 2, next3 = dp[p3] * 3, next5 = dp[p5] * 5;\n        dp[i] = Math.min(next2, Math.min(next3, next5));\n        if (dp[i] == next2) p2++;\n        if (dp[i] == next3) p3++;\n        if (dp[i] == next5) p5++;\n    }\n    \n    return dp[n - 1];\n}",
+      "code_python": "def nth_ugly_number(n: int) -> int:\n    dp = [1] * n\n    p2 = p3 = p5 = 0\n    \n    for i in range(1, n):\n        next2, next3, next5 = dp[p2] * 2, dp[p3] * 3, dp[p5] * 5\n        dp[i] = min(next2, next3, next5)\n        if dp[i] == next2: p2 += 1\n        if dp[i] == next3: p3 += 1\n        if dp[i] == next5: p5 += 1\n    \n    return dp[n - 1]",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

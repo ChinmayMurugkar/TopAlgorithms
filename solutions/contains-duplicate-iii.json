@@ -1,0 +1,32 @@
+{
+  "problem": {
+    "title": "Contains Duplicate III",
+    "leetcode_id": 220,
+    "category": "String/Array/Matrix",
+    "description": "Given an integer array nums and two integers indexDiff and valueDiff, return true if there are two distinct indices i and j such that abs(i - j) <= indexDiff and abs(nums[i] - nums[j]) <= valueDiff.",
+    "assumptions": [
+      "Both index and value conditions must be satisfied simultaneously.",
+      "valueDiff >= 0, indexDiff >= 1."
+    ],
+    "example": {
+      "input": "nums = [1,2,3,1], indexDiff = 3, valueDiff = 0",
+      "output": "true",
+      "explanation": "nums[0]=1 and nums[3]=1: |0-3|=3<=3 and |1-1|=0<=0. Use a TreeSet as a sorted sliding window: for each element check if any value in [num-t, num+t] exists in the set."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – TreeSet Sliding Window",
+      "description": "Maintain a sorted TreeSet of the last indexDiff elements. For each new element x, query the set for any value in [x - valueDiff, x + valueDiff] using floor/ceiling operations. If found, return true. Then add x to the set and evict the element that has moved out of the index window. TreeSet gives O(log k) lookup per element.",
+      "code": "public boolean containsNearbyAlmostDuplicate(int[] nums, int indexDiff, int valueDiff) {\n    TreeSet<Long> set = new TreeSet<>();\n    \n    for (int i = 0; i < nums.length; i++) {\n        long x = nums[i];\n        Long floor = set.floor(x + valueDiff);\n        if (floor != null && floor >= x - valueDiff) return true;\n        set.add(x);\n        if (i >= indexDiff) set.remove((long) nums[i - indexDiff]);\n    }\n    \n    return false;\n}",
+      "code_python": "from typing import List\nfrom sortedcontainers import SortedList\n\ndef contains_nearby_almost_duplicate(nums: List[int], index_diff: int, value_diff: int) -> bool:\n    window = SortedList()\n    for i, x in enumerate(nums):\n        # Find leftmost value >= x - value_diff\n        pos = window.bisect_left(x - value_diff)\n        if pos < len(window) and window[pos] <= x + value_diff:\n            return True\n        window.add(x)\n        if i >= index_diff:\n            window.remove(nums[i - index_diff])\n    return False",
+      "language": "java",
+      "complexity": {
+        "time": "O(n log k)",
+        "space": "O(k)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

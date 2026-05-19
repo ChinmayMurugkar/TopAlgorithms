@@ -1,0 +1,32 @@
+{
+  "problem": {
+    "title": "Contains Duplicate II",
+    "leetcode_id": 219,
+    "category": "String/Array/Matrix",
+    "description": "Given an integer array nums and an integer k, return true if there are two distinct indices i and j in the array such that nums[i] == nums[j] and abs(i - j) <= k.",
+    "assumptions": [
+      "Indices must be distinct.",
+      "abs(i - j) must be <= k."
+    ],
+    "example": {
+      "input": "nums = [1,2,3,1], k = 3",
+      "output": "true",
+      "explanation": "nums[0] == nums[3] == 1 and abs(0-3) = 3 <= k. Use a sliding window HashSet of size k: add each element, if already present return true, if window > k remove the oldest."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Sliding Window HashSet",
+      "description": "Maintain a HashSet containing at most k elements (a sliding window of the last k indices). For each new element, check if it is already in the set — if so, two equal elements are within distance k. Then add the element and evict the element from k positions back. This gives O(n) time with O(k) space.",
+      "code": "public boolean containsNearbyDuplicate(int[] nums, int k) {\n    Set<Integer> set = new HashSet<>();\n    \n    for (int i = 0; i < nums.length; i++) {\n        if (set.contains(nums[i])) return true;\n        set.add(nums[i]);\n        if (set.size() > k) set.remove(nums[i - k]);\n    }\n    \n    return false;\n}",
+      "code_python": "from typing import List\n\ndef contains_nearby_duplicate(nums: List[int], k: int) -> bool:\n    window = set()\n    for i, n in enumerate(nums):\n        if n in window:\n            return True\n        window.add(n)\n        if len(window) > k:\n            window.remove(nums[i - k])\n    return False",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(k)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}

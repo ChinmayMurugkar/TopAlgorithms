@@ -1,0 +1,33 @@
+{
+  "problem": {
+    "title": "Group Shifted Strings",
+    "leetcode_id": 249,
+    "category": "String/Array/Matrix",
+    "description": "Given an array of strings, group all strings that belong to the same shifting sequence. A shifting sequence is formed by repeatedly shifting each character to its successor (with 'z' wrapping to 'a'). For example, 'abc' → 'bcd' → ... → 'xyz'. All strings in the same group share the same pattern of character differences.",
+    "assumptions": [
+      "Only lowercase English letters.",
+      "Two strings belong to the same group if one can be obtained by shifting the other.",
+      "Shift wraps around: 'z' + 1 = 'a'."
+    ],
+    "example": {
+      "input": "strings = [\"abc\",\"bcd\",\"acef\",\"xyz\",\"az\",\"ba\",\"a\",\"z\"]",
+      "output": "[[\"acef\"],[\"a\",\"z\"],[\"abc\",\"bcd\",\"xyz\"],[\"az\",\"ba\"]]",
+      "explanation": "Encode each string as the tuple of differences between consecutive chars (mod 26). Strings with the same tuple are in the same group."
+    }
+  },
+  "solutions": [
+    {
+      "title": "Solution 1 – Difference Encoding",
+      "description": "For each string, compute a canonical key: the sequence of differences between adjacent characters modulo 26. For example, 'abc' → '(1,1)', 'bcd' → '(1,1)', 'xyz' → '(1,1)' — all the same key. Group strings by this key using a HashMap. Single-character strings all map to the empty key '()'.",
+      "code": "public List<List<String>> groupStrings(String[] strings) {\n    Map<String, List<String>> map = new HashMap<>();\n    \n    for (String s : strings) {\n        String key = getKey(s);\n        map.computeIfAbsent(key, k -> new ArrayList<>()).add(s);\n    }\n    \n    return new ArrayList<>(map.values());\n}\n\nprivate String getKey(String s) {\n    StringBuilder sb = new StringBuilder();\n    for (int i = 1; i < s.length(); i++) {\n        sb.append((s.charAt(i) - s.charAt(i - 1) + 26) % 26);\n        sb.append(',');\n    }\n    return sb.toString();\n}",
+      "code_python": "from typing import List\nfrom collections import defaultdict\n\ndef group_strings(strings: List[str]) -> List[List[str]]:\n    groups = defaultdict(list)\n    \n    for s in strings:\n        key = tuple((ord(s[i]) - ord(s[i-1])) % 26 for i in range(1, len(s)))\n        groups[key].append(s)\n    \n    return list(groups.values())",
+      "language": "java",
+      "complexity": {
+        "time": "O(n * k) where k is average string length",
+        "space": "O(n * k)"
+      }
+    }
+  ],
+  "variations": [],
+  "navigation": {}
+}
