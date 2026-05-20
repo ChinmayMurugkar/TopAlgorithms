@@ -15,14 +15,25 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 \u2013 Dynamic Programming [\u2713 Interviewer Accepted]",
+      "title": "Solution 1 – Dynamic Programming [✓ Interviewer Accepted]",
       "description": "dp[i] represents the number of unique BSTs with i nodes; when node j is chosen as root, the left subtree has j-1 nodes (dp[j-1] choices) and the right subtree has i-j nodes (dp[i-j] choices), so dp[i] is the sum of all such products. This follows the Catalan number recurrence and runs bottom-up so every subproblem is solved exactly once. The key insight is that structural uniqueness depends only on the size of each subtree, not the actual values placed in it.",
       "code": "public int numTrees(int n) {\n    int[] dp = new int[n + 1];\n    dp[0] = 1;\n    dp[1] = 1;\n    \n    for (int i = 2; i <= n; i++) {\n        for (int j = 1; j <= i; j++) {\n            dp[i] += dp[j - 1] * dp[i - j];\n        }\n    }\n    \n    return dp[n];\n}",
       "code_python": "def num_trees(n: int) -> int:\n    dp = [0] * (n + 1)\n    dp[0] = dp[1] = 1\n\n    for i in range(2, n + 1):\n        for j in range(1, i + 1):\n            dp[i] += dp[j - 1] * dp[i - j]\n\n    return dp[n]",
       "language": "java",
       "complexity": {
-        "time": "O(n\u00b2)",
+        "time": "O(n²)",
         "space": "O(n)"
+      }
+    },
+    {
+      "title": "Solution 2 – Catalan Number Formula [✓ Interviewer Accepted]",
+      "description": "The answer is the nth Catalan number: C(n) = C(2n, n) / (n+1). Compute it using the multiplicative formula: C(n) = product of (n+k+1)/k for k in 1..n, all divided by (n+1). Equivalently use: C_n = (2n)! / ((n+1)! * n!). In practice compute iteratively: result = result * (n+k) / k for k=2..n, then divide by (n+1). O(n) time O(1) space.",
+      "code": "public int numTrees(int n) {\n    // Catalan number: C(2n, n) / (n+1)\n    long result = 1;\n    for (int i = 0; i < n; i++) {\n        result = result * (2 * n - i) / (i + 1);\n    }\n    return (int)(result / (n + 1));\n}",
+      "code_python": "class Solution:\n    def numTrees(self, n: int) -> int:\n        # Catalan number C(2n, n) / (n+1)\n        from math import comb\n        return comb(2 * n, n) // (n + 1)",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
       }
     }
   ],

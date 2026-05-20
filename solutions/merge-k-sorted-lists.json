@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 \u2013 Min Heap [\u2713 Interviewer Accepted]",
+      "title": "Solution 1 – Min Heap [✓ Interviewer Accepted]",
       "description": "Seed a min-heap with the head of each non-null list, then repeatedly extract the smallest node, append it to the result list, and push that node's next pointer back into the heap. This ensures each extraction is O(log k) since the heap never grows beyond k elements, giving O(n log k) total where n is the total number of nodes.",
       "code": "public ListNode mergeKLists(ListNode[] lists) {\n    if (lists == null || lists.length == 0) return null;\n    \n    PriorityQueue pq = new PriorityQueue<>((a, b) -> a.val - b.val);\n    \n    for (ListNode list : lists) {\n        if (list != null) {\n            pq.offer(list);\n        }\n    }\n    \n    ListNode dummy = new ListNode(0);\n    ListNode current = dummy;\n    \n    while (!pq.isEmpty()) {\n        ListNode node = pq.poll();\n        current.next = node;\n        current = current.next;\n        \n        if (node.next != null) {\n            pq.offer(node.next);\n        }\n    }\n    \n    return dummy.next;\n}",
       "code_python": "# class ListNode:\n#     def __init__(self, val=0): self.val=val; self.next=None\nimport heapq\nfrom typing import Optional, List\n\ndef merge_k_lists(lists: List[Optional['ListNode']]) -> Optional['ListNode']:\n    heap: list = []\n    for i, node in enumerate(lists):\n        if node:\n            heapq.heappush(heap, (node.val, i, node))\n\n    dummy = type('ListNode', (), {'val': 0, 'next': None})()\n    current = dummy\n    while heap:\n        val, i, node = heapq.heappop(heap)\n        current.next = node\n        current = current.next\n        if node.next:\n            heapq.heappush(heap, (node.next.val, i, node.next))\n    return dummy.next",
@@ -24,6 +24,17 @@
       "complexity": {
         "time": "O(n log k)",
         "space": "O(k)"
+      }
+    },
+    {
+      "title": "Solution 2 – Divide and Conquer [✓ Interviewer Accepted]",
+      "description": "Repeatedly pair up lists and merge each pair until only one list remains. In each round, the number of lists halves. Merging two sorted lists of combined length L takes O(L). Across log k rounds, total work is O(n log k) where n is the total number of nodes. O(log k) recursion stack space.",
+      "code": "public ListNode mergeKLists(ListNode[] lists) {\n    if (lists == null || lists.length == 0) return null;\n    int interval = 1;\n    int len = lists.length;\n    while (interval < len) {\n        for (int i = 0; i + interval < len; i += interval * 2) {\n            lists[i] = mergeTwoLists(lists[i], lists[i + interval]);\n        }\n        interval *= 2;\n    }\n    return lists[0];\n}\n\nprivate ListNode mergeTwoLists(ListNode l1, ListNode l2) {\n    ListNode dummy = new ListNode(0);\n    ListNode curr = dummy;\n    while (l1 != null && l2 != null) {\n        if (l1.val <= l2.val) { curr.next = l1; l1 = l1.next; }\n        else { curr.next = l2; l2 = l2.next; }\n        curr = curr.next;\n    }\n    curr.next = (l1 != null) ? l1 : l2;\n    return dummy.next;\n}",
+      "code_python": "from typing import List, Optional\n\nclass Solution:\n    def mergeKLists(self, lists: List[Optional[object]]) -> Optional[object]:\n        if not lists:\n            return None\n        interval = 1\n        n = len(lists)\n        while interval < n:\n            for i in range(0, n - interval, interval * 2):\n                lists[i] = self._merge_two(lists[i], lists[i + interval])\n            interval *= 2\n        return lists[0]\n\n    def _merge_two(self, l1, l2):\n        dummy = type('Node', (), {'val': 0, 'next': None})()\n        curr = dummy\n        while l1 and l2:\n            if l1.val <= l2.val:\n                curr.next, l1 = l1, l1.next\n            else:\n                curr.next, l2 = l2, l2.next\n            curr = curr.next\n        curr.next = l1 if l1 else l2\n        return dummy.next",
+      "language": "java",
+      "complexity": {
+        "time": "O(n log k)",
+        "space": "O(log k)"
       }
     }
   ],

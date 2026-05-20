@@ -16,10 +16,32 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 \u2013 Stack [\u2713 Interviewer Accepted]",
+      "title": "Solution 1 – Stack [✓ Interviewer Accepted]",
       "description": "Use a stack initialized with a sentinel value of -1 to represent the base index. For each '(' push its index; for each ')' pop the top and compute the valid length as the distance from the current index to the new top of the stack. If the stack is empty after popping, push the current index as a new base/sentinel. This approach handles nested and consecutive valid substrings in a single O(n) pass.",
       "code": "public int longestValidParentheses(String s) {\n    Stack stack = new Stack<>();\n    stack.push(-1);\n    int maxLen = 0;\n    \n    for (int i = 0; i < s.length(); i++) {\n        if (s.charAt(i) == '(') {\n            stack.push(i);\n        } else {\n            stack.pop();\n            if (stack.isEmpty()) {\n                stack.push(i);\n            } else {\n                maxLen = Math.max(maxLen, i - stack.peek());\n            }\n        }\n    }\n    \n    return maxLen;\n}",
       "code_python": "class Solution:\n    def longestValidParentheses(self, s: str) -> int:\n        stack = [-1]  # sentinel\n        max_len = 0\n\n        for i, c in enumerate(s):\n            if c == '(':\n                stack.append(i)\n            else:\n                stack.pop()\n                if not stack:\n                    stack.append(i)  # new base\n                else:\n                    max_len = max(max_len, i - stack[-1])\n\n        return max_len",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "title": "Solution 2 – Two Pointers [✓ Interviewer Accepted]",
+      "description": "Two passes over the string — left-to-right and right-to-left — each using O(1) space. In the first pass, maintain open and close counters. When close > open, reset both to 0; when they are equal, update max with 2*close. The second pass mirrors this with reversed roles to catch cases where the string starts with unmatched '('.",
+      "code": "public int longestValidParentheses(String s) {\n    int open = 0, close = 0, maxLen = 0;\n    // Left to right\n    for (int i = 0; i < s.length(); i++) {\n        if (s.charAt(i) == '(') open++;\n        else close++;\n        if (open == close) maxLen = Math.max(maxLen, 2 * close);\n        else if (close > open) { open = 0; close = 0; }\n    }\n    open = 0; close = 0;\n    // Right to left\n    for (int i = s.length() - 1; i >= 0; i--) {\n        if (s.charAt(i) == '(') open++;\n        else close++;\n        if (open == close) maxLen = Math.max(maxLen, 2 * open);\n        else if (open > close) { open = 0; close = 0; }\n    }\n    return maxLen;\n}",
+      "code_python": "class Solution:\n    def longestValidParentheses(self, s: str) -> int:\n        open_c = close_c = max_len = 0\n        for c in s:\n            if c == '(':\n                open_c += 1\n            else:\n                close_c += 1\n            if open_c == close_c:\n                max_len = max(max_len, 2 * close_c)\n            elif close_c > open_c:\n                open_c = close_c = 0\n        open_c = close_c = 0\n        for c in reversed(s):\n            if c == '(':\n                open_c += 1\n            else:\n                close_c += 1\n            if open_c == close_c:\n                max_len = max(max_len, 2 * open_c)\n            elif open_c > close_c:\n                open_c = close_c = 0\n        return max_len",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 3 – Dynamic Programming [✓ Interviewer Accepted]",
+      "description": "Build a dp array where dp[i] = length of longest valid parentheses substring ending at index i. For each ')' at index i: if s[i-1]=='(' then dp[i] = dp[i-2] + 2 (direct match). Otherwise if s[i-1]==')' and the matching '(' for the inner valid substring is at j = i - dp[i-1] - 1: if s[j]=='(' then dp[i] = dp[i-1] + 2 + (dp[j-1] if j>=1 else 0). Track maximum dp value.",
+      "code": "public int longestValidParentheses(String s) {\n    int n = s.length();\n    if (n == 0) return 0;\n    int[] dp = new int[n];\n    int maxLen = 0;\n    for (int i = 1; i < n; i++) {\n        if (s.charAt(i) == ')') {\n            if (s.charAt(i - 1) == '(') {\n                dp[i] = (i >= 2 ? dp[i - 2] : 0) + 2;\n            } else {\n                int j = i - dp[i - 1] - 1;\n                if (j >= 0 && s.charAt(j) == '(') {\n                    dp[i] = dp[i - 1] + 2 + (j >= 1 ? dp[j - 1] : 0);\n                }\n            }\n            maxLen = Math.max(maxLen, dp[i]);\n        }\n    }\n    return maxLen;\n}",
+      "code_python": "class Solution:\n    def longestValidParentheses(self, s: str) -> int:\n        n = len(s)\n        if n == 0:\n            return 0\n        dp = [0] * n\n        max_len = 0\n        for i in range(1, n):\n            if s[i] == ')':\n                if s[i - 1] == '(':\n                    dp[i] = (dp[i - 2] if i >= 2 else 0) + 2\n                else:\n                    j = i - dp[i - 1] - 1\n                    if j >= 0 and s[j] == '(':\n                        dp[i] = dp[i - 1] + 2 + (dp[j - 1] if j >= 1 else 0)\n                max_len = max(max_len, dp[i])\n        return max_len",
       "language": "java",
       "complexity": {
         "time": "O(n)",

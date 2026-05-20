@@ -16,20 +16,10 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 \u2013 Boyer-Moore Voting [\u2713 Interviewer Accepted]",
+      "title": "Solution 1 – Boyer-Moore Voting [✓ Interviewer Accepted]",
       "description": "The Boyer-Moore Voting algorithm maintains a candidate and a running count. Each matching element increments the count; each non-matching element decrements it. When the count reaches zero a new candidate is chosen. Because the majority element appears more than n/2 times its votes can never be fully cancelled out, so it is always the final candidate.",
       "code": "public int majorityElement(int[] nums) {\n    int count = 0;\n    int candidate = 0;\n    \n    for (int num : nums) {\n        if (count == 0) {\n            candidate = num;\n        }\n        count += (num == candidate) ? 1 : -1;\n    }\n    \n    return candidate;\n}",
       "code_python": "from typing import List\n\nclass Solution:\n    def majorityElement(self, nums: List[int]) -> int:\n        count = 0\n        candidate = 0\n\n        for num in nums:\n            if count == 0:\n                candidate = num\n            count += 1 if num == candidate else -1\n\n        return candidate",
-      "language": "java",
-      "complexity": {
-        "time": "O(n)",
-        "space": "O(1)"
-      }
-    },
-    {
-      "title": "Solution 1 \u2013 Boyer-Moore Voting [\u2713 Interviewer Accepted]",
-      "description": "The Boyer-Moore Voting algorithm maintains a candidate and a running count. Each matching element increments the count; each non-matching element decrements it. When the count reaches zero a new candidate is chosen. Because the majority element appears more than n/2 times its votes can never be fully cancelled out, so it is always the final candidate.",
-      "code": "public int majorityElement(int[] nums) {\n    int count = 0;\n    int candidate = 0;\n    \n    for (int num : nums) {\n        if (count == 0) {\n            candidate = num;\n        }\n        count += (num == candidate) ? 1 : -1;\n    }\n    \n    return candidate;\n}",
       "language": "java",
       "complexity": {
         "time": "O(n)",

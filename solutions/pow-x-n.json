@@ -6,7 +6,7 @@
     "description": "Implement pow(x, n), which calculates x raised to the power n (i.e., xn).",
     "assumptions": [
       "n can be negative.",
-      "-100 \u2264 n \u2264 100."
+      "-100 ≤ n ≤ 100."
     ],
     "example": {
       "input": "x = 2.00000, n = 10",
@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 \u2013 Fast Power [\u2713 Interviewer Accepted]",
+      "title": "Solution 1 – Fast Power [✓ Interviewer Accepted]",
       "description": "Use binary exponentiation (exponentiation by squaring): recursively compute x^(n/2), then combine to get x^n in O(log n) multiplications. Negative exponents are handled by taking the reciprocal, and the even/odd split halves the problem size at each level.",
       "code": "public double myPow(double x, int n) {\n    if (n == 0) return 1;\n    if (n == 1) return x;\n    if (n == -1) return 1 / x;\n    \n    double half = myPow(x, n / 2);\n    if (n % 2 == 0) {\n        return half * half;\n    } else {\n        return n > 0 ? half * half * x : half * half / x;\n    }\n}",
       "code_python": "def myPow(x: float, n: int) -> float:\n    if n == 0:\n        return 1.0\n    if n < 0:\n        x = 1 / x\n        n = -n\n\n    half = myPow(x, n // 2)\n    if n % 2 == 0:\n        return half * half\n    else:\n        return half * half * x",
@@ -24,6 +24,17 @@
       "complexity": {
         "time": "O(log n)",
         "space": "O(log n)"
+      }
+    },
+    {
+      "title": "Solution 2 – Iterative Fast Power [✓ Interviewer Accepted]",
+      "description": "Iterative version of binary exponentiation (exponentiation by squaring). Handle negative n by using x = 1/x and n = -n. Keep a result accumulator: if the current bit of n is 1, multiply result by x; then square x and halve n. This avoids the call stack entirely. O(log n) time O(1) space.",
+      "code": "public double myPow(double x, int n) {\n    long N = n; // use long to handle Integer.MIN_VALUE\n    if (N < 0) { x = 1.0 / x; N = -N; }\n    double result = 1.0;\n    while (N > 0) {\n        if ((N & 1) == 1) result *= x;\n        x *= x;\n        N >>= 1;\n    }\n    return result;\n}",
+      "code_python": "class Solution:\n    def myPow(self, x: float, n: int) -> float:\n        if n < 0:\n            x, n = 1.0 / x, -n\n        result = 1.0\n        while n > 0:\n            if n & 1:\n                result *= x\n            x *= x\n            n >>= 1\n        return result",
+      "language": "java",
+      "complexity": {
+        "time": "O(log n)",
+        "space": "O(1)"
       }
     }
   ],

@@ -13,7 +13,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 \u2013 Recursive [\u2713 Interviewer Accepted]",
+      "title": "Solution 1 – Recursive [✓ Interviewer Accepted]",
       "description": "Recursively verify that two trees are identical by checking three conditions at every node: both nodes must be null (base case returning true), exactly one is null (mismatch returning false), or both have equal values and their left and right subtrees are also identical.",
       "code": "public boolean isSameTree(TreeNode p, TreeNode q) {\n    if (p == null && q == null) return true;\n    if (p == null || q == null) return false;\n    \n    return p.val == q.val && \n           isSameTree(p.left, q.left) && \n           isSameTree(p.right, q.right);\n}",
       "code_python": "from typing import Optional\n\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\ndef isSameTree(p: Optional[object], q: Optional[object]) -> bool:\n    if not p and not q:\n        return True\n    if not p or not q:\n        return False\n    return (p.val == q.val and\n            isSameTree(p.left, q.left) and\n            isSameTree(p.right, q.right))",
@@ -21,6 +21,17 @@
       "complexity": {
         "time": "O(n)",
         "space": "O(h)"
+      }
+    },
+    {
+      "title": "Solution 2 – Iterative with Stack [✓ Interviewer Accepted]",
+      "description": "Use a stack containing pairs of corresponding nodes from both trees. For each pair popped: if both are null, continue; if only one is null or values differ, return false. Otherwise push both pairs of children (left-left and right-right). O(n) time O(n) space.",
+      "code": "public boolean isSameTree(TreeNode p, TreeNode q) {\n    Deque<TreeNode[]> stack = new ArrayDeque<>();\n    stack.push(new TreeNode[]{p, q});\n    while (!stack.isEmpty()) {\n        TreeNode[] pair = stack.pop();\n        TreeNode a = pair[0], b = pair[1];\n        if (a == null && b == null) continue;\n        if (a == null || b == null || a.val != b.val) return false;\n        stack.push(new TreeNode[]{a.left, b.left});\n        stack.push(new TreeNode[]{a.right, b.right});\n    }\n    return true;\n}",
+      "code_python": "class Solution:\n    def isSameTree(self, p, q) -> bool:\n        stack = [(p, q)]\n        while stack:\n            a, b = stack.pop()\n            if a is None and b is None:\n                continue\n            if a is None or b is None or a.val != b.val:\n                return False\n            stack.append((a.left, b.left))\n            stack.append((a.right, b.right))\n        return True",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
       }
     }
   ],

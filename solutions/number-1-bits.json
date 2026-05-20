@@ -16,13 +16,24 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 \u2013 Bit Manipulation [\u2713 Interviewer Accepted]",
+      "title": "Solution 1 – Bit Manipulation [✓ Interviewer Accepted]",
       "description": "Repeatedly check the least significant bit with n & 1, increment the count if it is 1, then logical-right-shift n by 1 to process the next bit. Using unsigned right shift ensures the sign bit is treated as data rather than sign extension. The loop terminates in at most 32 iterations regardless of value, making this effectively O(1).",
       "code": "public int hammingWeight(int n) {\n    int count = 0;\n    while (n != 0) {\n        count += n & 1;\n        n = n >>> 1;\n    }\n    return count;\n}",
       "code_python": "def hamming_weight(n: int) -> int:\n    count = 0\n    while n:\n        count += n & 1\n        n >>= 1\n    return count",
       "language": "java",
       "complexity": {
         "time": "O(1)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 2 – Brian Kernighan's Algorithm [✓ Interviewer Accepted]",
+      "description": "Repeatedly clear the lowest set bit using the operation n = n & (n - 1). Each iteration removes exactly one set bit (the least significant one). Count how many iterations are needed until n becomes 0. This is faster than checking every bit when the number of set bits is small. O(number of 1-bits) time O(1) space.",
+      "code": "public int hammingWeight(int n) {\n    int count = 0;\n    while (n != 0) {\n        n &= (n - 1); // clear lowest set bit\n        count++;\n    }\n    return count;\n}",
+      "code_python": "class Solution:\n    def hammingWeight(self, n: int) -> int:\n        count = 0\n        while n:\n            n &= n - 1  # clear lowest set bit\n            count += 1\n        return count",
+      "language": "java",
+      "complexity": {
+        "time": "O(k) where k = number of set bits",
         "space": "O(1)"
       }
     }

@@ -5,17 +5,17 @@
     "category": "Math",
     "description": "Write an algorithm to determine if a number n is happy. A happy number is a number defined by the following process: Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.",
     "assumptions": [
-      "Repeatedly sum squares of digits. If reaches 1 \u2192 happy. If enters cycle not including 1 \u2192 not happy."
+      "Repeatedly sum squares of digits. If reaches 1 → happy. If enters cycle not including 1 → not happy."
     ],
     "example": {
       "input": "n = 19",
       "output": "true",
-      "explanation": "1\u00b2+9\u00b2=82 \u2192 8\u00b2+2\u00b2=68 \u2192 6\u00b2+8\u00b2=100 \u2192 1\u00b2+0+0=1. Reaches 1, so happy!"
+      "explanation": "1²+9²=82 → 8²+2²=68 → 6²+8²=100 → 1²+0+0=1. Reaches 1, so happy!"
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 \u2013 Floyd's Cycle Detection [\u2713 Interviewer Accepted]",
+      "title": "Solution 1 – Floyd's Cycle Detection [✓ Interviewer Accepted]",
       "description": "Model the digit-square-sum transformation as a sequence and apply Floyd's cycle detection (slow/fast pointers) to determine whether it terminates at 1 or enters a loop. The slow pointer advances one step at a time while the fast pointer advances two, so they must meet if a cycle exists. The key insight is that any non-happy number eventually enters a fixed cycle, and Floyd's algorithm detects this in O(1) space.",
       "code": "public boolean isHappy(int n) {\n    int slow = n;\n    int fast = getNext(n);\n    \n    while (fast != 1 && slow != fast) {\n        slow = getNext(slow);\n        fast = getNext(getNext(fast));\n    }\n    \n    return fast == 1;\n}\n\nprivate int getNext(int n) {\n    int sum = 0;\n    while (n > 0) {\n        int digit = n % 10;\n        sum += digit * digit;\n        n /= 10;\n    }\n    return sum;\n}",
       "code_python": "def is_happy(n: int) -> bool:\n    def get_next(num: int) -> int:\n        total = 0\n        while num > 0:\n            num, digit = divmod(num, 10)\n            total += digit * digit\n        return total\n\n    slow, fast = n, get_next(n)\n    while fast != 1 and slow != fast:\n        slow = get_next(slow)\n        fast = get_next(get_next(fast))\n    return fast == 1",
@@ -23,6 +23,17 @@
       "complexity": {
         "time": "O(log n)",
         "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 2 – HashSet [✓ Interviewer Accepted]",
+      "description": "Compute the sum of squares of digits in a loop. If the result equals 1, return true — it's a happy number. If the result has been seen before (detected via a HashSet), return false — we're in a cycle. Otherwise add the result to the set and repeat. O(log n) per step, terminates because the sequence either reaches 1 or enters a known cycle.",
+      "code": "public boolean isHappy(int n) {\n    Set<Integer> seen = new HashSet<>();\n    while (n != 1) {\n        if (seen.contains(n)) return false;\n        seen.add(n);\n        int sum = 0;\n        while (n > 0) {\n            int d = n % 10;\n            sum += d * d;\n            n /= 10;\n        }\n        n = sum;\n    }\n    return true;\n}",
+      "code_python": "class Solution:\n    def isHappy(self, n: int) -> bool:\n        seen = set()\n        while n != 1:\n            if n in seen:\n                return False\n            seen.add(n)\n            n = sum(int(d) ** 2 for d in str(n))\n        return True",
+      "language": "java",
+      "complexity": {
+        "time": "O(log n) per step",
+        "space": "O(log n)"
       }
     }
   ],

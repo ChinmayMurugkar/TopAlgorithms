@@ -9,20 +9,31 @@
       "pop, push, top also O(1)."
     ],
     "example": {
-      "input": "push(-2), push(0), push(-3), getMin()\u2192-3, pop(), top()\u21920, getMin()\u2192-2",
+      "input": "push(-2), push(0), push(-3), getMin()→-3, pop(), top()→0, getMin()→-2",
       "output": "-3, 0, -2",
       "explanation": "Maintain a second stack that tracks the minimum at each level. O(1) for all operations."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 \u2013 Two Stacks [\u2713 Interviewer Accepted]",
+      "title": "Solution 1 – Two Stacks [✓ Interviewer Accepted]",
       "description": "Maintain a second stack that mirrors the main stack but only records a new value when it is less than or equal to the current minimum. On pop, if the removed value equals the top of the min-stack, pop the min-stack too. The key insight is that each position in the main stack has a corresponding minimum of everything at or below it, making getMin O(1) at all times.",
       "code": "class MinStack {\n    private Stack stack;\n    private Stack minStack;\n    \n    public MinStack() {\n        stack = new Stack<>();\n        minStack = new Stack<>();\n    }\n    \n    public void push(int val) {\n        stack.push(val);\n        \n        if (minStack.isEmpty() || val <= minStack.peek()) {\n            minStack.push(val);\n        }\n    }\n    \n    public void pop() {\n        if (stack.peek().equals(minStack.peek())) {\n            minStack.pop();\n        }\n        stack.pop();\n    }\n    \n    public int top() {\n        return stack.peek();\n    }\n    \n    public int getMin() {\n        return minStack.peek();\n    }\n}",
       "code_python": "class MinStack:\n    def __init__(self) -> None:\n        self._stack: list[int] = []\n        self._min_stack: list[int] = []\n\n    def push(self, val: int) -> None:\n        self._stack.append(val)\n        if not self._min_stack or val <= self._min_stack[-1]:\n            self._min_stack.append(val)\n\n    def pop(self) -> None:\n        top = self._stack.pop()\n        if top == self._min_stack[-1]:\n            self._min_stack.pop()\n\n    def top(self) -> int:\n        return self._stack[-1]\n\n    def get_min(self) -> int:\n        return self._min_stack[-1]",
       "language": "java",
       "complexity": {
         "time": "O(1)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "title": "Solution 2 – Single Stack with Value-Min Pairs [✓ Interviewer Accepted]",
+      "description": "Instead of maintaining two separate stacks, store each element as a pair (value, current_min). On push, the current_min in the pair is min(val, stack.peek().min). getMin() simply returns the min from the top pair. All operations remain O(1) with no second stack needed.",
+      "code": "class MinStack {\n    private Deque<int[]> stack; // each entry: [value, currentMin]\n\n    public MinStack() {\n        stack = new ArrayDeque<>();\n    }\n\n    public void push(int val) {\n        int currentMin = stack.isEmpty() ? val : Math.min(val, stack.peek()[1]);\n        stack.push(new int[]{val, currentMin});\n    }\n\n    public void pop() {\n        stack.pop();\n    }\n\n    public int top() {\n        return stack.peek()[0];\n    }\n\n    public int getMin() {\n        return stack.peek()[1];\n    }\n}",
+      "code_python": "class MinStack:\n    def __init__(self):\n        self._stack = []  # stores (value, current_min)\n\n    def push(self, val: int) -> None:\n        current_min = val if not self._stack else min(val, self._stack[-1][1])\n        self._stack.append((val, current_min))\n\n    def pop(self) -> None:\n        self._stack.pop()\n\n    def top(self) -> int:\n        return self._stack[-1][0]\n\n    def getMin(self) -> int:\n        return self._stack[-1][1]",
+      "language": "java",
+      "complexity": {
+        "time": "O(1) all ops",
         "space": "O(n)"
       }
     }

@@ -16,15 +16,26 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 \u2013 Dynamic Programming [\u2713 Interviewer Accepted]",
+      "title": "Solution 1 – Dynamic Programming [✓ Interviewer Accepted]",
       "description": "Use DP to check if string can be segmented.",
       "code": "public boolean wordBreak(String s, List wordDict) {\n    Set wordSet = new HashSet<>(wordDict);\n    boolean[] dp = new boolean[s.length() + 1];\n    dp[0] = true;\n    \n    for (int i = 1; i <= s.length(); i++) {\n        for (int j = 0; j < i; j++) {\n            if (dp[j] && wordSet.contains(s.substring(j, i))) {\n                dp[i] = true;\n                break;\n            }\n        }\n    }\n    \n    return dp[s.length()];\n}",
       "language": "java",
       "complexity": {
-        "time": "O(n\u00b3)",
+        "time": "O(n³)",
         "space": "O(n)"
       },
       "code_python": "def wordBreak(s: str, wordDict: list[str]) -> bool:\n    word_set = set(wordDict)\n    n = len(s)\n    dp = [False] * (n + 1)\n    dp[0] = True  # empty string\n    for i in range(1, n + 1):\n        for j in range(i):\n            if dp[j] and s[j:i] in word_set:\n                dp[i] = True\n                break\n    return dp[n]"
+    },
+    {
+      "title": "Solution 2 – BFS [✓ Interviewer Accepted]",
+      "description": "Model the problem as a graph where each index in the string is a node and index 0 is the source. Use BFS: from each reachable index i, try every word in the dictionary — if s[i:i+len(word)] == word, add i+len(word) to the queue (if not visited). Return true if index n is ever reached. O(n * |dict| * max_word_len) time, O(n) space for visited set.",
+      "code": "public boolean wordBreak(String s, List<String> wordDict) {\n    Set<String> wordSet = new HashSet<>(wordDict);\n    boolean[] visited = new boolean[s.length() + 1];\n    Queue<Integer> queue = new LinkedList<>();\n    queue.offer(0);\n    visited[0] = true;\n    while (!queue.isEmpty()) {\n        int start = queue.poll();\n        for (int end = start + 1; end <= s.length(); end++) {\n            if (visited[end]) continue;\n            if (wordSet.contains(s.substring(start, end))) {\n                if (end == s.length()) return true;\n                visited[end] = true;\n                queue.offer(end);\n            }\n        }\n    }\n    return false;\n}",
+      "code_python": "from collections import deque\n\nclass Solution:\n    def wordBreak(self, s: str, wordDict) -> bool:\n        word_set = set(wordDict)\n        n = len(s)\n        visited = [False] * (n + 1)\n        queue = deque([0])\n        visited[0] = True\n        while queue:\n            start = queue.popleft()\n            for end in range(start + 1, n + 1):\n                if visited[end]:\n                    continue\n                if s[start:end] in word_set:\n                    if end == n:\n                        return True\n                    visited[end] = True\n                    queue.append(end)\n        return False",
+      "language": "java",
+      "complexity": {
+        "time": "O(n * |dict| * max_word_len)",
+        "space": "O(n)"
+      }
     }
   ],
   "variations": [],

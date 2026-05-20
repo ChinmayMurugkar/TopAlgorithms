@@ -11,19 +11,30 @@
     "example": {
       "input": "head = [1,2,3,4]",
       "output": "[2,1,4,3]",
-      "explanation": "Swap every two adjacent nodes. 1\u21942, 3\u21944. Iterative or recursive."
+      "explanation": "Swap every two adjacent nodes. 1↔2, 3↔4. Iterative or recursive."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 \u2013 Iterative [\u2713 Interviewer Accepted]",
-      "description": "A dummy head node simplifies edge cases; a 'prev' pointer then repeatedly re-links each pair (first, second) so that second precedes first, and prev advances past both. Performing the swap with three pointer reassignments in the right order ensures no node is orphaned. The key insight is that the two swaps \u2014 connecting second's next to first's old next, then pointing second before first \u2014 must happen before prev advances.",
+      "title": "Solution 1 – Iterative [✓ Interviewer Accepted]",
+      "description": "A dummy head node simplifies edge cases; a 'prev' pointer then repeatedly re-links each pair (first, second) so that second precedes first, and prev advances past both. Performing the swap with three pointer reassignments in the right order ensures no node is orphaned. The key insight is that the two swaps — connecting second's next to first's old next, then pointing second before first — must happen before prev advances.",
       "code": "public ListNode swapPairs(ListNode head) {\n    if (head == null || head.next == null) return head;\n    \n    ListNode dummy = new ListNode(0);\n    dummy.next = head;\n    ListNode prev = dummy;\n    \n    while (prev.next != null && prev.next.next != null) {\n        ListNode first = prev.next;\n        ListNode second = prev.next.next;\n        \n        first.next = second.next;\n        second.next = first;\n        prev.next = second;\n        \n        prev = first;\n    }\n    \n    return dummy.next;\n}",
       "code_python": "# class TreeNode: def __init__(self, val=0): self.val=val; self.left=self.right=None\nfrom typing import Optional\n\nclass ListNode:\n    def __init__(self, val: int = 0, next: 'Optional[ListNode]' = None):\n        self.val = val\n        self.next = next\n\ndef swap_pairs(head: Optional[ListNode]) -> Optional[ListNode]:\n    dummy = ListNode(0)\n    dummy.next = head\n    prev = dummy\n\n    while prev.next and prev.next.next:\n        first = prev.next\n        second = prev.next.next\n\n        first.next = second.next\n        second.next = first\n        prev.next = second\n\n        prev = first\n\n    return dummy.next",
       "language": "java",
       "complexity": {
         "time": "O(n)",
         "space": "O(1)"
+      }
+    },
+    {
+      "title": "Solution 2 – Recursive [✓ Interviewer Accepted]",
+      "description": "Base case: if the list has 0 or 1 nodes, return head unchanged. Otherwise, take the first two nodes, recursively solve the rest of the list, attach the result to the second node's next pointer, then point the second node back to the first. Return the second node as the new head. O(n) time O(n) stack space.",
+      "code": "public ListNode swapPairs(ListNode head) {\n    if (head == null || head.next == null) return head;\n    ListNode first = head;\n    ListNode second = head.next;\n    first.next = swapPairs(second.next);\n    second.next = first;\n    return second;\n}",
+      "code_python": "class Solution:\n    def swapPairs(self, head):\n        if not head or not head.next:\n            return head\n        first, second = head, head.next\n        first.next = self.swapPairs(second.next)\n        second.next = first\n        return second",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
       }
     }
   ],

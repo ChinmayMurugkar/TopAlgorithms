@@ -16,7 +16,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 \u2013 DFS with Sorting [\u2713 Interviewer Accepted]",
+      "title": "Solution 1 – DFS with Sorting [✓ Interviewer Accepted]",
       "description": "Use DFS to collect nodes and sort by position.",
       "code": "public List> verticalTraversal(TreeNode root) {\n    List nodes = new ArrayList<>();\n    dfs(root, 0, 0, nodes);\n    \n    Collections.sort(nodes, (a, b) -> {\n        if (a[1] != b[1]) return a[1] - b[1]; // column\n        if (a[0] != b[0]) return a[0] - b[0]; // row\n        return a[2] - b[2]; // value\n    });\n    \n    List> result = new ArrayList<>();\n    int currentCol = nodes.get(0)[1];\n    List currentList = new ArrayList<>();\n    \n    for (int[] node : nodes) {\n        if (node[1] != currentCol) {\n            result.add(currentList);\n            currentList = new ArrayList<>();\n            currentCol = node[1];\n        }\n        currentList.add(node[2]);\n    }\n    result.add(currentList);\n    \n    return result;\n}\n\nprivate void dfs(TreeNode node, int row, int col, List nodes) {\n    if (node == null) return;\n    \n    nodes.add(new int[]{row, col, node.val});\n    dfs(node.left, row + 1, col - 1, nodes);\n    dfs(node.right, row + 1, col + 1, nodes);\n}",
       "language": "java",
@@ -25,6 +25,17 @@
         "space": "O(n)"
       },
       "code_python": "# class TreeNode:\n#     def __init__(self, val=0): self.val=val; self.left=self.right=None\n\ndef verticalTraversal(root) -> list[list[int]]:\n    nodes = []  # (col, row, val)\n    def dfs(node, row, col):\n        if not node: return\n        nodes.append((col, row, node.val))\n        dfs(node.left,  row+1, col-1)\n        dfs(node.right, row+1, col+1)\n    dfs(root, 0, 0)\n    nodes.sort()  # sort by col, then row, then val\n    result, curr_col, curr_list = [], nodes[0][0], []\n    for col, row, val in nodes:\n        if col != curr_col:\n            result.append(curr_list)\n            curr_list = []\n            curr_col = col\n        curr_list.append(val)\n    result.append(curr_list)\n    return result"
+    },
+    {
+      "title": "Solution 2 – BFS with Column Tracking [✓ Interviewer Accepted]",
+      "description": "BFS using a queue of (node, column) pairs. Use a TreeMap (sorted by column key) mapping column index to a list of node values. When dequeuing a node at column c: add its value to the map at key c; enqueue left child at c-1 and right child at c+1. Because BFS processes nodes level by level, values within the same column are automatically ordered top-to-bottom. O(n log n) time due to TreeMap operations, O(n) space.",
+      "code": "public List<List<Integer>> verticalOrder(TreeNode root) {\n    List<List<Integer>> result = new ArrayList<>();\n    if (root == null) return result;\n    TreeMap<Integer, List<Integer>> colMap = new TreeMap<>();\n    Queue<int[]> queue = new LinkedList<>(); // [node_id, col]\n    Map<Integer, TreeNode> idToNode = new HashMap<>();\n    // Use a queue of Object arrays for (node, col)\n    Queue<Object[]> bfsQueue = new LinkedList<>();\n    bfsQueue.offer(new Object[]{root, 0});\n    while (!bfsQueue.isEmpty()) {\n        Object[] curr = bfsQueue.poll();\n        TreeNode node = (TreeNode) curr[0];\n        int col = (int) curr[1];\n        colMap.computeIfAbsent(col, k -> new ArrayList<>()).add(node.val);\n        if (node.left != null) bfsQueue.offer(new Object[]{node.left, col - 1});\n        if (node.right != null) bfsQueue.offer(new Object[]{node.right, col + 1});\n    }\n    result.addAll(colMap.values());\n    return result;\n}",
+      "code_python": "from collections import deque, defaultdict\nfrom typing import List\n\nclass Solution:\n    def verticalOrder(self, root) -> List[List[int]]:\n        if not root:\n            return []\n        col_map = defaultdict(list)\n        queue = deque([(root, 0)])\n        while queue:\n            node, col = queue.popleft()\n            col_map[col].append(node.val)\n            if node.left:\n                queue.append((node.left, col - 1))\n            if node.right:\n                queue.append((node.right, col + 1))\n        return [col_map[c] for c in sorted(col_map)]",
+      "language": "java",
+      "complexity": {
+        "time": "O(n log n)",
+        "space": "O(n)"
+      }
     }
   ],
   "variations": [],

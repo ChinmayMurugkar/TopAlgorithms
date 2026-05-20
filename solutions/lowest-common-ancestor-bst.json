@@ -11,12 +11,12 @@
     "example": {
       "input": "root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8",
       "output": "6",
-      "explanation": "In BST: if both p,q < root \u2192 go left; if both > root \u2192 go right; else root is LCA."
+      "explanation": "In BST: if both p,q < root → go left; if both > root → go right; else root is LCA."
     }
   },
   "solutions": [
     {
-      "title": "Solution 1 \u2013 BST Property [\u2713 Interviewer Accepted]",
+      "title": "Solution 1 – BST Property [✓ Interviewer Accepted]",
       "description": "Exploit the BST ordering property: if both p and q are smaller than the current node, the LCA must be in the left subtree; if both are larger, it must be in the right subtree. The first node where p and q fall on opposite sides (or one equals the node) is the LCA. This gives O(h) time without visiting the whole tree.",
       "code": "public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {\n    if (root == null) return null;\n    \n    if (p.val < root.val && q.val < root.val) {\n        return lowestCommonAncestor(root.left, p, q);\n    }\n    \n    if (p.val > root.val && q.val > root.val) {\n        return lowestCommonAncestor(root.right, p, q);\n    }\n    \n    return root;\n}",
       "code_python": "from typing import Optional\n\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val; self.left = left; self.right = right\n\nclass Solution:\n    def lowestCommonAncestor(\n        self,\n        root: Optional['TreeNode'],\n        p: 'TreeNode',\n        q: 'TreeNode',\n    ) -> Optional['TreeNode']:\n        if root is None:\n            return None\n\n        if p.val < root.val and q.val < root.val:\n            return self.lowestCommonAncestor(root.left, p, q)\n\n        if p.val > root.val and q.val > root.val:\n            return self.lowestCommonAncestor(root.right, p, q)\n\n        return root",
@@ -24,6 +24,17 @@
       "complexity": {
         "time": "O(h)",
         "space": "O(h)"
+      }
+    },
+    {
+      "title": "Solution 2 – Iterative [✓ Interviewer Accepted]",
+      "description": "Apply the same BST property logic as the recursive approach, but with an iterative while loop. If both p and q are less than root.val, move to the left subtree. If both are greater, move to the right subtree. Otherwise root is the LCA. O(H) time O(1) space — no call stack overhead.",
+      "code": "public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {\n    TreeNode curr = root;\n    while (curr != null) {\n        if (p.val < curr.val && q.val < curr.val) {\n            curr = curr.left;\n        } else if (p.val > curr.val && q.val > curr.val) {\n            curr = curr.right;\n        } else {\n            return curr;\n        }\n    }\n    return null;\n}",
+      "code_python": "class Solution:\n    def lowestCommonAncestor(self, root, p, q):\n        curr = root\n        while curr:\n            if p.val < curr.val and q.val < curr.val:\n                curr = curr.left\n            elif p.val > curr.val and q.val > curr.val:\n                curr = curr.right\n            else:\n                return curr\n        return None",
+      "language": "java",
+      "complexity": {
+        "time": "O(H)",
+        "space": "O(1)"
       }
     }
   ],

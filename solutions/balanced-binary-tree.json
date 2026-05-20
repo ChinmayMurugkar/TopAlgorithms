@@ -15,7 +15,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 \u2013 Recursive with Height [\u2713 Interviewer Accepted]",
+      "title": "Solution 1 – Recursive with Height [✓ Interviewer Accepted]",
       "description": "Perform a single post-order DFS that returns the subtree height if balanced, or -1 as a sentinel to signal imbalance. By checking balance and computing height in one pass, we avoid the O(n log n) cost of a naive two-pass approach. The key insight is to propagate the failure sentinel upward immediately so no extra work is done once an imbalance is detected.",
       "code": "public boolean isBalanced(TreeNode root) {\n    return getHeight(root) != -1;\n}\n\nprivate int getHeight(TreeNode root) {\n    if (root == null) return 0;\n    \n    int leftHeight = getHeight(root.left);\n    if (leftHeight == -1) return -1;\n    \n    int rightHeight = getHeight(root.right);\n    if (rightHeight == -1) return -1;\n    \n    if (Math.abs(leftHeight - rightHeight) > 1) return -1;\n    \n    return Math.max(leftHeight, rightHeight) + 1;\n}",
       "code_python": "from typing import Optional\n\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\ndef isBalanced(root: Optional['TreeNode']) -> bool:\n    def get_height(node: Optional['TreeNode']) -> int:\n        if node is None:\n            return 0\n        left_h = get_height(node.left)\n        if left_h == -1:\n            return -1\n        right_h = get_height(node.right)\n        if right_h == -1:\n            return -1\n        if abs(left_h - right_h) > 1:\n            return -1\n        return max(left_h, right_h) + 1\n\n    return get_height(root) != -1",
@@ -23,6 +23,17 @@
       "complexity": {
         "time": "O(n)",
         "space": "O(h)"
+      }
+    },
+    {
+      "title": "Solution 2 – Iterative Post-Order with Stack [✓ Interviewer Accepted]",
+      "description": "Perform an iterative post-order traversal using a stack and a HashMap to store heights. For each node after both children have been processed: retrieve left and right heights from the map, check |left_h - right_h| <= 1 (set a flag if violated), and store this node's height as 1 + max(left_h, right_h). O(n) time O(n) space.",
+      "code": "public boolean isBalanced(TreeNode root) {\n    if (root == null) return true;\n    Map<TreeNode, Integer> heights = new HashMap<>();\n    heights.put(null, 0);\n    Deque<TreeNode> stack = new ArrayDeque<>();\n    TreeNode curr = root, lastVisited = null;\n    boolean balanced = true;\n    while (curr != null || !stack.isEmpty()) {\n        if (curr != null) {\n            stack.push(curr);\n            curr = curr.left;\n        } else {\n            TreeNode peekNode = stack.peek();\n            if (peekNode.right != null && lastVisited != peekNode.right) {\n                curr = peekNode.right;\n            } else {\n                stack.pop();\n                int leftH = heights.getOrDefault(peekNode.left, 0);\n                int rightH = heights.getOrDefault(peekNode.right, 0);\n                if (Math.abs(leftH - rightH) > 1) balanced = false;\n                heights.put(peekNode, 1 + Math.max(leftH, rightH));\n                lastVisited = peekNode;\n            }\n        }\n    }\n    return balanced;\n}",
+      "code_python": "class Solution:\n    def isBalanced(self, root) -> bool:\n        heights = {None: 0}\n        stack = []\n        curr, last_visited = root, None\n        balanced = True\n        while curr or stack:\n            if curr:\n                stack.append(curr)\n                curr = curr.left\n            else:\n                peek = stack[-1]\n                if peek.right and last_visited is not peek.right:\n                    curr = peek.right\n                else:\n                    stack.pop()\n                    lh = heights.get(peek.left, 0)\n                    rh = heights.get(peek.right, 0)\n                    if abs(lh - rh) > 1:\n                        balanced = False\n                    heights[peek] = 1 + max(lh, rh)\n                    last_visited = peek\n        return balanced",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
       }
     }
   ],

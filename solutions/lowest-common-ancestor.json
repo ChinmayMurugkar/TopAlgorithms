@@ -17,7 +17,7 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 \u2013 Recursive DFS [\u2713 Interviewer Accepted]",
+      "title": "Solution 1 – Recursive DFS [✓ Interviewer Accepted]",
       "description": "Perform a post-order DFS: if the current node is null or equals p or q, return it immediately. Recursively search both subtrees; if both return non-null results the current node must be the LCA (p and q are in different subtrees). If only one side is non-null, the LCA lies entirely in that subtree and is propagated upward.",
       "code": "public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {\n    if (root == null || root == p || root == q) {\n        return root;\n    }\n    \n    TreeNode left = lowestCommonAncestor(root.left, p, q);\n    TreeNode right = lowestCommonAncestor(root.right, p, q);\n    \n    if (left != null && right != null) {\n        return root;\n    }\n    \n    return left != null ? left : right;\n}",
       "code_python": "from typing import Optional\n\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val; self.left = left; self.right = right\n\nclass Solution:\n    def lowestCommonAncestor(\n        self,\n        root: Optional['TreeNode'],\n        p: 'TreeNode',\n        q: 'TreeNode',\n    ) -> Optional['TreeNode']:\n        if root is None or root is p or root is q:\n            return root\n\n        left = self.lowestCommonAncestor(root.left, p, q)\n        right = self.lowestCommonAncestor(root.right, p, q)\n\n        if left and right:\n            return root\n        return left if left else right",
@@ -25,6 +25,17 @@
       "complexity": {
         "time": "O(n)",
         "space": "O(h) where h is the height of the tree"
+      }
+    },
+    {
+      "title": "Solution 2 – Parent Pointer + HashSet [✓ Interviewer Accepted]",
+      "description": "Use BFS/DFS to build a parent map for every node in the tree. Starting from node p, walk up the tree (using the parent map) adding each ancestor to a HashSet. Then starting from node q, walk up the tree — the first node already present in the ancestor set is the LCA. O(n) time O(n) space.",
+      "code": "public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {\n    Map<TreeNode, TreeNode> parent = new HashMap<>();\n    Deque<TreeNode> stack = new ArrayDeque<>();\n    parent.put(root, null);\n    stack.push(root);\n    while (!parent.containsKey(p) || !parent.containsKey(q)) {\n        TreeNode node = stack.pop();\n        if (node.left != null) {\n            parent.put(node.left, node);\n            stack.push(node.left);\n        }\n        if (node.right != null) {\n            parent.put(node.right, node);\n            stack.push(node.right);\n        }\n    }\n    Set<TreeNode> ancestors = new HashSet<>();\n    while (p != null) {\n        ancestors.add(p);\n        p = parent.get(p);\n    }\n    while (!ancestors.contains(q)) {\n        q = parent.get(q);\n    }\n    return q;\n}",
+      "code_python": "from collections import deque\n\nclass Solution:\n    def lowestCommonAncestor(self, root, p, q):\n        parent = {root: None}\n        stack = deque([root])\n        while p not in parent or q not in parent:\n            node = stack.pop()\n            if node.left:\n                parent[node.left] = node\n                stack.append(node.left)\n            if node.right:\n                parent[node.right] = node\n                stack.append(node.right)\n        ancestors = set()\n        while p:\n            ancestors.add(p)\n            p = parent[p]\n        while q not in ancestors:\n            q = parent[q]\n        return q",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
       }
     }
   ],

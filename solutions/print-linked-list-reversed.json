@@ -13,10 +13,21 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 \u2013 Recursive [\u2713 Interviewer Accepted]",
+      "title": "Solution 1 – Recursive [✓ Interviewer Accepted]",
       "description": "Recurse to the end of the list before printing: each call first processes the rest of the list, then prints the current node's value on the way back up. This naturally prints nodes in reverse without any explicit reversal or extra data structure.",
       "code": "public void printLinkedListInReverse(ListNode head) {\n    if (head == null) return;\n    \n    printLinkedListInReverse(head.next);\n    System.out.println(head.val);\n}",
       "code_python": "from typing import Optional\n\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\n\ndef printLinkedListInReverse(head: Optional[object]) -> None:\n    if not head:\n        return\n    printLinkedListInReverse(head.next)\n    print(head.val)",
+      "language": "java",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "title": "Solution 2 – Stack-Based Iterative [✓ Interviewer Accepted]",
+      "description": "Traverse the linked list from head to tail, pushing each node's value onto a stack. Then pop all values from the stack and collect/print them — since a stack is LIFO, this reverses the order. O(n) time O(n) space for the stack.",
+      "code": "public List<Integer> printReversed(ListNode head) {\n    Deque<Integer> stack = new ArrayDeque<>();\n    ListNode curr = head;\n    while (curr != null) {\n        stack.push(curr.val);\n        curr = curr.next;\n    }\n    List<Integer> result = new ArrayList<>();\n    while (!stack.isEmpty()) {\n        result.add(stack.pop());\n    }\n    return result;\n}",
+      "code_python": "from typing import List\n\nclass Solution:\n    def printReversed(self, head) -> List[int]:\n        stack = []\n        curr = head\n        while curr:\n            stack.append(curr.val)\n            curr = curr.next\n        return stack[::-1]",
       "language": "java",
       "complexity": {
         "time": "O(n)",

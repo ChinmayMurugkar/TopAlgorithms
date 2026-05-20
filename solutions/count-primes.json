@@ -16,19 +16,8 @@
   },
   "solutions": [
     {
-      "title": "Solution 1 \u2013 Sieve of Eratosthenes [\u2713 Interviewer Accepted]",
-      "description": "Initialize a boolean array marking all numbers as prime, then for each prime p starting from 2, mark all multiples of p starting at p\u00b2 as composite. Starting at p\u00b2 is the key optimization \u2014 smaller multiples were already marked by earlier primes \u2014 reducing the total work to O(n log log n).",
-      "code": "public int countPrimes(int n) {\n    if (n <= 2) return 0;\n    \n    boolean[] isPrime = new boolean[n];\n    Arrays.fill(isPrime, true);\n    isPrime[0] = isPrime[1] = false;\n    \n    for (int i = 2; i * i < n; i++) {\n        if (isPrime[i]) {\n            for (int j = i * i; j < n; j += i) {\n                isPrime[j] = false;\n            }\n        }\n    }\n    \n    int count = 0;\n    for (int i = 2; i < n; i++) {\n        if (isPrime[i]) count++;\n    }\n    \n    return count;\n}",
-      "code_python": "def countPrimes(n: int) -> int:\n    if n <= 2:\n        return 0\n    is_prime = [True] * n\n    is_prime[0] = is_prime[1] = False\n    i = 2\n    while i * i < n:\n        if is_prime[i]:\n            for j in range(i * i, n, i):\n                is_prime[j] = False\n        i += 1\n    return sum(is_prime)",
-      "language": "java",
-      "complexity": {
-        "time": "O(n log log n)",
-        "space": "O(n)"
-      }
-    },
-    {
-      "title": "Solution 1 \u2013 Sieve of Eratosthenes [\u2713 Interviewer Accepted]",
-      "description": "Initialize a boolean array marking all numbers as prime, then for each prime p starting from 2, mark all multiples of p starting at p\u00b2 as composite. Starting at p\u00b2 is the key optimization \u2014 smaller multiples were already marked by earlier primes \u2014 reducing the total work to O(n log log n).",
+      "title": "Solution 1 – Sieve of Eratosthenes [✓ Interviewer Accepted]",
+      "description": "Initialize a boolean array marking all numbers as prime, then for each prime p starting from 2, mark all multiples of p starting at p² as composite. Starting at p² is the key optimization — smaller multiples were already marked by earlier primes — reducing the total work to O(n log log n).",
       "code": "public int countPrimes(int n) {\n    if (n <= 2) return 0;\n    \n    boolean[] isPrime = new boolean[n];\n    Arrays.fill(isPrime, true);\n    isPrime[0] = isPrime[1] = false;\n    \n    for (int i = 2; i * i < n; i++) {\n        if (isPrime[i]) {\n            for (int j = i * i; j < n; j += i) {\n                isPrime[j] = false;\n            }\n        }\n    }\n    \n    int count = 0;\n    for (int i = 2; i < n; i++) {\n        if (isPrime[i]) count++;\n    }\n    \n    return count;\n}",
       "code_python": "def countPrimes(n: int) -> int:\n    if n <= 2:\n        return 0\n    is_prime = [True] * n\n    is_prime[0] = is_prime[1] = False\n    i = 2\n    while i * i < n:\n        if is_prime[i]:\n            for j in range(i * i, n, i):\n                is_prime[j] = False\n        i += 1\n    return sum(is_prime)",
       "language": "java",
